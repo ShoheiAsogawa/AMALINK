@@ -25,7 +25,7 @@ jobs:
         run: |
           git fetch origin main feature/cms-news-home-updates
           git checkout main
-          git merge --ff-only origin/feature/cms-news-home-updates
+          git merge --no-edit origin/feature/cms-news-home-updates
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
