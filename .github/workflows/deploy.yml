@@ -16,41 +16,23 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/feature/cms-news-home-updates'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout feature branch
-        uses: actions/checkout@v4
+      - name: Merge feature commit into main via API
+        uses: actions/github-script@v7
         with:
-          fetch-depth: 0
-
-      - name: Sync feature commit into main
-        run: |
-          git fetch origin main feature/cms-news-home-updates
-          git checkout -B main origin/main
-          git merge --no-edit "${GITHUB_SHA}"
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build for GitHub Pages (main)
-        run: npm run build:gh-pages
-        env:
-          MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
-          MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
-          NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY }}
-          GITHUB_PAGES: 'true'
-
-      - name: Commit and push main (including docs/)
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/
-          git diff --staged --quiet || git commit -m "chore: rebuild docs [skip ci]"
-          git push origin HEAD:main
+          script: |
+            try {
+              const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
+              const result = await github.rest.repos.merge({
+                owner,
+                repo,
+                base: "main",
+                head: context.sha,
+                commit_message: `chore: auto-sync feature commit ${context.sha.slice(0, 7)}`
+              });
+              core.info(`Merged: ${result.data.sha}`);
+            } catch (error) {
+              core.setFailed(`Auto-merge to main failed: ${error.message}`);
+            }
 
   build-and-deploy:
     if: github.event_name != 'push' || github.ref == 'refs/heads/main'
