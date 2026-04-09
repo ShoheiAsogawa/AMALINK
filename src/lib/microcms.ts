@@ -1,10 +1,14 @@
 import { createClient } from "microcms-js-sdk";
 import type { MicroCMSListContent, MicroCMSQueries } from "microcms-js-sdk";
 
+export type Category = {
+  title: string;
+} & MicroCMSListContent;
+
 export type News = {
   title: string;
   content: string;
-  category: string[];
+  category: Category | Category[];
 } & MicroCMSListContent;
 
 function getClient() {
