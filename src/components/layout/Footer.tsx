@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 
+const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export default function Footer() {
   return (
     <footer className="bg-slate-50 border-t border-slate-200 py-12 md:py-20">
@@ -10,7 +12,7 @@ export default function Footer() {
             <Link href="/" className="text-xl md:text-2xl font-bold tracking-widest flex items-center gap-2 mb-4 group">
               <div className="relative w-8 h-8 md:w-10 md:h-10">
                 <Image 
-                  src="/logo.png" 
+                  src={`${assetBase}/logo.png`}
                   alt="AMALINK Logo" 
                   fill
                   className="object-contain"

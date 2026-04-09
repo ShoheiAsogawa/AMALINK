@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
+const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,7 +27,7 @@ export default function Header() {
           <Link href="/" className="group flex items-center gap-2 mix-blend-normal">
             <div className="relative w-10 h-10 md:w-12 md:h-12">
               <Image 
-                src="/logo.png" 
+                src={`${assetBase}/logo.png`}
                 alt="AMALINK Logo" 
                 fill
                 className="object-contain" 

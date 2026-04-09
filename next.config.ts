@@ -6,6 +6,9 @@ const repositoryName = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "AMALINK"
 const basePath = isGithubPages ? `/${repositoryName}` : "";
 
 const nextConfig: NextConfig = {
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   ...(isGithubPages && {
     output: "export",
     basePath,
