@@ -46,7 +46,7 @@ export default async function NewsListPage() {
               {news.map((item) => (
                 <Link
                   key={item.id}
-                  href={`/news/${item.id}`}
+                  href={`/news/${item.id}/`}
                   className="group flex flex-col md:flex-row md:items-center gap-2 md:gap-8 py-6 md:py-8 hover:bg-slate-50/50 transition-colors duration-200 px-2 -mx-2 rounded-lg"
                 >
                   <time className="text-xs md:text-sm text-slate-400 font-sans tabular-nums whitespace-nowrap shrink-0">
