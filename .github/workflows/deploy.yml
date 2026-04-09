@@ -2,14 +2,34 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, feature/cms-news-home-updates]
+  schedule:
+    # microCMS 更新を定期取り込み（JSTで概ね毎時15分）
+    - cron: '15 * * * *'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
+  sync-feature-to-main:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/feature/cms-news-home-updates'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fast-forward main from feature
+        run: |
+          git fetch origin main feature/cms-news-home-updates
+          git checkout main
+          git merge --ff-only origin/feature/cms-news-home-updates
+          git push origin main
+
   build-and-deploy:
+    if: github.event_name != 'push' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
