@@ -1,10 +1,15 @@
 import type { NextConfig } from "next";
 
+const isGithubPages =
+  process.env.GITHUB_ACTIONS === "true" || process.env.GITHUB_PAGES === "true";
+const repositoryName = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "AMALINK";
+const basePath = isGithubPages ? `/${repositoryName}` : "";
+
 const nextConfig: NextConfig = {
-  // GitHub Pages用の設定（Vercel以外の本番ビルド時のみ有効）
-  ...(process.env.NODE_ENV === 'production' && !process.env.VERCEL && {
-    output: 'export',
-    basePath: '/AMARINK',
+  ...(isGithubPages && {
+    output: "export",
+    basePath,
+    assetPrefix: `${basePath}/`,
     images: {
       unoptimized: true,
     },

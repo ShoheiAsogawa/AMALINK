@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { clsx } from "clsx";
 import Image from "next/image";
 
 export default function Header() {
@@ -15,38 +14,6 @@ export default function Header() {
     { name: "News", href: "/news", label: "お知らせ", en: "News" },
     { name: "Contact", href: "/contact", label: "お問い合わせ", en: "Contact" },
   ];
-
-  const menuVariants = {
-    closed: {
-      opacity: 0,
-      y: "-100%",
-      transition: {
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-    open: {
-      opacity: 1,
-      y: "0%",
-      transition: {
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
-
-  const linkVariants = {
-    closed: { opacity: 0, y: 20 },
-    open: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: 0.3 + i * 0.1,
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    }),
-  };
 
   return (
     <>
@@ -123,10 +90,9 @@ export default function Header() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial="closed"
-            animate="open"
-            exit="closed"
-            variants={menuVariants}
+            initial={{ opacity: 0, y: "-100%" }}
+            animate={{ opacity: 1, y: "0%", transition: { duration: 0.5 } }}
+            exit={{ opacity: 0, y: "-100%", transition: { duration: 0.5 } }}
             className="fixed inset-0 bg-white z-[60] flex flex-col justify-center items-center"
           >
             {/* Close Button (X) - Top Right */}
@@ -165,8 +131,9 @@ export default function Header() {
               {navItems.map((item, i) => (
                 <motion.div
                   key={item.name}
-                  custom={i}
-                  variants={linkVariants}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
                   className="w-full text-center"
                 >
                   <Link

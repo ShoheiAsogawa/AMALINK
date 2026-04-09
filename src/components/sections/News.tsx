@@ -23,7 +23,7 @@ function CategoryBadge({ category }: { category: string }) {
 function NewsItem({ item }: { item: News }) {
   return (
     <Link
-      href={`/news/${item.id}`}
+      href="/news"
       className="group grid grid-cols-[auto_1fr_auto] md:grid-cols-[120px_auto_1fr_32px] items-center gap-3 md:gap-6 py-5 md:py-6 border-b border-slate-100 last:border-b-0 hover:bg-slate-50/50 transition-colors duration-300 -mx-2 px-2 rounded-lg"
     >
       <time className="text-xs md:text-sm text-slate-400 font-sans tabular-nums whitespace-nowrap">
