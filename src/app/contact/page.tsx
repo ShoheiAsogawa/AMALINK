@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { WaveBackground } from "@/components/ui/WaveBackground";
 import Header from "@/components/layout/Header";
@@ -128,9 +129,9 @@ export default function ContactPage() {
                                 内容を確認次第、担当者よりご連絡させていただきます。<br />
                                 しばらくお待ちくださいませ。
                             </p>
-                            <a href="/" className="inline-block mt-10 px-8 py-3 bg-slate-800 text-white rounded-full text-sm hover:bg-amami-blue transition-colors">
+                            <Link href="/" className="inline-block mt-10 px-8 py-3 bg-slate-800 text-white rounded-full text-sm hover:bg-amami-blue transition-colors">
                                 トップページへ戻る
-                            </a>
+                            </Link>
                         </div>
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-8">
