@@ -5,7 +5,7 @@ import type { Category } from "@/lib/microcms";
 import { ArrowRight, Newspaper } from "lucide-react";
 import Link from "next/link";
 
-export const revalidate = 0;
+export const dynamic = "force-static";
 
 export const metadata = {
   title: "お知らせ | AMALINK",
