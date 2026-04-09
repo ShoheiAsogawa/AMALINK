@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fafafa; /* Pure white -> Warm white/Off-white */
+  --foreground: #334155; /* Softer text color */
+  
+  /* Amami Colors - Slightly Darker for better visibility */
+  --amami-blue: #0ea5e9; /* Sky 500 (was 400) */
+  --amami-green: #10b981; /* Emerald 500 (was 400) */
+  --sand-beige: #e5e5b7; /* Darker sand beige */
+  
+  --amami-blue-light: #e0f2fe; /* Sky 100 */
+  --amami-green-light: #d1fae5; /* Emerald 100 */
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-amami-blue: var(--amami-blue);
+  --color-amami-green: var(--amami-green);
+  --color-amami-blue-light: var(--amami-blue-light);
+  --color-amami-green-light: var(--amami-green-light);
+  --color-sand-beige: var(--sand-beige);
+
+  --font-serif: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
+  --font-sans: "Zen Kaku Gothic New", "Helvetica Neue", sans-serif;
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  letter-spacing: 0.05em; /* Slightly wider spacing for elegance */
+}
+
+/* 縦書き用クラス */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+/* Custom Scrollbar - Thinner and subtler */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::selection {
+  background: var(--amami-blue);
+  color: #fff;
+}
+
+/* GPU Acceleration for smooth animations */
+.gpu-accelerate {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+}
