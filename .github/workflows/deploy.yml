@@ -4,38 +4,23 @@ on:
   push:
     branches: [main, feature/cms-news-home-updates]
   schedule:
-    # microCMS 更新を定期取り込み（JSTで概ね毎時15分）
     - cron: '15 * * * *'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  sync-feature-to-main-and-deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/feature/cms-news-home-updates'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Merge feature commit into main via API
-        uses: actions/github-script@v7
-        with:
-          script: |
-            try {
-              const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
-              const result = await github.rest.repos.merge({
-                owner,
-                repo,
-                base: "main",
-                head: context.sha,
-                commit_message: `chore: auto-sync feature commit ${context.sha.slice(0, 7)}`
-              });
-              core.info(`Merged: ${result.data.sha}`);
-            } catch (error) {
-              core.setFailed(`Auto-merge to main failed: ${error.message}`);
-            }
-
-  build-and-deploy:
-    if: github.event_name != 'push' || github.ref == 'refs/heads/main'
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -50,18 +35,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build for GitHub Pages
-        run: npm run build:gh-pages
+      - name: Build
+        run: npm run build
         env:
           MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
           MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
           NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY }}
           GITHUB_PAGES: 'true'
+          GITHUB_ACTIONS: 'true'
 
-      - name: Commit and push docs/
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/
-          git diff --staged --quiet || git commit -m "chore: rebuild docs [skip ci]"
-          git push
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
