@@ -36,6 +36,34 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
     return () => window.clearTimeout(id);
   }, [whiteFlash]);
 
+  /* 灯す／ミニゲーム中は背後の document スクロールとモバイルのオーバースクロールを止める */
+  useEffect(() => {
+    if (mainRevealed) return;
+    const html = document.documentElement;
+    const body = document.body;
+    const scrollY = window.scrollY;
+    html.classList.add("amalink-gateway-lock");
+    body.classList.add("amalink-gateway-lock");
+    body.dataset.amalinkGatewayScroll = String(scrollY);
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+    return () => {
+      html.classList.remove("amalink-gateway-lock");
+      body.classList.remove("amalink-gateway-lock");
+      const y = Number(body.dataset.amalinkGatewayScroll ?? "0");
+      delete body.dataset.amalinkGatewayScroll;
+      body.style.position = "";
+      body.style.top = "";
+      body.style.left = "";
+      body.style.right = "";
+      body.style.width = "";
+      window.scrollTo(0, y);
+    };
+  }, [mainRevealed]);
+
   return (
     <>
       <motion.div
@@ -71,7 +99,7 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={CROSSFADE}
-            className="fixed inset-0 z-[100]"
+            className="fixed inset-0 z-[100] max-h-[100dvh] touch-none overscroll-none"
           >
             <AnimatePresence mode="wait">
               {phase === "ask" && (

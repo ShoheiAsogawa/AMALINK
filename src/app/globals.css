@@ -40,6 +40,16 @@ body {
   letter-spacing: 0.05em; /* Slightly wider spacing for elegance */
 }
 
+/* GameGateway 表示中：スマホの縦スワイプでページがずれる・プルリフレッシュが掛かるのを抑止 */
+html.amalink-gateway-lock,
+body.amalink-gateway-lock {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+  touch-action: none;
+  height: 100%;
+  min-height: 100dvh;
+}
+
 /* WaveBackground: % は要素自身の幅基準（幅200% × translateX(-50%) = 1タイル分シームレス） */
 @keyframes wave-bg-drift {
   from {
