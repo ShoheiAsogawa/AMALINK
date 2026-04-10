@@ -1,6 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { getNewsList, getNewsDetail } from "@/lib/microcms";
+import { getNewsList, getNewsEntry } from "@/lib/microcms";
 import type { Category } from "@/lib/microcms";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
@@ -12,7 +12,7 @@ export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const { contents } = await getNewsList({ limit: 100 });
-  return contents.map((item) => ({ id: item.id }));
+  return contents.map((item) => ({ slug: item.slug ?? item.id }));
 }
 
 function formatDate(dateStr: string) {
@@ -29,10 +29,10 @@ function getCategories(category: Category | Category[] | undefined): Category[] 
   return Array.isArray(category) ? category : [category];
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   try {
-    const news = await getNewsDetail(id);
+    const news = await getNewsEntry(slug);
     return {
       title: `${news.title} | AMALINK`,
       description: news.title,
@@ -42,11 +42,11 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   }
 }
 
-export default async function NewsDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   let news;
   try {
-    news = await getNewsDetail(id);
+    news = await getNewsEntry(slug);
   } catch {
     notFound();
   }

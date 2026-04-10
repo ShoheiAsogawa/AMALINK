@@ -9,6 +9,8 @@ export type News = {
   title: string;
   content: string;
   category: Category | Category[];
+  /** microCMS のカスタムフィールド（任意。未設定時は URL に id を使う） */
+  slug?: string;
 } & MicroCMSListContent;
 
 function getClient() {
@@ -41,6 +43,33 @@ export async function getNewsDetail(id: string, queries?: MicroCMSQueries) {
   return client.getListDetail<News>({
     endpoint: "news",
     contentId: id,
+    queries,
+  });
+}
+
+/** URL セグメントが slug か id かに応じて1件取得（slug フィールド未設定APIでも id でフォールバック） */
+export async function getNewsEntry(slugOrId: string, queries?: MicroCMSQueries) {
+  const client = getClient();
+  if (!client) throw new Error("microCMS is not configured");
+
+  try {
+    const bySlug = await client.getList<News>({
+      endpoint: "news",
+      queries: {
+        filters: `slug[equals]${slugOrId}`,
+        limit: 1,
+        ...queries,
+      },
+    });
+    const hit = bySlug.contents[0];
+    if (hit) return hit;
+  } catch {
+    // slug フィールドが無い・フィルタ非対応など
+  }
+
+  return client.getListDetail<News>({
+    endpoint: "news",
+    contentId: slugOrId,
     queries,
   });
 }
