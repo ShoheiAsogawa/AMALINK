@@ -15,8 +15,6 @@ const SUN_ANGLE_RAD = Math.atan2(
 );
 const HIT_THRESHOLD_DEG = 12;
 
-const MOBILE_MQ = "(max-width: 767px)";
-
 export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
   const mountRef = useRef<HTMLDivElement>(null);
   const svgHostRef = useRef<HTMLDivElement>(null);
@@ -52,23 +50,6 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       cancelled = true;
     };
   }, []);
-
-  useEffect(() => {
-    if (!svgReady) return;
-    const svg = svgHostRef.current?.querySelector("#Clipping_Mask");
-    if (!svg) return;
-
-    const mq = window.matchMedia(MOBILE_MQ);
-    const applyPar = () => {
-      svg.setAttribute(
-        "preserveAspectRatio",
-        mq.matches ? "xMidYMid meet" : "xMinYMid slice",
-      );
-    };
-    applyPar();
-    mq.addEventListener("change", applyPar);
-    return () => mq.removeEventListener("change", applyPar);
-  }, [svgReady]);
 
   useEffect(() => {
     if (!svgReady) return;
@@ -128,14 +109,12 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       }
     }
 
-    function handleMouseMove(event: MouseEvent) {
-      applyPointer(event.clientX, event.clientY);
+    function handleMouseMove(e: MouseEvent) {
+      applyPointer(e.clientX, e.clientY);
     }
-
-    function handleTouchMove(event: TouchEvent) {
-      if (event.touches.length === 0) return;
-      const t = event.touches[0];
-      applyPointer(t.clientX, t.clientY);
+    function handleTouchMove(e: TouchEvent) {
+      if (e.touches.length === 0) return;
+      applyPointer(e.touches[0].clientX, e.touches[0].clientY);
     }
 
     setLightCenter();
@@ -148,9 +127,7 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     document.addEventListener("touchmove", handleTouchMove, { passive: true });
 
     const onClick = () => {
-      if (sunIsLit) {
-        triggerDawn();
-      }
+      if (sunIsLit) triggerDawn();
     };
     document.addEventListener("click", onClick);
 
@@ -187,15 +164,10 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       className={`svg-study-game ${isDawn ? "svg-study-dawn" : ""}`}
       style={{ opacity: isFadingOut ? 0 : 1, transition: "opacity 0.6s ease" }}
     >
-      <div className="svg-study-scene-stack">
-        <div className="svg-study-mobile-backdrop" aria-hidden />
-        <div ref={svgHostRef} className="svg-study-scene-host" aria-hidden />
-      </div>
+      <div ref={svgHostRef} className="svg-study-scene-host" aria-hidden />
       <div id="light_center" />
 
-      {isDawn && (
-        <div className="svg-study-dawn-overlay" aria-hidden />
-      )}
+      {isDawn && <div className="svg-study-dawn-overlay" aria-hidden />}
 
       <button
         type="button"

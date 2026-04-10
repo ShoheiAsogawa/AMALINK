@@ -2,8 +2,8 @@
 			id="Clipping_Mask"
 			xmlns="http://www.w3.org/2000/svg"
 			xmlns:xlink="http://www.w3.org/1999/xlink"
-			viewBox="0 0 1920 1080"
-			preserveAspectRatio="xMinYMid slice">
+			viewBox="0 -1400 1920 3880"
+			preserveAspectRatio="xMidYMid slice">
 			<defs>
 				<style>
 					.cls-1 {
@@ -512,7 +512,68 @@
 						class="cls-7"
 						d="M207,693l6-3h-8.98l-.02-18h7l-17-6h-4v-1h-1c-.04-.1-.31-.79-1-1-.71-.22-1.58,.18-2,1h-1v1h-4c-5.67,2-11.33,4-17,6h6l-.19,18h-6.81l5,3-10,133h59l-10-133Z" />
 				</clipPath>
+				<!-- 拡張用グラデーション -->
+				<linearGradient id="ext-sky-grad" x1="960" y1="-1400" x2="960" y2="80" gradientUnits="userSpaceOnUse">
+					<stop offset="0" stop-color="#050b16"/>
+					<stop offset="0.3" stop-color="#0a1628"/>
+					<stop offset="0.6" stop-color="#122140"/>
+					<stop offset="0.85" stop-color="#1c3364"/>
+					<stop offset="1" stop-color="#2a4570"/>
+				</linearGradient>
+				<linearGradient id="ext-ground-grad" x1="960" y1="1040" x2="960" y2="2480" gradientUnits="userSpaceOnUse">
+					<stop offset="0" stop-color="#122140"/>
+					<stop offset="0.12" stop-color="#1c3364"/>
+					<stop offset="0.35" stop-color="#152a52"/>
+					<stop offset="0.6" stop-color="#0e1d3a"/>
+					<stop offset="1" stop-color="#050b16"/>
+				</linearGradient>
 			</defs>
+
+			<!-- === 空の延長（上部 y=-1400〜0） === -->
+			<g id="Ext_Sky">
+				<rect x="-100" y="-1400" width="2120" height="1500" fill="url(#ext-sky-grad)"/>
+				<!-- 星 -->
+				<circle cx="280" cy="-1150" r="1.5" fill="#fefaf1" opacity="0.12"/>
+				<circle cx="720" cy="-1050" r="1" fill="#fefaf1" opacity="0.09"/>
+				<circle cx="1180" cy="-1250" r="1.2" fill="#fefaf1" opacity="0.1"/>
+				<circle cx="1580" cy="-800" r="1" fill="#fefaf1" opacity="0.11"/>
+				<circle cx="450" cy="-700" r="0.8" fill="#fefaf1" opacity="0.07"/>
+				<circle cx="1050" cy="-950" r="1.3" fill="#fefaf1" opacity="0.08"/>
+				<circle cx="1800" cy="-1100" r="0.9" fill="#fefaf1" opacity="0.1"/>
+				<circle cx="150" cy="-500" r="1" fill="#fefaf1" opacity="0.06"/>
+				<circle cx="900" cy="-1300" r="1.1" fill="#fefaf1" opacity="0.09"/>
+				<circle cx="1400" cy="-600" r="0.7" fill="#fefaf1" opacity="0.05"/>
+			</g>
+			<g id="Ext_Sky_Clouds" opacity="0.65">
+				<!-- 高高度の薄い雲 -->
+				<path fill="#162c50" d="M-100,-1050 C200,-1110 550,-1060 900,-1090 C1250,-1120 1550,-1040 1850,-1070 L1970,-1050 L1970,-850 C1550,-880 1200,-820 850,-860 C500,-900 200,-840 -100,-870 Z"/>
+				<!-- 中層の雲帯 -->
+				<path fill="#1a3358" d="M-100,-620 C220,-700 500,-640 780,-680 C1060,-720 1300,-600 1550,-650 C1780,-690 1920,-620 1970,-650 L1970,-380 C1700,-410 1350,-340 1050,-380 C750,-420 450,-350 150,-390 L-100,-370 Z"/>
+				<!-- 低層の雲（シーン上端に接続） -->
+				<path fill="#1e3862" d="M-100,-200 C150,-260 420,-200 700,-240 C980,-280 1200,-180 1450,-220 C1700,-260 1870,-200 1970,-230 L1970,20 C1700,-10 1350,40 1050,10 C750,-20 450,40 150,10 L-100,30 Z"/>
+				<!-- 雲のアクセント -->
+				<path fill="#223c68" opacity="0.5" d="M250,-750 C400,-790 580,-760 730,-780 C880,-800 980,-770 1020,-790 L1020,-680 C880,-700 730,-660 580,-680 C430,-700 300,-670 250,-690 Z"/>
+				<path fill="#223c68" opacity="0.4" d="M1150,-450 C1300,-490 1480,-460 1630,-480 C1780,-500 1870,-470 1920,-490 L1920,-380 C1780,-400 1630,-360 1480,-380 C1330,-400 1200,-370 1150,-390 Z"/>
+			</g>
+
+			<!-- === 地面・海の延長（下部 y=1080〜2480） === -->
+			<g id="Ext_Ground">
+				<rect x="-100" y="1020" width="2120" height="1460" fill="url(#ext-ground-grad)"/>
+				<!-- 水面の反射線 -->
+				<line x1="250" y1="1095" x2="1650" y2="1095" stroke="#fefaf1" stroke-width="1" opacity="0.03"/>
+				<line x1="450" y1="1120" x2="1450" y2="1120" stroke="#fefaf1" stroke-width="0.8" opacity="0.025"/>
+				<line x1="150" y1="1150" x2="1750" y2="1150" stroke="#fefaf1" stroke-width="0.6" opacity="0.02"/>
+				<line x1="350" y1="1180" x2="1550" y2="1180" stroke="#fefaf1" stroke-width="0.5" opacity="0.015"/>
+				<!-- 遠い山脈 -->
+				<path fill="#1a3058" d="M-100,1220 C80,1150 240,1190 440,1120 C580,1070 720,1160 880,1110 C1040,1060 1200,1170 1380,1100 C1520,1050 1660,1140 1820,1090 C1900,1060 1970,1110 1970,1090 L1970,1400 L-100,1400 Z"/>
+				<!-- 中距離の山 -->
+				<path fill="#142648" d="M-100,1350 C120,1270 320,1320 520,1250 C720,1180 880,1290 1080,1230 C1280,1170 1440,1280 1640,1220 C1800,1180 1920,1250 1970,1220 L1970,1600 L-100,1600 Z"/>
+				<!-- 近い山 -->
+				<path fill="#0e1d3a" d="M-100,1500 C80,1420 260,1470 440,1400 C620,1330 800,1440 980,1380 C1160,1320 1340,1430 1520,1370 C1700,1310 1860,1400 1970,1360 L1970,1850 L-100,1850 Z"/>
+				<!-- 最前景 -->
+				<path fill="#091428" d="M-100,1700 C200,1630 500,1680 800,1620 C1100,1560 1400,1660 1700,1600 C1870,1570 1970,1630 1970,1610 L1970,2480 L-100,2480 Z"/>
+			</g>
+
 			<g class="cls-27">
 				<rect
 					id="Sky"
