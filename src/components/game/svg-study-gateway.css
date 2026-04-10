@@ -36,17 +36,29 @@
   margin: 0;
 }
 
-/* 夜の減光はメインシーンだけ（上下の拡張レイヤーは潰れない） */
-.svg-study-scene-host svg#Clipping_Mask g.cls-27 {
+/* 夜の減光：メインと上下拡張を同じフィルタにして境目を消す */
+.svg-study-scene-host svg#Clipping_Mask g.cls-27,
+.svg-study-scene-host svg#Clipping_Mask #Ext_Sky,
+.svg-study-scene-host svg#Clipping_Mask #Ext_Sky_Below {
   filter: brightness(0.35) saturate(0.7);
   transition: filter 2s ease;
 }
 
-.svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask g.cls-27 {
+.svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask g.cls-27,
+.svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask #Ext_Sky,
+.svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask #Ext_Sky_Below {
   filter: brightness(1.05) saturate(1.1);
 }
 
 /* SVG 内部要素 */
+/* 太陽内「タップ」— #SunTapHintLayer で最前面に描画（インライン fill と併用） */
+.svg-study-scene-host svg#Clipping_Mask #SunTapHintLayer .svg-study-sun-tap-text {
+  font-family: var(--font-serif, "Zen Old Mincho", serif);
+  letter-spacing: 0.14em;
+  pointer-events: none;
+  animation: svg-study-tap-hint-pulse 1.6s ease-in-out infinite;
+}
+
 .svg-study-scene-host svg#Clipping_Mask #Light {
   pointer-events: none;
   z-index: 2;
@@ -173,6 +185,16 @@
   100% {
     translate: -20% 80%;
     scale: 2.5;
+  }
+}
+
+@keyframes svg-study-tap-hint-pulse {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 1;
   }
 }
 

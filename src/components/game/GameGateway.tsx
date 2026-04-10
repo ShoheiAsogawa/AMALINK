@@ -81,7 +81,7 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
                   onClick={() => setPhase("playing")}
                   className="group relative px-10 py-4 rounded-full bg-amami-blue hover:bg-sky-400 text-white font-serif font-medium text-base tracking-wider transition-all duration-300 hover:shadow-[0_0_30px_rgba(14,165,233,0.3)] cursor-pointer"
                 >
-                  <span className="relative z-10">やってみる</span>
+                  <span className="relative z-10">灯す</span>
                 </button>
 
                 <button

@@ -53,6 +53,16 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     };
   }, []);
 
+  /* 夜だけタップ用レイヤーを出す。文字の見え方は #Sun-lit と同じマスク（光の当たり）に依存 */
+  useEffect(() => {
+    if (!svgReady) return;
+    const host = svgHostRef.current;
+    if (!host) return;
+    const layer = host.querySelector("#SunTapHintLayer") as SVGGElement | null;
+    if (!layer) return;
+    layer.setAttribute("visibility", phase === "night" ? "visible" : "hidden");
+  }, [phase, svgReady]);
+
   useEffect(() => {
     if (!svgReady) return;
     const root = mountRef.current;
@@ -65,23 +75,31 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
 
     const _center = root.querySelector("#light_center") as HTMLDivElement | null;
     const _light = hostEl.querySelector("#Light") as SVGElement | null;
-    const _sun = hostEl.querySelector("#Sun") as SVGGElement | null;
-    const _sunEllipse = _sun?.querySelector("ellipse") as SVGEllipseElement | null;
+    const _maskPoly = hostEl.querySelector(
+      "#SunBeamMaskPoly",
+    ) as SVGPolygonElement | null;
+    const _sunBase = hostEl.querySelector("#Sun-base") as SVGEllipseElement | null;
 
-    if (!_center || !_light || !_sun || !_sunEllipse) return;
+    if (!_center || !_light || !_maskPoly || !_sunBase) return;
 
     const centerEl = _center;
     const lightEl = _light;
-    const sunEllipse = _sunEllipse;
+    const maskPoly = _maskPoly;
+    const sunBase = _sunBase;
 
-    sunEllipse.style.fill = "#38bdf8";
-    sunEllipse.style.transition = "fill 0.4s ease";
+    sunBase.style.fill = "#38bdf8";
+    sunBase.style.transition = "fill 0.4s ease";
 
     let currentAngleRad = 0;
-    let sunIsLit = false;
+    let beamOnSun = false;
+
+    function setLightRotation(angleDeg: number) {
+      lightEl.style.transform = `rotate(${angleDeg}deg)`;
+      maskPoly.setAttribute("transform", `rotate(${angleDeg} 190 680)`);
+    }
 
     function setLightCenter() {
-      lightEl.style.transform = "rotate(0deg)";
+      setLightRotation(0);
       const lh = hostEl.querySelector("#Lighthouse");
       if (!lh) return;
       const bbox = lh.getBoundingClientRect();
@@ -96,19 +114,12 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       const cy = rect.top + rect.height / 2;
       const angleRad = Math.atan2(clientY - cy, clientX - cx);
       const angleDeg = (angleRad * 180) / Math.PI + 1;
-      lightEl.style.transform = `rotate(${angleDeg}deg)`;
+      setLightRotation(angleDeg);
       currentAngleRad = angleRad;
 
       const diff = Math.abs(currentAngleRad - SUN_ANGLE_RAD) * (180 / Math.PI);
       const isHitting = diff < HIT_THRESHOLD_DEG;
-
-      if (isHitting && !sunIsLit) {
-        sunIsLit = true;
-        sunEllipse.style.fill = "#f3b21a";
-      } else if (!isHitting && sunIsLit) {
-        sunIsLit = false;
-        sunEllipse.style.fill = "#38bdf8";
-      }
+      beamOnSun = isHitting;
     }
 
     function handleMouseMove(e: MouseEvent) {
@@ -118,18 +129,23 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       if (e.touches.length === 0) return;
       applyPointer(e.touches[0].clientX, e.touches[0].clientY);
     }
+    function handleTouchStart(e: TouchEvent) {
+      if (e.touches.length === 0) return;
+      applyPointer(e.touches[0].clientX, e.touches[0].clientY);
+    }
 
     setLightCenter();
     lightEl.style.animation = "none";
-    lightEl.style.transform = "rotate(-50deg)";
+    setLightRotation(-50);
 
     const onResize = () => setLightCenter();
     window.addEventListener("resize", onResize);
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("touchmove", handleTouchMove, { passive: true });
+    document.addEventListener("touchstart", handleTouchStart, { passive: true });
 
     const onClick = () => {
-      if (sunIsLit) triggerDawn();
+      if (beamOnSun) triggerDawn();
     };
     document.addEventListener("click", onClick);
 
@@ -137,6 +153,7 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       window.removeEventListener("resize", onResize);
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchstart", handleTouchStart);
       document.removeEventListener("click", onClick);
     };
   }, [svgReady, triggerDawn]);
@@ -150,10 +167,15 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       lightEl.style.transition = "opacity 1.2s ease";
       lightEl.style.opacity = "0";
     }
-    const sunEllipse = host.querySelector("#Sun ellipse") as SVGEllipseElement | null;
-    if (sunEllipse) {
-      sunEllipse.style.transition = "fill 1.2s ease";
-      sunEllipse.style.fill = "#fefaf1";
+    const sunBase = host.querySelector("#Sun-base") as SVGEllipseElement | null;
+    const sunLit = host.querySelector("#Sun-lit") as SVGEllipseElement | null;
+    if (sunBase) {
+      sunBase.style.transition = "fill 1.2s ease";
+      sunBase.style.fill = "#fefaf1";
+    }
+    if (sunLit) {
+      sunLit.style.transition = "opacity 1.2s ease";
+      sunLit.style.opacity = "0";
     }
   }, [phase]);
 
