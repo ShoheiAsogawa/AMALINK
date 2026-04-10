@@ -19,7 +19,6 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      {/* 本体はバックグラウンドにプリレンダーしておく（非表示） */}
       <div className="hidden">{children}</div>
 
       <AnimatePresence mode="wait">
@@ -30,26 +29,33 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }}
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#1a1a2e]"
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center"
           >
-            {/* 海のような背景グラデーション */}
+            {/* 奄美の夜の海 */}
             <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a2e] via-[#16213e] to-[#0f3460]" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#071a2e] via-[#0c2744] to-[#0f3460]" />
+
+              {/* 波 — 2レイヤー */}
               <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute bottom-0 left-0 right-0 h-[40%] opacity-20"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute bottom-0 left-0 right-0 h-[35%] opacity-10"
               >
                 <svg viewBox="0 0 1200 200" preserveAspectRatio="none" className="w-full h-full">
-                  <path
-                    fill="#0ea5e9"
-                    d="M0,100 Q300,40 600,100 Q900,160 1200,100 L1200,200 L0,200 Z"
-                  />
+                  <path fill="#0ea5e9" d="M0,80 Q300,20 600,80 Q900,140 1200,80 L1200,200 L0,200 Z" />
+                </svg>
+              </motion.div>
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+                className="absolute bottom-0 left-0 right-0 h-[22%] opacity-15"
+              >
+                <svg viewBox="0 0 1200 200" preserveAspectRatio="none" className="w-full h-full">
+                  <path fill="#38bdf8" d="M0,100 Q300,50 600,100 Q900,150 1200,100 L1200,200 L0,200 Z" />
                 </svg>
               </motion.div>
             </div>
 
-            {/* コンテンツ */}
             <div className="relative z-10 flex flex-col items-center gap-12 px-6">
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
@@ -57,7 +63,7 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
                 transition={{ delay: 0.3, duration: 0.8 }}
                 className="text-center"
               >
-                <p className="text-white/50 text-xs tracking-[0.3em] uppercase font-sans mb-4">
+                <p className="text-sky-200/40 text-xs tracking-[0.3em] uppercase font-sans mb-6">
                   Welcome to AMALINK
                 </p>
                 <h2 className="text-white text-2xl sm:text-3xl font-serif font-medium leading-relaxed">
@@ -74,14 +80,14 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
               >
                 <button
                   onClick={() => setPhase("playing")}
-                  className="group relative px-10 py-4 rounded-full bg-sky-500 hover:bg-sky-400 text-white font-sans font-medium text-base tracking-wider transition-all duration-300 hover:shadow-[0_0_30px_rgba(14,165,233,0.4)] cursor-pointer"
+                  className="group relative px-10 py-4 rounded-full bg-amami-blue hover:bg-sky-400 text-white font-serif font-medium text-base tracking-wider transition-all duration-300 hover:shadow-[0_0_30px_rgba(14,165,233,0.3)] cursor-pointer"
                 >
                   <span className="relative z-10">やってみる</span>
                 </button>
 
                 <button
                   onClick={() => setPhase("done")}
-                  className="px-10 py-4 rounded-full border border-white/20 hover:border-white/40 text-white/60 hover:text-white/90 font-sans text-base tracking-wider transition-all duration-300 cursor-pointer"
+                  className="px-10 py-4 rounded-full border border-sky-300/20 hover:border-sky-300/40 text-sky-100/50 hover:text-sky-100/90 font-serif text-base tracking-wider transition-all duration-300 cursor-pointer"
                 >
                   サイトを見る
                 </button>
