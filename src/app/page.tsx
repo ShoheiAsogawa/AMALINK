@@ -6,6 +6,7 @@ import { Services } from "@/components/sections/Services";
 import { NewsSection } from "@/components/sections/News";
 import { Contact } from "@/components/sections/Contact";
 import { getNewsList } from "@/lib/microcms";
+import { GameGateway } from "@/components/game/GameGateway";
 
 export const revalidate = 60;
 
@@ -19,14 +20,16 @@ export default async function Home() {
   }
 
   return (
-    <main className="overflow-hidden">
-      <Header />
-      <Hero />
-      <About />
-      <Services />
-      <NewsSection news={news} />
-      <Contact />
-      <Footer />
-    </main>
+    <GameGateway>
+      <main className="overflow-hidden">
+        <Header />
+        <Hero />
+        <About />
+        <Services />
+        <NewsSection news={news} />
+        <Contact />
+        <Footer />
+      </main>
+    </GameGateway>
   );
 }
