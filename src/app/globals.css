@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-/* 静的出力 docs/ 内の旧バンドルに残ったクラス名を走査しない（webpack が ./& で落ちる原因になる） */
-@source not "../../docs";
-
 :root {
   --background: #fafafa; /* Pure white -> Warm white/Off-white */
   --foreground: #334155; /* Softer text color */
@@ -53,9 +50,8 @@ body {
   }
 }
 
-/* ノイズタイル（パスは layout で --bg-grain-noise-url を設定。GitHub Pages の basePath 対応） */
 .bg-grain-noise {
-  background-image: var(--bg-grain-noise-url);
+  background-image: url("/noise.svg");
 }
 
 /* 縦書き用クラス */

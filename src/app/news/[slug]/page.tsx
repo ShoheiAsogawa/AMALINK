@@ -6,13 +6,8 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 
-/** `output: export` で `generateStaticParams` が空のときのビルド制約を避ける */
-export const revalidate = 0;
-/**
- * GitHub Pages（output: export）では `dynamicParams: true` が禁止されビルド失敗する。
- * 新規記事は CI の再ビルド（push / 定期実行）で generateStaticParams に載るまで本番URLは404になり得る。
- */
-export const dynamicParams = false;
+export const revalidate = 60;
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const { contents } = await getNewsList({ limit: 100 });

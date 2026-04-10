@@ -16,14 +16,11 @@ const zenGothic = Zen_Kaku_Gothic_New({
   display: "swap",
 });
 
-const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const grainNoiseUrl = `url(${JSON.stringify(`${assetBase}/noise.svg`)})`;
-
 export const metadata: Metadata = {
   title: "AMALINK - 島のリズムで、未来をつくる。",
   description: "奄美で起業するAMALINK。情報で人と人をつなげ、島内外の懸け橋となります。",
   icons: {
-    icon: `${assetBase}/logo.png`,
+    icon: "/logo.png",
   },
 };
 
@@ -34,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className={`${zenMincho.variable} ${zenGothic.variable}`}>
-      <body style={{ ["--bg-grain-noise-url" as string]: grainNoiseUrl }}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
