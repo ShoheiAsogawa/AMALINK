@@ -84,6 +84,193 @@
   );
 }
 
+/* シーン全体（デスクトップ＝全面 slice / モバイル＝meet 用スタック） */
+.svg-study-scene-stack {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+/* モバイルのみ：レターボックス外を空・雲・山で埋める（デスクトップでは非表示） */
+.svg-study-mobile-backdrop {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .svg-study-game::after {
+    opacity: 0;
+  }
+
+  .svg-study-mobile-backdrop {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 50% 14% at 18% 10%, rgba(120, 148, 178, 0.42) 0%, transparent 72%),
+      radial-gradient(ellipse 42% 12% at 72% 7%, rgba(95, 125, 158, 0.38) 0%, transparent 70%),
+      radial-gradient(ellipse 38% 11% at 48% 16%, rgba(88, 118, 152, 0.35) 0%, transparent 68%),
+      radial-gradient(ellipse 36% 10% at 88% 14%, rgba(75, 105, 140, 0.32) 0%, transparent 65%),
+      radial-gradient(ellipse 1.2px 1.2px at 12% 6%, rgba(200, 230, 255, 0.55) 0%, transparent 100%),
+      radial-gradient(ellipse 1px 1px at 28% 11%, rgba(200, 230, 255, 0.45) 0%, transparent 100%),
+      radial-gradient(ellipse 1px 1px at 62% 5%, rgba(200, 230, 255, 0.4) 0%, transparent 100%),
+      radial-gradient(ellipse 1px 1px at 82% 9%, rgba(200, 230, 255, 0.5) 0%, transparent 100%),
+      radial-gradient(ellipse 1px 1px at 44% 4%, rgba(200, 230, 255, 0.35) 0%, transparent 100%),
+      linear-gradient(180deg, #0f2847 0%, #0c2744 22%, #071a2e 52%, #050f1c 78%, #020812 100%);
+    background-size:
+      100% 100%,
+      100% 100%,
+      100% 100%,
+      100% 100%,
+      120% 120%,
+      120% 120%,
+      120% 120%,
+      120% 120%,
+      120% 120%,
+      100% 100%;
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 0,
+      0 0,
+      0 0,
+      0 0,
+      0 0,
+      0 0,
+      0 0;
+    animation: svg-study-mobile-sky-shift 85s ease-in-out infinite alternate;
+  }
+
+  .svg-study-mobile-backdrop::before {
+    content: "";
+    position: absolute;
+    inset: -8% -15% 35%;
+    opacity: 0.85;
+    background:
+      radial-gradient(ellipse 55% 18% at 25% 55%, rgba(70, 100, 135, 0.5) 0%, transparent 75%),
+      radial-gradient(ellipse 48% 16% at 70% 48%, rgba(65, 95, 128, 0.45) 0%, transparent 72%),
+      radial-gradient(ellipse 40% 14% at 50% 62%, rgba(60, 88, 120, 0.4) 0%, transparent 70%);
+    animation: svg-study-mobile-cloud-drift 38s ease-in-out infinite;
+  }
+
+  .svg-study-mobile-backdrop::after {
+    content: "";
+    position: absolute;
+    left: -8%;
+    right: -8%;
+    bottom: 0;
+    height: min(42vh, 480px);
+    background: linear-gradient(180deg, transparent 0%, rgba(4, 14, 26, 0.55) 28%, #02060d 100%);
+    clip-path: polygon(
+      0 72%,
+      5% 54%,
+      12% 60%,
+      20% 46%,
+      28% 52%,
+      36% 40%,
+      45% 48%,
+      54% 36%,
+      63% 44%,
+      72% 32%,
+      80% 40%,
+      88% 28%,
+      96% 36%,
+      100% 24%,
+      100% 100%,
+      0 100%
+    );
+  }
+
+  .svg-study-game.svg-study-dawn .svg-study-mobile-backdrop {
+    background:
+      radial-gradient(ellipse 48% 13% at 22% 9%, rgba(255, 255, 255, 0.45) 0%, transparent 70%),
+      radial-gradient(ellipse 44% 12% at 76% 8%, rgba(186, 230, 254, 0.5) 0%, transparent 68%),
+      radial-gradient(ellipse 40% 11% at 52% 15%, rgba(125, 211, 252, 0.35) 0%, transparent 65%),
+      linear-gradient(180deg, #bae6fd 0%, #7dd3fc 38%, #38bdf8 78%, #0ea5e9 100%);
+    animation: svg-study-mobile-sky-shift-dawn 90s ease-in-out infinite alternate;
+  }
+
+  .svg-study-game.svg-study-dawn .svg-study-mobile-backdrop::before {
+    background:
+      radial-gradient(ellipse 50% 16% at 30% 52%, rgba(255, 255, 255, 0.35) 0%, transparent 74%),
+      radial-gradient(ellipse 45% 14% at 68% 50%, rgba(224, 242, 254, 0.4) 0%, transparent 72%);
+    opacity: 0.7;
+  }
+
+  .svg-study-game.svg-study-dawn .svg-study-mobile-backdrop::after {
+    background: linear-gradient(180deg, transparent 0%, rgba(14, 116, 144, 0.2) 35%, rgba(12, 74, 110, 0.5) 100%);
+    opacity: 0.85;
+    clip-path: polygon(
+      0 68%,
+      7% 50%,
+      15% 56%,
+      24% 42%,
+      34% 48%,
+      44% 36%,
+      54% 44%,
+      64% 34%,
+      74% 42%,
+      84% 30%,
+      94% 38%,
+      100% 26%,
+      100% 100%,
+      0 100%
+    );
+  }
+}
+
+@keyframes svg-study-mobile-sky-shift {
+  0% {
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      2% 0,
+      0 0,
+      0 0,
+      0 0,
+      0 0,
+      0 0,
+      0 0;
+  }
+  100% {
+    background-position:
+      3% 1%,
+      -2% 0,
+      1% 2%,
+      -1% 1%,
+      4% 2%,
+      -3% 1%,
+      2% -2%,
+      -2% 3%,
+      3% 1%,
+      0 0;
+  }
+}
+
+@keyframes svg-study-mobile-sky-shift-dawn {
+  0% {
+    filter: brightness(1);
+  }
+  100% {
+    filter: brightness(1.04);
+  }
+}
+
+@keyframes svg-study-mobile-cloud-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(12px, -6px) scale(1.02);
+  }
+}
+
 .svg-study-scene-host {
   position: absolute;
   inset: 0;
@@ -108,6 +295,22 @@
 
 .svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask {
   filter: brightness(1.05) saturate(1.1);
+}
+
+@media (max-width: 767px) {
+  .svg-study-scene-host {
+    z-index: 2;
+    background: transparent;
+  }
+
+  /* meet 時のレターボックスは SVG 内の透明域 — 背後の mobile-backdrop が見える */
+  .svg-study-scene-host svg#Clipping_Mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .svg-study-scene-host svg#Clipping_Mask #Light {

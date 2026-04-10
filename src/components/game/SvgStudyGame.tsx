@@ -7,13 +7,15 @@ interface SvgStudyGameProps {
   onClear: () => void;
 }
 
-const LIGHTHOUSE = { x: 190, y: 680 };
 const SUN_CENTER = { x: 963, y: 621 };
+const LIGHTHOUSE = { x: 190, y: 680 };
 const SUN_ANGLE_RAD = Math.atan2(
   SUN_CENTER.y - LIGHTHOUSE.y,
   SUN_CENTER.x - LIGHTHOUSE.x,
 );
 const HIT_THRESHOLD_DEG = 12;
+
+const MOBILE_MQ = "(max-width: 767px)";
 
 export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -44,14 +46,29 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       const text = await res.text();
       if (cancelled || !svgHostRef.current) return;
       svgHostRef.current.innerHTML = text;
-      const svg = svgHostRef.current.querySelector("#Clipping_Mask");
-      if (svg) svg.setAttribute("preserveAspectRatio", "xMinYMid slice");
       setSvgReady(true);
     })();
     return () => {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    if (!svgReady) return;
+    const svg = svgHostRef.current?.querySelector("#Clipping_Mask");
+    if (!svg) return;
+
+    const mq = window.matchMedia(MOBILE_MQ);
+    const applyPar = () => {
+      svg.setAttribute(
+        "preserveAspectRatio",
+        mq.matches ? "xMidYMid meet" : "xMinYMid slice",
+      );
+    };
+    applyPar();
+    mq.addEventListener("change", applyPar);
+    return () => mq.removeEventListener("change", applyPar);
+  }, [svgReady]);
 
   useEffect(() => {
     if (!svgReady) return;
@@ -77,6 +94,9 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     sunEllipse.style.fill = "#38bdf8";
     sunEllipse.style.transition = "fill 0.4s ease";
 
+    let currentAngleRad = 0;
+    let sunIsLit = false;
+
     function setLightCenter() {
       lightEl.style.transform = "rotate(0deg)";
       const lh = hostEl.querySelector("#Lighthouse");
@@ -86,15 +106,12 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       centerEl.style.left = `calc(${bbox.left}px + 1.2vw)`;
     }
 
-    let currentAngleRad = 0;
-    let sunIsLit = false;
-
-    function handleMouseMove(event: MouseEvent) {
+    function applyPointer(clientX: number, clientY: number) {
       lightEl.style.animation = "none";
       const rect = centerEl.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
-      const angleRad = Math.atan2(event.clientY - cy, event.clientX - cx);
+      const angleRad = Math.atan2(clientY - cy, clientX - cx);
       const angleDeg = (angleRad * 180) / Math.PI + 1;
       lightEl.style.transform = `rotate(${angleDeg}deg)`;
       currentAngleRad = angleRad;
@@ -111,6 +128,16 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       }
     }
 
+    function handleMouseMove(event: MouseEvent) {
+      applyPointer(event.clientX, event.clientY);
+    }
+
+    function handleTouchMove(event: TouchEvent) {
+      if (event.touches.length === 0) return;
+      const t = event.touches[0];
+      applyPointer(t.clientX, t.clientY);
+    }
+
     setLightCenter();
     lightEl.style.animation = "none";
     lightEl.style.transform = "rotate(-50deg)";
@@ -118,6 +145,7 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     const onResize = () => setLightCenter();
     window.addEventListener("resize", onResize);
     document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("touchmove", handleTouchMove, { passive: true });
 
     const onClick = () => {
       if (sunIsLit) {
@@ -129,6 +157,7 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     return () => {
       window.removeEventListener("resize", onResize);
       document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("touchmove", handleTouchMove);
       document.removeEventListener("click", onClick);
     };
   }, [svgReady, triggerDawn]);
@@ -158,7 +187,10 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       className={`svg-study-game ${isDawn ? "svg-study-dawn" : ""}`}
       style={{ opacity: isFadingOut ? 0 : 1, transition: "opacity 0.6s ease" }}
     >
-      <div ref={svgHostRef} className="svg-study-scene-host" aria-hidden />
+      <div className="svg-study-scene-stack">
+        <div className="svg-study-mobile-backdrop" aria-hidden />
+        <div ref={svgHostRef} className="svg-study-scene-host" aria-hidden />
+      </div>
       <div id="light_center" />
 
       {isDawn && (
