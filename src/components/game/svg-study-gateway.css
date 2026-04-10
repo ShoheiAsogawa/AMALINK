@@ -1,0 +1,285 @@
+/* SVG Study ミニゲーム — AMALINK ブランド用レイアウト・上書き */
+
+.svg-study-game {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+  height: 100dvh;
+  background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 35%, #7dd3fc 70%, #0ea5e9 100%);
+}
+
+.svg-study-game .svg-study-footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-family: var(--font-sans, "Zen Kaku Gothic New", sans-serif);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: rgba(15, 23, 42, 0.35);
+  padding: 12px 16px;
+}
+
+.svg-study-game .svg-study-hero {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  translate: 0 -24px;
+  position: relative;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.svg-study-game .svg-study-hero-inner {
+  text-align: center;
+  font-family: var(--font-serif, "Zen Old Mincho", serif);
+  color: #0c4a6e;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.svg-study-game .svg-study-hero-inner .lead {
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-sans, "Zen Kaku Gothic New", sans-serif);
+}
+
+.svg-study-game .svg-study-hero-inner .title {
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+}
+
+@media (max-width: 767px) {
+  .svg-study-game .svg-study-hero {
+    display: none;
+  }
+}
+
+.svg-study-game svg#Clipping_Mask {
+  display: flex;
+  width: 70%;
+  height: 100%;
+  margin: auto;
+  left: 0;
+  right: 0;
+  object-fit: cover;
+  object-position: 10% 50%;
+  position: absolute;
+  filter: saturate(1.08) hue-rotate(-8deg);
+}
+
+.svg-study-game svg#Clipping_Mask #Light {
+  pointer-events: none;
+  z-index: 2;
+  position: relative;
+}
+
+/* 太陽ホバー — 奄美ブルー系 */
+.svg-study-game svg#Clipping_Mask #Sun:hover ellipse {
+  fill: #38bdf8 !important;
+  cursor: pointer;
+}
+
+.svg-study-game svg#Clipping_Mask #Boat {
+  transition: transform 20s linear;
+  transform: translateX(0);
+}
+
+.svg-study-game svg#Clipping_Mask #Boat.translated {
+  transform: translateX(-110%) !important;
+}
+
+@media (max-width: 767px) {
+  .svg-study-game svg#Clipping_Mask {
+    width: 100%;
+    height: unset;
+    top: 0;
+    bottom: 0;
+  }
+}
+
+.svg-study-game .cls-9 {
+  transform-origin: 190px 680px;
+}
+
+.svg-study-game #light_center {
+  position: relative;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+}
+
+@keyframes svg-study-rotate {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.svg-study-game #Sun_Rings .cls-6 {
+  transform-origin: center;
+  animation: svg-study-scale 7s linear infinite;
+}
+
+@keyframes svg-study-scale {
+  0% {
+    scale: 0.57 0.5;
+    opacity: 0.5;
+  }
+  100% {
+    scale: 1 1;
+    opacity: 0;
+  }
+}
+
+.svg-study-game #Clouds_R > :nth-child(2n-1),
+.svg-study-game #Clouds_r2 {
+  animation: svg-study-clouds2 10s ease-in-out 0s infinite;
+}
+
+.svg-study-game #Clouds_R > :nth-child(2n) {
+  animation: svg-study-clouds1 10s ease-in-out 0s infinite;
+}
+
+.svg-study-game #Clouds_L > :nth-child(2n) {
+  animation: svg-study-clouds1 10s ease-in-out 0s infinite;
+}
+
+.svg-study-game #Clouds_L > :nth-child(2n-1) {
+  animation: svg-study-clouds2 10s ease-in-out 0s infinite;
+}
+
+@keyframes svg-study-clouds1 {
+  0% {
+    transform: translate(0, 0);
+    scale: 1.01;
+  }
+  50% {
+    transform: translate(10px, 10px);
+    scale: 1;
+  }
+  100% {
+    transform: translate(0, 0);
+    scale: 1.01;
+  }
+}
+
+@keyframes svg-study-clouds2 {
+  0% {
+    transform: translate(0, 0);
+    scale: 1;
+  }
+  50% {
+    transform: translate(-10px, -10px);
+    scale: 1.01;
+  }
+  100% {
+    transform: translate(0, 0);
+    scale: 1;
+  }
+}
+
+.svg-study-game #Birds #bird:nth-child(1) {
+  animation: svg-study-bird 40s ease-in 0s infinite;
+}
+
+.svg-study-game #Birds #bird:nth-child(2) {
+  animation: svg-study-bird2 40s ease-in -1s infinite;
+}
+
+.svg-study-game #Birds #bird:nth-child(3) {
+  animation: svg-study-bird 40s ease-in -1.4s infinite;
+}
+
+@keyframes svg-study-bird {
+  0% {
+    translate: 100% 50%;
+    scale: 0.3;
+  }
+  100% {
+    translate: -20% 80%;
+    scale: 2;
+  }
+}
+
+@keyframes svg-study-bird2 {
+  0% {
+    translate: 100% 51%;
+    scale: 0.3;
+  }
+  100% {
+    translate: -20% 80%;
+    scale: 2.5;
+  }
+}
+
+/* クリア演出 — 明朝体 */
+.svg-study-game .svg-study-win {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background: rgba(7, 26, 46, 0.25);
+  animation: svg-study-win-bg 0.5s ease-out forwards;
+}
+
+@keyframes svg-study-win-bg {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.svg-study-game .svg-study-win-inner {
+  font-family: var(--font-serif, "Zen Old Mincho", serif);
+  text-align: center;
+  color: #f0f9ff;
+  text-shadow: 0 2px 24px rgba(14, 165, 233, 0.5);
+}
+
+.svg-study-game .svg-study-win-inner .win-main {
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #e0f2fe;
+}
+
+.svg-study-game .svg-study-win-inner .win-sub {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.2em;
+  color: #7dd3fc;
+  font-family: var(--font-sans, "Zen Kaku Gothic New", sans-serif);
+}
+
+.svg-study-game .svg-study-skip {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 60;
+  font-family: var(--font-serif, "Zen Old Mincho", serif);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: rgba(12, 74, 110, 0.45);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.svg-study-game .svg-study-skip:hover {
+  color: #0ea5e9;
+}

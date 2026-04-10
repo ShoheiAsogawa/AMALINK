@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowGame } from "./ArrowGame";
+import { SvgStudyGame } from "./SvgStudyGame";
 
 type Phase = "ask" | "playing" | "done";
 
@@ -68,7 +68,7 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
                 </p>
                 <h2 className="text-white text-2xl sm:text-3xl font-serif font-medium leading-relaxed">
                   島に来る前に、<br />
-                  <span className="text-sky-400">弓を引いてみませんか？</span>
+                  <span className="text-sky-400">夕凪の風景でひと休みしませんか？</span>
                 </h2>
               </motion.div>
 
@@ -104,7 +104,7 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <ArrowGame onClear={handleClear} />
+            <SvgStudyGame onClear={handleClear} />
           </motion.div>
         )}
       </AnimatePresence>
