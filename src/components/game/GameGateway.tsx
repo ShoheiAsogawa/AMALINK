@@ -1,24 +1,40 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SvgStudyGame } from "./SvgStudyGame";
 
 type GatewayPhase = "ask" | "playing";
 
+/** ミニゲームクリア後：本編のフェード */
 const CROSSFADE = {
   duration: 1.25,
   ease: [0.22, 1, 0.36, 1] as const,
 };
 
+/** フラッシュバン：白までの立ち上がり・キープ・抜け */
+const WHITE_IN = { duration: 0.16, ease: "easeIn" as const };
+const WHITE_HOLD_MS = 420;
+const WHITE_OUT = { duration: 0.72, ease: [0.22, 1, 0.36, 1] as const };
+
+type WhiteFlashPhase = "idle" | "peak" | "out";
+
 export function GameGateway({ children }: { children: React.ReactNode }) {
   /** メインサイトを見せるか（false の間はオーバーレイが上に乗る） */
   const [mainRevealed, setMainRevealed] = useState(false);
   const [phase, setPhase] = useState<GatewayPhase>("ask");
+  const [whiteFlash, setWhiteFlash] = useState<WhiteFlashPhase>("idle");
 
   const handleClear = useCallback(() => {
     setMainRevealed(true);
+    setWhiteFlash("peak");
   }, []);
+
+  useEffect(() => {
+    if (whiteFlash !== "peak") return;
+    const id = window.setTimeout(() => setWhiteFlash("out"), WHITE_HOLD_MS);
+    return () => window.clearTimeout(id);
+  }, [whiteFlash]);
 
   return (
     <>
@@ -31,6 +47,22 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
       >
         {children}
       </motion.div>
+
+      <AnimatePresence>
+        {whiteFlash !== "idle" && (
+          <motion.div
+            key="gateway-white-flash"
+            aria-hidden
+            className="pointer-events-none fixed inset-0 z-[300] bg-white"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: whiteFlash === "out" ? 0 : 1 }}
+            transition={whiteFlash === "out" ? WHITE_OUT : WHITE_IN}
+            onAnimationComplete={() => {
+              if (whiteFlash === "out") setWhiteFlash("idle");
+            }}
+          />
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {!mainRevealed && (
