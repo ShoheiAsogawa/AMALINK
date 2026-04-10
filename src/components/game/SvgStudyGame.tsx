@@ -40,7 +40,9 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     if (!host) return;
     let cancelled = false;
     (async () => {
-      const res = await fetch("/svg-study/scene.svg");
+      const res = await fetch("/svg-study/scene.svg", {
+        cache: "no-store",
+      });
       const text = await res.text();
       if (cancelled || !svgHostRef.current) return;
       svgHostRef.current.innerHTML = text;

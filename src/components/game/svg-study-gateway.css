@@ -34,11 +34,15 @@
   width: 100%;
   height: 100%;
   margin: 0;
+}
+
+/* 夜の減光はメインシーンだけ（上下の拡張レイヤーは潰れない） */
+.svg-study-scene-host svg#Clipping_Mask g.cls-27 {
   filter: brightness(0.35) saturate(0.7);
   transition: filter 2s ease;
 }
 
-.svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask {
+.svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask g.cls-27 {
   filter: brightness(1.05) saturate(1.1);
 }
 
