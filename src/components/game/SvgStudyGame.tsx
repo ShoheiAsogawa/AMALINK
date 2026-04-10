@@ -7,11 +7,13 @@ interface SvgStudyGameProps {
   onClear: () => void;
 }
 
-function getRandomInt(min: number, max: number) {
-  const lo = Math.ceil(min);
-  const hi = Math.floor(max);
-  return Math.floor(Math.random() * (hi - lo) + lo);
-}
+const LIGHTHOUSE = { x: 190, y: 680 };
+const SUN_CENTER = { x: 963, y: 621 };
+const SUN_ANGLE_RAD = Math.atan2(
+  SUN_CENTER.y - LIGHTHOUSE.y,
+  SUN_CENTER.x - LIGHTHOUSE.x,
+);
+const HIT_THRESHOLD_DEG = 12;
 
 export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -19,24 +21,24 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
   const onClearRef = useRef(onClear);
   onClearRef.current = onClear;
 
-  const [showWin, setShowWin] = useState(false);
   const [svgReady, setSvgReady] = useState(false);
+  const [phase, setPhase] = useState<"night" | "dawn" | "done">("night");
   const clearedRef = useRef(false);
-  const mouseBoundRef = useRef(false);
 
-  const scheduleClear = useCallback(() => {
+  const triggerDawn = useCallback(() => {
     if (clearedRef.current) return;
     clearedRef.current = true;
-    setShowWin(true);
-    window.setTimeout(() => onClearRef.current(), 2600);
+    setPhase("dawn");
+    window.setTimeout(() => {
+      setPhase("done");
+      window.setTimeout(() => onClearRef.current(), 600);
+    }, 2200);
   }, []);
 
   useEffect(() => {
     const host = svgHostRef.current;
     if (!host) return;
-
     let cancelled = false;
-
     (async () => {
       const res = await fetch("/svg-study/scene.svg");
       const text = await res.text();
@@ -44,7 +46,6 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       svgHostRef.current.innerHTML = text;
       setSvgReady(true);
     })();
-
     return () => {
       cancelled = true;
     };
@@ -54,25 +55,25 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     if (!svgReady) return;
     const root = mountRef.current;
     const host = svgHostRef.current;
-    if (!root || !host || !host.querySelector("#Clipping_Mask")) return;
+    if (!root || !host) return;
 
     const hostEl = host;
-
-    const boat = hostEl.querySelector("#Boat") as SVGGElement | null;
     const svgRoot = hostEl.querySelector("#Clipping_Mask") as SVGSVGElement | null;
-    if (!boat || !svgRoot || svgRoot.children.length < 2) return;
+    if (!svgRoot) return;
 
-    const mainGroup = svgRoot.children[1] as SVGGElement;
-    const clippingmaskcontainer = svgRoot;
-    const center = root.querySelector("#light_center") as HTMLDivElement | null;
-    const hand = hostEl.querySelector("#Light") as SVGElement | null;
-    const sun = hostEl.querySelector("#Sun") as SVGGElement | null;
+    const _center = root.querySelector("#light_center") as HTMLDivElement | null;
+    const _light = hostEl.querySelector("#Light") as SVGElement | null;
+    const _sun = hostEl.querySelector("#Sun") as SVGGElement | null;
+    const _sunEllipse = _sun?.querySelector("ellipse") as SVGEllipseElement | null;
 
-    if (!center || !hand || !sun) return;
+    if (!_center || !_light || !_sun || !_sunEllipse) return;
 
-    const lightEl = hand;
-    const sunEl = sun;
-    const centerEl = center;
+    const centerEl = _center;
+    const lightEl = _light;
+    const sunEllipse = _sunEllipse;
+
+    sunEllipse.style.fill = "#38bdf8";
+    sunEllipse.style.transition = "fill 0.4s ease";
 
     function setLightCenter() {
       lightEl.style.transform = "rotate(0deg)";
@@ -83,87 +84,92 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       centerEl.style.left = `calc(${bbox.left}px + 1.2vw)`;
     }
 
-    function resetAnimation() {
-      lightEl.style.transform = "rotate(0deg)";
-      lightEl.style.animation = "svg-study-rotate 10s linear infinite";
-    }
+    let currentAngleRad = 0;
+    let sunIsLit = false;
 
     function handleMouseMove(event: MouseEvent) {
-      const target = event.target as Node | null;
-      if (!target || !clippingmaskcontainer.contains(target)) {
-        resetAnimation();
-      } else {
-        lightEl.style.animation = "none";
-        const rect = centerEl.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        const angle =
-          (Math.atan2(event.clientY - centerY, event.clientX - centerX) * 180) / Math.PI + 1;
-        lightEl.style.transform = `rotate(${angle}deg)`;
+      lightEl.style.animation = "none";
+      const rect = centerEl.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const angleRad = Math.atan2(event.clientY - cy, event.clientX - cx);
+      const angleDeg = (angleRad * 180) / Math.PI + 1;
+      lightEl.style.transform = `rotate(${angleDeg}deg)`;
+      currentAngleRad = angleRad;
+
+      const diff = Math.abs(currentAngleRad - SUN_ANGLE_RAD) * (180 / Math.PI);
+      const isHitting = diff < HIT_THRESHOLD_DEG;
+
+      if (isHitting && !sunIsLit) {
+        sunIsLit = true;
+        sunEllipse.style.fill = "#f3b21a";
+      } else if (!isHitting && sunIsLit) {
+        sunIsLit = false;
+        sunEllipse.style.fill = "#38bdf8";
       }
     }
 
     setLightCenter();
-    resetAnimation();
+    lightEl.style.animation = "none";
+    lightEl.style.transform = "rotate(-50deg)";
 
     const onResize = () => setLightCenter();
     window.addEventListener("resize", onResize);
+    document.addEventListener("mousemove", handleMouseMove);
 
-    const onSunClick = () => {
-      const dup = boat.cloneNode(true) as SVGGElement;
-      mainGroup.insertBefore(dup, boat.nextSibling);
-      dup.style.transform = `translateY(${getRandomInt(-20, 120)}px)`;
-      window.setTimeout(() => dup.classList.add("translated"), 100);
-      window.setTimeout(() => dup.remove(), 20000);
-
-      if (!mouseBoundRef.current) {
-        mouseBoundRef.current = true;
-        document.addEventListener("mousemove", handleMouseMove);
+    const onClick = () => {
+      if (sunIsLit) {
+        triggerDawn();
       }
-
-      scheduleClear();
     };
-
-    sunEl.addEventListener("click", onSunClick);
+    document.addEventListener("click", onClick);
 
     return () => {
       window.removeEventListener("resize", onResize);
       document.removeEventListener("mousemove", handleMouseMove);
-      sunEl.removeEventListener("click", onSunClick);
+      document.removeEventListener("click", onClick);
     };
-  }, [svgReady, scheduleClear]);
+  }, [svgReady, triggerDawn]);
+
+  useEffect(() => {
+    if (phase !== "dawn" && phase !== "done") return;
+    const host = svgHostRef.current;
+    if (!host) return;
+    const lightEl = host.querySelector("#Light") as SVGElement | null;
+    if (lightEl) {
+      lightEl.style.transition = "opacity 1.2s ease";
+      lightEl.style.opacity = "0";
+    }
+    const sunEllipse = host.querySelector("#Sun ellipse") as SVGEllipseElement | null;
+    if (sunEllipse) {
+      sunEllipse.style.transition = "fill 1.2s ease";
+      sunEllipse.style.fill = "#fefaf1";
+    }
+  }, [phase]);
+
+  const isDawn = phase === "dawn" || phase === "done";
+  const isFadingOut = phase === "done";
 
   return (
-    <div ref={mountRef} className="svg-study-game">
+    <div
+      ref={mountRef}
+      className={`svg-study-game ${isDawn ? "svg-study-dawn" : ""}`}
+      style={{ opacity: isFadingOut ? 0 : 1, transition: "opacity 0.6s ease" }}
+    >
       <div ref={svgHostRef} className="absolute inset-0" aria-hidden />
-
       <div id="light_center" />
 
-      <div className="grid-container svg-study-hero">
-        <div className="svg-study-hero-inner">
-          <p className="lead">AMALINK</p>
-          <p className="title">
-            夕陽をタップして、
-            <br />
-            島の灯を灯してください。
-          </p>
-        </div>
-      </div>
-
-      {showWin && (
-        <div className="svg-study-win" aria-live="polite">
-          <div className="svg-study-win-inner">
-            <p className="win-main">見事！</p>
-            <p className="win-sub">灯がともりました</p>
-          </div>
-        </div>
+      {isDawn && (
+        <div className="svg-study-dawn-overlay" aria-hidden />
       )}
 
-      <button type="button" className="svg-study-skip" onClick={() => onClear()}>
+      <button
+        type="button"
+        className="svg-study-skip"
+        onClick={() => onClear()}
+      >
         スキップ →
       </button>
-
-      <p className="svg-study-footer">奄美から、未来へ。</p>
     </div>
   );
 }

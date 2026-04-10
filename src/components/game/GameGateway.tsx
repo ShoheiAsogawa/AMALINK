@@ -67,8 +67,7 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
                   Welcome to AMALINK
                 </p>
                 <h2 className="text-white text-2xl sm:text-3xl font-serif font-medium leading-relaxed">
-                  島に来る前に、<br />
-                  <span className="text-sky-400">夕凪の風景でひと休みしませんか？</span>
+                  <span className="text-sky-400">島に明かりを灯しますか？</span>
                 </h2>
               </motion.div>
 
