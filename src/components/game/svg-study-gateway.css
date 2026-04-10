@@ -5,78 +5,147 @@
   inset: 0;
   z-index: 100;
   overflow: hidden;
-  height: 100dvh;
+  min-height: 100dvh;
+  min-width: 100%;
   background: linear-gradient(180deg, #0c2744 0%, #071a2e 40%, #040e1a 100%);
   cursor: none;
   transition: background 2s ease;
+}
+
+/* ロード中・端の馴染み用：空と遠山のトーン（メインSVGの下層） */
+.svg-study-game::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 140% 70% at 15% 12%, rgba(56, 189, 248, 0.12) 0%, transparent 45%),
+    radial-gradient(ellipse 100% 55% at 85% 25%, rgba(30, 58, 95, 0.45) 0%, transparent 50%),
+    linear-gradient(180deg, #0f2847 0%, #071a2e 38%, #050f1c 72%, #020812 100%);
+}
+
+.svg-study-game::after {
+  content: "";
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  bottom: 0;
+  height: min(36vh, 420px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.92;
+  background: linear-gradient(180deg, transparent 0%, rgba(4, 14, 26, 0.65) 35%, #02060d 100%);
+  clip-path: polygon(
+    0 70%,
+    6% 52%,
+    14% 58%,
+    22% 44%,
+    32% 50%,
+    42% 38%,
+    52% 46%,
+    62% 34%,
+    72% 42%,
+    82% 30%,
+    92% 40%,
+    100% 28%,
+    100% 100%,
+    0 100%
+  );
 }
 
 .svg-study-game.svg-study-dawn {
   background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 35%, #7dd3fc 70%, #0ea5e9 100%);
 }
 
-.svg-study-game svg#Clipping_Mask {
-  display: flex;
-  width: 70%;
-  height: 100%;
-  margin: auto;
-  left: 0;
-  right: 0;
-  object-fit: cover;
-  object-position: 10% 50%;
+.svg-study-game.svg-study-dawn::before {
+  background:
+    radial-gradient(ellipse 130% 65% at 20% 8%, rgba(255, 255, 255, 0.35) 0%, transparent 42%),
+    radial-gradient(ellipse 90% 50% at 80% 22%, rgba(125, 211, 252, 0.4) 0%, transparent 48%),
+    linear-gradient(180deg, #bae6fd 0%, #7dd3fc 45%, #38bdf8 85%, #0ea5e9 100%);
+}
+
+.svg-study-game.svg-study-dawn::after {
+  background: linear-gradient(180deg, transparent 0%, rgba(14, 116, 144, 0.25) 40%, rgba(12, 74, 110, 0.55) 100%);
+  opacity: 0.75;
+  clip-path: polygon(
+    0 65%,
+    8% 48%,
+    18% 55%,
+    28% 42%,
+    40% 50%,
+    52% 38%,
+    65% 46%,
+    78% 36%,
+    90% 44%,
+    100% 32%,
+    100% 100%,
+    0 100%
+  );
+}
+
+.svg-study-scene-host {
   position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.svg-study-scene-host svg#Clipping_Mask {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
   filter: brightness(0.35) saturate(0.7);
   transition: filter 2s ease;
 }
 
-.svg-study-game.svg-study-dawn svg#Clipping_Mask {
+.svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask {
   filter: brightness(1.05) saturate(1.1);
 }
 
-.svg-study-game svg#Clipping_Mask #Light {
+.svg-study-scene-host svg#Clipping_Mask #Light {
   pointer-events: none;
   z-index: 2;
   position: relative;
 }
 
-.svg-study-game svg#Clipping_Mask #Boat {
+.svg-study-scene-host svg#Clipping_Mask #Boat {
   transition: transform 20s linear;
   transform: translateX(0);
 }
 
-.svg-study-game svg#Clipping_Mask #Boat.translated {
+.svg-study-scene-host svg#Clipping_Mask #Boat.translated {
   transform: translateX(-110%) !important;
 }
 
-@media (max-width: 767px) {
-  .svg-study-game svg#Clipping_Mask {
-    width: 100%;
-    height: unset;
-    top: 0;
-    bottom: 0;
-  }
-}
-
-.svg-study-game .cls-9 {
+.svg-study-scene-host .cls-9 {
   transform-origin: 190px 680px;
 }
 
 .svg-study-game #light_center {
   position: relative;
+  z-index: 2;
   border-radius: 50%;
   width: 0;
   height: 0;
 }
 
 /* 太陽リング — 夜は非表示、夜明けでフェードイン */
-.svg-study-game #Sun_Rings .cls-6 {
+.svg-study-scene-host #Sun_Rings .cls-6 {
   transform-origin: center;
   animation: svg-study-scale 7s linear infinite;
   opacity: 0;
   transition: opacity 2s ease;
 }
 
-.svg-study-game.svg-study-dawn #Sun_Rings .cls-6 {
+.svg-study-game.svg-study-dawn .svg-study-scene-host #Sun_Rings .cls-6 {
   opacity: 0.5;
 }
 
@@ -92,17 +161,17 @@
 }
 
 /* 雲アニメーション */
-.svg-study-game #Clouds_R > :nth-child(2n-1),
-.svg-study-game #Clouds_r2 {
+.svg-study-scene-host #Clouds_R > :nth-child(2n-1),
+.svg-study-scene-host #Clouds_r2 {
   animation: svg-study-clouds2 10s ease-in-out 0s infinite;
 }
-.svg-study-game #Clouds_R > :nth-child(2n) {
+.svg-study-scene-host #Clouds_R > :nth-child(2n) {
   animation: svg-study-clouds1 10s ease-in-out 0s infinite;
 }
-.svg-study-game #Clouds_L > :nth-child(2n) {
+.svg-study-scene-host #Clouds_L > :nth-child(2n) {
   animation: svg-study-clouds1 10s ease-in-out 0s infinite;
 }
-.svg-study-game #Clouds_L > :nth-child(2n-1) {
+.svg-study-scene-host #Clouds_L > :nth-child(2n-1) {
   animation: svg-study-clouds2 10s ease-in-out 0s infinite;
 }
 
@@ -137,13 +206,13 @@
 }
 
 /* 鳥 */
-.svg-study-game #Birds #bird:nth-child(1) {
+.svg-study-scene-host #Birds #bird:nth-child(1) {
   animation: svg-study-bird 40s ease-in 0s infinite;
 }
-.svg-study-game #Birds #bird:nth-child(2) {
+.svg-study-scene-host #Birds #bird:nth-child(2) {
   animation: svg-study-bird2 40s ease-in -1s infinite;
 }
-.svg-study-game #Birds #bird:nth-child(3) {
+.svg-study-scene-host #Birds #bird:nth-child(3) {
   animation: svg-study-bird 40s ease-in -1.4s infinite;
 }
 
@@ -173,7 +242,7 @@
 .svg-study-game .svg-study-dawn-overlay {
   position: absolute;
   inset: 0;
-  z-index: 50;
+  z-index: 40;
   pointer-events: none;
   background: radial-gradient(
     ellipse at 50% 58%,
@@ -198,7 +267,7 @@
   position: absolute;
   bottom: 2rem;
   right: 2rem;
-  z-index: 60;
+  z-index: 55;
   font-family: var(--font-serif, "Zen Old Mincho", serif);
   font-size: 12px;
   letter-spacing: 0.12em;

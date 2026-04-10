@@ -44,6 +44,8 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       const text = await res.text();
       if (cancelled || !svgHostRef.current) return;
       svgHostRef.current.innerHTML = text;
+      const svg = svgHostRef.current.querySelector("#Clipping_Mask");
+      if (svg) svg.setAttribute("preserveAspectRatio", "xMinYMid slice");
       setSvgReady(true);
     })();
     return () => {
@@ -156,7 +158,7 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       className={`svg-study-game ${isDawn ? "svg-study-dawn" : ""}`}
       style={{ opacity: isFadingOut ? 0 : 1, transition: "opacity 0.6s ease" }}
     >
-      <div ref={svgHostRef} className="absolute inset-0" aria-hidden />
+      <div ref={svgHostRef} className="svg-study-scene-host" aria-hidden />
       <div id="light_center" />
 
       {isDawn && (
