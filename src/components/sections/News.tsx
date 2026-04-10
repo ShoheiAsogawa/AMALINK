@@ -59,7 +59,9 @@ function EmptyState() {
 export function NewsSection({ news }: { news: News[] }) {
   return (
     <section id="news" className="bg-gradient-to-b from-white to-slate-50 py-20 md:py-32 relative overflow-hidden">
-      <WaveBackground color="green" position="bottom" opacity={0.1} speed={0.3} />
+      {news.length > 0 && (
+        <WaveBackground color="green" position="bottom" opacity={0.1} speed={55} />
+      )}
       <div className="container mx-auto px-4 max-w-4xl relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12 md:mb-16">
           <div>

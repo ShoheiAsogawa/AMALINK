@@ -17,6 +17,7 @@ const zenGothic = Zen_Kaku_Gothic_New({
 });
 
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const grainNoiseUrl = `url(${JSON.stringify(`${assetBase}/noise.svg`)})`;
 
 export const metadata: Metadata = {
   title: "AMALINK - 島のリズムで、未来をつくる。",
@@ -33,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className={`${zenMincho.variable} ${zenGothic.variable}`}>
-      <body>{children}</body>
+      <body style={{ ["--bg-grain-noise-url" as string]: grainNoiseUrl }}>{children}</body>
     </html>
   );
 }

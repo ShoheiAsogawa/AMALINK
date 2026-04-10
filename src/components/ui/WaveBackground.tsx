@@ -1,38 +1,35 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { useId } from "react";
 
 interface WaveBackgroundProps {
   color?: "blue" | "blue-light" | "blue-dark" | "green" | "mixed";
   position?: "top" | "bottom" | "full";
   opacity?: number;
+  /** 横方向にシームレスで 1 周するまでの秒数（CSS animation-duration にそのまま渡す） */
   speed?: number;
   className?: string;
 }
 
-export function WaveBackground({ 
-  color = "blue", 
+export function WaveBackground({
+  color = "blue",
   position = "bottom",
   opacity = 0.15,
   speed = 30,
-  className = ""
+  className = "",
 }: WaveBackgroundProps) {
   const uniqueId = useId();
-  
-  // Blue color palette with different shades
+
   const getGradientColors = () => {
     switch (color) {
       case "blue-dark":
-        return { start: "#0369a1", end: "#0369a1" }; // Sky 700 - darker blue
+        return { start: "#0369a1", end: "#0369a1" };
       case "blue-light":
-        return { start: "#7dd3fc", end: "#7dd3fc" }; // Sky 300 - lighter blue
+        return { start: "#7dd3fc", end: "#7dd3fc" };
       case "green":
         return { start: "#10b981", end: "#10b981" };
       case "mixed":
         return { start: "#0ea5e9", end: "#10b981" };
       default:
-        return { start: "#0ea5e9", end: "#0ea5e9" }; // Sky 500 - medium blue
+        return { start: "#0ea5e9", end: "#0ea5e9" };
     }
   };
 
@@ -42,21 +39,23 @@ export function WaveBackground({
   const positionClasses = {
     top: "top-0",
     bottom: "bottom-0",
-    full: "top-1/2 -translate-y-1/2"
+    full: "top-1/2 -translate-y-1/2",
   };
 
   return (
-    <div className={`absolute left-0 right-0 ${positionClasses[position]} h-[50vh] overflow-hidden pointer-events-none ${className}`}>
-      <motion.div
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ 
-          duration: speed, 
-          repeat: Infinity, 
-          ease: "linear",
-          repeatType: "loop"
+    <div
+      className={`absolute left-0 right-0 ${positionClasses[position]} h-[50vh] overflow-hidden pointer-events-none ${className}`}
+    >
+      <div
+        className="absolute inset-0 w-[200%] h-full"
+        style={{
+          willChange: "transform",
+          backfaceVisibility: "hidden",
+          animationName: "wave-bg-drift",
+          animationDuration: `${speed}s`,
+          animationTimingFunction: "linear",
+          animationIterationCount: "infinite",
         }}
-        style={{ willChange: "transform" }}
-        className="absolute inset-0 w-[200%] h-full gpu-accelerate"
       >
         <svg viewBox="0 0 2400 320" preserveAspectRatio="none" className="w-full h-full">
           <defs>
@@ -70,8 +69,7 @@ export function WaveBackground({
             d="M0,160 Q300,100 600,160 Q900,220 1200,160 Q1500,100 1800,160 Q2100,220 2400,160 L2400,320 L0,320 Z"
           />
         </svg>
-      </motion.div>
+      </div>
     </div>
   );
 }
-

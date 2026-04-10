@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 
 /** `output: export` で `generateStaticParams` が空のときのビルド制約を避ける */
 export const revalidate = 0;
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const { contents } = await getNewsList({ limit: 100 });

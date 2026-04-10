@@ -17,7 +17,7 @@ export function Hero() {
     <section ref={ref} className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-slate-50">
       {/* Background with subtle gradient and noise texture */}
       <div className="absolute inset-0 z-0 bg-[#fafafa] overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+        <div className="absolute inset-0 opacity-[0.03] bg-grain-noise" />
         
         {/* Elegant Wave Animation - Perfectly seamless infinite waves */}
         {/* Key: Each wave pattern repeats exactly at 1200px, so 0%, 50%, 100% positions are identical */}

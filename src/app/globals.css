@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* 静的出力 docs/ 内の旧バンドルに残ったクラス名を走査しない（webpack が ./& で落ちる原因になる） */
+@source not "../../docs";
+
 :root {
   --background: #fafafa; /* Pure white -> Warm white/Off-white */
   --foreground: #334155; /* Softer text color */
@@ -38,6 +41,21 @@ body {
   overflow-x: hidden;
   scroll-behavior: smooth;
   letter-spacing: 0.05em; /* Slightly wider spacing for elegance */
+}
+
+/* WaveBackground: % は要素自身の幅基準（幅200% × translateX(-50%) = 1タイル分シームレス） */
+@keyframes wave-bg-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* ノイズタイル（パスは layout で --bg-grain-noise-url を設定。GitHub Pages の basePath 対応） */
+.bg-grain-noise {
+  background-image: var(--bg-grain-noise-url);
 }
 
 /* 縦書き用クラス */

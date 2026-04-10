@@ -95,7 +95,7 @@ export default function ContactPage() {
         
         {/* Background Elements */}
         <div className="fixed inset-0 z-0 pointer-events-none">
-            <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+            <div className="absolute inset-0 opacity-[0.03] bg-grain-noise" />
             <WaveBackground color="blue-dark" position="top" opacity={0.12} speed={15} />
             <WaveBackground color="blue-light" position="bottom" opacity={0.1} speed={17} />
         </div>
