@@ -15,9 +15,25 @@ const SUN_ANGLE_RAD = Math.atan2(
 );
 const HIT_THRESHOLD_DEG = 12;
 
+/** 灯台ビームの回転中心（mask / #Light の transform-origin と一致） */
+const BEAM_PIVOT_SVG = { x: 190, y: 680 };
+/** 灯台上の光源ランプ付近（scene.svg の灯台内 ellipse） */
+const LIGHTHOUSE_LAMP_SVG = { x: 187.5, y: 663.75 };
+
+function svgUserToClient(svg: SVGSVGElement, x: number, y: number) {
+  const pt = svg.createSVGPoint();
+  pt.x = x;
+  pt.y = y;
+  const ctm = svg.getScreenCTM();
+  if (!ctm) return null;
+  return pt.matrixTransform(ctm);
+}
+
 export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
   const mountRef = useRef<HTMLDivElement>(null);
   const svgHostRef = useRef<HTMLDivElement>(null);
+  const cursorGlowRef = useRef<HTMLDivElement>(null);
+  const lighthouseGlowRef = useRef<HTMLDivElement>(null);
   const onClearRef = useRef(onClear);
   onClearRef.current = onClear;
 
@@ -70,8 +86,9 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     if (!root || !host) return;
 
     const hostEl = host;
-    const svgRoot = hostEl.querySelector("#Clipping_Mask") as SVGSVGElement | null;
-    if (!svgRoot) return;
+    const clipFound = hostEl.querySelector("#Clipping_Mask");
+    if (!(clipFound instanceof SVGSVGElement)) return;
+    const svgClip: SVGSVGElement = clipFound;
 
     const _center = root.querySelector("#light_center") as HTMLDivElement | null;
     const _light = hostEl.querySelector("#Light") as SVGElement | null;
@@ -87,6 +104,11 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     const maskPoly = _maskPoly;
     const sunBase = _sunBase;
 
+    const desktopGlowMq = window.matchMedia(
+      "(min-width: 768px) and (pointer: fine)",
+    );
+    let desktopGlow = desktopGlowMq.matches;
+
     sunBase.style.fill = "#38bdf8";
     sunBase.style.transition = "fill 0.4s ease";
 
@@ -100,11 +122,26 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
 
     function setLightCenter() {
       setLightRotation(0);
-      const lh = hostEl.querySelector("#Lighthouse");
-      if (!lh) return;
-      const bbox = lh.getBoundingClientRect();
-      centerEl.style.top = `calc(${bbox.top}px + 5.6vw)`;
-      centerEl.style.left = `calc(${bbox.left}px + 1.2vw)`;
+      const pivot = svgUserToClient(
+        svgClip,
+        BEAM_PIVOT_SVG.x,
+        BEAM_PIVOT_SVG.y,
+      );
+      if (pivot) {
+        centerEl.style.position = "absolute";
+        centerEl.style.left = `${pivot.x}px`;
+        centerEl.style.top = `${pivot.y}px`;
+      }
+      const lampPt = svgUserToClient(
+        svgClip,
+        LIGHTHOUSE_LAMP_SVG.x,
+        LIGHTHOUSE_LAMP_SVG.y,
+      );
+      const towerGlowDom = lighthouseGlowRef.current;
+      if (lampPt && towerGlowDom) {
+        towerGlowDom.style.left = `${lampPt.x}px`;
+        towerGlowDom.style.top = `${lampPt.y}px`;
+      }
     }
 
     function applyPointer(clientX: number, clientY: number) {
@@ -124,6 +161,13 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
 
     function handleMouseMove(e: MouseEvent) {
       applyPointer(e.clientX, e.clientY);
+      if (desktopGlow) {
+        const g = cursorGlowRef.current;
+        if (g) {
+          g.style.left = `${e.clientX}px`;
+          g.style.top = `${e.clientY}px`;
+        }
+      }
     }
     function handleTouchMove(e: TouchEvent) {
       if (e.touches.length === 0) return;
@@ -139,6 +183,10 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     setLightRotation(-50);
 
     const onResize = () => setLightCenter();
+    const onGlowMq = () => {
+      desktopGlow = desktopGlowMq.matches;
+    };
+    desktopGlowMq.addEventListener("change", onGlowMq);
     window.addEventListener("resize", onResize);
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("touchmove", handleTouchMove, { passive: true });
@@ -150,6 +198,7 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     document.addEventListener("click", onClick);
 
     return () => {
+      desktopGlowMq.removeEventListener("change", onGlowMq);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("touchmove", handleTouchMove);
@@ -188,6 +237,20 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     >
       <div ref={svgHostRef} className="svg-study-scene-host" aria-hidden />
       <div id="light_center" />
+      {phase === "night" && (
+        <>
+          <div
+            ref={lighthouseGlowRef}
+            className="svg-study-lighthouse-glow"
+            aria-hidden
+          />
+          <div
+            ref={cursorGlowRef}
+            className="svg-study-cursor-glow"
+            aria-hidden
+          />
+        </>
+      )}
 
       {isDawn && <div className="svg-study-dawn-overlay" aria-hidden />}
 

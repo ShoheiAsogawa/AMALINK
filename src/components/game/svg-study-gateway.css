@@ -4,7 +4,7 @@
   position: fixed;
   inset: 0;
   z-index: 100;
-  overflow: hidden;
+  overflow: visible;
   min-height: 100dvh;
   background: #050b16;
   cursor: none;
@@ -23,7 +23,7 @@
   width: 100%;
   height: 100%;
   min-height: 100dvh;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .svg-study-scene-host svg#Clipping_Mask {
@@ -39,14 +39,16 @@
 /* 夜の減光：メインと上下拡張を同じフィルタにして境目を消す */
 .svg-study-scene-host svg#Clipping_Mask g.cls-27,
 .svg-study-scene-host svg#Clipping_Mask #Ext_Sky,
-.svg-study-scene-host svg#Clipping_Mask #Ext_Sky_Below {
+.svg-study-scene-host svg#Clipping_Mask #Ext_Sky_Below,
+.svg-study-scene-host svg#Clipping_Mask #Light {
   filter: brightness(0.35) saturate(0.7);
   transition: filter 2s ease;
 }
 
 .svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask g.cls-27,
 .svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask #Ext_Sky,
-.svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask #Ext_Sky_Below {
+.svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask #Ext_Sky_Below,
+.svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask #Light {
   filter: brightness(1.05) saturate(1.1);
 }
 
@@ -78,13 +80,64 @@
   transform-origin: 190px 680px;
 }
 
-/* 灯台光の基準点 */
+/* 灯台光の基準点（回転中心は SVG 座標を画面に投影して配置） */
 .svg-study-game #light_center {
-  position: relative;
+  position: absolute;
   z-index: 2;
   border-radius: 50%;
   width: 0;
   height: 0;
+}
+
+/* 灯台光源のぼかし（夜のみマウント・全端末） */
+.svg-study-lighthouse-glow {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  width: 104px;
+  height: 104px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle closest-side,
+    rgba(255, 242, 180, 0.5) 0%,
+    rgba(255, 228, 140, 0.24) 42%,
+    rgba(255, 210, 100, 0.08) 68%,
+    transparent 100%
+  );
+  filter: blur(14px);
+  mix-blend-mode: screen;
+}
+
+/* デスクトップ：カーソル追従の目印（夜のみマウント） */
+.svg-study-cursor-glow {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 48;
+  width: 96px;
+  height: 96px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle closest-side,
+    rgba(255, 242, 180, 0.42) 0%,
+    rgba(255, 228, 140, 0.2) 42%,
+    rgba(255, 210, 100, 0.06) 68%,
+    transparent 100%
+  );
+  filter: blur(14px);
+  mix-blend-mode: screen;
+}
+
+@media (min-width: 768px) and (pointer: fine) {
+  .svg-study-cursor-glow {
+    display: block;
+  }
 }
 
 /* 太陽リング — 夜は非表示、夜明けでフェードイン */
