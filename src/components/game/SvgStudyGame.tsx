@@ -31,7 +31,7 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     setPhase("dawn");
     window.setTimeout(() => {
       setPhase("done");
-      window.setTimeout(() => onClearRef.current(), 600);
+      onClearRef.current();
     }, 2200);
   }, []);
 
@@ -180,13 +180,11 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
   }, [phase]);
 
   const isDawn = phase === "dawn" || phase === "done";
-  const isFadingOut = phase === "done";
 
   return (
     <div
       ref={mountRef}
       className={`svg-study-game ${isDawn ? "svg-study-dawn" : ""}`}
-      style={{ opacity: isFadingOut ? 0 : 1, transition: "opacity 0.6s ease" }}
     >
       <div ref={svgHostRef} className="svg-study-scene-host" aria-hidden />
       <div id="light_center" />
