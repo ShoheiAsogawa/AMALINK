@@ -43,7 +43,7 @@
 .svg-study-scene-host svg#Clipping_Mask g.cls-27,
 .svg-study-scene-host svg#Clipping_Mask #Ext_Sky,
 .svg-study-scene-host svg#Clipping_Mask #Ext_Sky_Below,
-.svg-study-scene-host svg#Clipping_Mask #Light {
+.svg-study-scene-host svg#Clipping_Mask #LighthouseBeamStack {
   filter: brightness(0.35) saturate(0.7);
   transition: filter 2s ease;
 }
@@ -51,7 +51,7 @@
 .svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask g.cls-27,
 .svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask #Ext_Sky,
 .svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask #Ext_Sky_Below,
-.svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask #Light {
+.svg-study-game.svg-study-dawn .svg-study-scene-host svg#Clipping_Mask #LighthouseBeamStack {
   filter: brightness(1.05) saturate(1.1);
 }
 
@@ -68,6 +68,14 @@
   pointer-events: none;
   z-index: 2;
   position: relative;
+  /* 可変ビームの先端フェード（軸は JS が更新）— cls-9 の固定グラデを上書き */
+  fill: url(#lighthouse-beam-fill-dynamic);
+}
+
+/* ビーム＋スポットをまとめて発光レイヤーに */
+.svg-study-scene-host svg#Clipping_Mask #LighthouseBeamStack {
+  pointer-events: none;
+  mix-blend-mode: screen;
 }
 
 .svg-study-scene-host svg#Clipping_Mask #Boat {
@@ -137,7 +145,8 @@
   mix-blend-mode: screen;
 }
 
-@media (min-width: 768px) and (pointer: fine) {
+/* マウス（fine）・指操作（coarse）のどちらでも追従の光を表示。768px 未満のデスクトップ窓にも対応 */
+@media (pointer: fine), (pointer: coarse) {
   .svg-study-cursor-glow {
     display: block;
   }

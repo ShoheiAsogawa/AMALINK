@@ -496,6 +496,95 @@
 					<stop offset=".91" stop-color="#fefefc" stop-opacity=".06" />
 					<stop offset="1" stop-color="#fff" stop-opacity="0" />
 				</linearGradient>
+				<!-- 可変ビーム用：軸は SvgStudyGame が毎フレーム更新 -->
+				<linearGradient
+					id="lighthouse-beam-fill-dynamic"
+					x1="203"
+					y1="654"
+					x2="3177"
+					y2="654"
+					gradientUnits="userSpaceOnUse">
+					<stop offset="0" stop-color="#fff9f0" />
+					<stop offset=".12" stop-color="#fef4e4" stop-opacity=".92" />
+					<stop offset=".32" stop-color="#fef8ef" stop-opacity=".68" />
+					<stop offset=".52" stop-color="#fefcf5" stop-opacity=".42" />
+					<stop offset=".72" stop-color="#fefefc" stop-opacity=".2" />
+					<stop offset=".88" stop-color="#fff" stop-opacity=".06" />
+					<stop offset="1" stop-color="#fff" stop-opacity="0" />
+				</linearGradient>
+				<linearGradient
+					id="lighthouse-beam-mask-dynamic"
+					x1="203"
+					y1="654"
+					x2="3177"
+					y2="654"
+					gradientUnits="userSpaceOnUse">
+					<stop offset="0" stop-color="#fff" stop-opacity="1" />
+					<stop offset=".48" stop-color="#fff" stop-opacity="1" />
+					<stop offset=".68" stop-color="#fff" stop-opacity=".62" />
+					<stop offset=".84" stop-color="#fff" stop-opacity=".22" />
+					<stop offset=".94" stop-color="#fff" stop-opacity=".04" />
+					<stop offset="1" stop-color="#fff" stop-opacity="0" />
+				</linearGradient>
+				<radialGradient
+					id="lighthouse-beam-spot-halo"
+					gradientUnits="objectBoundingBox"
+					cx="0.5"
+					cy="0.5"
+					r="0.5">
+					<stop offset="0" stop-color="#fffef8" stop-opacity="0.62" />
+					<stop offset="0.28" stop-color="#fef6e8" stop-opacity="0.35" />
+					<stop offset="0.55" stop-color="#fef2dd" stop-opacity="0.14" />
+					<stop offset="0.82" stop-color="#fefaf2" stop-opacity="0.04" />
+					<stop offset="1" stop-color="#fff" stop-opacity="0" />
+				</radialGradient>
+				<radialGradient
+					id="lighthouse-beam-spot-core"
+					gradientUnits="objectBoundingBox"
+					cx="0.5"
+					cy="0.5"
+					r="0.5">
+					<stop offset="0" stop-color="#fff" stop-opacity="1" />
+					<stop offset="0.15" stop-color="#fffbf3" stop-opacity="0.95" />
+					<stop offset="0.38" stop-color="#fef4e0" stop-opacity="0.65" />
+					<stop offset="0.62" stop-color="#fef2dd" stop-opacity="0.32" />
+					<stop offset="0.85" stop-color="#fff8f0" stop-opacity="0.08" />
+					<stop offset="1" stop-color="#fff" stop-opacity="0" />
+				</radialGradient>
+				<!-- ビーム源のブルーム：先端を自然な点光源に見せる -->
+				<radialGradient
+					id="lighthouse-beam-source-bloom"
+					gradientUnits="objectBoundingBox"
+					cx="0.5"
+					cy="0.5"
+					r="0.5">
+					<stop offset="0" stop-color="#fff" stop-opacity="1" />
+					<stop offset="0.18" stop-color="#fffcf4" stop-opacity="0.94" />
+					<stop offset="0.42" stop-color="#fef6e4" stop-opacity="0.62" />
+					<stop offset="0.68" stop-color="#fef9f0" stop-opacity="0.22" />
+					<stop offset="1" stop-color="#fff" stop-opacity="0" />
+				</radialGradient>
+				<!-- ビーム＋スポットを一度にぼかし、先端の直線境目を消してスポットライト一体感に -->
+				<filter
+					id="lighthouse-beam-spotlight-unify"
+					filterUnits="userSpaceOnUse"
+					x="-2600"
+					y="-2600"
+					width="7800"
+					height="7800">
+					<feGaussianBlur in="SourceGraphic" stdDeviation="24" result="b" />
+					<feColorMatrix
+						in="b"
+						type="matrix"
+						values="1 0 0 0 0.04
+							0 1 0 0 0.035
+							0 0 1 0 0.03
+							0 0 0 1.12 0"
+						result="lit" />
+					<feMerge>
+						<feMergeNode in="lit" />
+					</feMerge>
+				</filter>
 				<radialGradient
 					id="radial-gradient-13"
 					cx="199.93"
@@ -529,9 +618,8 @@
 					<rect x="-400" y="-2000" width="4200" height="5000" fill="black" />
 					<polygon
 						id="SunBeamMaskPoly"
-						points="3176 867 203 690 203 672 3178 403 3176 867"
-						fill="white"
-						transform="rotate(-50 190 680)" />
+						points="3176 867 203 690 203 672 3178 403"
+						fill="url(#lighthouse-beam-mask-dynamic)" />
 				</mask>
 			</defs>
 
@@ -947,9 +1035,36 @@
 						paint-order="stroke fill">タップ</text>
 				</g>
 			</g>
-			<!-- #Light は cls-27 の clip-path（高さ1080）外へ回転するためグループ外に配置 -->
-			<polygon
-				id="Light"
-				class="cls-9"
-				points="3176 867 203 690 203 672 3178 403 3176 867" />
+			<!-- ビームとカーソル先の光を同一フィルタで合成（右参照：円形の照りと軸がなめらかに続く） -->
+			<g
+				id="LighthouseBeamStack"
+				filter="url(#lighthouse-beam-spotlight-unify)"
+				pointer-events="none">
+				<polygon
+					id="Light"
+					class="cls-9"
+					points="3176 867 203 690 203 672 3178 403" />
+				<!-- 灯台ランプ位置のブルーム：先端の幾何エッジを隠して点光源に見せる -->
+				<ellipse
+					id="BeamSourceBloom"
+					cx="190"
+					cy="680"
+					rx="110"
+					ry="88"
+					fill="url(#lighthouse-beam-source-bloom)" />
+				<g id="BeamCursorSpot">
+					<circle
+						id="BeamSpotHalo"
+						cx="0"
+						cy="0"
+						r="132"
+						fill="url(#lighthouse-beam-spot-halo)" />
+					<circle
+						id="BeamSpotCore"
+						cx="0"
+						cy="0"
+						r="56"
+						fill="url(#lighthouse-beam-spot-core)" />
+				</g>
+			</g>
 		</svg>
