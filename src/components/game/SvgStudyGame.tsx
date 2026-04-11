@@ -7,21 +7,25 @@ interface SvgStudyGameProps {
   onClear: () => void;
 }
 
-const SUN_CENTER = { x: 963, y: 621 };
-const LIGHTHOUSE = { x: 190, y: 680 };
-const SUN_ANGLE_RAD = Math.atan2(
-  SUN_CENTER.y - LIGHTHOUSE.y,
-  SUN_CENTER.x - LIGHTHOUSE.x,
-);
-const HIT_THRESHOLD_DEG = 12;
 /** ポインタ未到達時のビーム向き（以前の CSS rotate(-50deg)+1° 補正に相当） */
 const INITIAL_BEAM_RAD = ((-50 - 1) * Math.PI) / 180;
 
 /**
  * タップ判定用の楕円（Clipping_Mask のユーザ座標）。
- * #Sun-base(rx≈290, ry≈260) より広く、手前に描かれる #Sun_Rings の上部ハロを含める。
+ * #Sun_Rings 最外周（cx≈962.5, cy≈621.5, rx≈429.5, ry≈384）を覆い、特に上側のリング／ハロを取りこぼさない。
  */
-const SUN_TAP_ZONE = { cx: 963.06, cy: 621, rx: 348, ry: 336 };
+const SUN_TAP_ZONE = { cx: 962.5, cy: 621.5, rx: 438, ry: 392 };
+
+/**
+ * #SunTapText（scene.svg: x≈963, y≈454, font-size 92）＋ stroke / letter-spacing 分の余白。
+ * 楕円判定だけだと文字周りが端で外れることがあるため矩形を併用する。
+ */
+const SUN_TAP_TEXT_BOUNDS = {
+  minX: 792,
+  maxX: 1134,
+  minY: 392,
+  maxY: 518,
+};
 
 /** 灯台ビームの回転中心（台形の根元・旧 CSS transform-origin と一致） */
 const BEAM_PIVOT_SVG = { x: 190, y: 680 };
@@ -136,29 +140,22 @@ function buildBeamGeometry(targetX: number, targetY: number): BeamGeometry {
   };
 }
 
-/** 画面上の座標が太陽タップ域（リング含む）に入っているか */
-function clientPointInSunTapZone(
-  svg: SVGSVGElement,
-  clientX: number,
-  clientY: number,
-): boolean {
-  const pt = svg.createSVGPoint();
-  pt.x = clientX;
-  pt.y = clientY;
-  const ctm = svg.getScreenCTM();
-  if (!ctm) return false;
-  let inv: DOMMatrix;
-  try {
-    inv = ctm.inverse();
-  } catch {
-    return false;
-  }
-  const p = pt.matrixTransform(inv);
+function sunTapPointInEllipse(svgX: number, svgY: number): boolean {
   const { cx, cy, rx, ry } = SUN_TAP_ZONE;
   if (rx <= 0 || ry <= 0) return false;
-  const dx = (p.x - cx) / rx;
-  const dy = (p.y - cy) / ry;
+  const dx = (svgX - cx) / rx;
+  const dy = (svgY - cy) / ry;
   return dx * dx + dy * dy <= 1;
+}
+
+function sunTapPointInTextBounds(svgX: number, svgY: number): boolean {
+  const { minX, maxX, minY, maxY } = SUN_TAP_TEXT_BOUNDS;
+  return (
+    svgX >= minX &&
+    svgX <= maxX &&
+    svgY >= minY &&
+    svgY <= maxY
+  );
 }
 
 export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
@@ -253,16 +250,22 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     sunBase.style.fill = "#38bdf8";
     sunBase.style.transition = "fill 0.4s ease";
 
-    let currentAngleRad = 0;
+    /** 直近ポインタ位置（SVG ユーザ座標）。ビーム先端＝この点。 */
+    let lastPointerSvg: { x: number; y: number } | null = null;
     let beamOnSun = false;
     let lastClientX = 0;
     let lastClientY = 0;
     let hasLastClient = false;
 
+    /** ビームが太陽タップ可能域を指しているか（中心角度ではなく「当たり位置」で判定） */
     function syncBeamOnSun() {
-      const diff =
-        Math.abs(currentAngleRad - SUN_ANGLE_RAD) * (180 / Math.PI);
-      beamOnSun = diff < HIT_THRESHOLD_DEG;
+      if (!lastPointerSvg) {
+        beamOnSun = false;
+        return;
+      }
+      const { x, y } = lastPointerSvg;
+      beamOnSun =
+        sunTapPointInEllipse(x, y) || sunTapPointInTextBounds(x, y);
     }
 
     function applyBeamGeometry(geom: BeamGeometry) {
@@ -293,12 +296,6 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       }
     }
 
-    function updateBeamFromClient(clientX: number, clientY: number) {
-      const svgCoords = clientToSvgUser(svgClip, clientX, clientY);
-      if (!svgCoords) return;
-      applyBeamGeometry(buildBeamGeometry(svgCoords.x, svgCoords.y));
-    }
-
     function setLightCenter() {
       const pivot = svgUserToClient(
         svgClip,
@@ -324,15 +321,13 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
 
     function applyPointer(clientX: number, clientY: number) {
       lightEl.style.animation = "none";
-      const rect = centerEl.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const angleRad = Math.atan2(clientY - cy, clientX - cx);
-      currentAngleRad = angleRad;
       lastClientX = clientX;
       lastClientY = clientY;
       hasLastClient = true;
-      updateBeamFromClient(clientX, clientY);
+      const svgCoords = clientToSvgUser(svgClip, clientX, clientY);
+      if (!svgCoords) return;
+      lastPointerSvg = svgCoords;
+      applyBeamGeometry(buildBeamGeometry(svgCoords.x, svgCoords.y));
       syncBeamOnSun();
     }
 
@@ -369,8 +364,8 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
         BEAM_PIVOT_SVG.x + Math.cos(INITIAL_BEAM_RAD) * defaultLen;
       const defaultTy =
         BEAM_PIVOT_SVG.y + Math.sin(INITIAL_BEAM_RAD) * defaultLen;
+      lastPointerSvg = { x: defaultTx, y: defaultTy };
       applyBeamGeometry(buildBeamGeometry(defaultTx, defaultTy));
-      currentAngleRad = INITIAL_BEAM_RAD;
       syncBeamOnSun();
     }
 
@@ -386,8 +381,9 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     document.addEventListener("touchstart", handleTouchStart, { passive: true });
 
     function tryClearSunTap(clientX: number, clientY: number) {
+      /* クリック／タップ座標でビームを先に合わせる（直前の mousemove だけだと TAP や端がずれる） */
+      applyPointer(clientX, clientY);
       if (!beamOnSun) return;
-      if (!clientPointInSunTapZone(svgClip, clientX, clientY)) return;
       triggerDawn();
     }
 
@@ -431,12 +427,14 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     }
     const sunBase = host.querySelector("#Sun-base") as SVGEllipseElement | null;
     const sunLit = host.querySelector("#Sun-lit") as SVGEllipseElement | null;
+    /** 上昇中の太陽はビームが当たる帯（#Sun-lit）と同じ色に統一 */
+    const sunLitFill = "#f3b21a";
     if (sunBase) {
-      sunBase.style.transition = "fill 1.2s ease";
-      sunBase.style.fill = "#fefaf1";
+      sunBase.style.transition = "fill 2.2s ease-out";
+      sunBase.style.fill = sunLitFill;
     }
     if (sunLit) {
-      sunLit.style.transition = "opacity 1.2s ease";
+      sunLit.style.transition = "opacity 2.2s ease-out";
       sunLit.style.opacity = "0";
     }
   }, [phase]);

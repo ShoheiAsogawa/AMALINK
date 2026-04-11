@@ -674,6 +674,7 @@
 						</g>
 					</g>
 				</g>
+				<g id="SunMotionGroup">
 				<g id="Sun_Rings">
 					<ellipse class="cls-6" cx="962.5" cy="621.5" rx="429.5" ry="384" />
 					<ellipse class="cls-6" cx="963.62" cy="621.5" rx="303.11" ry="271" />
@@ -729,6 +730,7 @@
 								stroke-linecap="round" />
 						</g>
 					</g>
+				</g>
 				</g>
 				<path
 					id="Clouds_r2"
