@@ -207,8 +207,11 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     const host = svgHostRef.current;
     if (!host) return;
     const layer = host.querySelector("#SunTapHintLayer") as SVGGElement | null;
+    const ripples = host.querySelector("#SunTapRippleLayer") as SVGGElement | null;
     if (!layer) return;
-    layer.setAttribute("visibility", phase === "night" ? "visible" : "hidden");
+    const vis = phase === "night" ? "visible" : "hidden";
+    layer.setAttribute("visibility", vis);
+    ripples?.setAttribute("visibility", vis);
   }, [phase, svgReady]);
 
   useEffect(() => {
@@ -247,7 +250,6 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     const beamSpotCore = svgClip.querySelector(
       "#BeamSpotCore",
     ) as SVGCircleElement | null;
-
     sunBase.style.fill = "#38bdf8";
     sunBase.style.transition = "fill 0.4s ease";
 

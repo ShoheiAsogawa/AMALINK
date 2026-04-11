@@ -690,6 +690,46 @@
 						fill="#f3b21a"
 						mask="url(#sunbeam-lit-mask)" />
 				</g>
+				<g
+					id="SunTapRippleLayer"
+					pointer-events="none"
+					visibility="hidden">
+					<g transform="translate(963.06,621)">
+						<g class="svg-study-sun-tap-ripple svg-study-sun-tap-ripple--1">
+							<ellipse
+								cx="0"
+								cy="0"
+								rx="290.4"
+								ry="259.6"
+								fill="none"
+								stroke="rgba(186,230,253,0.95)"
+								stroke-width="6"
+								stroke-linecap="round" />
+						</g>
+						<g class="svg-study-sun-tap-ripple svg-study-sun-tap-ripple--2">
+							<ellipse
+								cx="0"
+								cy="0"
+								rx="290.4"
+								ry="259.6"
+								fill="none"
+								stroke="rgba(125,211,252,0.75)"
+								stroke-width="5"
+								stroke-linecap="round" />
+						</g>
+						<g class="svg-study-sun-tap-ripple svg-study-sun-tap-ripple--3">
+							<ellipse
+								cx="0"
+								cy="0"
+								rx="290.4"
+								ry="259.6"
+								fill="none"
+								stroke="rgba(254,249,195,0.55)"
+								stroke-width="4"
+								stroke-linecap="round" />
+						</g>
+					</g>
+				</g>
 				<path
 					id="Clouds_r2"
 					class="cls-26"
@@ -1027,12 +1067,12 @@
 						y="454"
 						text-anchor="middle"
 						dominant-baseline="middle"
-						fill="#fffef7"
-						font-size="68"
-						font-weight="600"
-						stroke="rgba(120,55,18,0.4)"
-						stroke-width="1.2"
-						paint-order="stroke fill">タップ</text>
+						fill="#713f12"
+						font-size="92"
+						font-weight="800"
+						stroke="rgba(255,255,255,0.35)"
+						stroke-width="1.5"
+						paint-order="stroke fill">TAP‼</text>
 				</g>
 			</g>
 			<!-- ビームとカーソル先の光を同一フィルタで合成（右参照：円形の照りと軸がなめらかに続く） -->
