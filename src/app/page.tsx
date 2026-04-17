@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
@@ -7,6 +8,20 @@ import { NewsSection } from "@/components/sections/News";
 import { Contact } from "@/components/sections/Contact";
 import { getNewsList } from "@/lib/microcms";
 import { GameGateway } from "@/components/game/GameGateway";
+import { absoluteUrl, DEFAULT_DESCRIPTION, SITE_NAME } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: `${SITE_NAME} - 島のリズムで、未来をつくる。`,
+  },
+  description: DEFAULT_DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    url: absoluteUrl("/"),
+    title: `${SITE_NAME} - 島のリズムで、未来をつくる。`,
+    description: DEFAULT_DESCRIPTION,
+  },
+};
 
 export const revalidate = 60;
 

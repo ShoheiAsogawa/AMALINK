@@ -164,21 +164,20 @@ export function Hero() {
           style={{ y, opacity }}
           className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-24"
         >
-          {/* Vertical Japanese Copy - Desktop Only */}
-          <div className="hidden md:flex flex-row-reverse gap-8 h-[55vh]">
-            <h1 className="vertical-text text-5xl md:text-7xl font-serif font-medium tracking-wider text-slate-800 leading-relaxed whitespace-nowrap">
+          {/* ページに h1 は1つのみ（モバイル／デスクトップで中身を出し分け） */}
+          <h1 className="m-0 font-serif font-medium text-slate-800">
+            <span className="hidden md:flex flex-row-reverse gap-8 h-[55vh] vertical-text text-5xl md:text-7xl tracking-wider leading-relaxed whitespace-nowrap">
               <span className="block mb-8">島のリズムで、</span>
               <span className="block text-amami-blue">未来をつくる。</span>
-            </h1>
-          </div>
-
-          {/* Mobile Copy (Horizontal) */}
-          <div className="md:hidden text-center pt-20">
-            <h1 className="text-3xl sm:text-4xl font-serif font-medium leading-tight text-slate-800 mb-8 drop-shadow-sm">
+            </span>
+            <span className="md:hidden block text-center pt-20 text-3xl sm:text-4xl leading-tight mb-8 drop-shadow-sm">
               島のリズムで、<br />
               <span className="text-amami-blue">未来をつくる。</span>
-            </h1>
-            <p className="text-slate-600 text-base leading-loose font-sans max-w-xs mx-auto">
+            </span>
+          </h1>
+
+          <div className="md:hidden text-center max-w-xs mx-auto">
+            <p className="text-slate-600 text-base leading-loose font-sans">
               波音のように穏やかに、<br />
               けれど着実に。<br />
               <br />
@@ -188,7 +187,6 @@ export function Hero() {
             </p>
           </div>
 
-          {/* Desktop Sub Copy */}
           <div className="hidden md:block max-w-md">
             <p className="text-slate-600 text-lg leading-loose font-sans">
               波音のように穏やかに、<br />

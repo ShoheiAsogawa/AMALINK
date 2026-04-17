@@ -1,15 +1,23 @@
+import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { getNewsList } from "@/lib/microcms";
 import type { Category } from "@/lib/microcms";
 import { ArrowRight, Newspaper } from "lucide-react";
 import Link from "next/link";
+import { absoluteUrl, SITE_NAME } from "@/lib/seo";
 
 export const revalidate = 0;
 
-export const metadata = {
-  title: "お知らせ | AMALINK",
-  description: "AMALINKからのお知らせ一覧です。",
+export const metadata: Metadata = {
+  title: "お知らせ",
+  description: `${SITE_NAME}からのお知らせ一覧です。イベント・リリース情報などを掲載しています。`,
+  alternates: { canonical: "/news" },
+  openGraph: {
+    url: absoluteUrl("/news"),
+    title: `お知らせ | ${SITE_NAME}`,
+    description: `${SITE_NAME}からのお知らせ一覧です。`,
+  },
 };
 
 function formatDate(dateStr: string) {

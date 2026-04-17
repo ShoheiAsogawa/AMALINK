@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { getNewsList, getNewsEntry } from "@/lib/microcms";
@@ -5,6 +6,8 @@ import type { Category } from "@/lib/microcms";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
+import { ArticleJsonLd } from "@/components/seo/ArticleJsonLd";
+import { absoluteUrl, SITE_NAME, stripHtmlToDescription } from "@/lib/seo";
 
 export const revalidate = 60;
 export const dynamicParams = true;
@@ -32,12 +35,32 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   try {
     const news = await getNewsEntry(slug);
+    const path = `/news/${news.slug ?? slug}`;
+    const description = stripHtmlToDescription(news.content) || news.title;
+    const published = news.publishedAt ?? news.createdAt;
+    const modified = news.updatedAt ?? published;
+
     return {
-      title: `${news.title} | AMALINK`,
-      description: news.title,
-    };
+      title: news.title,
+      description,
+      alternates: { canonical: path },
+      openGraph: {
+        type: "article",
+        url: absoluteUrl(path),
+        title: news.title,
+        description,
+        publishedTime: published,
+        modifiedTime: modified,
+        siteName: SITE_NAME,
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: news.title,
+        description,
+      },
+    } satisfies Metadata;
   } catch {
-    return { title: "お知らせ | AMALINK" };
+    return { title: "お知らせ" } satisfies Metadata;
   }
 }
 
@@ -50,8 +73,11 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
     notFound();
   }
 
+  const pathSegment = news.slug ?? slug;
+
   return (
     <main className="overflow-hidden">
+      <ArticleJsonLd news={news} pathSegment={pathSegment} />
       <Header />
       <article className="pt-32 md:pt-40 pb-20 md:pb-32 min-h-screen bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-6 max-w-3xl">
