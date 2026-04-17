@@ -166,9 +166,9 @@ export function Hero() {
         >
           {/* ページに h1 は1つのみ（モバイル／デスクトップで中身を出し分け） */}
           <h1 className="m-0 font-serif font-medium text-slate-800">
-            <span className="hidden md:flex flex-row-reverse gap-8 h-[55vh] vertical-text text-5xl md:text-7xl tracking-wider leading-relaxed whitespace-nowrap">
-              <span className="block mb-8">島のリズムで、</span>
-              <span className="block text-amami-blue">未来をつくる。</span>
+            <span className="hidden md:flex flex-row-reverse gap-8">
+              <span className="vertical-text text-5xl md:text-7xl tracking-wider leading-relaxed whitespace-nowrap">島のリズムで、</span>
+              <span className="vertical-text text-5xl md:text-7xl tracking-wider leading-relaxed whitespace-nowrap text-amami-blue">未来をつくる。</span>
             </span>
             <span className="md:hidden block text-center pt-20 text-3xl sm:text-4xl leading-tight mb-8 drop-shadow-sm">
               島のリズムで、<br />
