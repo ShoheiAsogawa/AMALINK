@@ -96,3 +96,281 @@ body.amalink-gateway-lock {
   -webkit-backface-visibility: hidden;
   perspective: 1000px;
 }
+
+/* Header モバイル — Uiverse ハンバーガー（JulianDeAlb）適用・currentColor でヘッダーと調和 */
+/* display は Header のラベルで Tailwind（inline-flex / md:hidden）を使う。ここで display を指定すると md:hidden が負ける */
+.amalink-hamburger {
+  cursor: pointer;
+}
+
+.amalink-hamburger svg {
+  height: 3em;
+  width: 3em;
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.amalink-hamburger .amalink-hamburger-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+  transition:
+    stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+    stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.amalink-hamburger .amalink-hamburger-line-top-bottom {
+  stroke-dasharray: 12 63;
+}
+
+.amalink-hamburger input:checked + svg {
+  transform: rotate(-45deg);
+}
+
+.amalink-hamburger input:checked + svg .amalink-hamburger-line-top-bottom {
+  stroke-dasharray: 20 300;
+  stroke-dashoffset: -32.42;
+}
+
+/* Pixel toggle — From Uiverse.io by augustin_4687（配色のみ青グラデーションに変更） */
+.amalink-pixel-toggle {
+  --edge: #292524;
+  --blue-hi: #bae6fd;
+  --blue-mid: #38bdf8;
+  --blue-deep: #0ea5e9;
+  --blue-dark: #0369a1;
+  --blue-shine-in: #e0f7ff;
+  --black-25: rgba(0, 0, 0, 0.25);
+
+  position: relative;
+  display: block;
+  width: 4rem;
+  height: 4rem;
+  cursor: pointer;
+  isolation: isolate;
+}
+
+.amalink-pixel-toggle > button.amalink-pixel-trigger {
+  cursor: pointer;
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  border: 2px solid var(--edge);
+  border-radius: 0.25rem;
+  background: linear-gradient(165deg, var(--blue-hi) 0%, var(--blue-mid) 52%, var(--blue-deep) 100%);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition:
+    background-color 0.2s,
+    background 0.2s;
+}
+
+.amalink-pixel-toggle > button.amalink-pixel-trigger:hover {
+  background: linear-gradient(165deg, #e0f2fe 0%, var(--blue-mid) 48%, #38bdf8 100%);
+}
+
+.amalink-pixel-toggle > button.amalink-pixel-trigger:active {
+  outline-color: var(--edge);
+}
+
+.amalink-pixel-toggle > button.amalink-pixel-trigger:focus-visible {
+  outline-color: var(--edge);
+  outline-style: dashed;
+}
+
+.amalink-pixel-toggle > span:nth-child(2) {
+  position: absolute;
+  inset: 3px;
+  pointer-events: none;
+  background-color: var(--blue-mid);
+  border-bottom: 2px solid var(--black-25);
+  transition: transform 75ms;
+}
+
+.amalink-pixel-toggle > span:nth-child(2)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(rgb(255 255 255 / 80%) 20%, transparent 20%),
+    radial-gradient(rgb(255 255 255 / 100%) 20%, transparent 20%);
+  background-position:
+    0 0,
+    4px 4px;
+  background-size: 8px 8px;
+  mix-blend-mode: hard-light;
+  opacity: 0.5;
+  animation: amalink-pixel-dots 0.5s infinite linear;
+}
+
+.amalink-pixel-toggle > span:nth-child(3) {
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+}
+
+.amalink-pixel-toggle > span:nth-child(3)::before {
+  content: "";
+  width: 0.375rem;
+  height: 0.375rem;
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  background-color: var(--edge);
+  border-radius: 0.125rem;
+  box-shadow:
+    3.125em 0 var(--edge),
+    0 3.125em var(--edge),
+    3.125em 3.125em var(--edge);
+}
+
+.amalink-pixel-toggle > span:nth-child(4) {
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+  filter: drop-shadow(0.25em 0.25em 0 rgba(0, 0, 0, 0.2));
+  transition: all 75ms;
+}
+
+.amalink-pixel-toggle > span:nth-child(4)::after {
+  content: "";
+  width: 0.25rem;
+  height: 0.25rem;
+  position: absolute;
+  top: 0.875rem;
+  left: 1rem;
+  border-radius: 0.0625rem;
+  background-color: var(--edge);
+  box-shadow:
+    0.75em 2em var(--edge),
+    1em 2em var(--edge),
+    0.75em 1.75em var(--edge),
+    1em 1.75em var(--edge),
+    0.75em 1.25em var(--edge),
+    1em 1.25em var(--edge),
+    0.75em 1em var(--edge),
+    1em 1em var(--edge),
+    1em 0.75em var(--edge),
+    1.5em 0.75em var(--edge),
+    1.25em 0.75em var(--edge),
+    1.25em -0.25em var(--edge),
+    1.5em 0em var(--edge),
+    1.25em 0.5em var(--edge),
+    1.5em 0.5em var(--edge),
+    1.25em 0.25em var(--edge),
+    1.5em 0.25em var(--edge),
+    1.25em 0 var(--edge),
+    1em -0.25em var(--edge),
+    0.75em -0.25em var(--edge),
+    0.5em -0.25em var(--edge),
+    0.25em -0.25em var(--edge),
+    0.25em 0 var(--edge),
+    0 0.25em var(--edge),
+    0 0.5em var(--edge),
+    0.25em 0.25em var(--edge),
+    0.25em 0.5em var(--edge);
+}
+
+.amalink-pixel-toggle > span:nth-child(5) {
+  position: absolute;
+  background: linear-gradient(180deg, var(--blue-hi) 0%, var(--blue-deep) 55%, var(--blue-dark) 100%);
+  border: 2px solid var(--edge);
+  border-radius: 0.75rem;
+  pointer-events: none;
+  z-index: -1;
+  inset: 0.5rem 1.5rem;
+  box-shadow:
+    7px 0 0 0 var(--edge),
+    inset 0 2px 0 0 var(--blue-shine-in),
+    inset 0 -2px 0 0 var(--blue-dark);
+  transition: all 0ms cubic-bezier(0, 0.5, 0.4, 1);
+}
+
+.amalink-pixel-toggle > button.amalink-pixel-trigger:hover ~ span:nth-child(4) {
+  filter: drop-shadow(0.125em 0.125em 0 rgba(0, 0, 0, 0.2));
+}
+
+@keyframes amalink-pixel-dots {
+  0% {
+    background-position:
+      0 0,
+      4px 4px;
+  }
+  100% {
+    background-position:
+      8px 0,
+      12px 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .amalink-pixel-toggle > span:nth-child(2)::before {
+    animation: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .amalink-pixel-toggle > button.amalink-pixel-trigger:active,
+  .amalink-pixel-toggle > button.amalink-pixel-trigger:focus-visible {
+    outline-color: var(--blue-mid);
+  }
+}
+
+/* Footer 区切り線上を横断するサファリトラック（右端外→左端外まで線形ループ） */
+@keyframes footer-truck-cross {
+  from {
+    transform: translate3d(100vw, 0, 0);
+  }
+  to {
+    transform: translate3d(calc(-100vw - 100%), 0, 0);
+  }
+}
+
+@keyframes footer-truck-bump {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  16% {
+    transform: translate3d(0, -2px, 0) rotate(-0.55deg);
+  }
+  32% {
+    transform: translate3d(0, 1px, 0) rotate(0.45deg);
+  }
+  49% {
+    transform: translate3d(0, -3px, 0) rotate(0.65deg);
+  }
+  66% {
+    transform: translate3d(0, 0.5px, 0) rotate(-0.35deg);
+  }
+  82% {
+    transform: translate3d(0, -1.5px, 0) rotate(0.3deg);
+  }
+}
+
+.footer-truck-runner {
+  animation: footer-truck-cross 21s linear infinite;
+  will-change: transform;
+}
+
+.footer-truck-bump {
+  animation: footer-truck-bump 0.58s steps(2, end) infinite;
+  transform-origin: 50% 88%;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-truck-runner {
+    animation: none;
+    transform: translate3d(50%, 0, 0);
+    opacity: 0.9;
+  }
+
+  .footer-truck-bump {
+    animation: none;
+  }
+}

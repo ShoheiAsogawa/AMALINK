@@ -1109,4 +1109,330 @@
 						fill="url(#lighthouse-beam-spot-core)" />
 				</g>
 			</g>
+			<!-- 灯のスポットが近づいたときだけ見える動物画像（SvgStudyGame が opacity を更新）。ビームより手前に描画 -->
+			<g id="HiddenAnimalsLayer" pointer-events="none">
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(1760 540)"
+					data-ax="1760"
+					data-ay="540"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/01.png"
+							xlink:href="/hatena-animals/01.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(1680 760)"
+					data-ax="1680"
+					data-ay="760"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/02.png"
+							xlink:href="/hatena-animals/02.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(1580 950)"
+					data-ax="1580"
+					data-ay="950"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/03.png"
+							xlink:href="/hatena-animals/03.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(1780 1080)"
+					data-ax="1780"
+					data-ay="1080"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/04.png"
+							xlink:href="/hatena-animals/04.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(1640 1280)"
+					data-ax="1640"
+					data-ay="1280"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/05.png"
+							xlink:href="/hatena-animals/05.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(1420 640)"
+					data-ax="1420"
+					data-ay="640"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/06.png"
+							xlink:href="/hatena-animals/06.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(1300 860)"
+					data-ax="1300"
+					data-ay="860"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/07.png"
+							xlink:href="/hatena-animals/07.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(1180 1040)"
+					data-ax="1180"
+					data-ay="1040"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/08.png"
+							xlink:href="/hatena-animals/08.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(1260 1240)"
+					data-ax="1260"
+					data-ay="1240"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/09.png"
+							xlink:href="/hatena-animals/09.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(1080 1340)"
+					data-ax="1080"
+					data-ay="1340"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/10.png"
+							xlink:href="/hatena-animals/10.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(920 980)"
+					data-ax="920"
+					data-ay="980"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/11.png"
+							xlink:href="/hatena-animals/11.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(780 1180)"
+					data-ax="780"
+					data-ay="1180"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/12.png"
+							xlink:href="/hatena-animals/12.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(660 860)"
+					data-ax="660"
+					data-ay="860"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/13.png"
+							xlink:href="/hatena-animals/13.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(540 1320)"
+					data-ax="540"
+					data-ay="1320"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/14.png"
+							xlink:href="/hatena-animals/14.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(380 1210)"
+					data-ax="380"
+					data-ay="1210"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/15.png"
+							xlink:href="/hatena-animals/15.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(420 940)"
+					data-ax="420"
+					data-ay="940"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/16.png"
+							xlink:href="/hatena-animals/16.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+				<g
+					class="svg-study-hidden-animal-root"
+					transform="translate(880 740)"
+					data-ax="880"
+					data-ay="740"
+					opacity="0">
+					<g class="svg-study-hidden-animal-hop-target">
+						<rect x="-44" y="-48" width="88" height="96" fill="transparent" pointer-events="all" />
+						<image
+							class="svg-study-hidden-animal-img"
+							href="/hatena-animals/17.png"
+							xlink:href="/hatena-animals/17.png"
+							x="-40"
+							y="-44"
+							width="80"
+							height="88"
+							preserveAspectRatio="xMidYMid meet" />
+					</g>
+				</g>
+			</g>
 		</svg>

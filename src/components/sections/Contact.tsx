@@ -1,56 +1,83 @@
 "use client";
 
 import { Section } from "@/components/ui/Section";
+import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 import { WaveBackground } from "@/components/ui/WaveBackground";
-import Link from "next/link";
+import { getOfficialLineAddFriendUrl } from "@/lib/seo";
+import { OfficialLineIcon } from "@/components/ui/OfficialLineIcon";
+import { ChunkyAnchor, ChunkyNextLink } from "@/components/ui/ChunkyButton";
 
 export function Contact() {
+  const lineUrl = getOfficialLineAddFriendUrl();
+
   return (
-    // Applied gradient from slate-50 (Services end) to white
     <Section
       id="contact"
       className="bg-gradient-to-b from-slate-50 to-white py-20 md:py-32 overflow-hidden relative"
       background={<WaveBackground color="blue-light" position="top" opacity={0.18} speed={16} />}
     >
-      <div className="max-w-4xl mx-auto px-6 relative z-10">
+      <div className="relative z-10 mx-auto w-full max-w-4xl">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center bg-transparent p-6 md:p-24"
+          className="flex flex-col items-center bg-transparent py-6 text-center md:py-24"
         >
-          <span className="text-amami-green text-xs font-bold tracking-[0.2em] uppercase block mb-4 md:mb-6">Contact Us</span>
-          
-          <h2 className="text-2xl md:text-5xl font-serif text-slate-800 mb-6 md:mb-8 leading-tight">
+          <SectionEyebrow label="Contact Us" color="green" />
+
+          <h2 className="mb-6 w-full max-w-full text-center text-2xl font-serif leading-tight text-slate-800 [letter-spacing:0] md:mb-8 md:whitespace-nowrap md:text-[clamp(1.65rem,3.2vw,3rem)] xl:text-5xl">
             まずは、<br className="md:hidden" />
             気軽にお話ししませんか？
           </h2>
-          
-          <p className="text-slate-500 mb-8 md:mb-12 text-sm md:text-lg max-w-2xl mx-auto leading-loose font-sans">
-            「これって相談していいのかな？」<br />
-            そんな気持ちのままで大丈夫です。<br />
-            思いついたことを、気軽に聞かせてください。
-          </p>
-          
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="inline-block"
-          >
-            <Link 
-              href="/contact"
-              className="inline-flex items-center gap-4 px-8 py-4 md:px-12 md:py-5 bg-slate-800 text-white rounded-full font-sans tracking-wider hover:bg-amami-blue transition-colors duration-300 shadow-lg group text-sm md:text-base w-full md:w-auto justify-center cursor-pointer"
-            >
-              <span>お問い合わせはこちら</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
 
-          <p className="mt-8 text-[10px] md:text-xs text-slate-400 font-sans">
-            通常、2営業日以内に返信いたします。
+          <p className="mb-9 max-w-2xl text-center text-base leading-loose text-slate-500 md:mb-11 md:text-lg font-sans">
+            「これって相談していいのかな？」<br className="hidden sm:block" />
+            そんな気持ちのままで大丈夫。お気軽にどうぞ。
+          </p>
+
+          <div className="mx-auto flex w-full max-w-[15rem] flex-col items-stretch justify-center gap-3 sm:max-w-[32rem] sm:flex-row sm:gap-5">
+            <ChunkyAnchor
+              href={lineUrl}
+              theme="neu"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex w-full min-w-0 flex-1"
+            >
+              <span className="grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-2.5">
+                <span className="flex shrink-0 translate-y-[0.11em] items-center justify-center">
+                  <OfficialLineIcon className="relative size-[1em]" />
+                </span>
+                <span className="flex min-h-[1em] min-w-0 items-center justify-center whitespace-nowrap text-center leading-none">
+                  公式LINE
+                </span>
+                <ArrowRight
+                  className="size-[0.85em] shrink-0 translate-y-[0.11em] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-[0.11em]"
+                  aria-hidden
+                />
+              </span>
+            </ChunkyAnchor>
+
+            <ChunkyNextLink href="/contact" theme="neu" className="group flex w-full min-w-0 flex-1">
+              <span className="grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-2.5">
+                <span className="flex shrink-0 translate-y-[0.11em] items-center justify-center">
+                  <Mail className="size-[1em] opacity-90" strokeWidth={2} aria-hidden />
+                </span>
+                <span className="flex min-h-[1em] min-w-0 items-center justify-center whitespace-nowrap text-center leading-none">
+                  お問い合わせ
+                </span>
+                <ArrowRight
+                  className="size-[0.85em] shrink-0 translate-y-[0.11em] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-[0.11em]"
+                  aria-hidden
+                />
+              </span>
+            </ChunkyNextLink>
+          </div>
+
+          <p className="mt-8 max-w-md text-center text-xs text-slate-400 md:text-sm font-sans">
+            お問い合わせには、通常2営業日以内に返信いたします。
           </p>
         </motion.div>
       </div>

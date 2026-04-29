@@ -159,10 +159,10 @@ export function Hero() {
         <div className="absolute bottom-0 left-0 right-0 h-[150px] md:h-[250px] bg-gradient-to-b from-transparent to-slate-50 pointer-events-none z-[1]" />
       </div>
 
-      <div className="container mx-auto px-6 z-10 relative h-full flex items-center justify-center py-20 md:py-0">
+      <div className="container relative z-10 mx-auto flex h-full items-center justify-center px-6 py-20 md:py-0">
         <motion.div
           style={{ y, opacity }}
-          className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-24"
+          className="flex flex-col items-center justify-center gap-8 md:flex-row md:gap-24"
         >
           {/* ページに h1 は1つのみ（モバイル／デスクトップで中身を出し分け） */}
           <h1 className="m-0 font-serif font-medium text-slate-800">
@@ -170,14 +170,14 @@ export function Hero() {
               <span className="vertical-text text-5xl md:text-7xl tracking-wider leading-relaxed whitespace-nowrap">島のリズムで、</span>
               <span className="vertical-text text-5xl md:text-7xl tracking-wider leading-relaxed whitespace-nowrap text-amami-blue">未来をつくる。</span>
             </span>
-            <span className="md:hidden block text-center pt-20 text-3xl sm:text-4xl leading-tight mb-8 drop-shadow-sm">
+            <span className="md:hidden block mb-8 pt-4 text-center text-3xl leading-tight drop-shadow-sm sm:text-4xl">
               島のリズムで、<br />
               <span className="text-amami-blue">未来をつくる。</span>
             </span>
           </h1>
 
           <div className="md:hidden text-center max-w-xs mx-auto">
-            <p className="text-slate-600 text-base leading-loose font-sans">
+            <p className="text-lg leading-loose text-slate-600 font-sans">
               波音のように穏やかに、<br />
               けれど着実に。<br />
               <br />
@@ -188,7 +188,7 @@ export function Hero() {
           </div>
 
           <div className="hidden md:block max-w-md">
-            <p className="text-slate-600 text-lg leading-loose font-sans">
+            <p className="text-lg leading-loose text-slate-600 md:text-xl font-sans">
               波音のように穏やかに、<br />
               けれど着実に。<br />
               <br />

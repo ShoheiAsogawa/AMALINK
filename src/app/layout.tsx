@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Zen_Old_Mincho, Zen_Kaku_Gothic_New } from "next/font/google";
+import { PixelPlayButton } from "@/components/ui/PixelPlayButton";
 import { RootJsonLd } from "@/components/seo/JsonLd";
 import { absoluteUrl, DEFAULT_DESCRIPTION, SITE_NAME } from "@/lib/seo";
 import "./globals.css";
@@ -92,6 +93,7 @@ export default function RootLayout({
       <body>
         <RootJsonLd />
         {children}
+        <PixelPlayButton />
       </body>
     </html>
   );

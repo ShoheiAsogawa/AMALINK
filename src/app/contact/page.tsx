@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { WaveBackground } from "@/components/ui/WaveBackground";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { ChunkyButton, ChunkyNextLink } from "@/components/ui/ChunkyButton";
 
 const NOTIFY_EMAIL = "uken.shohei@gmail.com";
 
@@ -129,9 +129,9 @@ export default function ContactPage() {
                                 内容を確認次第、担当者よりご連絡させていただきます。<br />
                                 しばらくお待ちくださいませ。
                             </p>
-                            <Link href="/" className="inline-block mt-10 px-8 py-3 bg-slate-800 text-white rounded-full text-sm hover:bg-amami-blue transition-colors">
+                            <ChunkyNextLink href="/" theme="primary" className="mt-10 inline-flex">
                                 トップページへ戻る
-                            </Link>
+                            </ChunkyNextLink>
                         </div>
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-8">
@@ -196,13 +196,15 @@ export default function ContactPage() {
                             </div>
 
                             <div className="pt-4 text-center">
-                                <button
+                                <ChunkyButton
                                     type="submit"
+                                    theme="primary"
+                                    block
                                     disabled={status === "submitting"}
-                                    className="w-full md:w-auto md:px-12 py-4 bg-slate-800 text-white rounded-full font-bold tracking-wider hover:bg-amami-blue transition-colors duration-300 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-amami-blue/30"
+                                    className="mx-auto w-full max-w-md md:inline-flex md:w-auto md:min-w-[280px]"
                                 >
                                     {status === "submitting" ? "送信中..." : "上記の内容で送信する"}
-                                </button>
+                                </ChunkyButton>
                             </div>
                             
                             {status === "error" && (

@@ -49,6 +49,17 @@ const BEAM_SPOT_HALO_R = 132;
 /** 灯台上の光源ランプ付近（scene.svg の灯台内 ellipse） */
 const LIGHTHOUSE_LAMP_SVG = { x: 187.5, y: 663.75 };
 
+/** カーソル位置のスポットから動物までの距離 → 不透明度（ハロ付近までフェード） */
+function opacityFromSpotDistance(dist: number): number {
+  const inner = BEAM_SPOT_CORE_R + 22;
+  const outer = BEAM_SPOT_HALO_R + 56;
+  if (dist <= inner) return 1;
+  if (dist >= outer) return 0;
+  const t = (dist - inner) / (outer - inner);
+  const s = t * t * (3 - 2 * t);
+  return 1 - s;
+}
+
 interface BeamGeometry {
   points: string;
   gradX1: number;
@@ -247,6 +258,24 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     const beamSpotCore = svgClip.querySelector(
       "#BeamSpotCore",
     ) as SVGCircleElement | null;
+    const animalRoots = Array.from(
+      svgClip.querySelectorAll(".svg-study-hidden-animal-root"),
+    ) as SVGGElement[];
+
+    function updateAnimalOpacities(spotCx: number, spotCy: number) {
+      for (const root of animalRoots) {
+        const ax = Number(root.getAttribute("data-ax"));
+        const ay = Number(root.getAttribute("data-ay"));
+        if (Number.isNaN(ax) || Number.isNaN(ay)) continue;
+        const d = Math.hypot(spotCx - ax, spotCy - ay);
+        const op = opacityFromSpotDistance(d);
+        root.setAttribute("opacity", String(op));
+        const rect = root.querySelector("rect");
+        if (rect)
+          rect.setAttribute("pointer-events", op > 0.06 ? "all" : "none");
+      }
+    }
+
     sunBase.style.fill = "#38bdf8";
     sunBase.style.transition = "fill 0.4s ease";
 
@@ -294,6 +323,26 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
         beamSpotCore.setAttribute("cy", sy);
         beamSpotCore.setAttribute("r", String(BEAM_SPOT_CORE_R));
       }
+      updateAnimalOpacities(geom.spotCx, geom.spotCy);
+    }
+
+    const hopCleanups: Array<() => void> = [];
+    for (const hop of svgClip.querySelectorAll(".svg-study-hidden-animal-hop-target")) {
+      if (!(hop instanceof SVGGElement)) continue;
+      const onEnter = () => {
+        hop.classList.remove("svg-study-animal-hop");
+        void hop.getBoundingClientRect();
+        hop.classList.add("svg-study-animal-hop");
+      };
+      const onAnimEnd = () => {
+        hop.classList.remove("svg-study-animal-hop");
+      };
+      hop.addEventListener("pointerenter", onEnter);
+      hop.addEventListener("animationend", onAnimEnd);
+      hopCleanups.push(() => {
+        hop.removeEventListener("pointerenter", onEnter);
+        hop.removeEventListener("animationend", onAnimEnd);
+      });
     }
 
     function setLightCenter() {
@@ -411,6 +460,9 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       document.removeEventListener("click", onClick);
       document.removeEventListener("touchend", onTouchEnd);
       document.removeEventListener("pointerup", onPointerUp);
+      hopCleanups.forEach((fn) => {
+        fn();
+      });
     };
   }, [svgReady, triggerDawn]);
 
@@ -421,9 +473,16 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     const beamStack = host.querySelector(
       "#LighthouseBeamStack",
     ) as SVGGElement | null;
+    const animalsLayer = host.querySelector(
+      "#HiddenAnimalsLayer",
+    ) as SVGGElement | null;
     if (beamStack) {
       beamStack.style.transition = "opacity 1.2s ease";
       beamStack.style.opacity = "0";
+    }
+    if (animalsLayer) {
+      animalsLayer.style.transition = "opacity 1.2s ease";
+      animalsLayer.style.opacity = "0";
     }
     const sunBase = host.querySelector("#Sun-base") as SVGEllipseElement | null;
     const sunLit = host.querySelector("#Sun-lit") as SVGEllipseElement | null;

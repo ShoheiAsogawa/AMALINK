@@ -1,9 +1,10 @@
 "use client";
 
 import { Section } from "@/components/ui/Section";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
+import { motion } from "framer-motion";
 import { Monitor, Smartphone, PenTool } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { WaveBackground } from "@/components/ui/WaveBackground";
 
 const services = [
@@ -40,7 +41,7 @@ function ServiceCard({ service, index }: { service: typeof services[0], index: n
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.8 }}
-      className="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-500 border border-slate-100 flex flex-col justify-between min-h-[360px] md:min-h-[400px] group relative overflow-hidden"
+      className="group relative flex min-h-[400px] flex-col justify-between overflow-hidden rounded-[2rem] border border-slate-100 bg-white/80 p-8 shadow-sm backdrop-blur-sm transition-all duration-500 hover:shadow-xl md:min-h-[440px] md:p-12"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => setIsHovered(!isHovered)}
@@ -61,13 +62,13 @@ function ServiceCard({ service, index }: { service: typeof services[0], index: n
               transition={{ duration: 4, ease: "linear", repeat: isHovered ? Infinity : 0 }}
               className="space-y-1"
             >
-              <div className="opacity-90">import React from 'react';</div>
-              <div className="opacity-90">import {'{'} useState {'}'} from 'react';</div>
+              <div className="opacity-90">{`import React from 'react';`}</div>
+              <div className="opacity-90">{`import { useState } from 'react';`}</div>
               <div className="h-2" />
               <div className="opacity-100">function App() {'{'}</div>
               <div className="pl-4 opacity-80">const [count, setCount] = useState(0);</div>
               <div className="pl-4 opacity-80">return (</div>
-              <div className="pl-8 opacity-70">&lt;div className="app"&gt;</div>
+              <div className="pl-8 opacity-70">{`<div className="app">`}</div>
               <div className="pl-12 opacity-60">&lt;h1&gt;Hello World&lt;/h1&gt;</div>
               <div className="pl-12 opacity-60">&lt;button onClick={'{'}() =&gt; setCount(c =&gt; c + 1){'}'}&gt;</div>
               <div className="pl-16 opacity-50">Count: {'{'}count{'}'}</div>
@@ -201,7 +202,7 @@ function ServiceCard({ service, index }: { service: typeof services[0], index: n
         <h3 className="text-xl md:text-2xl font-serif text-slate-800 mb-2">{service.title}</h3>
         <span className="text-[10px] md:text-xs text-amami-blue uppercase tracking-widest block mb-6 md:mb-8">{service.enTitle}</span>
         
-        <p className="text-slate-500 text-sm leading-7 md:leading-8 font-sans whitespace-pre-line">
+        <p className="text-base leading-relaxed text-slate-500 md:text-lg md:leading-relaxed font-sans whitespace-pre-line">
           {service.description}
         </p>
       </div>
@@ -212,63 +213,36 @@ function ServiceCard({ service, index }: { service: typeof services[0], index: n
 }
 
 export function Services() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
-
   return (
-    // Applied gradient from white (About end) to slate-50 (Services)
     <Section
       id="services"
-      className="bg-gradient-to-b from-white to-slate-50 py-20 md:py-32 overflow-hidden relative"
+      className="relative overflow-hidden bg-gradient-to-b from-white to-slate-50 py-20 md:py-32"
       background={<WaveBackground color="blue" position="full" opacity={0.12} speed={14} />}
     >
-      <div className="container mx-auto px-6 mb-12 md:mb-32 relative z-10">
-        <motion.div
-           initial={{ opacity: 0, y: 20 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true }}
-           className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 text-center md:text-left"
+      <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mx-auto mb-12 max-w-3xl text-center md:mb-32"
         >
-          <div className="w-full md:w-auto">
-            <span className="text-amami-blue text-xs font-bold tracking-[0.2em] uppercase block mb-4">Services</span>
-            <h2 className="text-3xl md:text-5xl font-serif text-slate-800 leading-tight">
-              島暮らしを、<br />
-              ちょっと便利に。
-            </h2>
-          </div>
-          <p className="text-slate-500 text-sm md:text-base max-w-md leading-loose font-sans mx-auto md:mx-0">
+          <SectionEyebrow label="Services" color="blue" />
+
+          <h2 className="mb-8 text-3xl font-serif leading-tight text-slate-800 [letter-spacing:0] md:text-5xl">
+            島暮らしを、<br />
+            ちょっと便利に。
+          </h2>
+          <p className="mx-auto max-w-2xl text-base leading-loose text-slate-500 md:text-lg font-sans">
             難しそうなITのことも、私たちにお任せください。<br />
             お客様一人ひとりのペースに合わせて、<br />
             最適な解決策をご提案します。
           </p>
         </motion.div>
-      </div>
 
-      <div ref={containerRef} className="container mx-auto px-6 relative z-10">
-        {/* Background Text Decoration - Moved to the very top of the section to avoid overlap */}
-        <motion.div 
-          style={{ x }}
-          className="hidden md:block absolute -top-52 left-0 text-[10vw] font-bold text-slate-200/30 tracking-widest pointer-events-none select-none whitespace-nowrap z-0"
-        >
-          AMALINK SERVICES
-        </motion.div>
-        
-        {/* Mobile visible background text */}
-        <div className="md:hidden absolute -top-20 left-0 text-[15vw] font-bold text-slate-100 tracking-widest pointer-events-none select-none whitespace-nowrap z-0 opacity-50">
-          SERVICES
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8 relative z-10">
+        <div className="relative z-10 grid gap-6 md:grid-cols-3 md:gap-8">
           {services.map((service, index) => (
             <ServiceCard key={index} service={service} index={index} />
           ))}
         </div>
-      </div>
     </Section>
   );
 }

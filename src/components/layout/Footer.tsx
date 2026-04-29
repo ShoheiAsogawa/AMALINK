@@ -1,12 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
+import { FooterTruck } from "@/components/layout/FooterTruck";
 
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-50 border-t border-slate-200 py-12 md:py-20">
-      <div className="container mx-auto px-6">
+    <footer className="relative bg-slate-50 border-t border-slate-200 py-12 md:py-20">
+      <FooterTruck />
+      <div className="container relative z-[1] mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 md:gap-10">
           <div className="text-left w-full md:w-auto">
             <Link href="/" className="text-xl md:text-2xl font-bold tracking-widest flex items-center gap-2 mb-4 group">

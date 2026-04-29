@@ -28,5 +28,12 @@ export function stripHtmlToDescription(html: string, maxLen = 160): string {
 
 export const SITE_NAME = "AMALINK";
 
+/** 公式LINEの友だち追加URL。`NEXT_PUBLIC_OFFICIAL_LINE_URL` が無いときはデフォルトを使う */
+export function getOfficialLineAddFriendUrl(): string {
+  const fromEnv = process.env.NEXT_PUBLIC_OFFICIAL_LINE_URL?.trim();
+  if (fromEnv) return fromEnv;
+  return "https://lin.ee/Sr8rTSa";
+}
+
 export const DEFAULT_DESCRIPTION =
   "AMALINKは情報で人と人をつなげ、島内外の懸け橋となります。システム開発・ホームページ制作・デザインなど、奄美を拠点にデジタルで地域とつながります。";

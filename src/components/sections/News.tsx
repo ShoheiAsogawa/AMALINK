@@ -1,4 +1,5 @@
 import { WaveBackground } from "@/components/ui/WaveBackground";
+import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { ArrowRight, Newspaper } from "lucide-react";
 import Link from "next/link";
 import type { News, Category } from "@/lib/microcms";
@@ -62,23 +63,20 @@ export function NewsSection({ news }: { news: News[] }) {
       {news.length > 0 && (
         <WaveBackground color="green" position="bottom" opacity={0.1} speed={55} />
       )}
-      <div className="container mx-auto px-4 max-w-4xl relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12 md:mb-16">
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-[1px] bg-amami-green" />
-              <span className="text-amami-green text-xs font-bold tracking-[0.2em] uppercase">News</span>
-            </div>
-            <h2 className="text-3xl md:text-5xl font-serif text-slate-800 leading-tight">お知らせ</h2>
-          </div>
+      <div className="container relative z-10 mx-auto max-w-4xl px-4">
+        <div className="mb-12 flex flex-col items-center text-center md:mb-16">
+          <SectionEyebrow label="News" color="green" />
+          <h2 className="text-3xl font-serif leading-tight text-slate-800 [letter-spacing:0] md:text-5xl">
+            お知らせ
+          </h2>
           {news.length > 0 && (
             <Link
               href="/news"
-              className="group inline-flex items-center gap-2 text-sm text-slate-500 hover:text-amami-green font-sans transition-colors duration-300"
+              className="group mt-6 inline-flex items-center gap-2 text-sm text-slate-500 transition-colors duration-300 hover:text-amami-green font-sans"
             >
               <span>すべて見る</span>
               <span className="sr-only">お知らせ一覧へ</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           )}
         </div>

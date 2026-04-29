@@ -6,6 +6,7 @@ import { About } from "@/components/sections/About";
 import { Services } from "@/components/sections/Services";
 import { NewsSection } from "@/components/sections/News";
 import { Contact } from "@/components/sections/Contact";
+import { MarqueeSpacer } from "@/components/ui/MarqueeSpacer";
 import { getNewsList } from "@/lib/microcms";
 import { GameGateway } from "@/components/game/GameGateway";
 import { absoluteUrl, DEFAULT_DESCRIPTION, SITE_NAME } from "@/lib/seo";
@@ -39,7 +40,9 @@ export default async function Home() {
       <main className="overflow-hidden">
         <Header />
         <Hero />
+        <MarqueeSpacer phrase="PHILOSOPHY" />
         <About />
+        <MarqueeSpacer phrase="AMALINK SERVICES" className="bg-white" />
         <Services />
         <NewsSection news={news} />
         <Contact />
