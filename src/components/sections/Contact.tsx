@@ -34,7 +34,8 @@ export function Contact() {
           </h2>
 
           <p className="mb-9 max-w-2xl text-center text-base leading-loose text-slate-500 md:mb-11 md:text-lg font-sans">
-            「これって相談していいのかな？」<br className="hidden sm:block" />
+            「これって相談をしていいのかな？」
+            <br />
             そんな気持ちのままで大丈夫。お気軽にどうぞ。
           </p>
 

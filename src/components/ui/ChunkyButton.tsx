@@ -13,12 +13,13 @@ import Link, { type LinkProps } from "next/link";
 import { cn } from "@/lib/utils";
 import { colorMix, squirclePath } from "@/lib/chunkySquircle";
 
-export type ChunkyTheme = "neu" | "primary";
+export type ChunkyTheme = "neu" | "primary" | "blue";
 
 /** script.js の HEX ペアに相当（薄い面 / 影側） */
 const THEMES: Record<ChunkyTheme, { hb: string; hd: string }> = {
   neu: { hb: "fafafa", hd: "94a3b8" },
   primary: { hb: "1e293b", hd: "0f172a" },
+  blue: { hb: "0ea5e9", hd: "0369a1" },
 };
 
 type ChromeProps = {
@@ -55,6 +56,7 @@ function ChunkyChrome({ theme, block, disabled, children }: ChromeProps) {
   const hi = color(hb, 70, "white");
   const sh = color(hd, 35, "black");
   const whiteFace = theme === "neu";
+  const coloredFace = theme !== "neu";
 
   const w = Math.max(96, Math.round(cw / scale - 10));
   const baseY = 12;
@@ -135,7 +137,7 @@ function ChunkyChrome({ theme, block, disabled, children }: ChromeProps) {
         className={cn(
           /* [&_svg]/[&_img]:block … インライン置換要素のベースライン下ギャップでアイコンだけ下に見えるのを防ぐ */
           "pointer-events-none absolute inset-x-0 z-[2] flex flex-row flex-nowrap items-center justify-center py-0 [&_img]:block [&_svg]:block [&_svg]:shrink-0",
-          theme === "primary"
+          coloredFace
             ? "gap-3 px-5 text-[15px] font-bold tracking-wider text-white sm:px-7 sm:text-[18px]"
             : "gap-2 px-4 text-[14px] font-medium tracking-wide text-slate-800 sm:gap-2.5 sm:px-6 sm:text-[17px]"
         )}
@@ -214,7 +216,8 @@ type NextProps = {
   block?: boolean;
   children: ReactNode;
   className?: string;
-} & Omit<LinkProps, "className">;
+} & Omit<LinkProps, "className"> &
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "href">;
 
 export function ChunkyNextLink({ theme = "neu", block, className, children, ...rest }: NextProps) {
   return (

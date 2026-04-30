@@ -23,8 +23,9 @@ export default function Footer() {
               <span className="text-slate-900 font-sans group-hover:text-amami-blue transition-colors">AMALINK</span>
             </Link>
             <p className="text-slate-500 text-xs md:text-sm font-sans leading-relaxed">
-              奄美大島から、<br />
-              デジタルで暮らしを豊かに。
+              島のリズムで、
+              <br />
+              <span className="text-amami-blue">未来をつくる。</span>
             </p>
           </div>
 

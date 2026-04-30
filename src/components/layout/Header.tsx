@@ -1,14 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Mail } from "lucide-react";
+import { Mail, Monitor, Newspaper, UserRound } from "lucide-react";
 import { OfficialLineIcon } from "@/components/ui/OfficialLineIcon";
 import { getOfficialLineAddFriendUrl } from "@/lib/seo";
+import { ChunkyAnchor, ChunkyNextLink } from "@/components/ui/ChunkyButton";
 
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+/** モバイル：タップ後にこの時間だけ待ってから遷移（動物アニメを見せる） */
+const MOBILE_NAV_DELAY_MS = 520;
 
 type NavItem = {
   name: string;
@@ -19,8 +24,12 @@ type NavItem = {
 };
 
 export default function Header() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [activeMobileAnimal, setActiveMobileAnimal] = useState<string | null>(null);
+  const mobileAnimalTimerRef = useRef<number | null>(null);
   const lineUrl = getOfficialLineAddFriendUrl();
+  const mobileNavIconClass = "size-[1em] shrink-0 opacity-90";
 
   const navItems: NavItem[] = [
     { name: "About", href: "/#about", label: "私たちについて", en: "About Us" },
@@ -30,6 +39,173 @@ export default function Header() {
     { name: "Contact", href: "/contact", label: "お問い合わせ", en: "Contact" },
   ];
 
+  function mobileNavIcon(itemName: string) {
+    switch (itemName) {
+      case "About":
+        return <UserRound className={mobileNavIconClass} strokeWidth={2} aria-hidden />;
+      case "Services":
+        return <Monitor className={mobileNavIconClass} strokeWidth={2} aria-hidden />;
+      case "News":
+        return <Newspaper className={mobileNavIconClass} strokeWidth={2} aria-hidden />;
+      case "OfficialLINE":
+        return <OfficialLineIcon className="relative size-[1em] shrink-0" aria-hidden />;
+      case "Contact":
+        return <Mail className={mobileNavIconClass} strokeWidth={2} aria-hidden />;
+      default:
+        return null;
+    }
+  }
+
+  function animalShellClass(itemName: NavItem["name"]): string {
+    switch (itemName) {
+      case "About":
+        return "pointer-events-none absolute left-4 top-[34%] z-0 h-[2.25rem] w-[2.6rem]";
+      case "Services":
+        return "pointer-events-none absolute right-3 top-[36%] z-0 h-[2.25rem] w-[2.6rem]";
+      case "News":
+        return "pointer-events-none absolute left-3 top-[22%] z-0 h-[2.35rem] w-[2.25rem] overflow-visible [clip-path:inset(0_0_12%_0)]";
+      case "OfficialLINE":
+        return "pointer-events-none absolute right-4 top-[28%] z-0 h-[2.45rem] w-[2.35rem]";
+      case "Contact":
+        return "pointer-events-none absolute left-4 top-[32%] z-0 h-[2.15rem] w-[3rem]";
+      default:
+        return "";
+    }
+  }
+
+  function navMenuAnimal(itemName: string, isActive: boolean) {
+    switch (itemName) {
+      case "About":
+        return (
+          <motion.div
+            className={animalShellClass("About")}
+            initial={false}
+            animate={
+              isActive
+                ? { y: -48, rotate: -4, opacity: 1, scale: 1 }
+                : { y: 0, rotate: -10, opacity: 0.96, scale: 0.86 }
+            }
+            transition={{ type: "spring", stiffness: 420, damping: 18, mass: 0.55 }}
+          >
+            <Image
+              src={`${assetBase}/menu-about-bird.png`}
+              alt=""
+              width={382}
+              height={337}
+              className="h-full w-full object-contain object-left-bottom drop-shadow-[0_3px_5px_rgba(15,23,42,0.18)]"
+              sizes="42px"
+            />
+          </motion.div>
+        );
+      case "Services":
+        return (
+          <motion.div
+            className={animalShellClass("Services")}
+            initial={false}
+            animate={
+              isActive
+                ? { y: -42, rotate: 5, opacity: 1, scale: 1 }
+                : { y: 2, rotate: 10, opacity: 0.96, scale: 0.86 }
+            }
+            transition={{ type: "spring", stiffness: 420, damping: 18, mass: 0.55 }}
+          >
+            <Image
+              src={`${assetBase}/menu-service-kingfisher.png`}
+              alt=""
+              width={322}
+              height={288}
+              className="h-full w-full object-contain object-right-bottom drop-shadow-[0_3px_5px_rgba(15,23,42,0.18)]"
+              sizes="42px"
+            />
+          </motion.div>
+        );
+      case "News":
+        /* 足元だけ隠したいのに overflow-hidden + translate-y で上に逃がすと、顔が上辺で途切れる。
+           clip-path で下端だけトリミングする（見える領域は上〜中央寄り）。 */
+        return (
+          <motion.div
+            className={animalShellClass("News")}
+            initial={false}
+            animate={
+              isActive
+                ? { x: -18, y: -30, rotate: -10, opacity: 1, scale: 1 }
+                : { x: 6, y: 0, rotate: -6, opacity: 0.96, scale: 0.88 }
+            }
+            transition={{ type: "spring", stiffness: 420, damping: 18, mass: 0.55 }}
+          >
+            <Image
+              src={`${assetBase}/menu-news-hawk.png`}
+              alt=""
+              width={302}
+              height={381}
+              className="h-full w-full object-contain object-left-bottom drop-shadow-[0_3px_5px_rgba(15,23,42,0.18)]"
+              sizes="40px"
+            />
+          </motion.div>
+        );
+      case "OfficialLINE":
+        return (
+          <motion.div
+            className={animalShellClass("OfficialLINE")}
+            initial={false}
+            animate={
+              isActive
+                ? { x: 46, rotate: 6, opacity: 1, scale: 1 }
+                : { x: 0, rotate: 3, opacity: 0.96, scale: 0.86 }
+            }
+            transition={{ type: "spring", stiffness: 430, damping: 17, mass: 0.55 }}
+          >
+            <Image
+              src={`${assetBase}/menu-line-rabbit.png`}
+              alt=""
+              width={317}
+              height={344}
+              className="h-full w-full object-contain object-right-center drop-shadow-[0_3px_5px_rgba(15,23,42,0.18)]"
+              sizes="39px"
+            />
+          </motion.div>
+        );
+      case "Contact":
+        return (
+          <motion.div
+            className={animalShellClass("Contact")}
+            initial={false}
+            animate={
+              isActive
+                ? { x: -48, rotate: -5, opacity: 1, scale: 1 }
+                : { x: 0, rotate: -2, opacity: 0.96, scale: 0.86 }
+            }
+            transition={{ type: "spring", stiffness: 430, damping: 17, mass: 0.55 }}
+          >
+            <Image
+              src={`${assetBase}/menu-contact-snake.png`}
+              alt=""
+              width={390}
+              height={285}
+              className="h-full w-full object-contain object-left-center drop-shadow-[0_3px_5px_rgba(15,23,42,0.18)]"
+              sizes="48px"
+            />
+          </motion.div>
+        );
+      default:
+        return null;
+    }
+  }
+
+  function shouldDeferMobileNavClick(e: React.MouseEvent) {
+    return e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0;
+  }
+
+  function triggerMobileAnimal(itemName: string) {
+    if (mobileAnimalTimerRef.current) {
+      window.clearTimeout(mobileAnimalTimerRef.current);
+    }
+    setActiveMobileAnimal(itemName);
+    mobileAnimalTimerRef.current = window.setTimeout(() => {
+      setActiveMobileAnimal(null);
+    }, 620);
+  }
+
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
     const closeIfDesktop = () => {
@@ -38,6 +214,14 @@ export default function Header() {
     closeIfDesktop();
     mq.addEventListener("change", closeIfDesktop);
     return () => mq.removeEventListener("change", closeIfDesktop);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (mobileAnimalTimerRef.current) {
+        window.clearTimeout(mobileAnimalTimerRef.current);
+      }
+    };
   }, []);
 
   return (
@@ -62,7 +246,7 @@ export default function Header() {
             </span>
           </Link>
 
-          {/* Desktop Nav（ハンバーガーはモバイルのみ md:hidden） */}
+          {/* Desktop Nav */}
           <nav className="hidden md:flex space-x-10 mix-blend-normal text-slate-900">
             {navItems.map((item) => {
               const className =
@@ -76,12 +260,12 @@ export default function Header() {
                   className={className}
                 >
                   <span>{item.label}</span>
-                  <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-gradient-to-r from-amami-blue to-amami-green group-hover:w-full transition-all duration-300" />
+                  <span className="absolute -bottom-2 left-0 h-[1px] w-0 bg-gradient-to-r from-amami-blue to-amami-green transition-all duration-300 group-hover:w-full" />
                 </a>
               ) : (
                 <Link key={item.name} href={item.href} className={className}>
                   <span>{item.label}</span>
-                  <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-gradient-to-r from-amami-blue to-amami-green group-hover:w-full transition-all duration-300" />
+                  <span className="absolute -bottom-2 left-0 h-[1px] w-0 bg-gradient-to-r from-amami-blue to-amami-green transition-all duration-300 group-hover:w-full" />
                 </Link>
               );
             })}
@@ -125,7 +309,7 @@ export default function Header() {
               y: "105%",
               transition: { duration: 0.38, ease: [0.4, 0, 1, 1] },
             }}
-            className="fixed inset-0 z-[80] flex flex-col items-center justify-center bg-white px-6 pb-16 pt-28 md:hidden"
+            className="fixed inset-0 z-[80] flex flex-col items-center justify-center bg-white px-5 pb-12 pt-24 md:hidden"
           >
             {/* Background Decoration */}
             <div className="pointer-events-none absolute top-[-10%] right-[-10%] h-[300px] w-[300px] rounded-full bg-amami-blue-light/30 blur-[60px]" />
@@ -134,59 +318,66 @@ export default function Header() {
             <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-slate-50 opacity-50" />
             <div className="pointer-events-none absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-slate-50 opacity-50" />
 
-            <div className="relative z-10 flex w-full flex-col items-center space-y-12">
+            <div className="relative z-10 flex w-full max-w-[18rem] flex-col items-stretch gap-2.5">
               {navItems.map((item, i) => (
                 <motion.div
                   key={item.name}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15 + i * 0.08, duration: 0.45 }}
-                  className="w-full text-center"
+                  className="relative w-full overflow-visible"
                 >
+                  {navMenuAnimal(item.name, activeMobileAnimal === item.name)}
                   {item.external ? (
-                    <a
+                    <ChunkyAnchor
                       href={item.href}
+                      theme="blue"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative flex flex-col items-center justify-center py-4"
-                      onClick={() => setIsOpen(false)}
+                      className="group relative z-10 flex w-full min-w-0"
+                      onPointerDown={() => triggerMobileAnimal(item.name)}
+                      onClick={(e) => {
+                        if (shouldDeferMobileNavClick(e)) return;
+                        e.preventDefault();
+                        window.setTimeout(() => {
+                          window.open(item.href, "_blank", "noopener,noreferrer");
+                          setIsOpen(false);
+                        }, MOBILE_NAV_DELAY_MS);
+                      }}
                     >
-                      <span className="relative z-10 flex items-center justify-center gap-3">
-                        {item.name === "OfficialLINE" && (
-                          <OfficialLineIcon className="h-9 w-9 shrink-0" aria-hidden />
-                        )}
-                        <span className="text-2xl font-serif font-medium text-slate-800 transition-all duration-300 group-hover:bg-gradient-to-r group-hover:from-amami-blue group-hover:to-amami-green group-hover:bg-clip-text group-hover:text-transparent">
+                      <span className="flex w-full min-w-0 items-center justify-center gap-2 px-2">
+                        <span className="flex shrink-0 translate-y-[0.11em] items-center justify-center">
+                          {mobileNavIcon(item.name)}
+                        </span>
+                        <span className="flex min-h-[1em] min-w-0 items-center justify-center whitespace-nowrap text-center leading-none">
                           {item.label}
                         </span>
                       </span>
-                      <span className="relative z-10 mt-2 text-[10px] font-sans uppercase tracking-[0.3em] text-slate-400 transition-colors duration-300 group-hover:text-amami-blue/60">
-                        {item.en}
-                      </span>
-                      <span className="absolute left-1/2 top-1/2 -z-0 h-0 w-0 rounded-full bg-slate-50 opacity-50 transition-all duration-500 ease-out group-hover:h-32 group-hover:w-32 -translate-x-1/2 -translate-y-1/2" />
-                    </a>
+                    </ChunkyAnchor>
                   ) : (
-                    <Link
+                    <ChunkyNextLink
                       href={item.href}
-                      className="group relative flex flex-col items-center justify-center py-4"
-                      onClick={() => setIsOpen(false)}
+                      theme="blue"
+                      className="group relative z-10 flex w-full min-w-0"
+                      onPointerDown={() => triggerMobileAnimal(item.name)}
+                      onClick={(e) => {
+                        if (shouldDeferMobileNavClick(e)) return;
+                        e.preventDefault();
+                        window.setTimeout(() => {
+                          setIsOpen(false);
+                          router.push(item.href);
+                        }, MOBILE_NAV_DELAY_MS);
+                      }}
                     >
-                      <span className="relative z-10 flex items-center justify-center gap-3">
-                        {item.name === "Contact" && (
-                          <Mail
-                            className="h-7 w-7 shrink-0 text-slate-500"
-                            strokeWidth={2}
-                            aria-hidden
-                          />
-                        )}
-                        <span className="text-2xl font-serif font-medium text-slate-800 transition-all duration-300 group-hover:bg-gradient-to-r group-hover:from-amami-blue group-hover:to-amami-green group-hover:bg-clip-text group-hover:text-transparent">
+                      <span className="flex w-full min-w-0 items-center justify-center gap-2 px-2">
+                        <span className="flex shrink-0 translate-y-[0.11em] items-center justify-center">
+                          {mobileNavIcon(item.name)}
+                        </span>
+                        <span className="flex min-h-[1em] min-w-0 items-center justify-center whitespace-nowrap text-center leading-none">
                           {item.label}
                         </span>
                       </span>
-                      <span className="relative z-10 mt-2 text-[10px] font-sans uppercase tracking-[0.3em] text-slate-400 transition-colors duration-300 group-hover:text-amami-blue/60">
-                        {item.en}
-                      </span>
-                      <span className="absolute left-1/2 top-1/2 -z-0 h-0 w-0 rounded-full bg-slate-50 opacity-50 transition-all duration-500 ease-out group-hover:h-32 group-hover:w-32 -translate-x-1/2 -translate-y-1/2" />
-                    </Link>
+                    </ChunkyNextLink>
                   )}
                 </motion.div>
               ))}
