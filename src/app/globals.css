@@ -106,7 +106,7 @@ body.amalink-gateway-lock {
 .amalink-hamburger svg {
   height: 3em;
   width: 3em;
-  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .amalink-hamburger .amalink-hamburger-line {
@@ -116,8 +116,8 @@ body.amalink-gateway-lock {
   stroke-linejoin: round;
   stroke-width: 3;
   transition:
-    stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
-    stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    stroke-dasharray 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    stroke-dashoffset 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .amalink-hamburger .amalink-hamburger-line-top-bottom {
@@ -131,6 +131,53 @@ body.amalink-gateway-lock {
 .amalink-hamburger input:checked + svg .amalink-hamburger-line-top-bottom {
   stroke-dasharray: 20 300;
   stroke-dashoffset: -32.42;
+}
+
+/* Mobile nav — スタガーを CSS に寄せて Framer の子コンポーネント更新を減らす */
+@keyframes amalink-mobile-nav-item-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.amalink-mobile-nav-item {
+  opacity: 0;
+  animation: amalink-mobile-nav-item-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(0.05s + var(--amalink-nav-i, 0) * 0.045s);
+}
+
+@keyframes amalink-mobile-nav-footer-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.amalink-mobile-nav-footer {
+  opacity: 0;
+  animation: amalink-mobile-nav-footer-in 0.3s ease-out forwards;
+  animation-delay: 0.28s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .amalink-mobile-nav-item,
+  .amalink-mobile-nav-footer {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .amalink-hamburger svg,
+  .amalink-hamburger .amalink-hamburger-line {
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Pixel toggle — From Uiverse.io by augustin_4687（配色のみ青グラデーションに変更） */

@@ -85,7 +85,7 @@ export default function Header() {
                 ? { y: -48, rotate: -4, opacity: 1, scale: 1 }
                 : { y: 0, rotate: -10, opacity: 0.96, scale: 0.86 }
             }
-            transition={{ type: "spring", stiffness: 420, damping: 18, mass: 0.55 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
               src={`${assetBase}/menu-about-bird.png`}
@@ -107,7 +107,7 @@ export default function Header() {
                 ? { y: -42, rotate: 5, opacity: 1, scale: 1 }
                 : { y: 2, rotate: 10, opacity: 0.96, scale: 0.86 }
             }
-            transition={{ type: "spring", stiffness: 420, damping: 18, mass: 0.55 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
               src={`${assetBase}/menu-service-kingfisher.png`}
@@ -131,7 +131,7 @@ export default function Header() {
                 ? { x: -18, y: -30, rotate: -10, opacity: 1, scale: 1 }
                 : { x: 6, y: 0, rotate: -6, opacity: 0.96, scale: 0.88 }
             }
-            transition={{ type: "spring", stiffness: 420, damping: 18, mass: 0.55 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
               src={`${assetBase}/menu-news-hawk.png`}
@@ -153,7 +153,7 @@ export default function Header() {
                 ? { x: 46, rotate: 6, opacity: 1, scale: 1 }
                 : { x: 0, rotate: 3, opacity: 0.96, scale: 0.86 }
             }
-            transition={{ type: "spring", stiffness: 430, damping: 17, mass: 0.55 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
               src={`${assetBase}/menu-line-rabbit.png`}
@@ -175,7 +175,7 @@ export default function Header() {
                 ? { x: -48, rotate: -5, opacity: 1, scale: 1 }
                 : { x: 0, rotate: -2, opacity: 0.96, scale: 0.86 }
             }
-            transition={{ type: "spring", stiffness: 430, damping: 17, mass: 0.55 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
               src={`${assetBase}/menu-contact-snake.png`}
@@ -298,34 +298,27 @@ export default function Header() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: "105%" }}
+            initial={{ y: "100%" }}
             animate={{
-              opacity: 1,
               y: 0,
-              transition: { duration: 0.48, ease: [0.22, 1, 0.36, 1] },
+              transition: { duration: 0.34, ease: [0.22, 1, 0.36, 1] },
             }}
             exit={{
-              opacity: 0,
-              y: "105%",
-              transition: { duration: 0.38, ease: [0.4, 0, 1, 1] },
+              y: "100%",
+              transition: { duration: 0.26, ease: [0.4, 0, 1, 1] },
             }}
+            style={{ willChange: "transform" }}
             className="fixed inset-0 z-[80] flex flex-col items-center justify-center bg-white px-5 pb-12 pt-24 md:hidden"
           >
-            {/* Background Decoration */}
-            <div className="pointer-events-none absolute top-[-10%] right-[-10%] h-[300px] w-[300px] rounded-full bg-amami-blue-light/30 blur-[60px]" />
-            <div className="pointer-events-none absolute bottom-[-10%] left-[-10%] h-[300px] w-[300px] rounded-full bg-amami-green-light/30 blur-[60px]" />
-
             <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-slate-50 opacity-50" />
             <div className="pointer-events-none absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-slate-50 opacity-50" />
 
             <div className="relative z-10 flex w-full max-w-[18rem] flex-col items-stretch gap-2.5">
               {navItems.map((item, i) => (
-                <motion.div
+                <div
                   key={item.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.15 + i * 0.08, duration: 0.45 }}
-                  className="relative w-full overflow-visible"
+                  className="amalink-mobile-nav-item relative w-full overflow-visible"
+                  style={{ "--amalink-nav-i": i } as React.CSSProperties}
                 >
                   {navMenuAnimal(item.name, activeMobileAnimal === item.name)}
                   {item.external ? (
@@ -379,18 +372,13 @@ export default function Header() {
                       </span>
                     </ChunkyNextLink>
                   )}
-                </motion.div>
+                </div>
               ))}
             </div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.45, duration: 0.4 }}
-              className="pointer-events-none absolute bottom-12 text-center"
-            >
+            <div className="amalink-mobile-nav-footer pointer-events-none absolute bottom-12 text-center">
               <p className="text-[10px] font-sans tracking-widest text-slate-300">© AMALINK</p>
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
