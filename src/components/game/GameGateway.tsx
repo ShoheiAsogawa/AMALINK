@@ -17,12 +17,35 @@ const WHITE_OUT = { duration: 0.72, ease: [0.22, 1, 0.36, 1] as const };
 
 type WhiteFlashPhase = "idle" | "peak" | "out";
 
+const GATEWAY_SEEN_KEY = "amalink-gateway-seen";
+
+function readGatewaySeen(): boolean {
+  try {
+    return sessionStorage.getItem(GATEWAY_SEEN_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function writeGatewaySeen(): void {
+  try {
+    sessionStorage.setItem(GATEWAY_SEEN_KEY, "1");
+  } catch {
+    /* private browsing 等 */
+  }
+}
+
 export function GameGateway({ children }: { children: React.ReactNode }) {
-  /** メインサイトを見せるか（false の間はオーバーレイが上に乗る） */
-  const [mainRevealed, setMainRevealed] = useState(false);
+  /** null = 初回判定中, true = 本編表示, false = ゲートウェイ表示 */
+  const [mainRevealed, setMainRevealed] = useState<boolean | null>(null);
   const [whiteFlash, setWhiteFlash] = useState<WhiteFlashPhase>("idle");
 
+  useEffect(() => {
+    setMainRevealed(readGatewaySeen());
+  }, []);
+
   const handleClear = useCallback(() => {
+    writeGatewaySeen();
     setMainRevealed(true);
     setWhiteFlash("peak");
   }, []);
@@ -35,7 +58,7 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
 
   /* 灯す／ミニゲーム中は背後の document スクロールとモバイルのオーバースクロールを止める */
   useEffect(() => {
-    if (mainRevealed) return;
+    if (mainRevealed !== false) return;
     const html = document.documentElement;
     const body = document.body;
     const scrollY = window.scrollY;
@@ -61,13 +84,16 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
     };
   }, [mainRevealed]);
 
+  const revealed = mainRevealed === true;
+  const showGateway = mainRevealed === false;
+
   return (
     <>
       <motion.div
         initial={false}
-        animate={{ opacity: mainRevealed ? 1 : 0 }}
+        animate={{ opacity: revealed ? 1 : 0 }}
         transition={CROSSFADE}
-        style={{ pointerEvents: mainRevealed ? "auto" : "none" }}
+        style={{ pointerEvents: revealed ? "auto" : "none" }}
         className="relative z-0 min-h-screen"
       >
         {children}
@@ -90,7 +116,7 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
       </AnimatePresence>
 
       <AnimatePresence>
-        {!mainRevealed && (
+        {showGateway && (
           <motion.div
             key="gateway-overlay"
             initial={{ opacity: 1 }}
