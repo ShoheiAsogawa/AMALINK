@@ -2,7 +2,6 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { LEGAL_NAME } from "@/lib/seo";
 
 export function Hero() {
   const ref = useRef(null);
@@ -154,12 +153,12 @@ export function Hero() {
         <div className="absolute bottom-0 left-0 right-0 h-[150px] md:h-[250px] bg-gradient-to-b from-transparent to-slate-50 pointer-events-none z-[1]" />
       </div>
 
-      <div className="container relative z-10 mx-auto flex h-full items-center justify-center px-6 py-20 md:py-0">
+      <div className="container relative z-10 mx-auto flex h-full w-full items-center justify-center px-6 py-20 md:py-0">
         <motion.div
           style={{ y, opacity }}
-          className="flex flex-col items-center justify-center gap-8 md:flex-row md:gap-24"
+          className="flex w-full flex-col items-center justify-center gap-8 md:w-auto md:flex-row md:gap-24"
         >
-          <h1 className="m-0 font-serif font-medium text-slate-800">
+          <h1 className="m-0 w-full text-center font-serif font-medium text-slate-800">
             <span className="hidden md:flex flex-row-reverse gap-8">
               <span className="vertical-text text-5xl md:text-7xl tracking-wider leading-relaxed whitespace-nowrap">
                 島のリズムで、
@@ -168,14 +167,14 @@ export function Hero() {
                 未来をつくる。
               </span>
             </span>
-            <span className="md:hidden block mb-8 pt-4 text-center text-3xl leading-tight drop-shadow-sm sm:text-4xl">
+            <span className="mx-auto block w-full pt-4 text-center text-3xl leading-tight drop-shadow-sm sm:text-4xl md:hidden">
               島のリズムで、
               <br />
               <span className="text-amami-blue">未来をつくる。</span>
             </span>
           </h1>
 
-          <div className="md:hidden text-center max-w-xs mx-auto">
+          <div className="mx-auto w-full max-w-xs text-center md:hidden">
             <p className="text-lg leading-loose text-slate-600 font-sans">
               波音のように穏やかに、
               <br />
@@ -207,18 +206,8 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* 下部：会社情報 → Scroll（重ならないよう縦並び） */}
-      <div className="absolute bottom-6 md:bottom-10 left-0 right-0 z-10 flex flex-col items-center gap-5 px-6 md:gap-6">
-        <p className="max-w-sm text-center font-sans text-[10px] leading-relaxed tracking-wide text-slate-400 md:max-w-none md:text-xs">
-          <span className="block md:inline">{LEGAL_NAME}</span>
-          <span className="mx-1.5 hidden text-slate-300 md:inline" aria-hidden>
-            |
-          </span>
-          <span className="mt-0.5 block md:mt-0 md:inline">
-            奄美大島のウェブ制作・システム開発・デザイン・GEO対策
-          </span>
-        </p>
-
+      {/* Scroll */}
+      <div className="absolute bottom-6 md:bottom-10 left-0 right-0 z-10 flex flex-col items-center px-6">
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}

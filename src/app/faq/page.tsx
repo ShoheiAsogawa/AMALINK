@@ -34,8 +34,6 @@ export default function FaqPage() {
           </h1>
           <p className="mb-12 text-center font-sans leading-loose text-slate-500">
             ご依頼前によくいただく質問をまとめました。
-            <br />
-            ここにない内容も、お気軽にお問い合わせください。
           </p>
 
           <FaqAccordion />
