@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { getNewsList, getNewsEntry } from "@/lib/microcms";
-import type { Category } from "@/lib/microcms";
+import { getNewsList, getNewsEntry, formatMicroCmsDate, getContentCategories } from "@/lib/microcms";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
@@ -15,20 +14,6 @@ export const dynamicParams = true;
 export async function generateStaticParams() {
   const { contents } = await getNewsList({ limit: 100 });
   return contents.map((item) => ({ slug: item.slug ?? item.id }));
-}
-
-function formatDate(dateStr: string) {
-  const d = new Date(dateStr);
-  return d.toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
-}
-
-function getCategories(category: Category | Category[] | undefined): Category[] {
-  if (!category) return [];
-  return Array.isArray(category) ? category : [category];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -77,7 +62,15 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
 
   return (
     <main className="overflow-hidden">
-      <ArticleJsonLd news={news} pathSegment={pathSegment} />
+      <ArticleJsonLd
+        title={news.title}
+        pathPrefix="/news"
+        pathSegment={pathSegment}
+        schemaType="NewsArticle"
+        publishedAt={news.publishedAt}
+        createdAt={news.createdAt}
+        updatedAt={news.updatedAt}
+      />
       <Header />
       <article className="pt-32 md:pt-40 pb-20 md:pb-32 min-h-screen bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-6 max-w-3xl">
@@ -90,10 +83,10 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
           </Link>
           <header className="mb-10">
             <time className="text-sm text-slate-400 font-sans tabular-nums block mb-4">
-              {formatDate(news.publishedAt ?? news.createdAt)}
+              {formatMicroCmsDate(news.publishedAt ?? news.createdAt)}
             </time>
             <div className="flex flex-wrap gap-2 mb-6">
-              {getCategories(news.category).map((cat) => (
+              {getContentCategories(news.category).map((cat) => (
                 <span
                   key={cat.id}
                   className="inline-block text-[10px] md:text-xs px-3 py-0.5 rounded-full bg-amami-blue-light/40 text-amami-blue font-sans tracking-wide"

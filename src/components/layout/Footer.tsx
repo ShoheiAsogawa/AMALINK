@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FooterTruck } from "@/components/layout/FooterTruck";
+import { COMPANY_OVERVIEW } from "@/lib/site-content";
 import { LEGAL_NAME } from "@/lib/seo";
 
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -26,6 +27,9 @@ export default function Footer() {
             <p className="text-slate-500 text-xs md:text-sm font-sans leading-relaxed">
               {LEGAL_NAME}
               <br />
+              {COMPANY_OVERVIEW.address}
+            </p>
+            <p className="mt-[1em] text-slate-500 text-xs md:text-sm font-sans leading-relaxed">
               島のリズムで、
               <br />
               <span className="text-amami-blue">未来をつくる。</span>

@@ -1,25 +1,48 @@
 import { absoluteUrl, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
-import type { News } from "@/lib/microcms";
 
-type Props = {
-  news: News;
+type ArticleJsonLdProps = {
+  title: string;
+  pathPrefix: "/news" | "/articles";
   pathSegment: string;
+  schemaType: "NewsArticle" | "BlogPosting";
+  description?: string;
+  publishedAt?: string;
+  createdAt: string;
+  updatedAt?: string;
+  articleSection?: string;
 };
 
-export function ArticleJsonLd({ news, pathSegment }: Props) {
-  const url = absoluteUrl(`/news/${pathSegment}`);
-  const published = news.publishedAt ?? news.createdAt;
-  const modified = news.updatedAt ?? published;
+export function ArticleJsonLd({
+  title,
+  pathPrefix,
+  pathSegment,
+  schemaType,
+  description,
+  publishedAt,
+  createdAt,
+  updatedAt,
+  articleSection,
+}: ArticleJsonLdProps) {
+  const url = absoluteUrl(`${pathPrefix}/${pathSegment}`);
+  const published = publishedAt ?? createdAt;
+  const modified = updatedAt ?? published;
 
-  const payload = {
+  const payload: Record<string, unknown> = {
     "@context": "https://schema.org",
-    "@type": "NewsArticle",
-    headline: news.title,
+    "@type": schemaType,
+    headline: title,
     datePublished: published,
     dateModified: modified,
+    inLanguage: "ja",
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": url,
+    },
+    author: {
+      "@type": "Organization",
+      name: LEGAL_NAME,
+      alternateName: SITE_NAME,
+      url: absoluteUrl("/"),
     },
     publisher: {
       "@type": "Organization",
@@ -31,6 +54,13 @@ export function ArticleJsonLd({ news, pathSegment }: Props) {
       },
     },
   };
+
+  if (description) {
+    payload.description = description;
+  }
+  if (articleSection) {
+    payload.articleSection = articleSection;
+  }
 
   return (
     <script

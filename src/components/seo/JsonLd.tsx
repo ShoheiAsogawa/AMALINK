@@ -20,7 +20,7 @@ export function RootJsonLd() {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Organization",
+        "@type": ["Organization", "LocalBusiness"],
         "@id": `${root}#organization`,
         name: LEGAL_NAME,
         alternateName: SITE_NAME,
@@ -31,10 +31,20 @@ export function RootJsonLd() {
           url: absoluteUrl("/logo.png"),
         },
         description: DEFAULT_DESCRIPTION,
-        areaServed: {
-          "@type": "Place",
-          name: COMPANY_OVERVIEW.region,
+        address: {
+          "@type": "PostalAddress",
+          ...COMPANY_OVERVIEW.postalAddress,
         },
+        areaServed: [
+          {
+            "@type": "Place",
+            name: COMPANY_OVERVIEW.region,
+          },
+          {
+            "@type": "AdministrativeArea",
+            name: "鹿児島県",
+          },
+        ],
         knowsAbout: [
           "ホームページ制作",
           "システム開発",

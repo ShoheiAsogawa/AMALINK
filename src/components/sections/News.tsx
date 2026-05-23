@@ -2,28 +2,15 @@ import { WaveBackground } from "@/components/ui/WaveBackground";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { ArrowRight, Newspaper } from "lucide-react";
 import Link from "next/link";
-import type { News, Category } from "@/lib/microcms";
+import type { News } from "@/lib/microcms";
+import { formatMicroCmsDate, getContentCategories } from "@/lib/microcms";
 
-function formatDate(dateStr: string) {
-  const d = new Date(dateStr);
-  return d.toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
-}
-
-function CategoryBadge({ category }: { category: Category }) {
+function CategoryBadge({ category }: { category: { id: string; title: string } }) {
   return (
     <span className="inline-block text-[10px] md:text-xs px-3 py-0.5 rounded-full bg-amami-blue-light/40 text-amami-blue font-sans tracking-wide">
       {category.title}
     </span>
   );
-}
-
-function getCategories(category: Category | Category[] | undefined): Category[] {
-  if (!category) return [];
-  return Array.isArray(category) ? category : [category];
 }
 
 function NewsItem({ item }: { item: News }) {
@@ -33,10 +20,10 @@ function NewsItem({ item }: { item: News }) {
       className="group grid grid-cols-[auto_1fr_auto] md:grid-cols-[120px_auto_1fr_32px] items-center gap-3 md:gap-6 py-5 md:py-6 border-b border-slate-100 last:border-b-0 hover:bg-slate-50/50 transition-colors duration-200 px-2 -mx-2 rounded-lg"
     >
       <time className="text-xs md:text-sm text-slate-400 font-sans tabular-nums whitespace-nowrap">
-        {formatDate(item.publishedAt ?? item.createdAt)}
+        {formatMicroCmsDate(item.publishedAt ?? item.createdAt)}
       </time>
       <div className="hidden md:flex gap-2">
-        {getCategories(item.category).map((cat) => (
+        {getContentCategories(item.category).map((cat) => (
           <CategoryBadge key={cat.id} category={cat} />
         ))}
       </div>

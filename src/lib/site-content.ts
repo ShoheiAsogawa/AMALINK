@@ -27,6 +27,13 @@ export const COMPANY_OVERVIEW = {
   region: "鹿児島県奄美群（奄美大島を拠点とした離島エリア）",
   baseLocation: "鹿児島県奄美大島",
   serviceArea: "鹿児島県奄美群を拠点に、全国オンライン対応",
+  address: "鹿児島県大島郡宇検村大字芦検４３６",
+  postalAddress: {
+    streetAddress: "大字芦検４３６",
+    addressLocality: "大島郡宇検村",
+    addressRegion: "鹿児島県",
+    addressCountry: "JP",
+  },
   targetCustomers:
     "奄美大島および離島エリアの中小事業者、観光・特産品事業者、自治体・地域団体、島内で自社運用しやすいWebサイトや業務システムを検討している方",
   strengths: [
@@ -248,6 +255,7 @@ export const FAQ_ITEMS: FaqItem[] = [
 export const KEY_URLS = {
   home: absoluteUrl("/"),
   faq: absoluteUrl("/faq"),
+  articles: absoluteUrl("/articles"),
   contact: absoluteUrl("/contact"),
   news: absoluteUrl("/news"),
   services: absoluteUrl("/#services"),

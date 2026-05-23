@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { getNewsList } from "@/lib/microcms";
-import type { Category } from "@/lib/microcms";
+import { getNewsList, formatMicroCmsDate, getContentCategories } from "@/lib/microcms";
 import { ArrowRight, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { absoluteUrl, SITE_NAME } from "@/lib/seo";
@@ -19,20 +18,6 @@ export const metadata: Metadata = {
     description: `${SITE_NAME}からのお知らせ一覧です。`,
   },
 };
-
-function formatDate(dateStr: string) {
-  const d = new Date(dateStr);
-  return d.toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
-}
-
-function getCategories(category: Category | Category[] | undefined): Category[] {
-  if (!category) return [];
-  return Array.isArray(category) ? category : [category];
-}
 
 export default async function NewsListPage() {
   const { contents: news } = await getNewsList({ limit: 100 });
@@ -58,10 +43,10 @@ export default async function NewsListPage() {
                   className="group flex flex-col md:flex-row md:items-center gap-2 md:gap-8 py-6 md:py-8 hover:bg-slate-50/50 transition-colors duration-200 px-2 -mx-2 rounded-lg"
                 >
                   <time className="text-xs md:text-sm text-slate-400 font-sans tabular-nums whitespace-nowrap shrink-0">
-                    {formatDate(item.publishedAt ?? item.createdAt)}
+                    {formatMicroCmsDate(item.publishedAt ?? item.createdAt)}
                   </time>
                   <div className="flex gap-2 shrink-0">
-                    {getCategories(item.category).map((cat) => (
+                    {getContentCategories(item.category).map((cat) => (
                       <span
                         key={cat.id}
                         className="inline-block text-[10px] md:text-xs px-3 py-0.5 rounded-full bg-amami-blue-light/40 text-amami-blue font-sans tracking-wide"

@@ -13,6 +13,36 @@ export type News = {
   slug?: string;
 } & MicroCMSListContent;
 
+/**
+ * GEO向け記事（microCMS API: articles）
+ * 管理画面で API「articles」を作成し、title / content / slug / description / category を設定してください。
+ * description … メタ・冒頭要約（40〜60語推奨）。未設定時は本文から自動生成します。
+ */
+export type Article = {
+  title: string;
+  content: string;
+  /** GEO向け：メタ description 兼 冒頭の核心回答 */
+  description?: string;
+  category?: Category | Category[];
+  slug?: string;
+} & MicroCMSListContent;
+
+export function getContentCategories(
+  category: Category | Category[] | undefined,
+): Category[] {
+  if (!category) return [];
+  return Array.isArray(category) ? category : [category];
+}
+
+export function formatMicroCmsDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+}
+
 function getClient() {
   const serviceDomain = process.env.MICROCMS_SERVICE_DOMAIN;
   const apiKey = process.env.MICROCMS_API_KEY;
@@ -25,6 +55,12 @@ function getClient() {
 }
 
 const EMPTY_LIST = { contents: [] as News[], totalCount: 0, offset: 0, limit: 0 };
+const EMPTY_ARTICLE_LIST = {
+  contents: [] as Article[],
+  totalCount: 0,
+  offset: 0,
+  limit: 0,
+};
 
 export async function getNewsList(queries?: MicroCMSQueries) {
   const client = getClient();
@@ -69,6 +105,46 @@ export async function getNewsEntry(slugOrId: string, queries?: MicroCMSQueries) 
 
   return client.getListDetail<News>({
     endpoint: "news",
+    contentId: slugOrId,
+    queries,
+  });
+}
+
+export async function getArticlesList(queries?: MicroCMSQueries) {
+  const client = getClient();
+  if (!client) return EMPTY_ARTICLE_LIST;
+
+  try {
+    return await client.getList<Article>({
+      endpoint: "articles",
+      queries: { orders: "-publishedAt", ...queries },
+    });
+  } catch {
+    return EMPTY_ARTICLE_LIST;
+  }
+}
+
+export async function getArticleEntry(slugOrId: string, queries?: MicroCMSQueries) {
+  const client = getClient();
+  if (!client) throw new Error("microCMS is not configured");
+
+  try {
+    const bySlug = await client.getList<Article>({
+      endpoint: "articles",
+      queries: {
+        filters: `slug[equals]${slugOrId}`,
+        limit: 1,
+        ...queries,
+      },
+    });
+    const hit = bySlug.contents[0];
+    if (hit) return hit;
+  } catch {
+    // slug フィールドが無い・フィルタ非対応など
+  }
+
+  return client.getListDetail<Article>({
+    endpoint: "articles",
     contentId: slugOrId,
     queries,
   });
