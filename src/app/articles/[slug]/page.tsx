@@ -18,8 +18,12 @@ export const revalidate = 60;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  const { contents } = await getArticlesList({ limit: 100 });
-  return contents.map((item) => ({ slug: item.slug ?? item.id }));
+  try {
+    const { contents } = await getArticlesList({ limit: 100 });
+    return (contents ?? []).map((item) => ({ slug: item.slug ?? item.id }));
+  } catch {
+    return [];
+  }
 }
 
 function articleDescription(

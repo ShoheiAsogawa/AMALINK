@@ -66,10 +66,15 @@ export async function getNewsList(queries?: MicroCMSQueries) {
   const client = getClient();
   if (!client) return EMPTY_LIST;
 
-  return client.getList<News>({
-    endpoint: "news",
-    queries: { orders: "-publishedAt", ...queries },
-  });
+  try {
+    const result = await client.getList<News>({
+      endpoint: "news",
+      queries: { orders: "-publishedAt", ...queries },
+    });
+    return { ...result, contents: result.contents ?? [] };
+  } catch {
+    return EMPTY_LIST;
+  }
 }
 
 export async function getNewsDetail(id: string, queries?: MicroCMSQueries) {
@@ -115,10 +120,11 @@ export async function getArticlesList(queries?: MicroCMSQueries) {
   if (!client) return EMPTY_ARTICLE_LIST;
 
   try {
-    return await client.getList<Article>({
+    const result = await client.getList<Article>({
       endpoint: "articles",
       queries: { orders: "-publishedAt", ...queries },
     });
+    return { ...result, contents: result.contents ?? [] };
   } catch {
     return EMPTY_ARTICLE_LIST;
   }

@@ -25,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const { contents } = await getNewsList({ limit: 100 });
     newsEntries.push(
-      ...contents.map((item) => ({
+      ...(contents ?? []).map((item) => ({
         url: absoluteUrl(`/news/${item.slug ?? item.id}`),
         lastModified: new Date(item.updatedAt ?? item.publishedAt ?? item.createdAt),
         changeFrequency: "monthly" as const,
@@ -39,7 +39,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const { contents } = await getArticlesList({ limit: 100 });
     articleEntries.push(
-      ...contents.map((item) => ({
+      ...(contents ?? []).map((item) => ({
         url: absoluteUrl(`/articles/${item.slug ?? item.id}`),
         lastModified: new Date(item.updatedAt ?? item.publishedAt ?? item.createdAt),
         changeFrequency: "monthly" as const,
