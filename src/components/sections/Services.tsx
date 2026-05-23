@@ -3,9 +3,10 @@
 import { Section } from "@/components/ui/Section";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { motion } from "framer-motion";
-import { Monitor, Smartphone, PenTool } from "lucide-react";
+import { Monitor, Smartphone, PenTool, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { WaveBackground } from "@/components/ui/WaveBackground";
+import { cn } from "@/lib/utils";
 
 const services = [
   {
@@ -14,6 +15,7 @@ const services = [
     title: "システム開発",
     enTitle: "System Development",
     description: "日々の業務で「困ったな」「大変だな」と感じることはありませんか？\n在庫管理や予約システムなど、面倒な作業を自動化して、\nもっと大切なことに時間を使えるようお手伝いします。",
+    wide: false,
   },
   {
     id: "02",
@@ -21,6 +23,7 @@ const services = [
     title: "ホームページ制作",
     enTitle: "Web Production",
     description: "お店や会社の「顔」となるホームページ。\nただ綺麗なだけでなく、お客様が見やすく、\n使いやすいサイトを丁寧に作り上げます。",
+    wide: false,
   },
   {
     id: "03",
@@ -28,11 +31,94 @@ const services = [
     title: "デザイン",
     enTitle: "Creative Design",
     description: "ロゴマークや名刺、パンフレットなど。\nあなたの想いをカタチにして、\n見る人の心に残るデザインをご提案します。",
+    wide: false,
   },
-];
+  {
+    id: "04",
+    icon: <Sparkles className="w-6 h-6" />,
+    title: "GEO対策",
+    enTitle: "Generative Engine Optimization",
+    description:
+      "これからは、人が検索するだけでなく、AIが答えを選ぶ時代。\n事業内容が正しく伝わるWebページの設計と、\nAIに引用されやすい情報整理・改善をサポートします。",
+    wide: true,
+  },
+] as const;
+
+type Service = (typeof services)[number];
+
+const GEO_MATRIX_LINES = [
+  "llms.txt",
+  "JSON-LD",
+  "@context",
+  "FAQPage",
+  "Organization",
+  "schema.org",
+  "meta",
+  "og:title",
+  "canonical",
+  "structured",
+  "WebSite",
+  "Service",
+  "legalName",
+  "description",
+  "robots.txt",
+  "sitemap.xml",
+  "areaServed",
+  "AI cite",
+  "GEO",
+  "Generative",
+] as const;
+
+function GeoMatrixRain({ active }: { active: boolean }) {
+  const columnCount = 16;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: active ? 0.22 : 0 }}
+      transition={{ duration: 0.35 }}
+      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      aria-hidden
+    >
+      <div className="flex h-full w-full justify-between gap-1 px-4 md:gap-2 md:px-8">
+        {Array.from({ length: columnCount }, (_, col) => {
+          const lines = Array.from({ length: 18 }, (_, row) =>
+            GEO_MATRIX_LINES[(col + row) % GEO_MATRIX_LINES.length]
+          );
+          const duration = 9 + (col % 6) * 1.4;
+
+          return (
+            <div key={col} className="relative h-full min-w-0 flex-1 overflow-hidden">
+              <motion.div
+                className="flex flex-col font-mono text-[8px] leading-[1.35rem] text-amami-blue md:text-[9px] md:leading-[1.5rem]"
+                initial={{ y: 0 }}
+                animate={active ? { y: ["0%", "50%"] } : { y: "0%" }}
+                transition={{
+                  duration,
+                  repeat: active ? Infinity : 0,
+                  ease: "linear",
+                }}
+              >
+                {[...lines, ...lines].map((line, row) => (
+                  <span
+                    key={`${col}-${row}`}
+                    className="block truncate whitespace-nowrap"
+                    style={{ opacity: 0.25 + (row % 4) * 0.12 }}
+                  >
+                    {line}
+                  </span>
+                ))}
+              </motion.div>
+            </div>
+          );
+        })}
+      </div>
+    </motion.div>
+  );
+}
 
 // サービスカードコンポーネント
-function ServiceCard({ service, index }: { service: typeof services[0], index: number }) {
+function ServiceCard({ service, index }: { service: Service; index: number }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -41,7 +127,12 @@ function ServiceCard({ service, index }: { service: typeof services[0], index: n
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.8 }}
-      className="group relative flex min-h-[400px] flex-col justify-between overflow-hidden rounded-[2rem] border border-slate-100 bg-white/80 p-8 shadow-sm backdrop-blur-sm transition-all duration-500 hover:shadow-xl md:min-h-[440px] md:p-12"
+      className={cn(
+        "group relative flex flex-col justify-between overflow-hidden rounded-[2rem] border border-slate-100 bg-white/80 p-8 shadow-sm backdrop-blur-sm transition-all duration-500 hover:shadow-xl md:p-12",
+        service.wide
+          ? "min-h-[320px] md:col-span-3 md:min-h-[280px]"
+          : "min-h-[400px] md:min-h-[440px]"
+      )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => setIsHovered(!isHovered)}
@@ -191,12 +282,22 @@ function ServiceCard({ service, index }: { service: typeof services[0], index: n
         </motion.div>
       )}
 
-      <div className="relative z-10">
-        <div className="flex justify-between items-start mb-6 md:mb-8">
+      {service.wide && (
+        <div className="absolute top-8 right-8 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-slate-50 text-slate-600 transition-all duration-300 group-hover:scale-110 group-hover:bg-amami-blue-light/20 group-hover:text-amami-blue md:top-12 md:right-12">
+          {service.icon}
+        </div>
+      )}
+
+      {service.id === "04" && <GeoMatrixRain active={isHovered} />}
+
+      <div className={cn("relative z-10", service.wide && "max-w-xl")}>
+        <div className="flex items-start justify-between mb-6 md:mb-8">
           <span className="text-3xl md:text-4xl font-serif text-slate-200 group-hover:text-amami-blue/20 transition-colors">{service.id}</span>
-          <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-slate-600 group-hover:text-amami-blue group-hover:bg-amami-blue-light/20 group-hover:scale-110 transition-all duration-300">
-            {service.icon}
-          </div>
+          {!service.wide && (
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-50 text-slate-600 transition-all duration-300 group-hover:scale-110 group-hover:bg-amami-blue-light/20 group-hover:text-amami-blue">
+              {service.icon}
+            </div>
+          )}
         </div>
         
         <h3 className="text-xl md:text-2xl font-serif text-slate-800 mb-2">{service.title}</h3>

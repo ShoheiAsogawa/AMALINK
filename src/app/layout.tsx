@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Zen_Old_Mincho, Zen_Kaku_Gothic_New } from "next/font/google";
 import { PixelPlayButton } from "@/components/ui/PixelPlayButton";
 import { RootJsonLd } from "@/components/seo/JsonLd";
-import { absoluteUrl, DEFAULT_DESCRIPTION, SITE_NAME } from "@/lib/seo";
+import { absoluteUrl, DEFAULT_DESCRIPTION, DEFAULT_TITLE, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
 import "./globals.css";
 
 const zenMincho = Zen_Old_Mincho({
@@ -19,27 +19,32 @@ const zenGothic = Zen_Kaku_Gothic_New({
   display: "swap",
 });
 
-const siteTitleDefault = `${SITE_NAME} - 島のリズムで、未来をつくる。`;
-
 export const metadata: Metadata = {
   metadataBase: new URL(absoluteUrl("/")),
   title: {
-    default: siteTitleDefault,
-    template: `%s | ${SITE_NAME}`,
+    default: DEFAULT_TITLE,
+    template: `%s | ${LEGAL_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,
   keywords: [
+    "合同会社AMALINK",
     "AMALINK",
+    "奄美大島",
     "奄美",
+    "離島",
     "システム開発",
     "ホームページ制作",
     "Webデザイン",
     "地域DX",
     "鹿児島",
+    "ウェブ制作",
+    "GEO対策",
+    "Generative Engine Optimization",
+    "AI検索",
   ],
-  authors: [{ name: SITE_NAME }],
-  creator: SITE_NAME,
-  publisher: SITE_NAME,
+  authors: [{ name: LEGAL_NAME }],
+  creator: LEGAL_NAME,
+  publisher: LEGAL_NAME,
   formatDetection: {
     email: false,
     address: false,
@@ -49,23 +54,23 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ja_JP",
     url: absoluteUrl("/"),
-    siteName: SITE_NAME,
-    title: siteTitleDefault,
+    siteName: `${LEGAL_NAME}（${SITE_NAME}）`,
+    title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
     images: [
       {
-        url: "/logo.png",
+        url: absoluteUrl("/logo.png"),
         width: 512,
         height: 512,
-        alt: `${SITE_NAME} ロゴ`,
+        alt: `${LEGAL_NAME}（${SITE_NAME}）ロゴ`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: siteTitleDefault,
+    title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: ["/logo.png"],
+    images: [absoluteUrl("/logo.png")],
   },
   robots: {
     index: true,

@@ -3,13 +3,13 @@ import { getNewsList } from "@/lib/microcms";
 import { absoluteUrl } from "@/lib/seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticPaths = ["", "/news", "/contact"] as const;
+  const staticPaths = ["", "/amami-digital", "/faq", "/news", "/contact"] as const;
 
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => ({
     url: absoluteUrl(path || "/"),
     lastModified: new Date(),
     changeFrequency: path === "" ? "weekly" : "monthly",
-    priority: path === "" ? 1 : 0.7,
+    priority: path === "" ? 1 : path === "/amami-digital" ? 0.9 : 0.7,
   }));
 
   try {

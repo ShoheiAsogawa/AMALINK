@@ -1,31 +1,111 @@
-import { absoluteUrl, DEFAULT_DESCRIPTION, SITE_NAME } from "@/lib/seo";
+import {
+  COMPANY_OVERVIEW,
+  FAQ_ITEMS,
+  KEY_URLS,
+  SERVICES,
+} from "@/lib/site-content";
+import {
+  absoluteUrl,
+  DEFAULT_DESCRIPTION,
+  LEGAL_NAME,
+  SITE_NAME,
+  getOfficialLineAddFriendUrl,
+} from "@/lib/seo";
 
 export function RootJsonLd() {
   const root = absoluteUrl("/");
+  const lineUrl = getOfficialLineAddFriendUrl();
+
   const payload = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
         "@id": `${root}#organization`,
-        name: SITE_NAME,
+        name: LEGAL_NAME,
+        alternateName: SITE_NAME,
+        legalName: LEGAL_NAME,
         url: root,
         logo: {
           "@type": "ImageObject",
           url: absoluteUrl("/logo.png"),
         },
         description: DEFAULT_DESCRIPTION,
+        areaServed: {
+          "@type": "Place",
+          name: COMPANY_OVERVIEW.region,
+        },
+        knowsAbout: [
+          "ホームページ制作",
+          "システム開発",
+          "Webデザイン",
+          "GEO対策",
+          "Generative Engine Optimization",
+          "地域DX",
+          "奄美大島",
+        ],
+        sameAs: [lineUrl],
       },
       {
         "@type": "WebSite",
         "@id": `${root}#website`,
         url: root,
-        name: SITE_NAME,
+        name: `${LEGAL_NAME}（${SITE_NAME}）`,
         description: DEFAULT_DESCRIPTION,
         inLanguage: "ja",
         publisher: { "@id": `${root}#organization` },
       },
+      ...SERVICES.map((service) => ({
+        "@type": "Service",
+        "@id": `${root}#${service.id}`,
+        name: service.name,
+        description: service.description,
+        url: service.url,
+        provider: { "@id": `${root}#organization` },
+        areaServed: {
+          "@type": "Place",
+          name: COMPANY_OVERVIEW.baseLocation,
+        },
+      })),
+      {
+        "@type": "FAQPage",
+        "@id": `${root}#faq`,
+        url: KEY_URLS.faq,
+        mainEntity: FAQ_ITEMS.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      },
     ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(payload) }}
+    />
+  );
+}
+
+export function FaqPageJsonLd() {
+  const faqUrl = KEY_URLS.faq;
+  const payload = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    url: faqUrl,
+    mainEntity: FAQ_ITEMS.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
   };
 
   return (

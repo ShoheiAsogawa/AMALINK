@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Mail, Monitor, Newspaper, UserRound } from "lucide-react";
+import { Mail, Monitor, Newspaper, UserRound, CircleHelp } from "lucide-react";
 import { OfficialLineIcon } from "@/components/ui/OfficialLineIcon";
 import { getOfficialLineAddFriendUrl } from "@/lib/seo";
 import { ChunkyAnchor, ChunkyNextLink } from "@/components/ui/ChunkyButton";
@@ -35,6 +35,7 @@ export default function Header() {
     { name: "About", href: "/#about", label: "私たちについて", en: "About Us" },
     { name: "Services", href: "/#services", label: "サービス", en: "Services" },
     { name: "News", href: "/news", label: "お知らせ", en: "News" },
+    { name: "FAQ", href: "/faq", label: "よくある質問", en: "FAQ" },
     { name: "OfficialLINE", href: lineUrl, label: "公式LINE", en: "LINE", external: true },
     { name: "Contact", href: "/contact", label: "お問い合わせ", en: "Contact" },
   ];
@@ -47,6 +48,8 @@ export default function Header() {
         return <Monitor className={mobileNavIconClass} strokeWidth={2} aria-hidden />;
       case "News":
         return <Newspaper className={mobileNavIconClass} strokeWidth={2} aria-hidden />;
+      case "FAQ":
+        return <CircleHelp className={mobileNavIconClass} strokeWidth={2} aria-hidden />;
       case "OfficialLINE":
         return <OfficialLineIcon className="relative size-[1em] shrink-0" aria-hidden />;
       case "Contact":
@@ -89,7 +92,7 @@ export default function Header() {
           >
             <Image
               src={`${assetBase}/menu-about-bird.png`}
-              alt=""
+              alt="About セクションを表す鳥のイラスト"
               width={382}
               height={337}
               className="h-full w-full object-contain object-left-bottom drop-shadow-[0_3px_5px_rgba(15,23,42,0.18)]"
@@ -111,7 +114,7 @@ export default function Header() {
           >
             <Image
               src={`${assetBase}/menu-service-kingfisher.png`}
-              alt=""
+              alt="Services セクションを表すカワセミのイラスト"
               width={322}
               height={288}
               className="h-full w-full object-contain object-right-bottom drop-shadow-[0_3px_5px_rgba(15,23,42,0.18)]"
@@ -135,7 +138,7 @@ export default function Header() {
           >
             <Image
               src={`${assetBase}/menu-news-hawk.png`}
-              alt=""
+              alt="News セクションを表すタカのイラスト"
               width={302}
               height={381}
               className="h-full w-full object-contain object-left-bottom drop-shadow-[0_3px_5px_rgba(15,23,42,0.18)]"
@@ -157,7 +160,7 @@ export default function Header() {
           >
             <Image
               src={`${assetBase}/menu-line-rabbit.png`}
-              alt=""
+              alt="公式LINEを表すウサギのイラスト"
               width={317}
               height={344}
               className="h-full w-full object-contain object-right-center drop-shadow-[0_3px_5px_rgba(15,23,42,0.18)]"
@@ -179,7 +182,7 @@ export default function Header() {
           >
             <Image
               src={`${assetBase}/menu-contact-snake.png`}
-              alt=""
+              alt="Contact セクションを表すヘビのイラスト"
               width={390}
               height={285}
               className="h-full w-full object-contain object-left-center drop-shadow-[0_3px_5px_rgba(15,23,42,0.18)]"

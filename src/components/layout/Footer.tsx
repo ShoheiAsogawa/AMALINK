@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FooterTruck } from "@/components/layout/FooterTruck";
+import { LEGAL_NAME } from "@/lib/seo";
 
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -15,7 +16,7 @@ export default function Footer() {
               <div className="relative w-8 h-8 md:w-10 md:h-10">
                 <Image 
                   src={`${assetBase}/logo.png`}
-                  alt="AMALINK Logo" 
+                  alt={`${LEGAL_NAME} ロゴ`}
                   fill
                   className="object-contain"
                 />
@@ -23,6 +24,8 @@ export default function Footer() {
               <span className="text-slate-900 font-sans group-hover:text-amami-blue transition-colors">AMALINK</span>
             </Link>
             <p className="text-slate-500 text-xs md:text-sm font-sans leading-relaxed">
+              {LEGAL_NAME}
+              <br />
               島のリズムで、
               <br />
               <span className="text-amami-blue">未来をつくる。</span>
@@ -30,8 +33,19 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col md:items-end gap-6 w-full md:w-auto">
+            <nav className="flex flex-wrap gap-x-5 gap-y-2 text-xs md:text-sm font-sans text-slate-500">
+              <Link href="/amami-digital" className="hover:text-amami-blue transition-colors">
+                奄美のデジタル支援
+              </Link>
+              <Link href="/faq" className="hover:text-amami-blue transition-colors">
+                よくある質問
+              </Link>
+              <Link href="/contact" className="hover:text-amami-blue transition-colors">
+                お問い合わせ
+              </Link>
+            </nav>
              <div className="text-slate-400 text-[10px] md:text-xs tracking-wide font-sans">
-              &copy; {new Date().getFullYear()} AMALINK. All rights reserved.
+              &copy; {new Date().getFullYear()} {LEGAL_NAME}. All rights reserved.
             </div>
           </div>
         </div>

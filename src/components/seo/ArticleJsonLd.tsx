@@ -1,4 +1,4 @@
-import { absoluteUrl, SITE_NAME } from "@/lib/seo";
+import { absoluteUrl, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
 import type { News } from "@/lib/microcms";
 
 type Props = {
@@ -23,7 +23,8 @@ export function ArticleJsonLd({ news, pathSegment }: Props) {
     },
     publisher: {
       "@type": "Organization",
-      name: SITE_NAME,
+      name: LEGAL_NAME,
+      alternateName: SITE_NAME,
       logo: {
         "@type": "ImageObject",
         url: absoluteUrl("/logo.png"),

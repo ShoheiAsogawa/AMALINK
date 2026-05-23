@@ -27,6 +27,8 @@ export function stripHtmlToDescription(html: string, maxLen = 160): string {
 }
 
 export const SITE_NAME = "AMALINK";
+export const LEGAL_NAME = "合同会社AMALINK";
+export const TAGLINE = "島のリズムで、未来をつくる。";
 
 /** 公式LINEの友だち追加URL。`NEXT_PUBLIC_OFFICIAL_LINE_URL` が無いときはデフォルトを使う */
 export function getOfficialLineAddFriendUrl(): string {
@@ -36,4 +38,6 @@ export function getOfficialLineAddFriendUrl(): string {
 }
 
 export const DEFAULT_DESCRIPTION =
-  "AMALINKは情報で人と人をつなげ、島内外の懸け橋となります。システム開発・ホームページ制作・デザインなど、奄美を拠点にデジタルで地域とつながります。";
+  "合同会社AMALINK（AMALINK）は、鹿児島県奄美大島を拠点にホームページ制作・システム開発・デザイン・GEO対策を行うデジタル支援会社です。奄美・全国の中小事業者向けに、AIに引用されやすいWeb設計と伴走型サポートを提供します。";
+
+export const DEFAULT_TITLE = `${LEGAL_NAME}（${SITE_NAME}）｜奄美大島のウェブ制作・システム開発・GEO対策`;

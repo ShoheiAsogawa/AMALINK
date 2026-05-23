@@ -9,18 +9,19 @@ import { Contact } from "@/components/sections/Contact";
 import { MarqueeSpacer } from "@/components/ui/MarqueeSpacer";
 import { getNewsList } from "@/lib/microcms";
 import { GameGateway } from "@/components/game/GameGateway";
-import { absoluteUrl, DEFAULT_DESCRIPTION, SITE_NAME } from "@/lib/seo";
+import { absoluteUrl, DEFAULT_DESCRIPTION, DEFAULT_TITLE } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: {
-    absolute: `${SITE_NAME} - 島のリズムで、未来をつくる。`,
+    absolute: DEFAULT_TITLE,
   },
   description: DEFAULT_DESCRIPTION,
   alternates: { canonical: "/" },
   openGraph: {
     url: absoluteUrl("/"),
-    title: `${SITE_NAME} - 島のリズムで、未来をつくる。`,
+    title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
+    type: "website",
   },
 };
 

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Sprout, Waves, Users } from "lucide-react";
 import { useState } from "react";
 import { WaveBackground } from "@/components/ui/WaveBackground";
+import { LEGAL_NAME } from "@/lib/seo";
 
 // 島に根ざすカード - リアルな双葉成長アニメーション（右下配置）
 function SproutCard() {
@@ -241,7 +242,7 @@ export function About() {
 
           <div className="space-y-8 font-serif text-lg leading-loose text-slate-600 md:text-xl">
             <p>
-              AMALINK（アマリンク）は、奄美大島で生まれたデジタルクリエイティブチームです。
+              {LEGAL_NAME}（アマリンク）は、奄美大島で生まれたデジタルクリエイティブチームです。
             </p>
             <p>
               私たちの名前「AMALINK」には、故郷「<span className="text-amami-blue font-bold">AMAMI</span>」と、世界への「
