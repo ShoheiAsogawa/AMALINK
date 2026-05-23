@@ -32,21 +32,8 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex flex-col md:items-end gap-6 w-full md:w-auto">
-            <nav className="flex flex-wrap gap-x-5 gap-y-2 text-xs md:text-sm font-sans text-slate-500">
-              <Link href="/amami-digital" className="hover:text-amami-blue transition-colors">
-                奄美のデジタル支援
-              </Link>
-              <Link href="/faq" className="hover:text-amami-blue transition-colors">
-                よくある質問
-              </Link>
-              <Link href="/contact" className="hover:text-amami-blue transition-colors">
-                お問い合わせ
-              </Link>
-            </nav>
-             <div className="text-slate-400 text-[10px] md:text-xs tracking-wide font-sans">
-              &copy; {new Date().getFullYear()} {LEGAL_NAME}. All rights reserved.
-            </div>
+          <div className="text-slate-400 text-[10px] md:text-xs tracking-wide font-sans w-full md:w-auto md:text-right">
+            &copy; {new Date().getFullYear()} {LEGAL_NAME}. All rights reserved.
           </div>
         </div>
       </div>

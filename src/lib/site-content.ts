@@ -54,7 +54,7 @@ export const SERVICES = [
     enName: "Web Production",
     description:
       "お店や会社の「顔」となるコーポレートサイト・集客サイトを、見やすさと更新しやすさを重視して制作します。",
-    url: absoluteUrl("/amami-digital"),
+    url: absoluteUrl("/#services"),
   },
   {
     id: "design",
@@ -247,7 +247,6 @@ export const FAQ_ITEMS: FaqItem[] = [
 
 export const KEY_URLS = {
   home: absoluteUrl("/"),
-  amamiDigital: absoluteUrl("/amami-digital"),
   faq: absoluteUrl("/faq"),
   contact: absoluteUrl("/contact"),
   news: absoluteUrl("/news"),
