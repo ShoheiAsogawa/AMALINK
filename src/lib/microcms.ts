@@ -14,9 +14,8 @@ export type News = {
 } & MicroCMSListContent;
 
 /**
- * GEO向け記事（microCMS API: articles）
- * 管理画面で API「articles」を作成し、title / content / slug / description / category を設定してください。
- * description … メタ・冒頭要約（40〜60語推奨）。未設定時は本文から自動生成します。
+ * GEO向け記事（microCMS API: articles）— 現在サイト非公開・将来復活用
+ * 復活時: src/app/articles/ と ArticlesSection を戻し、redirect を削除
  */
 export type Article = {
   title: string;

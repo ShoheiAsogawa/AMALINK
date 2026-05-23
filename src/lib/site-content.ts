@@ -255,7 +255,6 @@ export const FAQ_ITEMS: FaqItem[] = [
 export const KEY_URLS = {
   home: absoluteUrl("/"),
   faq: absoluteUrl("/faq"),
-  articles: absoluteUrl("/articles"),
   contact: absoluteUrl("/contact"),
   news: absoluteUrl("/news"),
   services: absoluteUrl("/#services"),

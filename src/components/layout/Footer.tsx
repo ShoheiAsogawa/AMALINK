@@ -11,13 +11,6 @@ export default function Footer() {
     <footer className="relative bg-slate-50 border-t border-slate-200 py-12 md:py-20">
       <FooterTruck />
       <div className="container relative z-[1] mx-auto px-6">
-        <Link
-          href="/articles"
-          className="absolute right-6 top-12 z-[2] inline-block font-sans text-[10px] tracking-wide text-slate-400 transition-colors hover:text-amami-blue md:top-20 md:text-xs"
-        >
-          コラム・ガイド
-        </Link>
-
         <div className="max-w-md text-left">
           <Link href="/" className="text-xl md:text-2xl font-bold tracking-widest flex items-center gap-2 mb-4 group">
             <div className="relative w-8 h-8 md:w-10 md:h-10">

@@ -8,6 +8,16 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
+      {
+        source: "/articles",
+        destination: "/",
+        permanent: false,
+      },
+      {
+        source: "/articles/:slug",
+        destination: "/",
+        permanent: false,
+      },
     ];
   },
 };

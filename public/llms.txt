@@ -46,7 +46,6 @@
 ## 主要ページ
 
 - [トップページ](https://amalink.co.jp/): 会社概要・サービス・お知らせ
-- [コラム・ガイド](https://amalink.co.jp/articles): 奄美大島・離島向けWeb制作・システム開発の記事（ロングテール・GEO向け）
 - [よくある質問（FAQ）](https://amalink.co.jp/faq): 料金・対応エリア・選び方など
 - [お問い合わせ](https://amalink.co.jp/contact): 無料相談フォーム
 - [お知らせ](https://amalink.co.jp/news): イベント・リリースなど最新情報
