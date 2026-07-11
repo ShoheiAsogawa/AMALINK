@@ -13,7 +13,7 @@ export function Section({ children, id, className, background, bleed, ...props }
   return (
     <section
       id={id}
-      className={cn("py-20 md:py-32 relative overflow-hidden", className)}
+      className={cn("relative overflow-x-clip py-20 md:py-32", className)}
       {...props}
     >
       {background}

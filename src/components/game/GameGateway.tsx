@@ -87,17 +87,24 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
   const revealed = mainRevealed === true;
   const showGateway = mainRevealed === false;
 
+  /* 本編表示後は素の div にする。motion の transform が残ると子の sticky/fixed が壊れる */
+  const mainShell = revealed ? (
+    <div className="relative z-0 min-h-screen">{children}</div>
+  ) : (
+    <motion.div
+      initial={false}
+      animate={{ opacity: 0 }}
+      transition={CROSSFADE}
+      style={{ pointerEvents: "none" }}
+      className="relative z-0 min-h-screen"
+    >
+      {children}
+    </motion.div>
+  );
+
   return (
     <>
-      <motion.div
-        initial={false}
-        animate={{ opacity: revealed ? 1 : 0 }}
-        transition={CROSSFADE}
-        style={{ pointerEvents: revealed ? "auto" : "none" }}
-        className="relative z-0 min-h-screen"
-      >
-        {children}
-      </motion.div>
+      {mainShell}
 
       <AnimatePresence>
         {whiteFlash !== "idle" && (

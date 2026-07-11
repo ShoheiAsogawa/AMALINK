@@ -9,6 +9,7 @@ import { WaveBackground } from "@/components/ui/WaveBackground";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { RabbitAvatar } from "@/components/chatbot/RabbitAvatar";
+import { usePinnedHorizontalScroll } from "@/components/ui/usePinnedHorizontalScroll";
 
 const services = [
   {
@@ -103,7 +104,7 @@ function GeoKeywordRain({ active }: { active: boolean }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{ opacity: active ? 1 : 0 }}
+      animate={{ opacity: active ? 0.55 : 0 }}
       transition={{ duration: 0.35 }}
       className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
       aria-hidden
@@ -133,7 +134,7 @@ function GeoKeywordRain({ active }: { active: boolean }) {
                     key={`${col}-${row}`}
                     className="block whitespace-nowrap text-[11px] font-medium tracking-wide text-amami-blue md:text-sm"
                     style={{
-                      opacity: 0.18 + ((col + row) % 5) * 0.1,
+                      opacity: 0.08 + ((col + row) % 5) * 0.035,
                       transform: `translateX(${((col * 11 + row * 7) % 28) - 8}px)`,
                     }}
                   >
@@ -320,29 +321,26 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
           initial={{ opacity: 0.7, y: 10 }}
           animate={{ opacity: isHovered ? 1 : 0.85, y: isHovered ? 0 : 4 }}
           transition={{ duration: 0.35 }}
-          className="pointer-events-none absolute bottom-10 right-2 z-20 md:bottom-12 md:right-3"
+          className="pointer-events-none absolute bottom-6 right-2 z-20 md:bottom-8 md:right-3"
           aria-hidden
         >
           <RabbitAvatar mood={isHovered ? "happy" : "idle"} size={80} animateFloat={false} />
         </motion.div>
       )}
 
-      <div className="relative z-10 flex min-h-0 flex-1 flex-col pr-12 md:pr-14">
-        <span className="mb-4 block font-serif text-2xl text-slate-200 transition-colors group-hover:text-amami-blue/20 md:mb-5 md:text-3xl">
-          {service.id}
-        </span>
-        
-        <h3 className="mb-1.5 font-serif text-lg text-slate-800 md:mb-2 md:text-2xl">{service.title}</h3>
-        <span className="mb-3 block font-sans text-[10px] uppercase tracking-widest text-amami-blue md:mb-5 md:text-xs">
-          {service.enTitle}
-        </span>
-        
-        <p
-          className={cn(
-            "font-sans text-sm leading-relaxed whitespace-pre-line text-slate-500 md:text-base md:leading-relaxed",
-            service.key === "chatbot" && "pr-6 md:pr-8",
-          )}
-        >
+      <div className="relative z-10 flex min-h-0 flex-1 flex-col">
+        <div className="pr-12 md:pr-14">
+          <span className="mb-4 block font-serif text-2xl text-slate-200 transition-colors group-hover:text-amami-blue/20 md:mb-5 md:text-3xl">
+            {service.id}
+          </span>
+
+          <h3 className="mb-1.5 font-serif text-lg text-slate-800 md:mb-2 md:text-2xl">{service.title}</h3>
+          <span className="mb-3 block font-sans text-[10px] uppercase tracking-widest text-amami-blue md:mb-5 md:text-xs">
+            {service.enTitle}
+          </span>
+        </div>
+
+        <p className="font-sans text-sm leading-relaxed whitespace-pre-line text-slate-500 md:text-base md:leading-relaxed">
           {service.description}
         </p>
 
@@ -354,7 +352,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         >
           <Link
             href={service.href}
-            className="inline-flex items-center font-sans text-xs font-medium text-amami-blue underline decoration-amami-blue/30 underline-offset-4 transition hover:decoration-amami-blue md:text-sm"
+            className="inline-flex items-center font-sans text-xs font-medium text-amami-blue transition hover:text-amami-blue/80 md:text-sm"
             onClick={(e) => e.stopPropagation()}
           >
             {service.linkLabel}
@@ -366,37 +364,113 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   );
 }
 
+function ServicesCopy({ className }: { className?: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className={cn("mx-auto max-w-3xl text-center", className)}
+    >
+      <SectionEyebrow label="Services" color="blue" />
+
+      <h2 className="mb-8 font-serif text-3xl leading-tight tracking-normal text-slate-800 md:text-5xl">
+        島暮らしを、<br />
+        ちょっと便利に。
+      </h2>
+      <p className="mx-auto max-w-2xl font-sans text-base leading-loose text-slate-500 md:text-lg">
+        難しそうなITのことも、私たちにお任せください。<br />
+        お客様一人ひとりのペースに合わせて、<br />
+        最適な解決策をご提案します。
+      </p>
+    </motion.div>
+  );
+}
+
+function MobileServicesScroller() {
+  const { active, containerRef, layout, reduceMotion, stickyRef, trackRef, x } =
+    usePinnedHorizontalScroll(services.length);
+
+  if (reduceMotion) {
+    return (
+      <div className="md:hidden">
+        <ServicesCopy />
+        <div className="mt-8 space-y-5">
+          {services.map((service, index) => (
+            <ServiceCard key={service.key} service={service} index={index} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative -mx-4 w-[calc(100%+2rem)] min-w-0 max-w-[calc(100%+2rem)] md:hidden"
+      style={{ height: layout.containerHeight }}
+      aria-label="サービスカード。縦スクロールで横に進みます"
+    >
+      <div
+        ref={stickyRef}
+        className="sticky z-10 flex w-full min-w-0 overflow-hidden"
+        style={{ top: layout.stickyTop }}
+      >
+        <div className="w-full overflow-hidden">
+          <div className="px-5">
+            <ServicesCopy />
+          </div>
+
+          <motion.div
+            ref={trackRef}
+            style={{ x }}
+            className="mt-8 flex w-max items-stretch gap-5 px-6 will-change-transform"
+          >
+            {services.map((service, index) => (
+              <div
+                key={service.key}
+                className="w-[min(80vw,22rem)] shrink-0"
+                data-service-card={index}
+              >
+                <ServiceCard service={service} index={index} />
+              </div>
+            ))}
+          </motion.div>
+
+          <div className="mt-6 flex justify-center gap-2 px-6" aria-hidden>
+            {services.map((service, index) => (
+              <span
+                key={service.key}
+                className={cn(
+                  "h-1.5 rounded-full transition-all duration-300",
+                  active === index ? "w-6 bg-amami-blue" : "w-1.5 bg-slate-300",
+                )}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Services() {
   return (
     <Section
       id="services"
-      className="relative overflow-hidden bg-gradient-to-b from-white to-slate-50 py-20 md:py-32"
+      className="relative !overflow-visible bg-gradient-to-b from-white to-slate-50 py-20 md:py-32"
       background={<WaveBackground color="blue" position="full" opacity={0.12} speed={14} />}
     >
-      <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mx-auto mb-12 max-w-3xl text-center md:mb-32"
-        >
-          <SectionEyebrow label="Services" color="blue" />
+      <MobileServicesScroller />
 
-          <h2 className="mb-8 text-3xl font-serif leading-tight text-slate-800 [letter-spacing:0] md:text-5xl">
-            島暮らしを、<br />
-            ちょっと便利に。
-          </h2>
-          <p className="mx-auto max-w-2xl text-base leading-loose text-slate-500 md:text-lg font-sans">
-            難しそうなITのことも、私たちにお任せください。<br />
-            お客様一人ひとりのペースに合わせて、<br />
-            最適な解決策をご提案します。
-          </p>
-        </motion.div>
-
+      <div className="hidden md:block">
+        <ServicesCopy className="mb-32" />
         <div className="relative z-10 grid auto-rows-fr gap-5 md:grid-cols-3 md:gap-6">
           {services.map((service, index) => (
             <ServiceCard key={service.key} service={service} index={index} />
           ))}
         </div>
+      </div>
     </Section>
   );
 }

@@ -38,7 +38,7 @@ export default async function Home() {
 
   return (
     <GameGateway>
-      <main className="overflow-hidden">
+      <main className="overflow-x-clip">
         <Header />
         <Hero />
         <MarqueeSpacer phrase="PHILOSOPHY" />

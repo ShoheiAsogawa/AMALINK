@@ -276,7 +276,7 @@ export function AmalinkChatbot() {
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="rounded-2xl bg-slate-900 px-3 py-1.5 font-sans text-[11px] font-medium text-white shadow-lg"
+                className="whitespace-nowrap rounded-2xl bg-slate-900 px-3 py-1.5 font-sans text-[11px] font-medium text-white shadow-lg"
               >
                 くろうさと話す
               </button>
