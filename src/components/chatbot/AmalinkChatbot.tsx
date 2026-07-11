@@ -20,6 +20,9 @@ type UiMessage = {
 };
 
 const OPEN_EVENT = "amalink-open-chat";
+/** クライアント側の連打防止（秒） */
+const CLIENT_SEND_COOLDOWN_MS = 1500;
+const CLIENT_MAX_USER_MESSAGES = 30;
 
 export function openAmalinkChat() {
   if (typeof window !== "undefined") {
@@ -37,6 +40,7 @@ export function AmalinkChatbot() {
   ]);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const lastSendAtRef = useRef(0);
 
   useEffect(() => {
     const onOpen = () => setOpen(true);
@@ -66,12 +70,34 @@ export function AmalinkChatbot() {
     const content = text.trim();
     if (!content || pending) return;
 
+    const now = Date.now();
+    if (now - lastSendAtRef.current < CLIENT_SEND_COOLDOWN_MS) {
+      return;
+    }
+
+    const userCount = messages.filter((m) => m.role === "user").length;
+    if (userCount >= CLIENT_MAX_USER_MESSAGES) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `a-${Date.now()}`,
+          role: "assistant",
+          content:
+            "いっぱい話してくれてありがとう。続きはお問い合わせからもどうぞ。",
+          showContactLink: true,
+        },
+      ]);
+      return;
+    }
+
+    lastSendAtRef.current = now;
+
     const userMsg: UiMessage = {
       id: `u-${Date.now()}`,
       role: "user",
-      content,
+      content: content.slice(0, 800),
     };
-    const nextMessages = [...messages, userMsg];
+    const nextMessages = [...messages, userMsg].slice(-24);
     setMessages(nextMessages);
     setInput("");
     setPending(true);
@@ -90,6 +116,37 @@ export function AmalinkChatbot() {
         error?: string;
         showContactLink?: boolean;
       };
+
+      if (res.status === 429) {
+        setMood("thinking");
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `a-${Date.now()}`,
+            role: "assistant",
+            content:
+              data.reply?.trim() ||
+              "ごめんね、いまちょっと込み合ってるみたい。少し待ってから、もう一度話しかけてね。",
+          },
+        ]);
+        setTimeout(() => setMood("idle"), 1200);
+        return;
+      }
+
+      if (res.status === 403 || res.status === 413) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `a-${Date.now()}`,
+            role: "assistant",
+            content: "うまく送れなかったみたい。少し時間をおいてから試してね。",
+          },
+        ]);
+        setMood("thinking");
+        setTimeout(() => setMood("idle"), 1200);
+        return;
+      }
+
       const reply =
         data.reply?.trim() ||
         "うまく答えられなかったみたい。奄美大島やAMALINKのこと、別の聞き方で試してみてね。";
