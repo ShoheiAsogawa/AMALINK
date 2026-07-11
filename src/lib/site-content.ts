@@ -39,7 +39,7 @@ export const COMPANY_OVERVIEW = {
   strengths: [
     "奄美大島に拠点を置き、対面・オンライン双方で地域の文脈を理解した提案ができる",
     "難しい専門用語を避け、事業者のペースに合わせた丁寧な伴走型サポート",
-    "ホームページ制作から業務システム、ロゴ・印刷物まで一貫して相談できる",
+    "ホームページ制作から業務システム、ロゴ・印刷物の制作・印刷手配まで一貫して相談できる",
     "離島ならではの回線・運用・更新のしやすさを前提に設計する",
   ],
   notIdealFor:
@@ -53,7 +53,15 @@ export const SERVICES = [
     enName: "System Development",
     description:
       "在庫管理・予約・問い合わせ管理など、日々の業務負担を減らすWebアプリや業務システムを開発します。",
-    url: absoluteUrl("/#services"),
+    url: absoluteUrl("/system-development"),
+  },
+  {
+    id: "ai-avatar-chatbot",
+    name: "AIアバターチャットボット",
+    enName: "AI Avatar Chatbot",
+    description:
+      "自社サイト向けのAIチャットボット制作に対応。アバター付き案内ボットや、答える範囲を絞った設計など、用途に合わせて組み込みまでご相談いただけます。",
+    url: absoluteUrl("/ai-avatar-chatbot"),
   },
   {
     id: "web-production",
@@ -61,23 +69,23 @@ export const SERVICES = [
     enName: "Web Production",
     description:
       "お店や会社の「顔」となるコーポレートサイト・集客サイトを、見やすさと更新しやすさを重視して制作します。",
-    url: absoluteUrl("/#services"),
+    url: absoluteUrl("/web-production"),
   },
   {
     id: "design",
     name: "デザイン",
     enName: "Creative Design",
     description:
-      "ロゴ、名刺、パンフレットなど、ブランドの想いを伝えるビジュアルデザインを提供します。",
-    url: absoluteUrl("/#services"),
+      "ロゴ、名刺、パンフレットなど、ブランドの想いを伝えるビジュアルを制作。印刷の手配から納品まで一気通貫で対応します。",
+    url: absoluteUrl("/design"),
   },
   {
     id: "geo",
-    name: "GEO対策",
-    enName: "Generative Engine Optimization",
+    name: "GEO・SEO対策",
+    enName: "GEO & SEO",
     description:
-      "AIが検索結果を生成する時代に向け、事業内容が正しく伝わるWebページの設計と、AIに引用されやすい情報整理・改善をサポートします。",
-    url: absoluteUrl("/#services"),
+      "検索エンジン向けのSEOと、AI検索・生成AI向けのGEOをあわせて支援。事業内容が正しく伝わるWebページの設計と改善を行います。",
+    url: absoluteUrl("/geo-seo"),
   },
 ] as const;
 
@@ -122,7 +130,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: "services",
     question: "ロゴや名刺など、デザインだけの依頼もできますか？",
     answer:
-      "はい。ロゴマーク、名刺、パンフレット、SNS用の画像など、ビジュアルのみのご依頼も承っています。Web制作と合わせてブランド全体を整えたい場合も、一貫してご相談いただけます。",
+      "はい。ロゴマーク、名刺、パンフレット、SNS用の画像など、ビジュアルのみのご依頼も承っています。印刷の手配から納品まで一気通貫で対応でき、Web制作と合わせてブランド全体を整えたい場合もご相談いただけます。",
   },
   {
     id: "service-renewal",
@@ -172,6 +180,20 @@ export const FAQ_ITEMS: FaqItem[] = [
     question: "SEO対策とGEO対策は違うのですか？",
     answer:
       "SEOはGoogleなどの検索結果で上位表示を目指す対策、GEOはAIが生成する回答の中で引用・紹介されやすくする対策です。どちらも「見つけてもらう」ことが目的ですが、AI検索が増える今は両方を意識したWeb設計が有効です。AMALINKでは制作とあわせて、両方の視点を取り入れたご提案が可能です。",
+  },
+  {
+    id: "service-chatbot",
+    category: "services",
+    question: "AIアバターチャットボットとは何ですか？",
+    answer:
+      "サイト上に表示されるキャラクター付きの案内チャットです。よくある質問への回答や、問い合わせへの橋渡しを自動化できます。AMALINKでは、答える範囲・見た目・導線を合わせて制作・組み込みもご相談いただけます。",
+  },
+  {
+    id: "service-chatbot-scope",
+    category: "services",
+    question: "チャットボットは何でも答えてくれますか？",
+    answer:
+      "いいえ。答える範囲をあらかじめ決めて設計します。「自社サービスと地域のことだけ」など、用途に合わせて制限できます。",
   },
   {
     id: "process-area",
@@ -257,6 +279,6 @@ export const KEY_URLS = {
   faq: absoluteUrl("/faq"),
   contact: absoluteUrl("/contact"),
   news: absoluteUrl("/news"),
-  services: absoluteUrl("/#services"),
+  services: absoluteUrl("/system-development"),
   about: absoluteUrl("/#about"),
 } as const;

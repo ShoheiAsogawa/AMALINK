@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { Section } from "@/components/ui/Section";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { motion } from "framer-motion";
@@ -9,13 +10,34 @@ import { getOfficialLineAddFriendUrl } from "@/lib/seo";
 import { OfficialLineIcon } from "@/components/ui/OfficialLineIcon";
 import { ChunkyAnchor, ChunkyNextLink } from "@/components/ui/ChunkyButton";
 
-export function Contact() {
+type ContactProps = {
+  id?: string;
+  title?: ReactNode;
+  description?: ReactNode;
+};
+
+export function Contact({
+  id = "contact",
+  title = (
+    <>
+      まずは、<br className="md:hidden" />
+      気軽にお話ししませんか？
+    </>
+  ),
+  description = (
+    <>
+      「これって相談をしていいのかな？」
+      <br />
+      そんな気持ちのままで大丈夫。お気軽にどうぞ。
+    </>
+  ),
+}: ContactProps) {
   const lineUrl = getOfficialLineAddFriendUrl();
 
   return (
     <Section
-      id="contact"
-      className="bg-gradient-to-b from-slate-50 to-white py-20 md:py-32 overflow-hidden relative"
+      id={id}
+      className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-20 md:py-32"
       background={<WaveBackground color="blue-light" position="top" opacity={0.18} speed={16} />}
     >
       <div className="relative z-10 mx-auto w-full max-w-4xl">
@@ -28,15 +50,12 @@ export function Contact() {
         >
           <SectionEyebrow label="Contact Us" color="green" />
 
-          <h2 className="mb-6 w-full max-w-full text-center text-2xl font-serif leading-tight text-slate-800 [letter-spacing:0] md:mb-8 md:whitespace-nowrap md:text-[clamp(1.65rem,3.2vw,3rem)] xl:text-5xl">
-            まずは、<br className="md:hidden" />
-            気軽にお話ししませんか？
+          <h2 className="mb-6 w-full max-w-full text-center font-serif text-2xl leading-tight text-slate-800 [letter-spacing:0] md:mb-8 md:text-[clamp(1.65rem,3.2vw,3rem)] xl:text-5xl">
+            {title}
           </h2>
 
-          <p className="mb-9 max-w-2xl text-center text-base leading-loose text-slate-500 md:mb-11 md:text-lg font-sans">
-            「これって相談をしていいのかな？」
-            <br />
-            そんな気持ちのままで大丈夫。お気軽にどうぞ。
+          <p className="mb-9 max-w-2xl text-center font-sans text-base leading-loose text-slate-500 md:mb-11 md:text-lg">
+            {description}
           </p>
 
           <div className="mx-auto flex w-full max-w-[15rem] flex-col items-stretch justify-center gap-3 sm:max-w-[32rem] sm:flex-row sm:gap-5">
@@ -77,7 +96,7 @@ export function Contact() {
             </ChunkyNextLink>
           </div>
 
-          <p className="mt-8 max-w-md text-center text-xs text-slate-400 md:text-sm font-sans">
+          <p className="mt-8 max-w-md text-center font-sans text-xs text-slate-400 md:text-sm">
             お問い合わせには、通常2営業日以内に返信いたします。
           </p>
         </motion.div>

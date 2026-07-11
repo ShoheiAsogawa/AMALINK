@@ -8,7 +8,7 @@ const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-slate-50 border-t border-slate-200 py-12 md:py-20">
+    <footer className="relative border-t border-slate-200 bg-slate-50 pt-12 pb-[calc(3rem+7.25rem)] md:pt-20 md:pb-[calc(5rem+8.5rem)]">
       <FooterTruck />
       <div className="container relative z-[1] mx-auto px-6">
         <div className="max-w-md text-left">

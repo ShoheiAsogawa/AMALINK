@@ -3,109 +3,141 @@
 import { Section } from "@/components/ui/Section";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { motion } from "framer-motion";
-import { Monitor, Smartphone, PenTool, Sparkles } from "lucide-react";
+import { Bot, Monitor, Smartphone, PenTool, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { WaveBackground } from "@/components/ui/WaveBackground";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { RabbitAvatar } from "@/components/chatbot/RabbitAvatar";
 
 const services = [
   {
+    key: "system",
     id: "01",
     icon: <Monitor className="w-6 h-6" />,
     title: "システム開発",
     enTitle: "System Development",
     description: "日々の業務で「困ったな」「大変だな」と感じることはありませんか？\n在庫管理や予約システムなど、面倒な作業を自動化して、\nもっと大切なことに時間を使えるようお手伝いします。",
+    href: "/system-development",
+    linkLabel: "システム開発について詳しく見る",
     wide: false,
   },
   {
+    key: "chatbot",
     id: "02",
+    icon: <Bot className="w-6 h-6" />,
+    title: "AIアバターチャットボット",
+    enTitle: "AI Avatar Chatbot",
+    description:
+      "自社サイト向けのAIチャットボット制作に対応しています。\nアバター付きの案内ボットや、答える範囲を絞った設計など、\n用途に合わせて組み込みまでご相談いただけます。",
+    href: "/ai-avatar-chatbot",
+    linkLabel: "チャットボットについて詳しく見る",
+    wide: false,
+  },
+  {
+    key: "web",
+    id: "03",
     icon: <Smartphone className="w-6 h-6" />,
     title: "ホームページ制作",
     enTitle: "Web Production",
     description: "お店や会社の「顔」となるホームページ。\nただ綺麗なだけでなく、お客様が見やすく、\n使いやすいサイトを丁寧に作り上げます。",
+    href: "/web-production",
+    linkLabel: "ホームページ制作について詳しく見る",
     wide: false,
   },
   {
-    id: "03",
+    key: "design",
+    id: "04",
     icon: <PenTool className="w-6 h-6" />,
     title: "デザイン",
     enTitle: "Creative Design",
-    description: "ロゴマークや名刺、パンフレットなど。\nあなたの想いをカタチにして、\n見る人の心に残るデザインをご提案します。",
+    description: "ロゴマークや名刺、パンフレットなど。\nデザインから印刷手配・納品まで一気通貫で、\n見る人の心に残るカタチをご提案します。",
+    href: "/design",
+    linkLabel: "デザインについて詳しく見る",
     wide: false,
   },
   {
-    id: "04",
+    key: "geo",
+    id: "05",
     icon: <Sparkles className="w-6 h-6" />,
-    title: "GEO対策",
-    enTitle: "Generative Engine Optimization",
+    title: "GEO・SEO対策",
+    enTitle: "GEO & SEO",
     description:
-      "これからは、人が検索するだけでなく、AIが答えを選ぶ時代。\n事業内容が正しく伝わるWebページの設計と、\nAIに引用されやすい情報整理・改善をサポートします。",
+      "検索にもAIにも、正しく伝わるWebへ。\nSEOとGEOの両面から、事業内容が引用・発見されやすい\nページ設計と情報整理をサポートします。",
+    href: "/geo-seo",
+    linkLabel: "GEO・SEO対策について詳しく見る",
     wide: true,
   },
 ] as const;
 
 type Service = (typeof services)[number];
 
-const GEO_MATRIX_LINES = [
-  "llms.txt",
-  "JSON-LD",
-  "@context",
-  "FAQPage",
-  "Organization",
-  "schema.org",
-  "meta",
-  "og:title",
-  "canonical",
-  "structured",
-  "WebSite",
-  "Service",
-  "legalName",
-  "description",
-  "robots.txt",
-  "sitemap.xml",
-  "areaServed",
-  "AI cite",
-  "GEO",
-  "Generative",
-] as const;
+function GeoKeywordRain({ active }: { active: boolean }) {
+  const keywords = [
+    "ChatGPT",
+    "GEO",
+    "SEO",
+    "AI検索",
+    "引用",
+    "LLM",
+    "生成AI",
+    "FAQ",
+    "構造化データ",
+    "llms.txt",
+    "JSON-LD",
+    "Perplexity",
+    "Gemini",
+    "Claude",
+    "AI Overview",
+    "検索順位",
+    "メタ情報",
+    "内部リンク",
+    "エンティティ",
+    "ナレッジ",
+    "E-E-A-T",
+    "引用されやすさ",
+  ] as const;
 
-function GeoMatrixRain({ active }: { active: boolean }) {
-  const columnCount = 16;
+  const columnCount = 5;
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{ opacity: active ? 0.22 : 0 }}
+      animate={{ opacity: active ? 1 : 0 }}
       transition={{ duration: 0.35 }}
       className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
       aria-hidden
     >
-      <div className="flex h-full w-full justify-between gap-1 px-4 md:gap-2 md:px-8">
+      <div className="flex h-full w-full justify-between gap-3 px-6 md:gap-6 md:px-12">
         {Array.from({ length: columnCount }, (_, col) => {
-          const lines = Array.from({ length: 18 }, (_, row) =>
-            GEO_MATRIX_LINES[(col + row) % GEO_MATRIX_LINES.length]
-          );
-          const duration = 9 + (col % 6) * 1.4;
+          const duration = 14 + (col % 4) * 3.5;
+          const columnWords = Array.from({ length: 18 }, (_, row) => {
+            const word = keywords[(col * 7 + row * 3) % keywords.length]!;
+            return word;
+          });
 
           return (
             <div key={col} className="relative h-full min-w-0 flex-1 overflow-hidden">
               <motion.div
-                className="flex flex-col font-mono text-[8px] leading-[1.35rem] text-amami-blue md:text-[9px] md:leading-[1.5rem]"
-                initial={{ y: 0 }}
-                animate={active ? { y: ["0%", "50%"] } : { y: "0%" }}
+                className="flex flex-col items-start gap-5 py-3 font-sans"
+                initial={{ y: "0%" }}
+                animate={active ? { y: ["0%", "-50%"] } : { y: "0%" }}
                 transition={{
                   duration,
                   repeat: active ? Infinity : 0,
                   ease: "linear",
                 }}
               >
-                {[...lines, ...lines].map((line, row) => (
+                {[...columnWords, ...columnWords].map((word, row) => (
                   <span
                     key={`${col}-${row}`}
-                    className="block truncate whitespace-nowrap"
-                    style={{ opacity: 0.25 + (row % 4) * 0.12 }}
+                    className="block whitespace-nowrap text-[11px] font-medium tracking-wide text-amami-blue md:text-sm"
+                    style={{
+                      opacity: 0.18 + ((col + row) % 5) * 0.1,
+                      transform: `translateX(${((col * 11 + row * 7) % 28) - 8}px)`,
+                    }}
                   >
-                    {line}
+                    {word}
                   </span>
                 ))}
               </motion.div>
@@ -128,53 +160,50 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.8 }}
       className={cn(
-        "group relative flex flex-col justify-between overflow-hidden rounded-[2rem] border border-slate-100 bg-white/80 p-8 shadow-sm backdrop-blur-sm transition-all duration-500 hover:shadow-xl md:p-12",
+        "group relative flex flex-col overflow-hidden rounded-[1.75rem] border border-slate-100 bg-white/80 p-6 shadow-sm backdrop-blur-sm transition-all duration-500 hover:shadow-xl md:rounded-[2rem] md:p-8",
         service.wide
-          ? "min-h-[320px] md:col-span-3 md:min-h-[280px]"
-          : "min-h-[400px] md:min-h-[440px]"
+          ? "md:col-span-3"
+          : "min-h-0",
+        service.key === "chatbot" && "pb-14 md:pb-16",
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => setIsHovered(!isHovered)}
     >
       {/* ホバー時の背景アニメーション - 中央最背面に配置 */}
-      {service.id === "01" && (
+      {service.key === "system" && (
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 0.25 : 0 }}
           transition={{ duration: 0.3 }}
           className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden z-0"
         >
-          {/* コードタイピング風アニメーション - ダミーコードが流れる */}
+          {/* 装飾は検索本文に混ざらない抽象的なバーで表現する */}
           <div className="w-64 h-48 font-mono text-xs leading-relaxed text-amami-blue p-4 border border-amami-blue/30 rounded bg-amami-blue/10 overflow-hidden flex flex-col">
             <motion.div
               initial={{ y: 0 }}
               animate={isHovered ? { y: -80 } : { y: 0 }}
               transition={{ duration: 4, ease: "linear", repeat: isHovered ? Infinity : 0 }}
-              className="space-y-1"
+              className="space-y-2"
+              aria-hidden
             >
-              <div className="opacity-90">{`import React from 'react';`}</div>
-              <div className="opacity-90">{`import { useState } from 'react';`}</div>
-              <div className="h-2" />
-              <div className="opacity-100">function App() {'{'}</div>
-              <div className="pl-4 opacity-80">const [count, setCount] = useState(0);</div>
-              <div className="pl-4 opacity-80">return (</div>
-              <div className="pl-8 opacity-70">{`<div className="app">`}</div>
-              <div className="pl-12 opacity-60">&lt;h1&gt;Hello World&lt;/h1&gt;</div>
-              <div className="pl-12 opacity-60">&lt;button onClick={'{'}() =&gt; setCount(c =&gt; c + 1){'}'}&gt;</div>
-              <div className="pl-16 opacity-50">Count: {'{'}count{'}'}</div>
-              <div className="pl-12 opacity-60">&lt;/button&gt;</div>
-              <div className="pl-8 opacity-70">&lt;/div&gt;</div>
-              <div className="pl-4 opacity-80">);</div>
-              <div className="opacity-100">{'}'}</div>
-              <div className="h-2" />
-              <div className="opacity-90">export default App;</div>
+              {Array.from({ length: 14 }, (_, row) => (
+                <span
+                  key={row}
+                  className="block h-2 rounded-full bg-current"
+                  style={{
+                    marginLeft: `${(row % 4) * 12}px`,
+                    opacity: 0.25 + (row % 3) * 0.15,
+                    width: `${35 + ((row * 19) % 55)}%`,
+                  }}
+                />
+              ))}
             </motion.div>
           </div>
         </motion.div>
       )}
 
-      {service.id === "02" && (
+      {service.key === "web" && (
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 0.15 : 0 }}
@@ -233,7 +262,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         </motion.div>
       )}
 
-      {service.id === "03" && (
+      {service.key === "design" && (
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 0.15 : 0 }}
@@ -282,33 +311,48 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         </motion.div>
       )}
 
-      {service.wide && (
-        <div className="absolute top-8 right-8 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-slate-50 text-slate-600 transition-all duration-300 group-hover:scale-110 group-hover:bg-amami-blue-light/20 group-hover:text-amami-blue md:top-12 md:right-12">
-          {service.icon}
-        </div>
-      )}
-
-      {service.id === "04" && <GeoMatrixRain active={isHovered} />}
-
-      <div className={cn("relative z-10", service.wide && "max-w-xl")}>
-        <div className="flex items-start justify-between mb-6 md:mb-8">
-          <span className="text-3xl md:text-4xl font-serif text-slate-200 group-hover:text-amami-blue/20 transition-colors">{service.id}</span>
-          {!service.wide && (
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-50 text-slate-600 transition-all duration-300 group-hover:scale-110 group-hover:bg-amami-blue-light/20 group-hover:text-amami-blue">
-              {service.icon}
-            </div>
-          )}
-        </div>
-        
-        <h3 className="text-xl md:text-2xl font-serif text-slate-800 mb-2">{service.title}</h3>
-        <span className="text-[10px] md:text-xs text-amami-blue uppercase tracking-widest block mb-6 md:mb-8">{service.enTitle}</span>
-        
-        <p className="text-base leading-relaxed text-slate-500 md:text-lg md:leading-relaxed font-sans whitespace-pre-line">
-          {service.description}
-        </p>
+      {/* 右上アイコンはカード基準で固定（本文幅の影響を受けない） */}
+      <div className="absolute top-5 right-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-slate-50 text-slate-600 transition-all duration-300 group-hover:scale-110 group-hover:bg-amami-blue-light/20 group-hover:text-amami-blue md:top-6 md:right-6 md:h-11 md:w-11">
+        {service.icon}
       </div>
 
-      <div className="w-full h-[1px] bg-slate-100 mt-6 md:mt-8 group-hover:bg-amami-blue transition-colors duration-500 relative z-10" />
+      {service.key === "geo" && <GeoKeywordRain active={isHovered} />}
+
+      {service.key === "chatbot" && (
+        <motion.div
+          initial={{ opacity: 0.7, y: 10 }}
+          animate={{ opacity: isHovered ? 1 : 0.85, y: isHovered ? 0 : 4 }}
+          transition={{ duration: 0.35 }}
+          className="pointer-events-none absolute bottom-10 right-2 z-20 md:bottom-12 md:right-3"
+          aria-hidden
+        >
+          <RabbitAvatar mood={isHovered ? "happy" : "idle"} size={80} animateFloat={false} />
+        </motion.div>
+      )}
+
+      <div className={cn("relative z-10 pr-12 md:pr-14", service.wide && "max-w-3xl")}>
+        <span className="mb-4 block font-serif text-2xl text-slate-200 transition-colors group-hover:text-amami-blue/20 md:mb-5 md:text-3xl">
+          {service.id}
+        </span>
+        
+        <h3 className="mb-1.5 font-serif text-lg text-slate-800 md:mb-2 md:text-2xl">{service.title}</h3>
+        <span className="mb-3 block font-sans text-[10px] uppercase tracking-widest text-amami-blue md:mb-5 md:text-xs">
+          {service.enTitle}
+        </span>
+        
+        <p className="font-sans text-sm leading-relaxed whitespace-pre-line text-slate-500 md:text-base md:leading-relaxed">
+          {service.description}
+        </p>
+        <Link
+          href={service.href}
+          className="mt-4 inline-flex items-center font-sans text-xs font-medium text-amami-blue underline decoration-amami-blue/30 underline-offset-4 transition hover:decoration-amami-blue md:mt-5 md:text-sm"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {service.linkLabel}
+        </Link>
+      </div>
+
+      <div className="relative z-10 mt-5 h-px w-full bg-slate-100 transition-colors duration-500 group-hover:bg-amami-blue md:mt-6" />
     </motion.div>
   );
 }
@@ -339,7 +383,7 @@ export function Services() {
           </p>
         </motion.div>
 
-        <div className="relative z-10 grid gap-6 md:grid-cols-3 md:gap-8">
+        <div className="relative z-10 grid gap-5 md:grid-cols-3 md:gap-6">
           {services.map((service, index) => (
             <ServiceCard key={index} service={service} index={index} />
           ))}

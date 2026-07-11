@@ -16,12 +16,14 @@ function FaqAccordionItem({
   answer,
   isOpen,
   onToggle,
+  singleLineOnMobile,
 }: {
   id: string;
   question: string;
   answer: string;
   isOpen: boolean;
   onToggle: () => void;
+  singleLineOnMobile?: boolean;
 }) {
   const buttonId = `faq-btn-${id}`;
   const panelId = `faq-panel-${id}`;
@@ -36,7 +38,12 @@ function FaqAccordionItem({
         aria-controls={panelId}
         className="flex w-full items-start justify-between gap-4 px-5 py-5 text-left md:px-8 md:py-6"
       >
-        <span className="font-serif text-base leading-snug text-slate-800 md:text-lg">
+        <span
+          className={cn(
+            "font-serif text-base leading-snug text-slate-800 md:text-lg",
+            singleLineOnMobile && "whitespace-nowrap text-sm sm:text-base"
+          )}
+        >
           {question}
         </span>
         <ChevronDown
@@ -65,7 +72,14 @@ function FaqAccordionItem({
   );
 }
 
-export function FaqAccordion() {
+export type FaqAccordionEntry = {
+  id: string;
+  question: string;
+  answer: string;
+  singleLineOnMobile?: boolean;
+};
+
+export function FaqAccordion({ items }: { items?: FaqAccordionEntry[] }) {
   const [openIds, setOpenIds] = useState<Set<string>>(new Set());
 
   function toggle(id: string) {
@@ -78,6 +92,24 @@ export function FaqAccordion() {
       }
       return next;
     });
+  }
+
+  if (items) {
+    return (
+      <div className="space-y-3">
+        {items.map((item) => (
+          <FaqAccordionItem
+            key={item.id}
+            id={item.id}
+            question={item.question}
+            answer={item.answer}
+            singleLineOnMobile={item.singleLineOnMobile}
+            isOpen={openIds.has(item.id)}
+            onToggle={() => toggle(item.id)}
+          />
+        ))}
+      </div>
+    );
   }
 
   const grouped = (Object.keys(FAQ_CATEGORIES) as FaqCategoryId[]).map((categoryId) => ({

@@ -77,19 +77,6 @@ export function RootJsonLd() {
           name: COMPANY_OVERVIEW.baseLocation,
         },
       })),
-      {
-        "@type": "FAQPage",
-        "@id": `${root}#faq`,
-        url: KEY_URLS.faq,
-        mainEntity: FAQ_ITEMS.map((item) => ({
-          "@type": "Question",
-          name: item.question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: item.answer,
-          },
-        })),
-      },
     ],
   };
 
