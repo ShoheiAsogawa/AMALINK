@@ -141,7 +141,7 @@ export default function ContactPage() {
                                     お問い合わせ項目 <span className="text-amami-blue text-xs ml-1">必須</span>
                                 </label>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                    {["システム開発について", "AIアバターチャットボットについて", "ホームページ制作について", "デザインについて", "GEO・SEO対策について", "その他・ご相談"].map((cat) => (
+                                    {["システム開発について", "チャットボットについて", "ホームページ制作について", "デザインについて", "GEO・SEO対策について", "その他・ご相談"].map((cat) => (
                                         <label key={cat} className="relative cursor-pointer group">
                                             <input type="radio" name="category" value={cat} className="peer sr-only" required />
                                             <div className="px-4 py-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 text-sm transition-all peer-checked:bg-amami-blue-light peer-checked:border-amami-blue peer-checked:text-amami-blue group-hover:bg-white">

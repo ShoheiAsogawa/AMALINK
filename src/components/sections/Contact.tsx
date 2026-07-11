@@ -50,7 +50,7 @@ export function Contact({
         >
           <SectionEyebrow label="Contact Us" color="green" />
 
-          <h2 className="mb-6 w-full max-w-full text-center font-serif text-2xl leading-tight text-slate-800 [letter-spacing:0] md:mb-8 md:text-[clamp(1.65rem,3.2vw,3rem)] xl:text-5xl">
+          <h2 className="mb-6 w-full max-w-full text-center font-serif leading-tight text-slate-800 [letter-spacing:0] whitespace-nowrap text-[clamp(0.95rem,3.8vw,2.5rem)] md:mb-8">
             {title}
           </h2>
 

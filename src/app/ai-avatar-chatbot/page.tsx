@@ -157,8 +157,7 @@ export default function AiAvatarChatbotPage() {
             </p>
             <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl">
               <span className="block">自社サイトに合う、</span>
-              <span className="block sm:inline">AIアバターチャットボット</span>
-              <span className="block sm:inline">制作<span className="hidden sm:inline">。</span></span>
+              <span className="block whitespace-nowrap">AIアバターチャットボット制作。</span>
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
               {LEGAL_NAME}は、サイトに馴染むアバター付きチャットボットの制作・組み込みを行います。答える範囲の設計から問い合わせ導線まで、用途に合わせてご提案します。
@@ -214,12 +213,7 @@ export default function AiAvatarChatbotPage() {
         </section>
 
         <Contact
-          title={
-            <>
-              まずは、<br className="md:hidden" />
-              どんな案内をしたいか教えてください。
-            </>
-          }
+          title="まずは、どんな案内をしたいか教えてください。"
           description={
             <>
               作りたいものが固まっていなくても大丈夫です。
