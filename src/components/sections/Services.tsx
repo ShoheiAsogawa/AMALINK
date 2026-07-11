@@ -360,7 +360,7 @@ function ServiceCard({
         >
           <Link
             href={service.href}
-            className="inline-flex items-center font-sans text-xs font-medium text-amami-blue transition hover:text-amami-blue/80 md:text-sm"
+            className="inline-flex items-center whitespace-nowrap font-sans text-xs font-medium text-amami-blue transition hover:text-amami-blue/80 md:text-sm"
             onClick={(e) => e.stopPropagation()}
           >
             {service.linkLabel}

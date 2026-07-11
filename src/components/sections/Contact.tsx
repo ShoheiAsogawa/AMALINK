@@ -50,11 +50,11 @@ export function Contact({
         >
           <SectionEyebrow label="Contact Us" color="green" />
 
-          <h2 className="mb-6 w-full max-w-full text-center font-serif leading-tight text-slate-800 [letter-spacing:0] whitespace-nowrap text-[clamp(0.95rem,3.8vw,2.5rem)] md:mb-8">
+          <h2 className="mb-5 max-w-3xl text-center font-serif text-[1.65rem] leading-snug text-slate-800 [letter-spacing:0] md:mb-7 md:text-4xl md:leading-tight lg:text-[2.75rem]">
             {title}
           </h2>
 
-          <p className="mb-9 max-w-2xl text-center font-sans text-base leading-loose text-slate-500 md:mb-11 md:text-lg">
+          <p className="mb-9 max-w-xl text-center font-sans text-sm leading-relaxed text-slate-500 md:mb-11 md:text-base md:leading-loose">
             {description}
           </p>
 
@@ -64,7 +64,7 @@ export function Contact({
               theme="neu"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex w-full min-w-0 flex-1"
+              className="group flex w-full min-w-0 flex-1 text-[0.95rem] md:text-base"
             >
               <span className="grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-2.5">
                 <span className="flex shrink-0 translate-y-[0.11em] items-center justify-center">
@@ -80,7 +80,11 @@ export function Contact({
               </span>
             </ChunkyAnchor>
 
-            <ChunkyNextLink href="/contact" theme="neu" className="group flex w-full min-w-0 flex-1">
+            <ChunkyNextLink
+              href="/contact"
+              theme="neu"
+              className="group flex w-full min-w-0 flex-1 text-[0.95rem] md:text-base"
+            >
               <span className="grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-2.5">
                 <span className="flex shrink-0 translate-y-[0.11em] items-center justify-center">
                   <Mail className="size-[1em] opacity-90" strokeWidth={2} aria-hidden />
@@ -96,7 +100,7 @@ export function Contact({
             </ChunkyNextLink>
           </div>
 
-          <p className="mt-8 max-w-md text-center font-sans text-xs text-slate-400 md:text-sm">
+          <p className="mt-8 max-w-md text-center font-sans text-[11px] leading-relaxed text-slate-400 md:text-sm">
             お問い合わせには、通常2営業日以内に返信いたします。
           </p>
         </motion.div>

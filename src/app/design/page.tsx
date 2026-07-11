@@ -145,10 +145,9 @@ export default function DesignPage() {
             <p className="mb-4 font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
               Creative Design
             </p>
-            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl">
+            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
               <span className="block">想いをカタチにする、</span>
-              <span className="block sm:inline">伝わるデザイン</span>
-              <span className="block sm:inline">制作<span className="hidden sm:inline">。</span></span>
+              <span className="block whitespace-nowrap">伝わるデザイン制作。</span>
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
               {LEGAL_NAME}は、ロゴや名刺、パンフレットなど、ブランドの印象を伝えるビジュアルを制作します。印刷の手配から納品まで一気通貫で対応でき、Webと合わせた統一もご相談ください。
@@ -159,14 +158,16 @@ export default function DesignPage() {
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">What we design</p>
-            <h2 className="mt-3 font-serif text-3xl md:text-5xl">対応できるデザインの例</h2>
+            <h2 className="mt-3 whitespace-nowrap font-serif text-[clamp(1.35rem,5.5vw,3rem)] md:text-5xl font-bold text-brand-gradient">
+              対応できるデザインの例
+            </h2>
             <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">
               下記は対応例です。単体のご依頼から、複数媒体の統一までご相談いただけます。
             </p>
             <div className="mt-10 grid gap-5 md:grid-cols-2">
               {examples.map((item) => (
                 <article key={item.title} className="rounded-3xl border border-slate-100 bg-slate-50 p-7 md:p-9">
-                  <h3 className="font-serif text-2xl">{item.title}</h3>
+                  <h3 className="font-serif text-2xl font-bold text-brand-gradient">{item.title}</h3>
                   <p className="mt-4 font-sans leading-loose text-slate-600">{item.body}</p>
                 </article>
               ))}
@@ -177,7 +178,7 @@ export default function DesignPage() {
         <section className="bg-slate-50 px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">Process</p>
-            <h2 className="mt-3 font-serif text-3xl md:text-5xl">相談から納品まで</h2>
+            <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">相談から納品まで</h2>
             <ol className="mt-12 grid gap-5">
               {steps.map(([number, heading, body]) => (
                 <li
@@ -185,7 +186,7 @@ export default function DesignPage() {
                   className="grid gap-3 rounded-3xl bg-white p-7 md:grid-cols-[5rem_14rem_1fr] md:items-center md:p-9"
                 >
                   <span className="font-serif text-3xl text-amami-blue/40">{number}</span>
-                  <h3 className="font-serif text-xl">{heading}</h3>
+                  <h3 className="font-serif text-xl font-bold text-brand-gradient">{heading}</h3>
                   <p className="font-sans leading-loose text-slate-600">{body}</p>
                 </li>
               ))}
@@ -196,7 +197,7 @@ export default function DesignPage() {
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">FAQ</p>
-            <h2 className="mt-3 font-serif text-2xl md:text-5xl">デザインのよくある質問</h2>
+            <h2 className="mt-3 font-serif text-2xl md:text-5xl font-bold text-brand-gradient">デザインのよくある質問</h2>
             <div className="mt-10">
               <FaqAccordion items={faqs} />
             </div>

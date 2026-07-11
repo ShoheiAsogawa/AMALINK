@@ -145,7 +145,7 @@ export default function WebProductionPage() {
             <p className="mb-4 font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
               Web Production
             </p>
-            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl">
+            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
               <span className="block">お店や会社の顔になる、</span>
               <span className="block sm:inline">伝わるホームページ</span>
               <span className="block sm:inline">制作<span className="hidden sm:inline">。</span></span>
@@ -159,14 +159,14 @@ export default function WebProductionPage() {
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">What we build</p>
-            <h2 className="mt-3 font-serif text-3xl md:text-5xl">対応できるサイトの例</h2>
+            <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">対応できるサイトの例</h2>
             <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">
               下記は対応例です。ページ数や機能は、目的とご予算に合わせてご提案します。
             </p>
             <div className="mt-10 grid gap-5 md:grid-cols-2">
               {examples.map((item) => (
                 <article key={item.title} className="rounded-3xl border border-slate-100 bg-slate-50 p-7 md:p-9">
-                  <h3 className="font-serif text-2xl">{item.title}</h3>
+                  <h3 className="font-serif text-2xl font-bold text-brand-gradient">{item.title}</h3>
                   <p className="mt-4 font-sans leading-loose text-slate-600">{item.body}</p>
                 </article>
               ))}
@@ -177,7 +177,7 @@ export default function WebProductionPage() {
         <section className="bg-slate-50 px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">Process</p>
-            <h2 className="mt-3 font-serif text-3xl md:text-5xl">相談から公開まで</h2>
+            <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">相談から公開まで</h2>
             <ol className="mt-12 grid gap-5">
               {steps.map(([number, heading, body]) => (
                 <li
@@ -185,7 +185,7 @@ export default function WebProductionPage() {
                   className="grid gap-3 rounded-3xl bg-white p-7 md:grid-cols-[5rem_14rem_1fr] md:items-center md:p-9"
                 >
                   <span className="font-serif text-3xl text-amami-blue/40">{number}</span>
-                  <h3 className="font-serif text-xl">{heading}</h3>
+                  <h3 className="font-serif text-xl font-bold text-brand-gradient">{heading}</h3>
                   <p className="font-sans leading-loose text-slate-600">{body}</p>
                 </li>
               ))}
@@ -196,7 +196,7 @@ export default function WebProductionPage() {
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">FAQ</p>
-            <h2 className="mt-3 font-serif text-2xl md:text-5xl">ホームページ制作のよくある質問</h2>
+            <h2 className="mt-3 font-serif text-2xl md:text-5xl font-bold text-brand-gradient">ホームページ制作のよくある質問</h2>
             <div className="mt-10">
               <FaqAccordion items={faqs} />
             </div>
