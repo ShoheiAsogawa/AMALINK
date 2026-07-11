@@ -14,6 +14,7 @@ type ValueCardShellProps = {
   children: ReactNode;
   className?: string;
   delay?: number;
+  entrance?: boolean;
   isHovered: boolean;
   setHovered: (v: boolean) => void;
 };
@@ -22,15 +23,16 @@ function ValueCardShell({
   children,
   className,
   delay = 0,
+  entrance = true,
   isHovered,
   setHovered,
 }: ValueCardShellProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, amount: 0.35 }}
-      transition={{ delay, duration: 0.8 }}
+      initial={entrance ? { opacity: 0, x: 20 } : false}
+      whileInView={entrance ? { opacity: 1, x: 0 } : undefined}
+      viewport={entrance ? { once: true, amount: 0.35 } : undefined}
+      transition={entrance ? { delay, duration: 0.8 } : undefined}
       className={cn(
         "group relative overflow-hidden rounded-2xl border border-slate-100 bg-slate-50/80 p-8 backdrop-blur-sm transition-all duration-500 hover:bg-white hover:shadow-xl md:p-10",
         className,
@@ -44,13 +46,22 @@ function ValueCardShell({
   );
 }
 
-function SproutCard({ className, delay = 0 }: { className?: string; delay?: number }) {
+function SproutCard({
+  className,
+  delay = 0,
+  entrance = true,
+}: {
+  className?: string;
+  delay?: number;
+  entrance?: boolean;
+}) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <ValueCardShell
       className={className}
       delay={delay}
+      entrance={entrance}
       isHovered={isHovered}
       setHovered={setIsHovered}
     >
@@ -108,13 +119,22 @@ function SproutCard({ className, delay = 0 }: { className?: string; delay?: numb
   );
 }
 
-function RippleCard({ className, delay = 0.2 }: { className?: string; delay?: number }) {
+function RippleCard({
+  className,
+  delay = 0.2,
+  entrance = true,
+}: {
+  className?: string;
+  delay?: number;
+  entrance?: boolean;
+}) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <ValueCardShell
       className={className}
       delay={delay}
+      entrance={entrance}
       isHovered={isHovered}
       setHovered={setIsHovered}
     >
@@ -156,13 +176,22 @@ function RippleCard({ className, delay = 0.2 }: { className?: string; delay?: nu
   );
 }
 
-function PeopleCard({ className, delay = 0.4 }: { className?: string; delay?: number }) {
+function PeopleCard({
+  className,
+  delay = 0.4,
+  entrance = true,
+}: {
+  className?: string;
+  delay?: number;
+  entrance?: boolean;
+}) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <ValueCardShell
       className={className}
       delay={delay}
+      entrance={entrance}
       isHovered={isHovered}
       setHovered={setIsHovered}
     >
@@ -271,9 +300,9 @@ function ValuesCards({ mobileCopy }: { mobileCopy: ReactNode }) {
         <div className="md:hidden">
           {mobileCopy}
           <div className="mt-8 space-y-8">
-            <SproutCard />
-            <RippleCard />
-            <PeopleCard />
+            <SproutCard entrance={false} />
+            <RippleCard entrance={false} />
+            <PeopleCard entrance={false} />
           </div>
         </div>
         <div className="mx-auto hidden w-full max-w-xl space-y-8 md:mx-0 md:block md:max-w-[min(100%,36rem)]">
@@ -306,13 +335,13 @@ function ValuesCards({ mobileCopy }: { mobileCopy: ReactNode }) {
               className="mt-8 flex w-max items-stretch gap-5 px-6 will-change-transform"
             >
             <div className={CARD_ITEM_CLASS} data-value-card="0">
-              <SproutCard className={CARD_CLASS} delay={0} />
+              <SproutCard className={CARD_CLASS} delay={0} entrance={false} />
             </div>
             <div className={CARD_ITEM_CLASS} data-value-card="1">
-              <RippleCard className={CARD_CLASS} delay={0} />
+              <RippleCard className={CARD_CLASS} delay={0} entrance={false} />
             </div>
             <div className={CARD_ITEM_CLASS} data-value-card="2">
-              <PeopleCard className={CARD_CLASS} delay={0} />
+              <PeopleCard className={CARD_CLASS} delay={0} entrance={false} />
             </div>
             </motion.div>
 

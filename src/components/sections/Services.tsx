@@ -151,15 +151,23 @@ function GeoKeywordRain({ active }: { active: boolean }) {
 }
 
 // サービスカードコンポーネント
-function ServiceCard({ service, index }: { service: Service; index: number }) {
+function ServiceCard({
+  service,
+  index,
+  entrance = true,
+}: {
+  service: Service;
+  index: number;
+  entrance?: boolean;
+}) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.8 }}
+      initial={entrance ? { opacity: 0, y: 50 } : false}
+      whileInView={entrance ? { opacity: 1, y: 0 } : undefined}
+      viewport={entrance ? { once: true } : undefined}
+      transition={entrance ? { delay: index * 0.1, duration: 0.8 } : undefined}
       className={cn(
         "group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-slate-100 bg-white/80 p-6 shadow-sm backdrop-blur-sm transition-all duration-500 hover:shadow-xl md:rounded-[2rem] md:p-8",
         service.orderClass,
@@ -397,7 +405,7 @@ function MobileServicesScroller() {
         <ServicesCopy />
         <div className="mt-8 space-y-5">
           {services.map((service, index) => (
-            <ServiceCard key={service.key} service={service} index={index} />
+            <ServiceCard key={service.key} service={service} index={index} entrance={false} />
           ))}
         </div>
       </div>
@@ -432,7 +440,7 @@ function MobileServicesScroller() {
                 className="w-[min(80vw,22rem)] shrink-0"
                 data-service-card={index}
               >
-                <ServiceCard service={service} index={index} />
+                <ServiceCard service={service} index={index} entrance={false} />
               </div>
             ))}
           </motion.div>
