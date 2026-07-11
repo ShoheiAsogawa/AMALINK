@@ -214,12 +214,7 @@ export default function SystemDevelopmentPage() {
         </section>
 
         <Contact
-          title={
-            <>
-              まずは、<br className="md:hidden" />
-              いま困っている作業を教えてください。
-            </>
-          }
+          title="まずは、気軽にお話ししませんか？"
           description={
             <>
               作るものが決まっていなくても大丈夫です。

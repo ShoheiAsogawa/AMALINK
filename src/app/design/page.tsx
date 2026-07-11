@@ -205,12 +205,7 @@ export default function DesignPage() {
         </section>
 
         <Contact
-          title={
-            <>
-              まずは、<br className="md:hidden" />
-              どんな印象にしたいか教えてください。
-            </>
-          }
+          title="まずは、気軽にお話ししませんか？"
           description={
             <>
               作りたいものが固まっていなくても大丈夫です。

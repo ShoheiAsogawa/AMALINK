@@ -204,12 +204,7 @@ export default function GeoSeoPage() {
         </section>
 
         <Contact
-          title={
-            <>
-              まずは、<br className="md:hidden" />
-              いまのサイトの伝わり方を教えてください。
-            </>
-          }
+          title="まずは、気軽にお話ししませんか？"
           description={
             <>
               改善したい点がはっきりしていなくても大丈夫です。
