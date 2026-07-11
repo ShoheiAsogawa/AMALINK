@@ -1,0 +1,58 @@
+﻿category,island,source_name,url,source_type,confidence,update_frequency,use_case
+群島概要,全体,奄美群島観光物産協会 ぐーんと奄美,https://goontoamami.jp/,公式観光,高,週次,群島概要・島別案内
+群島概要,全体,ぐーんと奄美 奄美群島の紹介,https://goontoamami.jp/access/,公式観光,高,月次,8有人島・アクセス
+行政,全体,鹿児島県大島支庁,https://www.pref.kagoshima.jp/aq01/chiiki/oshima/index.html,県,高,月次,12市町村・群島行政
+行政,全体,鹿児島県 所管区域,https://www.pref.kagoshima.jp/aa02/chiiki/oshima/soshiki/kannai.html,県,高,年次,1市9町2村
+統計,全体,鹿児島県 奄美群島の概況,https://www.pref.kagoshima.jp/aq01/chiiki/oshima/chiiki/zeniki/gaikyou/amamigaikyou.html,県,高,年次,人口・産業・教育
+移住,全体,ねりやかなや,https://www.neriyakanaya.jp/,公式移住,高,週次,移住・交通・行政窓口
+移住,全体,奄美群島12市町村の行政窓口,https://www.neriyakanaya.jp/contents/contact_gov,公式移住,高,月次,行政窓口
+世界遺産,奄美大島|徳之島,UNESCO World Heritage Centre,https://whc.unesco.org/en/list/1574/,国際機関,高,安定,登録範囲・価値
+世界遺産,奄美大島|徳之島,環境省 遺産地域の特徴,https://kyushu.env.go.jp/okinawa/amami-okinawa/description/index.html,国,高,年次,生物多様性
+国立公園,全体,環境省 奄美群島国立公園,https://www.env.go.jp/park/amami/index.html,国,高,年次,公園区域・自然
+国立公園,全体,奄美野生生物保護センター 国立公園,https://kyushu.env.go.jp/okinawa/awcc/national-park.html,国,高,年次,高島・低島の分類
+自然,奄美大島,奄美大島世界遺産センター,https://amami-whcc.jp/,公式施設,高,月次,世界遺産学習
+自然,奄美大島,奄美野生生物保護センター,https://www.env.go.jp/nature/kisho/wildlifecenter/amami.html,国,高,月次,希少種・保護
+自然,奄美大島,環境省 マングース根絶宣言,https://www.env.go.jp/press/press_03661.html,国,高,安定,外来種対策
+マナー,全体,鹿児島県 奄美群島マナーガイド,https://www.pref.kagoshima.jp/ad13/kurashi-kankyo/kankyo/amami/03007077.html,県,高,年次,自然・集落マナー
+気象,全体,気象庁 奄美地方,https://www.jma.go.jp/bosai/,国,高,リアルタイム,警報・台風・雨
+防災,全体,国土地理院 ハザードマップポータル,https://disaportal.gsi.go.jp/,国,高,リアルタイム,津波・土砂・洪水
+観光,奄美大島地域,あまみの,https://www.amami-tourism.org/,公式DMO,高,週次,奄美大島・周辺3島
+観光,奄美大島地域,あまみの 奄美のこと,https://www.amami-tourism.org/about/,公式DMO,高,年次,概要・文化・歴史
+観光,奄美大島地域,ぐーんと奄美 奄美大島,https://goontoamami.jp/amamiisland/,公式観光,高,月次,島概要・交通
+観光,喜界島,喜界島ナビ,https://kikaijimanavi.com/,公式観光,高,週次,スポット・店舗
+観光,喜界島,ぐーんと奄美 喜界島,https://goontoamami.jp/kikai/,公式観光,高,月次,島概要・交通
+観光,徳之島,徳之島観光連盟,https://www.tokunoshima-kanko.com/,公式観光,高,週次,3町観光
+観光,徳之島,ぐーんと奄美 徳之島,https://goontoamami.jp/tokunoshima/,公式観光,高,月次,島概要・交通
+観光,沖永良部島,おきのえらぶ島の旅,https://okinoerabujima.info/,公式観光,高,週次,スポット・体験
+観光,沖永良部島,ぐーんと奄美 沖永良部島,https://goontoamami.jp/okinoerabu/,公式観光,高,月次,島概要・交通
+観光,与論島,ヨロン島観光ガイド,https://www.yorontou.info/,公式観光,高,週次,スポット・百合ヶ浜
+観光,与論島,ヨロン旅のすすめ,https://www.yorontou.info/about,公式観光,高,年次,文化・旧暦・結
+観光,与論島,ぐーんと奄美 与論島,https://goontoamami.jp/yoron/,公式観光,高,月次,島概要・交通
+文化,全体,鹿児島県 奄美島唄保存伝承事業,https://www.pref.kagoshima.jp/ab10/kyoiku-bunka/bunka/shinko/h25amamishimauta.html,県,高,年次,島唄
+言語,全体,文化庁 危機的な状況にある言語・方言,https://www.bunka.go.jp/seisaku/kokugo_nihongo/kokugo_shisaku/kikigengo/,国,高,年次,言語保全
+言語,全体,国立国語研究所,https://www.ninjal.ac.jp/,学術,高,年次,方言研究
+酒,全体,鹿児島県酒造組合奄美支部・奄美大島酒造協同組合,https://www.kokuchu.com/,業界公式,高,月次,黒糖焼酎・蔵元
+酒,全体,国税庁 酒類情報,https://www.nta.go.jp/taxes/sake/,国,高,年次,黒糖焼酎の定義
+工芸,奄美大島地域,本場奄美大島紬協同組合,https://amamioshimatsumugi.jp/,組合公式,高,月次,工程・証紙・歴史
+行政,奄美大島,奄美市,https://www.city.amami.lg.jp/,自治体,高,週次,行政・防災・観光
+行政,奄美大島,龍郷町,https://www.town.tatsugo.lg.jp/,自治体,高,週次,行政・防災・観光
+行政,奄美大島,大和村,https://www.vill.yamato.lg.jp/,自治体,高,週次,行政・防災・観光
+行政,奄美大島,宇検村,https://www.uken.net/,自治体,高,週次,行政・防災・観光
+行政,奄美大島地域,瀬戸内町,https://www.town.setouchi.lg.jp/,自治体,高,週次,行政・船・周辺3島
+行政,喜界島,喜界町,https://www.town.kikai.lg.jp/,自治体,高,週次,行政・防災・観光
+行政,徳之島,徳之島町,https://www.tokunoshima-town.org/,自治体,高,週次,行政・防災
+行政,徳之島,天城町,https://www.town.amagi.lg.jp/,自治体,高,週次,行政・防災
+行政,徳之島,伊仙町,https://www.town.isen.kagoshima.jp/,自治体,高,週次,行政・防災
+行政,沖永良部島,和泊町,https://www.town.wadomari.lg.jp/,自治体,高,週次,行政・防災
+行政,沖永良部島,知名町,https://www.town.china.lg.jp/,自治体,高,週次,行政・防災
+行政,与論島,与論町,https://www.yoron.jp/,自治体,高,週次,行政・防災
+交通,奄美大島,奄美空港,https://amami-airport.co.jp/,運営者公式,高,リアルタイム,フライト・空港交通
+交通,全体,日本航空,https://www.jal.co.jp/,運営者公式,高,リアルタイム,群島航空
+交通,全体,日本エアコミューター,https://www.jac.co.jp/,運営者公式,高,リアルタイム,島間航空
+交通,全体,マルエーフェリー,https://www.aline-ferry.com/,運営者公式,高,リアルタイム,本航路・喜界航路
+交通,全体,マリックスライン,https://marixline.com/,運営者公式,高,リアルタイム,本航路
+交通,奄美大島地域,瀬戸内町 船舶交通,https://www.town.setouchi.lg.jp/,自治体,高,リアルタイム,加計呂麻・請・与路
+自然,沖永良部島,昇竜洞,https://okinoerabujima.info/spot/1016,公式観光,高,月次,観光鍾乳洞
+歴史,沖永良部島,西郷南洲記念館,https://okinoerabujima.info/spot/1004,公式観光,高,月次,西郷隆盛
+自然,与論島,百合ヶ浜,https://www.yorontou.info/spot/5112.html,公式観光,高,リアルタイム,出現予測
+文化,与論島,与論町,https://www.yoron.jp/,自治体,高,年次,十五夜踊り・文化財

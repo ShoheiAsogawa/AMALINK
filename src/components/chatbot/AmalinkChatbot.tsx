@@ -1,16 +1,22 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { Send, X } from "lucide-react";
+import { ExternalLink, Send, X } from "lucide-react";
 import { RabbitAvatar, type RabbitMood } from "@/components/chatbot/RabbitAvatar";
-import { CHATBOT_GREETING, CHATBOT_NAME } from "@/lib/chatbot-knowledge";
+import {
+  CHATBOT_CONTACT_PATH,
+  CHATBOT_GREETING,
+  CHATBOT_NAME,
+} from "@/lib/chatbot-knowledge";
 import { cn } from "@/lib/utils";
 
 type UiMessage = {
   id: string;
   role: "user" | "assistant";
   content: string;
+  showContactLink?: boolean;
 };
 
 const OPEN_EVENT = "amalink-open-chat";
@@ -79,7 +85,11 @@ export function AmalinkChatbot() {
           messages: nextMessages.map((m) => ({ role: m.role, content: m.content })),
         }),
       });
-      const data = (await res.json()) as { reply?: string; error?: string };
+      const data = (await res.json()) as {
+        reply?: string;
+        error?: string;
+        showContactLink?: boolean;
+      };
       const reply =
         data.reply?.trim() ||
         "うまく答えられなかったみたい。奄美大島やAMALINKのこと、別の聞き方で試してみてね。";
@@ -87,7 +97,12 @@ export function AmalinkChatbot() {
       setMood("talking");
       setMessages((prev) => [
         ...prev,
-        { id: `a-${Date.now()}`, role: "assistant", content: reply },
+        {
+          id: `a-${Date.now()}`,
+          role: "assistant",
+          content: reply,
+          showContactLink: Boolean(data.showContactLink),
+        },
       ]);
       setTimeout(() => setMood("idle"), Math.min(2200, 400 + reply.length * 18));
     } catch {
@@ -128,10 +143,10 @@ export function AmalinkChatbot() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: 28, scale: 0.94 }}
+            initial={{ opacity: 0, y: 12, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 18, scale: 0.96 }}
-            transition={{ type: "spring", stiffness: 380, damping: 28 }}
+            exit={{ opacity: 0, y: 8, scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 420, damping: 32, mass: 0.7 }}
             className="pointer-events-auto mb-2 ml-2 flex w-[min(100vw-1.5rem,22.5rem)] flex-col overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-white/95 shadow-[0_20px_50px_rgba(15,23,42,0.18)] backdrop-blur-md max-md:mb-1"
             role="dialog"
             aria-label={`${CHATBOT_NAME}チャット`}
@@ -170,13 +185,29 @@ export function AmalinkChatbot() {
                 <div
                   key={m.id}
                   className={cn(
-                    "max-w-[90%] rounded-2xl px-3.5 py-2.5 font-sans text-sm leading-relaxed",
-                    m.role === "user"
-                      ? "ml-auto bg-amami-blue text-white"
-                      : "mr-auto border border-slate-100 bg-white text-slate-700 shadow-sm",
+                    "flex max-w-[90%] flex-col gap-2",
+                    m.role === "user" ? "ml-auto items-end" : "mr-auto items-start",
                   )}
                 >
-                  {m.content}
+                  <div
+                    className={cn(
+                      "rounded-2xl px-3.5 py-2.5 font-sans text-sm leading-relaxed",
+                      m.role === "user"
+                        ? "bg-amami-blue text-white"
+                        : "border border-slate-100 bg-white text-slate-700 shadow-sm",
+                    )}
+                  >
+                    {m.content}
+                  </div>
+                  {m.role === "assistant" && m.showContactLink && (
+                    <Link
+                      href={CHATBOT_CONTACT_PATH}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-amami-blue/30 bg-amami-blue-light/50 px-3 py-1.5 font-sans text-xs font-medium text-amami-blue transition hover:border-amami-blue/50 hover:bg-amami-blue-light"
+                    >
+                      お問い合わせページへ
+                      <ExternalLink className="h-3 w-3" aria-hidden />
+                    </Link>
+                  )}
                 </div>
               ))}
               {pending && (
@@ -231,15 +262,16 @@ export function AmalinkChatbot() {
         )}
       </AnimatePresence>
 
-      {/* 左下から顔を見せる → クリックで登場 */}
-      <div className="pointer-events-auto relative ml-1 flex flex-col items-start">
+      {/* 左下から顔を見せる → クリックで登場（高さ固定で開閉時のガクつき防止） */}
+      <div className="pointer-events-auto relative ml-1 h-[100px] w-[112px] max-md:h-[92px] max-md:w-[100px]">
         <AnimatePresence>
           {!open && (
             <motion.div
               initial={{ opacity: 0, y: 6, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 4, scale: 0.96 }}
-              className="relative z-10 mb-1 ml-1"
+              transition={{ duration: 0.18 }}
+              className="absolute bottom-full left-1 z-10 mb-4"
             >
               <button
                 type="button"
@@ -256,17 +288,11 @@ export function AmalinkChatbot() {
           )}
         </AnimatePresence>
 
-        <div
-          className={cn(
-            "relative overflow-hidden",
-            open
-              ? "h-[140px] w-[128px] max-md:h-[118px] max-md:w-[108px]"
-              : "h-[100px] w-[112px] max-md:h-[92px] max-md:w-[100px]",
-          )}
-        >
+        {/* 上にジャンプ余白を確保し、耳が overflow で切れないようにする */}
+        <div className="absolute -top-3 bottom-0 left-0 right-0 overflow-hidden">
           <motion.button
             type="button"
-            className="absolute left-1/2 top-0 -translate-x-1/2"
+            className="absolute left-1/2 top-3 -translate-x-1/2"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label={open ? "チャットを閉じる" : `${CHATBOT_NAME}に話しかける`}
@@ -277,13 +303,12 @@ export function AmalinkChatbot() {
                 open
                   ? { y: 0 }
                   : {
-                      // ふわふわではなく、たまに小さく跳ねる
                       y: [0, 0, -10, 0, 0],
                     }
               }
               transition={
                 open
-                  ? undefined
+                  ? { duration: 0.2 }
                   : {
                       duration: 0.7,
                       times: [0, 0.72, 0.84, 0.94, 1],
@@ -295,7 +320,7 @@ export function AmalinkChatbot() {
             >
               <RabbitAvatar
                 mood={open ? mood : "idle"}
-                size={open ? 120 : 118}
+                size={118}
                 priority
                 animateFloat={false}
               />

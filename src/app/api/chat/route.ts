@@ -5,9 +5,8 @@ import {
   CHATBOT_MAX_TOKENS,
   CHATBOT_MODEL_DEFAULT,
   CHATBOT_SYSTEM_PROMPT,
-  CHATBOT_TEMPERATURE,
+  finalizeChatReply,
   localChatReply,
-  stripMarkdown,
   type ChatMessage,
 } from "@/lib/chatbot-knowledge";
 
@@ -46,8 +45,10 @@ export async function POST(request: Request) {
 
   const apiKey = process.env.OPENAI_API_KEY?.trim();
   if (!apiKey) {
+    const local = finalizeChatReply(localChatReply(lastUser.content), lastUser.content);
     return NextResponse.json({
-      reply: localChatReply(lastUser.content),
+      reply: local.reply,
+      showContactLink: local.showContactLink,
       mode: "local" as const,
     });
   }
@@ -63,10 +64,7 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         model,
-        temperature: CHATBOT_TEMPERATURE,
-        max_tokens: CHATBOT_MAX_TOKENS,
-        frequency_penalty: 0.2,
-        presence_penalty: 0.1,
+        max_completion_tokens: CHATBOT_MAX_TOKENS,
         messages: [
           { role: "system", content: CHATBOT_SYSTEM_PROMPT },
           ...cleaned,
@@ -77,8 +75,10 @@ export async function POST(request: Request) {
     if (!response.ok) {
       const detail = await response.text();
       console.error("OpenAI chat error", response.status, detail);
+      const local = finalizeChatReply(localChatReply(lastUser.content), lastUser.content);
       return NextResponse.json({
-        reply: localChatReply(lastUser.content),
+        reply: local.reply,
+        showContactLink: local.showContactLink,
         mode: "local" as const,
         warning: "AI接続に失敗したため、簡易回答に切り替えました。",
       });
@@ -90,15 +90,19 @@ export async function POST(request: Request) {
     const raw =
       data.choices?.[0]?.message?.content?.trim() ||
       localChatReply(lastUser.content);
+    const finalized = finalizeChatReply(raw, lastUser.content);
 
     return NextResponse.json({
-      reply: stripMarkdown(raw),
+      reply: finalized.reply,
+      showContactLink: finalized.showContactLink,
       mode: "openai" as const,
     });
   } catch (error) {
     console.error("Chat route failed", error);
+    const local = finalizeChatReply(localChatReply(lastUser.content), lastUser.content);
     return NextResponse.json({
-      reply: localChatReply(lastUser.content),
+      reply: local.reply,
+      showContactLink: local.showContactLink,
       mode: "local" as const,
       warning: "一時的に接続できないため、簡易回答に切り替えました。",
     });

@@ -1,47 +1,32 @@
+import {
+  AMAMI_ANSWER_RULES,
+  AMAMI_FAQ_SEEDS,
+  AMAMI_KNOWLEDGE,
+} from "@/lib/amami-knowledge";
 import { COMPANY_OVERVIEW, FAQ_ITEMS, SERVICES } from "@/lib/site-content";
+
+export { AMAMI_KNOWLEDGE } from "@/lib/amami-knowledge";
 
 export const CHATBOT_NAME = "くろうさ";
 
 export const CHATBOT_GREETING =
-  "うがみんしょうらん。くろうさだよ。奄美大島のことと、AMALINKのサービス案内ができるよ。なにが知りたい？";
-
-/** 事前取り込み済みの奄美大島ナレッジ（案内レベル） */
-export const AMAMI_KNOWLEDGE = `
-【位置・概要】
-鹿児島県と沖縄本島のほぼ中間にある亜熱帯の島。奄美群島で最大。面積はおよそ712平方キロメートル。人口はおよそ6万人規模。最高峰は湯湾岳（694メートル）。リアス海岸や深い谷など地形が複雑。
-
-【世界自然遺産】
-2021年7月、「奄美大島、徳之島、沖縄島北部及び西表島」が世界自然遺産に登録。生物多様性の保全上重要な地域。登録は陸域中心。固有種・希少種が多い。
-
-【生き物】
-アマミノクロウサギは奄美大島と徳之島にのみ生息する特別天然記念物。夜行性で、観察はガイド付きナイトツアーなどが一般的。ルリカケスなど固有種もいる。金作原など一部エリアは認定ガイド同行が必要な場合がある。
-
-【自然・観光】
-亜熱帯多雨林、マングローブ、干潟、海など多様な環境。島内はスポットが点在するためレンタカー利用が多い。繁忙期は事前予約が安心。滞在は2泊以上がおすすめされやすい。梅雨明け後〜台風前の初夏は比較的天候が安定しやすいと言われる。
-
-【文化・食】
-大島紬、黒糖焼酎、島の食文化が有名。琉球・薩摩・アメリカ統治などの歴史を経て、人と人のつながりを大切にする気風がある。あいさつ「うがみんしょうらん」は島の方言で親しみのある挨拶。
-
-【行政・拠点】
-奄美市、大和村、宇検村、瀬戸内町、龍郷町など。AMALINKの拠点は鹿児島県大島郡宇検村。観光案内は島内に複数の案内所がある。公式観光情報の一例: https://www.amami-tourism.org/
-
-【注意】
-野生動物の遭遇は保証できない。自然保護のためルール・ガイド指示を守る。最新の料金・営業・規制は公式・現地確認を勧める。
-`.trim();
+  "うがみんしょうらん。くろうさだよ。奄美群島のことと、AMALINKのサービス案内ができるよ。なにが知りたい？";
 
 export const CHATBOT_SYSTEM_PROMPT = `あなたは「${CHATBOT_NAME}」です。奄美大島のアマミノクロウサギをモチーフにした、合同会社AMALINK（AMALINK）公式サイトの案内キャラクターです。
 
 # 絶対ルール
-1. 答えてよい話題は「奄美大島（奄美群島・宇検村など島の暮らし・観光・自然・文化の一般知識）」と「AMALINK（会社・サービス・依頼の流れ）」だけ。
-2. それ以外は短く断る。例: ごめんね、くろうさは奄美大島とAMALINKのことしか話せないんだ。
+1. 答えてよい話題は「奄美群島（8有人島・12市町村の暮らし・観光・自然・文化・歴史の一般知識）」と「AMALINK（会社・サービス・依頼の流れ）」だけ。
+2. それ以外は短く断る。例: ごめんね、くろうさは奄美群島とAMALINKのことしか話せないんだ。
 3. 知らないことや公式にない料金の断定はしない。料金は内容によるのでお問い合わせへ。
 4. 回答は簡潔に。基本は1〜3文。最大でも短い段落2つまで。
-5. マークダウンは禁止。見出し記号、太字、箇条書き記号（- * # \`）、リンク記法は使わない。普通の日本語の文章だけ。
+5. マークダウンは禁止。見出し記号、太字、箇条書き記号（- * # \`）、リンク記法は使わない。普通の日本語の文章だけ。URLも本文に書かない。
 6. 絵文字は使わないか、多くても1つまで。
 7. 口調はやさしく親しみやすく。ですます調ベースで、ときどき「だよ」「ね」を使ってよい。
 8. 初回や挨拶には「うがみんしょうらん」を自然に使ってよい。
-9. 問い合わせ誘導が自然なときは、サイトのお問い合わせ（https://amalink.co.jp/contact）を案内する。
-10. 事前知識にない細部は推測で断定せず、公式確認やお問い合わせを勧める。
+9. 料金・見積・依頼・相談・詳細確認など、お問い合わせページへの誘導が自然なときは、本文で「お問い合わせからどうぞ」などと案内し、回答の末尾に必ず [[CONTACT]] とだけ付ける（制御用。ユーザーには見せない）。不要なら付けない。
+10. 事前知識にない細部は推測で断定せず、公式確認やお問い合わせを勧める。誘導するならルール9に従う。
+
+${AMAMI_ANSWER_RULES}
 
 # AMALINK公式情報
 会社名: ${COMPANY_OVERVIEW.legalName}（ブランド: ${COMPANY_OVERVIEW.brandName}）
@@ -57,16 +42,47 @@ export const CHATBOT_SYSTEM_PROMPT = `あなたは「${CHATBOT_NAME}」です。
 FAQ:
 ${FAQ_ITEMS.map((f) => `Q:${f.question} A:${f.answer}`).join("\n")}
 
-# 奄美大島ナレッジ（事前取り込み）
+# 奄美群島ナレッジ（事前取り込み・監査反映）
 ${AMAMI_KNOWLEDGE}
 `;
 
 /** OpenAI Chat Completions 向けの固定設定 */
-export const CHATBOT_MODEL_DEFAULT = "gpt-4o-mini";
+export const CHATBOT_MODEL_DEFAULT = "gpt-5.4-mini";
+/** GPT-5.4系は temperature 非対応のため未使用（互換用に残置） */
 export const CHATBOT_TEMPERATURE = 0.25;
-export const CHATBOT_MAX_TOKENS = 220;
+export const CHATBOT_MAX_TOKENS = 400;
 export const CHATBOT_MAX_MESSAGES = 12;
 export const CHATBOT_MAX_CONTENT_LENGTH = 800;
+
+/** お問い合わせ誘導用（UI側でリンク表示。本文からは除去する） */
+export const CHATBOT_CONTACT_MARKER = "[[CONTACT]]";
+export const CHATBOT_CONTACT_PATH = "/contact";
+
+const CONTACT_HINT_RE =
+  /お問い合わせ|お問合せ|ご相談|見積|見積り|ご連絡|依頼|相談したい|料金|費用|値段|お願いできる/;
+
+/** 返答から制御マーカーを外し、お問い合わせリンク表示要否を返す */
+export function finalizeChatReply(
+  raw: string,
+  userText?: string,
+): { reply: string; showContactLink: boolean } {
+  const hasMarker = raw.includes(CHATBOT_CONTACT_MARKER);
+  const reply = stripMarkdown(
+    raw
+      .replaceAll(CHATBOT_CONTACT_MARKER, "")
+      .replace(/https?:\/\/(?:www\.)?amalink\.co\.jp\/contact\/?/gi, "")
+      .replace(/\s{2,}/g, " ")
+      .trim(),
+  );
+
+  const userNeeds =
+    typeof userText === "string" && CONTACT_HINT_RE.test(userText);
+  const replyNeeds = CONTACT_HINT_RE.test(reply);
+  const showContactLink =
+    hasMarker || (userNeeds && replyNeeds) || /お問い合わせ/.test(reply);
+
+  return { reply, showContactLink };
+}
 
 export type ChatMessage = {
   role: "user" | "assistant" | "system";
@@ -74,7 +90,7 @@ export type ChatMessage = {
 };
 
 const OFF_TOPIC =
-  "ごめんね、くろうさは奄美大島とAMALINKのことしか話せないんだ。島のことや会社のサービスなら聞くよ。";
+  "ごめんね、くろうさは奄美群島とAMALINKのことしか話せないんだ。島のことや会社のサービスなら聞くよ。";
 
 function normalize(text: string) {
   return text.toLowerCase().replace(/\s+/g, "");
@@ -94,33 +110,56 @@ export function stripMarkdown(text: string): string {
     .trim();
 }
 
-function amamiLocalReply(q: string): string | null {
-  if (q.includes("世界遺産") || q.includes("自然遺産")) {
-    return "2021年に、奄美大島・徳之島・沖縄島北部・西表島が世界自然遺産に登録されたよ。生物多様性が高く評価されているんだ。";
-  }
-  if (q.includes("クロウサギ") || q.includes("黒兎") || q.includes("黒ウサギ") || q.includes("くろうさ")) {
-    if (q.includes("くろうさ") && (q.includes("だれ") || q.includes("誰") || q.includes("お前") || q.includes("なに"))) {
-      return null;
+function matchAmamiFaq(userText: string, q: string): string | null {
+  let best: { score: number; answer: string } | null = null;
+  for (const item of AMAMI_FAQ_SEEDS) {
+    const hay = normalize(item.title + item.answer + item.islands.join(""));
+    let score = 0;
+    for (const token of userText.split(/[\s　、。！？!?]+/).filter((t) => t.length >= 2)) {
+      if (hay.includes(normalize(token))) score += token.length;
     }
-    return "アマミノクロウサギは奄美大島と徳之島だけにいる特別天然記念物だよ。夜行性だから、見るならガイド付きのナイトツアーが一般的だね。";
+    for (const island of item.islands) {
+      if (q.includes(normalize(island))) score += 8;
+    }
+    if (q.includes("群島") && item.title.includes("群島")) score += 10;
+    if (q.includes("世界遺産") && item.title.includes("世界")) score += 12;
+    if (q.includes("国立公園") && item.title.includes("国立公園")) score += 12;
+    if ((q.includes("ハブ") || q.includes("蛇")) && item.title.includes("ハブ")) score += 12;
+    if (q.includes("百合") && item.title.includes("百合")) score += 12;
+    if (q.includes("闘牛") && item.title.includes("闘牛")) score += 12;
+    if ((q.includes("ケイビング") || q.includes("鍾乳")) && (item.title.includes("ケイビング") || item.title.includes("鍾乳"))) {
+      score += 12;
+    }
+    if (q.includes("沖縄") && (item.title.includes("沖縄") || item.title.includes("与論"))) score += 10;
+    if (q.includes("市町村") && item.title.includes("市町村")) score += 12;
+    if (q.includes("有人") && item.title.includes("有人")) score += 12;
+    if (!best || score > best.score) best = { score, answer: item.answer };
   }
-  if (q.includes("どこ") && (q.includes("奄美") || q.includes("島"))) {
-    return "奄美大島は鹿児島と沖縄のあいだあたりにある亜熱帯の島だよ。奄美群島でいちばん大きい島なんだ。";
+  if (best && best.score >= 6) return best.answer;
+  return null;
+}
+
+function amamiLocalReply(userText: string, q: string): string | null {
+  const faq = matchAmamiFaq(userText, q);
+  if (faq) return faq;
+
+  if (q.includes("クロウサギ") || q.includes("黒兎") || q.includes("黒ウサギ")) {
+    return "アマミノクロウサギは奄美大島と徳之島にいるよ。野生動物だから観察は保証できないし、見るならガイド付きが安心だね。";
   }
   if (q.includes("うがみん") || q.includes("挨拶") || q.includes("あいさつ")) {
     return "うがみんしょうらんは、奄美の方言であいさつだよ。くろうさもよく使うんだ。";
   }
+  if (q.includes("宇検")) {
+    return "宇検村は奄美大島にある村で、AMALINKの拠点もあるよ。湯湾岳や焼内湾など、自然が豊かなエリアだね。";
+  }
   if (q.includes("紬") || q.includes("つむぎ")) {
-    return "大島紬は奄美を代表する伝統工芸のひとつだよ。島の文化を感じられるものとして知られているね。";
+    return "本場奄美大島紬は、主に奄美大島で体験や展示ができるよ。予約条件は公式やお店で確認してね。";
   }
   if (q.includes("焼酎") || q.includes("黒糖")) {
-    return "奄美では黒糖焼酎が有名だよ。島の食やおみやげの定番のひとつだね。";
-  }
-  if (q.includes("宇検")) {
-    return "宇検村は奄美大島にある村で、AMALINKの拠点もあるよ。自然が豊かなエリアだね。";
+    return "黒糖焼酎は、鹿児島県の奄美群島でつくられる焼酎として知られているよ。蔵や島ごとに味が違うんだ。";
   }
   if (q.includes("観光") || q.includes("旅行") || q.includes("行き方") || q.includes("アクセス")) {
-    return "島内は見どころが点在するのでレンタカーが便利なことが多いよ。最新の交通や宿は公式の観光情報も確認してみてね。";
+    return "島や地域で交通条件が違うよ。飛行機や船の時刻は変わるから、公式の運航情報を確認しつつ、どの島に行くか教えてね。";
   }
   return null;
 }
@@ -147,13 +186,25 @@ export function localChatReply(userText: string): string {
   const onTopicHints = [
     "奄美",
     "あまみ",
+    "群島",
     "島",
     "宇検",
+    "喜界",
+    "徳之島",
+    "沖永良部",
+    "えらぶ",
+    "与論",
+    "ヨロン",
+    "加計呂麻",
+    "請島",
+    "与路",
     "くろうさ",
     "アマミノクロウサギ",
     "黒兎",
     "黒ウサギ",
     "世界遺産",
+    "国立公園",
+    "ハブ",
     "うがみん",
     "amalink",
     "アマリンク",
@@ -175,6 +226,11 @@ export function localChatReply(userText: string): string {
     "宿泊",
     "紬",
     "焼酎",
+    "移住",
+    "闘牛",
+    "百合",
+    "ケイビング",
+    "鍾乳",
   ];
 
   const hasOnTopic = onTopicHints.some((h) => q.includes(normalize(h)));
@@ -192,11 +248,14 @@ export function localChatReply(userText: string): string {
     return CHATBOT_GREETING;
   }
 
-  if (q.includes("くろうさ") && (q.includes("だれ") || q.includes("誰") || q.includes("お前") || q.includes("なに"))) {
+  if (
+    q.includes("くろうさ") &&
+    (q.includes("だれ") || q.includes("誰") || q.includes("お前") || q.includes("なに"))
+  ) {
     return "ぼくはくろうさ。アマミノクロウサギをモチーフにした、AMALINKの案内キャラクターだよ。";
   }
 
-  const amami = amamiLocalReply(q);
+  const amami = amamiLocalReply(userText, q);
   if (amami) return amami;
 
   let best: { score: number; answer: string } | null = null;
@@ -228,10 +287,20 @@ export function localChatReply(userText: string): string {
   }
 
   if (best && best.score >= 4) {
-    return stripMarkdown(`${best.answer} くわしくはお問い合わせからもどうぞ。`);
+    const needsContact =
+      CONTACT_HINT_RE.test(userText) || /お問い合わせ|ご連絡|見積/.test(best.answer);
+    return stripMarkdown(
+      needsContact
+        ? `${best.answer} くわしくはお問い合わせからもどうぞ。 ${CHATBOT_CONTACT_MARKER}`
+        : best.answer,
+    );
   }
 
   if (!hasOnTopic) return OFF_TOPIC;
 
-  return "うがみんしょうらん。もう少し具体的に聞いてくれると答えやすいよ。奄美のことか、AMALINKのサービスのこと、どちらが知りたい？";
+  if (CONTACT_HINT_RE.test(userText) && hasOnTopic) {
+    return `内容によって変わることが多いから、くわしくはお問い合わせで相談してね。 ${CHATBOT_CONTACT_MARKER}`;
+  }
+
+  return "うがみんしょうらん。もう少し具体的に聞いてくれると答えやすいよ。奄美群島のことか、AMALINKのサービスのこと、どちらが知りたい？";
 }

@@ -20,7 +20,7 @@ const services = [
     description: "日々の業務で「困ったな」「大変だな」と感じることはありませんか？\n在庫管理や予約システムなど、面倒な作業を自動化して、\nもっと大切なことに時間を使えるようお手伝いします。",
     href: "/system-development",
     linkLabel: "システム開発について詳しく見る",
-    wide: false,
+    orderClass: "md:order-1",
   },
   {
     key: "chatbot",
@@ -32,7 +32,7 @@ const services = [
       "自社サイト向けのAIチャットボット制作に対応しています。\nアバター付きの案内ボットや、答える範囲を絞った設計など、\n用途に合わせて組み込みまでご相談いただけます。",
     href: "/ai-avatar-chatbot",
     linkLabel: "チャットボットについて詳しく見る",
-    wide: false,
+    orderClass: "md:order-2",
   },
   {
     key: "web",
@@ -43,7 +43,7 @@ const services = [
     description: "お店や会社の「顔」となるホームページ。\nただ綺麗なだけでなく、お客様が見やすく、\n使いやすいサイトを丁寧に作り上げます。",
     href: "/web-production",
     linkLabel: "ホームページ制作について詳しく見る",
-    wide: false,
+    orderClass: "md:order-3",
   },
   {
     key: "design",
@@ -54,7 +54,7 @@ const services = [
     description: "ロゴマークや名刺、パンフレットなど。\nデザインから印刷手配・納品まで一気通貫で、\n見る人の心に残るカタチをご提案します。",
     href: "/design",
     linkLabel: "デザインについて詳しく見る",
-    wide: false,
+    orderClass: "md:order-4",
   },
   {
     key: "geo",
@@ -66,7 +66,7 @@ const services = [
       "検索にもAIにも、正しく伝わるWebへ。\nSEOとGEOの両面から、事業内容が引用・発見されやすい\nページ設計と情報整理をサポートします。",
     href: "/geo-seo",
     linkLabel: "GEO・SEO対策について詳しく見る",
-    wide: true,
+    orderClass: "md:order-5",
   },
 ] as const;
 
@@ -160,11 +160,8 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.8 }}
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-[1.75rem] border border-slate-100 bg-white/80 p-6 shadow-sm backdrop-blur-sm transition-all duration-500 hover:shadow-xl md:rounded-[2rem] md:p-8",
-        service.wide
-          ? "md:col-span-3"
-          : "min-h-0",
-        service.key === "chatbot" && "pb-14 md:pb-16",
+        "group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-slate-100 bg-white/80 p-6 shadow-sm backdrop-blur-sm transition-all duration-500 hover:shadow-xl md:rounded-[2rem] md:p-8",
+        service.orderClass,
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -330,7 +327,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         </motion.div>
       )}
 
-      <div className={cn("relative z-10 pr-12 md:pr-14", service.wide && "max-w-3xl")}>
+      <div className="relative z-10 flex min-h-0 flex-1 flex-col pr-12 md:pr-14">
         <span className="mb-4 block font-serif text-2xl text-slate-200 transition-colors group-hover:text-amami-blue/20 md:mb-5 md:text-3xl">
           {service.id}
         </span>
@@ -340,19 +337,31 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
           {service.enTitle}
         </span>
         
-        <p className="font-sans text-sm leading-relaxed whitespace-pre-line text-slate-500 md:text-base md:leading-relaxed">
+        <p
+          className={cn(
+            "font-sans text-sm leading-relaxed whitespace-pre-line text-slate-500 md:text-base md:leading-relaxed",
+            service.key === "chatbot" && "pr-6 md:pr-8",
+          )}
+        >
           {service.description}
         </p>
-        <Link
-          href={service.href}
-          className="mt-4 inline-flex items-center font-sans text-xs font-medium text-amami-blue underline decoration-amami-blue/30 underline-offset-4 transition hover:decoration-amami-blue md:mt-5 md:text-sm"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {service.linkLabel}
-        </Link>
-      </div>
 
-      <div className="relative z-10 mt-5 h-px w-full bg-slate-100 transition-colors duration-500 group-hover:bg-amami-blue md:mt-6" />
+        <div
+          className={cn(
+            "mt-auto pt-6",
+            service.key === "chatbot" && "pr-16 md:pr-20",
+          )}
+        >
+          <Link
+            href={service.href}
+            className="inline-flex items-center font-sans text-xs font-medium text-amami-blue underline decoration-amami-blue/30 underline-offset-4 transition hover:decoration-amami-blue md:text-sm"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {service.linkLabel}
+          </Link>
+          <div className="mt-5 h-px w-full bg-slate-100 transition-colors duration-500 group-hover:bg-amami-blue md:mt-6" />
+        </div>
+      </div>
     </motion.div>
   );
 }
@@ -383,9 +392,9 @@ export function Services() {
           </p>
         </motion.div>
 
-        <div className="relative z-10 grid gap-5 md:grid-cols-3 md:gap-6">
+        <div className="relative z-10 grid auto-rows-fr gap-5 md:grid-cols-3 md:gap-6">
           {services.map((service, index) => (
-            <ServiceCard key={index} service={service} index={index} />
+            <ServiceCard key={service.key} service={service} index={index} />
           ))}
         </div>
     </Section>

@@ -93,27 +93,39 @@ export function RabbitAvatar({
     setFrame("idle");
     const idleLoop = () => {
       const roll = Math.random();
-      if (roll < 0.5) {
+      if (roll < 0.55) {
+        // 瞬き（連続瞬きもあり）
         setFrame("blink");
-        schedule(160, () => {
+        schedule(120, () => {
           setFrame("idle");
-          schedule(1800 + Math.random() * 2200, idleLoop);
+          if (Math.random() < 0.45) {
+            schedule(90, () => {
+              setFrame("blink");
+              schedule(120, () => {
+                setFrame("idle");
+                schedule(500 + Math.random() * 700, idleLoop);
+              });
+            });
+          } else {
+            schedule(550 + Math.random() * 750, idleLoop);
+          }
         });
-      } else if (roll < 0.78) {
-        setFrame("wink");
-        schedule(420, () => {
+      } else if (roll < 0.88) {
+        // 口を開ける（talk / happy）
+        setFrame(Math.random() < 0.55 ? "talk" : "happy");
+        schedule(280 + Math.random() * 220, () => {
           setFrame("idle");
-          schedule(2000 + Math.random() * 2400, idleLoop);
+          schedule(600 + Math.random() * 800, idleLoop);
         });
       } else {
-        setFrame("happy");
-        schedule(500, () => {
+        setFrame("wink");
+        schedule(320, () => {
           setFrame("idle");
-          schedule(2200 + Math.random() * 2600, idleLoop);
+          schedule(650 + Math.random() * 850, idleLoop);
         });
       }
     };
-    schedule(1600 + Math.random() * 1200, idleLoop);
+    schedule(400 + Math.random() * 500, idleLoop);
 
     return () => {
       cancelled = true;

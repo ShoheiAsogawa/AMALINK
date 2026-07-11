@@ -1,0 +1,9 @@
+﻿island_id,island_name_ja,island_name_en,island_group,municipalities,terrain_type,world_heritage_component,habu_guidance,primary_topics
+amami_oshima,奄美大島,Amami-Oshima,奄美大島地域,奄美市|龍郷町|大和村|宇検村|瀬戸内町,高島,指定区域あり,生息,照葉樹林|マングローブ|大島紬|島唄|リアス海岸
+kakeromajima,加計呂麻島,Kakeromajima,奄美大島地域,瀬戸内町,高島,なし,生息,大島海峡|集落|諸鈍シバヤ|戦争史|文学
+ukeshima,請島,Ukeshima,奄美大島地域,瀬戸内町,高島,なし,生息,有人離島|集落生活|自然|船旅
+yoroshima,与路島,Yoroshima,奄美大島地域,瀬戸内町,高島,なし,生息,サンゴ石垣|集落景観|海|船旅
+kikaijima,喜界島,Kikai-jima,喜界島,喜界町,低島,なし,非生息島として扱う,隆起サンゴ礁|段丘|サトウキビ|ゴマ|城久遺跡群
+tokunoshima,徳之島,Tokunoshima,徳之島,徳之島町|天城町|伊仙町,高島,指定区域あり,生息,固有種|照葉樹林|闘牛|海食景観|農業
+okinoerabujima,沖永良部島,Okinoerabu-jima,沖永良部島,和泊町|知名町,低島,なし,非生息島として扱う,鍾乳洞|ケイビング|暗川|花き|西郷隆盛
+yoronjima,与論島,Yoron-jima,与論島,与論町,低島,なし,非生息島として扱う,礁湖|百合ヶ浜|十五夜踊り|与論献奉|琉球文化

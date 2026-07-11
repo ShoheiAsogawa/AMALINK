@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AmamiArchipelagoKnowledgeRecord",
+  "type": "object",
+  "required": [
+    "knowledge_id",
+    "title",
+    "category",
+    "content",
+    "source_url",
+    "last_verified",
+    "confidence",
+    "dynamic_level"
+  ],
+  "properties": {
+    "knowledge_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "subcategory": {
+      "type": "string"
+    },
+    "island": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "municipality": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "area_tag": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "audience": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "language": {
+      "type": "string",
+      "default": "ja"
+    },
+    "content": {
+      "type": "string"
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_name": {
+      "type": "string"
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "international",
+        "national_government",
+        "prefecture",
+        "municipality",
+        "official_tourism",
+        "museum",
+        "academic",
+        "operator_official",
+        "media",
+        "other"
+      ]
+    },
+    "last_verified": {
+      "type": "string",
+      "format": "date"
+    },
+    "valid_from": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "valid_until": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "dynamic_level": {
+      "type": "string",
+      "enum": [
+        "stable",
+        "annual",
+        "seasonal",
+        "monthly",
+        "weekly",
+        "realtime"
+      ]
+    },
+    "sensitivity": {
+      "type": "string",
+      "enum": [
+        "public",
+        "caution",
+        "restricted"
+      ]
+    },
+    "fact_type": {
+      "type": "string",
+      "enum": [
+        "verified_fact",
+        "official_guidance",
+        "tradition",
+        "legend",
+        "tourism_expression",
+        "inference"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}
