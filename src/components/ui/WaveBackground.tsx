@@ -47,14 +47,11 @@ export function WaveBackground({
       className={`absolute left-0 right-0 ${positionClasses[position]} h-[50vh] overflow-hidden pointer-events-none ${className}`}
     >
       <div
-        className="absolute inset-0 w-[200%] h-full"
+        className="absolute inset-0 h-full w-[200%] anim-wave-drift"
         style={{
           willChange: "transform",
           backfaceVisibility: "hidden",
-          animationName: "wave-bg-drift",
           animationDuration: `${speed}s`,
-          animationTimingFunction: "linear",
-          animationIterationCount: "infinite",
         }}
       >
         <svg viewBox="0 0 2400 320" preserveAspectRatio="none" className="w-full h-full">

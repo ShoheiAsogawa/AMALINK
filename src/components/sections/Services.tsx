@@ -93,41 +93,40 @@ function GeoKeywordRain({ active }: { active: boolean }) {
     "検索順位",
     "メタ情報",
     "内部リンク",
-    "エンティティ",
-    "ナレッジ",
-    "E-E-A-T",
-    "引用されやすさ",
   ] as const;
 
-  const columnCount = 5;
+  const columnCount = 3;
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: active ? 0.55 : 0 }}
-      transition={{ duration: 0.35 }}
-      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+    <div
+      className={cn(
+        "pointer-events-none absolute inset-0 z-0 overflow-hidden transition-opacity duration-300",
+        active ? "opacity-[0.55]" : "opacity-0",
+      )}
       aria-hidden
     >
       <div className="flex h-full w-full justify-between gap-3 px-6 md:gap-6 md:px-12">
         {Array.from({ length: columnCount }, (_, col) => {
           const duration = 14 + (col % 4) * 3.5;
-          const columnWords = Array.from({ length: 18 }, (_, row) => {
+          const columnWords = Array.from({ length: 10 }, (_, row) => {
             const word = keywords[(col * 7 + row * 3) % keywords.length]!;
             return word;
           });
 
           return (
             <div key={col} className="relative h-full min-w-0 flex-1 overflow-hidden">
-              <motion.div
-                className="flex flex-col items-start gap-5 py-3 font-sans"
-                initial={{ y: "0%" }}
-                animate={active ? { y: ["0%", "-50%"] } : { y: "0%" }}
-                transition={{
-                  duration,
-                  repeat: active ? Infinity : 0,
-                  ease: "linear",
-                }}
+              <div
+                className={cn(
+                  "flex flex-col items-start gap-5 py-3 font-sans",
+                  active && "geo-keyword-rain-track",
+                )}
+                style={
+                  active
+                    ? {
+                        animationDuration: `${duration}s`,
+                      }
+                    : undefined
+                }
               >
                 {[...columnWords, ...columnWords].map((word, row) => (
                   <span
@@ -141,12 +140,12 @@ function GeoKeywordRain({ active }: { active: boolean }) {
                     {word}
                   </span>
                 ))}
-              </motion.div>
+              </div>
             </div>
           );
         })}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -169,7 +168,7 @@ function ServiceCard({
       viewport={entrance ? { once: true } : undefined}
       transition={entrance ? { delay: index * 0.1, duration: 0.8 } : undefined}
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-slate-100 bg-white/80 p-6 shadow-sm backdrop-blur-sm transition-all duration-500 hover:shadow-xl md:rounded-[2rem] md:p-8",
+        "group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-slate-100 bg-white p-6 shadow-sm transition-[transform,box-shadow] duration-500 hover:shadow-xl md:rounded-[2rem] md:p-8",
         service.orderClass,
       )}
       onMouseEnter={() => setIsHovered(true)}
@@ -224,35 +223,35 @@ function ServiceCard({
             className="w-40 h-48 border border-current text-amami-blue rounded p-2 bg-white/50 relative"
           >
             {/* ヘッダー */}
-            <motion.div 
-              initial={{ width: 0 }} 
-              animate={isHovered ? { width: "100%" } : { width: 0 }} 
-              transition={{ duration: 0.4, delay: 0.1 }} 
-              className="h-4 bg-current mb-3 opacity-70" 
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={isHovered ? { scaleX: 1 } : { scaleX: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+              className="mb-3 h-4 origin-left bg-current opacity-70"
             />
-            
+
             {/* コンテンツエリア */}
-            <div className="flex gap-2 mb-3 h-24">
+            <div className="mb-3 flex h-24 gap-2">
               {/* サイドバー */}
-              <motion.div 
-                initial={{ height: 0 }} 
-                animate={isHovered ? { height: "100%" } : { height: 0 }} 
-                transition={{ duration: 0.4, delay: 0.3 }} 
-                className="w-1/3 bg-current opacity-40" 
+              <motion.div
+                initial={{ scaleY: 0 }}
+                animate={isHovered ? { scaleY: 1 } : { scaleY: 0 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                className="h-full w-1/3 origin-top bg-current opacity-40"
               />
               {/* メインカラム */}
-              <div className="w-2/3 flex flex-col gap-2">
-                <motion.div 
-                  initial={{ width: 0 }} 
-                  animate={isHovered ? { width: "100%" } : { width: 0 }} 
-                  transition={{ duration: 0.3, delay: 0.5 }} 
-                  className="h-12 bg-current opacity-30" 
+              <div className="flex w-2/3 flex-col gap-2">
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={isHovered ? { scaleX: 1 } : { scaleX: 0 }}
+                  transition={{ duration: 0.3, delay: 0.5 }}
+                  className="h-12 origin-left bg-current opacity-30"
                 />
-                <motion.div 
-                  initial={{ width: 0 }} 
-                  animate={isHovered ? { width: "100%" } : { width: 0 }} 
-                  transition={{ duration: 0.3, delay: 0.6 }} 
-                  className="h-full bg-current opacity-30" 
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={isHovered ? { scaleX: 1 } : { scaleX: 0 }}
+                  transition={{ duration: 0.3, delay: 0.6 }}
+                  className="h-full origin-left bg-current opacity-30"
                 />
               </div>
             </div>
@@ -283,7 +282,7 @@ function ServiceCard({
               fill="currentColor" 
               initial={{ scale: 0 }} 
               animate={{ scale: isHovered ? 1 : 0 }} 
-              transition={{ type: "spring", stiffness: 200, damping: 12, delay: 0 }}
+              transition={{ type: "spring", stiffness: 140, damping: 16, delay: 0 }}
               className="opacity-50"
             />
             {/* 四角 - 右下 */}
@@ -292,7 +291,7 @@ function ServiceCard({
               fill="currentColor" 
               initial={{ scale: 0, rotate: 0 }} 
               animate={{ scale: isHovered ? 1 : 0, rotate: isHovered ? 15 : 0 }} 
-              transition={{ type: "spring", stiffness: 200, damping: 12, delay: 0.1 }}
+              transition={{ type: "spring", stiffness: 140, damping: 16, delay: 0.1 }}
               className="opacity-40"
             />
             {/* 三角形 - 右上 */}
@@ -301,7 +300,7 @@ function ServiceCard({
               fill="currentColor" 
               initial={{ scale: 0 }} 
               animate={{ scale: isHovered ? 1 : 0 }} 
-              transition={{ type: "spring", stiffness: 200, damping: 12, delay: 0.2 }}
+              transition={{ type: "spring", stiffness: 140, damping: 16, delay: 0.2 }}
               className="opacity-30"
             />
             {/* 五角形 - 左下 */}
@@ -310,7 +309,7 @@ function ServiceCard({
               fill="currentColor" 
               initial={{ scale: 0 }} 
               animate={{ scale: isHovered ? 1 : 0 }} 
-              transition={{ type: "spring", stiffness: 200, damping: 12, delay: 0.3 }}
+              transition={{ type: "spring", stiffness: 140, damping: 16, delay: 0.3 }}
               className="opacity-30"
             />
           </svg>
@@ -318,7 +317,7 @@ function ServiceCard({
       )}
 
       {/* 右上アイコンはカード基準で固定（本文幅の影響を受けない） */}
-      <div className="absolute top-5 right-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-slate-50 text-slate-600 transition-all duration-300 group-hover:scale-110 group-hover:bg-amami-blue-light/20 group-hover:text-amami-blue md:top-6 md:right-6 md:h-11 md:w-11">
+      <div className="absolute top-5 right-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-slate-50 text-slate-600 transition-[transform,background-color,color] duration-300 group-hover:scale-110 group-hover:bg-amami-blue-light/20 group-hover:text-amami-blue md:top-6 md:right-6 md:h-11 md:w-11">
         {service.icon}
       </div>
 
@@ -396,7 +395,7 @@ function ServicesCopy({ className }: { className?: string }) {
 }
 
 function MobileServicesScroller() {
-  const { active, containerRef, layout, reduceMotion, stickyRef, trackRef, x } =
+  const { containerRef, layout, reduceMotion, setDotRef, stickyRef, trackRef, x } =
     usePinnedHorizontalScroll(services.length);
 
   if (reduceMotion) {
@@ -449,10 +448,8 @@ function MobileServicesScroller() {
             {services.map((service, index) => (
               <span
                 key={service.key}
-                className={cn(
-                  "h-1.5 rounded-full transition-all duration-300",
-                  active === index ? "w-6 bg-amami-blue" : "w-1.5 bg-slate-300",
-                )}
+                ref={(node) => setDotRef(index, node)}
+                className="pinned-scroll-dot h-1.5 rounded-full"
               />
             ))}
           </div>

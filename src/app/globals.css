@@ -74,6 +74,76 @@ body.amalink-gateway-lock {
   }
 }
 
+@keyframes hero-scroll-bounce {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 10px, 0);
+  }
+}
+
+.hero-scroll-hint {
+  animation: hero-scroll-bounce 2s ease-in-out infinite;
+  will-change: transform;
+}
+
+.anim-wave-drift {
+  animation-name: wave-bg-drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes geo-keyword-rain {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+.geo-keyword-rain-track {
+  animation-name: geo-keyword-rain;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.pinned-scroll-dot {
+  width: 0.375rem;
+  background-color: #cbd5e1;
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.pinned-scroll-dot[data-active="true"] {
+  width: 1.5rem;
+  background-color: var(--amami-blue);
+}
+
+@keyframes chatbot-rabbit-hop {
+  0%,
+  72%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  84% {
+    transform: translate3d(0, -10px, 0);
+  }
+  94% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.chatbot-rabbit-hop {
+  animation: chatbot-rabbit-hop 3.1s ease-out infinite;
+  will-change: transform;
+}
+
 .bg-grain-noise {
   background-image: url("/noise.svg");
 }
@@ -191,6 +261,13 @@ body.amalink-gateway-lock {
   .amalink-hamburger svg,
   .amalink-hamburger .amalink-hamburger-line {
     transition-duration: 0.01ms !important;
+  }
+
+  .hero-scroll-hint,
+  .geo-keyword-rain-track,
+  .chatbot-rabbit-hop,
+  .anim-wave-drift {
+    animation: none !important;
   }
 }
 

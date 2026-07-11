@@ -3,6 +3,95 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
+type WaveLayer = {
+  bottom?: string;
+  top?: string;
+  height: string;
+  duration: number;
+  opacity?: string;
+  rotate?: boolean;
+  path: string;
+  gradient: {
+    id: string;
+    stops: { offset: string; color: string; opacity: string }[];
+    y1?: string;
+    y2?: string;
+  };
+};
+
+const WAVE_LAYERS: WaveLayer[] = [
+  {
+    bottom: "bottom-[30%] md:bottom-[20%]",
+    height: "h-[60vh] md:h-[70vh]",
+    duration: 35,
+    path: "M0,180 Q300,120 600,180 Q900,240 1200,180 Q1500,120 1800,180 Q2100,240 2400,180 L2400,320 L0,320 Z",
+    gradient: {
+      id: "hero-wave1",
+      stops: [
+        { offset: "0%", color: "#0284c7", opacity: "0.15" },
+        { offset: "100%", color: "#0284c7", opacity: "0" },
+      ],
+    },
+  },
+  {
+    bottom: "bottom-[20%] md:bottom-[10%]",
+    height: "h-[50vh] md:h-[60vh]",
+    duration: 28,
+    path: "M0,160 Q300,100 600,160 Q900,220 1200,160 Q1500,100 1800,160 Q2100,220 2400,160 L2400,320 L0,320 Z",
+    gradient: {
+      id: "hero-wave2",
+      stops: [
+        { offset: "0%", color: "#0ea5e9", opacity: "0.2" },
+        { offset: "100%", color: "#0ea5e9", opacity: "0" },
+      ],
+    },
+  },
+  {
+    bottom: "bottom-[10%] md:bottom-0",
+    height: "h-[45vh] md:h-[55vh]",
+    duration: 24,
+    path: "M0,200 Q300,140 600,200 Q900,260 1200,200 Q1500,140 1800,200 Q2100,260 2400,200 L2400,320 L0,320 Z",
+    gradient: {
+      id: "hero-wave3",
+      stops: [
+        { offset: "0%", color: "#38bdf8", opacity: "0.25" },
+        { offset: "100%", color: "#38bdf8", opacity: "0" },
+      ],
+    },
+  },
+  {
+    bottom: "bottom-0",
+    height: "h-[35vh] md:h-[45vh]",
+    duration: 20,
+    path: "M0,220 Q300,160 600,220 Q900,280 1200,220 Q1500,160 1800,220 Q2100,280 2400,220 L2400,320 L0,320 Z",
+    gradient: {
+      id: "hero-wave4",
+      stops: [
+        { offset: "0%", color: "#7dd3fc", opacity: "0.3" },
+        { offset: "50%", color: "#bae6fd", opacity: "0.15" },
+        { offset: "100%", color: "#f0f9ff", opacity: "0" },
+      ],
+    },
+  },
+  {
+    top: "top-[10%]",
+    height: "h-[30vh] md:h-[40vh]",
+    duration: 40,
+    opacity: "opacity-50",
+    rotate: true,
+    path: "M0,160 Q300,100 600,160 Q900,220 1200,160 Q1500,100 1800,160 Q2100,220 2400,160 L2400,320 L0,320 Z",
+    gradient: {
+      id: "hero-wave5",
+      y1: "100%",
+      y2: "0%",
+      stops: [
+        { offset: "0%", color: "#e0f2fe", opacity: "0.4" },
+        { offset: "100%", color: "#e0f2fe", opacity: "0" },
+      ],
+    },
+  },
+];
+
 export function Hero() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -19,136 +108,43 @@ export function Hero() {
       <div className="absolute inset-0 z-0 bg-[#fafafa] overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03] bg-grain-noise" />
 
-        {/* Wave Layer 1 - Deep Blue */}
-        <motion.div
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            duration: 35,
-            repeat: Infinity,
-            ease: "linear",
-            repeatType: "loop",
-          }}
-          style={{ willChange: "transform" }}
-          className="absolute bottom-[30%] md:bottom-[20%] w-[200%] h-[60vh] md:h-[70vh] gpu-accelerate"
-        >
-          <svg viewBox="0 0 2400 320" preserveAspectRatio="none" className="w-full h-full">
-            <defs>
-              <linearGradient id="wave1" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#0284c7" stopOpacity="0.15" />
-                <stop offset="100%" stopColor="#0284c7" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path
-              fill="url(#wave1)"
-              d="M0,180 Q300,120 600,180 Q900,240 1200,180 Q1500,120 1800,180 Q2100,240 2400,180 L2400,320 L0,320 Z"
-            />
-          </svg>
-        </motion.div>
-
-        {/* Wave Layer 2 - Medium Blue */}
-        <motion.div
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            duration: 28,
-            repeat: Infinity,
-            ease: "linear",
-            repeatType: "loop",
-          }}
-          style={{ willChange: "transform" }}
-          className="absolute bottom-[20%] md:bottom-[10%] w-[200%] h-[50vh] md:h-[60vh] gpu-accelerate"
-        >
-          <svg viewBox="0 0 2400 320" preserveAspectRatio="none" className="w-full h-full">
-            <defs>
-              <linearGradient id="wave2" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.2" />
-                <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path
-              fill="url(#wave2)"
-              d="M0,160 Q300,100 600,160 Q900,220 1200,160 Q1500,100 1800,160 Q2100,220 2400,160 L2400,320 L0,320 Z"
-            />
-          </svg>
-        </motion.div>
-
-        {/* Wave Layer 3 - Light Blue */}
-        <motion.div
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            duration: 24,
-            repeat: Infinity,
-            ease: "linear",
-            repeatType: "loop",
-          }}
-          style={{ willChange: "transform" }}
-          className="absolute bottom-[10%] md:bottom-0 w-[200%] h-[45vh] md:h-[55vh] gpu-accelerate"
-        >
-          <svg viewBox="0 0 2400 320" preserveAspectRatio="none" className="w-full h-full">
-            <defs>
-              <linearGradient id="wave3" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.25" />
-                <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path
-              fill="url(#wave3)"
-              d="M0,200 Q300,140 600,200 Q900,260 1200,200 Q1500,140 1800,200 Q2100,260 2400,200 L2400,320 L0,320 Z"
-            />
-          </svg>
-        </motion.div>
-
-        {/* Wave Layer 4 - Lightest Blue */}
-        <motion.div
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-            repeatType: "loop",
-          }}
-          style={{ willChange: "transform" }}
-          className="absolute bottom-0 w-[200%] h-[35vh] md:h-[45vh] gpu-accelerate"
-        >
-          <svg viewBox="0 0 2400 320" preserveAspectRatio="none" className="w-full h-full">
-            <defs>
-              <linearGradient id="wave4" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#7dd3fc" stopOpacity="0.3" />
-                <stop offset="50%" stopColor="#bae6fd" stopOpacity="0.15" />
-                <stop offset="100%" stopColor="#f0f9ff" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path
-              fill="url(#wave4)"
-              d="M0,220 Q300,160 600,220 Q900,280 1200,220 Q1500,160 1800,220 Q2100,280 2400,220 L2400,320 L0,320 Z"
-            />
-          </svg>
-        </motion.div>
-
-        {/* Wave Layer 5 - Top atmosphere */}
-        <motion.div
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            duration: 40,
-            repeat: Infinity,
-            ease: "linear",
-            repeatType: "loop",
-          }}
-          style={{ willChange: "transform" }}
-          className="absolute top-[10%] w-[200%] h-[30vh] md:h-[40vh] opacity-50 gpu-accelerate"
-        >
-          <svg viewBox="0 0 2400 320" preserveAspectRatio="none" className="w-full h-full rotate-180">
-            <defs>
-              <linearGradient id="wave5" x1="0%" y1="100%" x2="0%" y2="0%">
-                <stop offset="0%" stopColor="#e0f2fe" stopOpacity="0.4" />
-                <stop offset="100%" stopColor="#e0f2fe" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path
-              fill="url(#wave5)"
-              d="M0,160 Q300,100 600,160 Q900,220 1200,160 Q1500,100 1800,160 Q2100,220 2400,160 L2400,320 L0,320 Z"
-            />
-          </svg>
-        </motion.div>
+        {WAVE_LAYERS.map((layer) => (
+          <div
+            key={layer.gradient.id}
+            className={`absolute w-[200%] anim-wave-drift gpu-accelerate ${layer.height} ${layer.bottom ?? ""} ${layer.top ?? ""} ${layer.opacity ?? ""}`}
+            style={{
+              willChange: "transform",
+              backfaceVisibility: "hidden",
+              animationDuration: `${layer.duration}s`,
+            }}
+          >
+            <svg
+              viewBox="0 0 2400 320"
+              preserveAspectRatio="none"
+              className={`h-full w-full ${layer.rotate ? "rotate-180" : ""}`}
+            >
+              <defs>
+                <linearGradient
+                  id={layer.gradient.id}
+                  x1="0%"
+                  y1={layer.gradient.y1 ?? "0%"}
+                  x2="0%"
+                  y2={layer.gradient.y2 ?? "100%"}
+                >
+                  {layer.gradient.stops.map((stop) => (
+                    <stop
+                      key={stop.offset}
+                      offset={stop.offset}
+                      stopColor={stop.color}
+                      stopOpacity={stop.opacity}
+                    />
+                  ))}
+                </linearGradient>
+              </defs>
+              <path fill={`url(#${layer.gradient.id})`} d={layer.path} />
+            </svg>
+          </div>
+        ))}
 
         <div className="absolute bottom-0 left-0 right-0 h-[150px] md:h-[250px] bg-gradient-to-b from-transparent to-slate-50 pointer-events-none z-[1]" />
       </div>
@@ -208,14 +204,10 @@ export function Hero() {
 
       {/* Scroll */}
       <div className="absolute bottom-6 md:bottom-10 left-0 right-0 z-10 flex flex-col items-center px-6">
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-2"
-        >
+        <div className="hero-scroll-hint flex flex-col items-center gap-2">
           <span className="text-[10px] text-slate-400 uppercase tracking-[0.2em] font-sans">Scroll</span>
           <div className="w-[1px] h-8 md:h-12 bg-slate-300" />
-        </motion.div>
+        </div>
       </div>
     </section>
   );

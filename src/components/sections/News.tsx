@@ -68,7 +68,7 @@ export function NewsSection({ news }: { news: News[] }) {
           )}
         </div>
         {news.length > 0 ? (
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl border border-slate-100 p-4 md:p-8 shadow-sm">
+          <div className="rounded-2xl border border-slate-100 bg-white p-4 shadow-sm md:p-8">
             {news.map((item) => (
               <NewsItem key={item.id} item={item} />
             ))}

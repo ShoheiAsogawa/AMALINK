@@ -119,7 +119,7 @@ export default function ContactPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="bg-white/80 backdrop-blur-md p-8 md:p-12 rounded-[2rem] shadow-sm border border-slate-100"
+                    className="rounded-[2rem] border border-slate-100 bg-white p-8 shadow-sm md:p-12"
                 >
                     {status === "success" ? (
                         <div className="text-center py-12">

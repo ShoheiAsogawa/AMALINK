@@ -7,14 +7,15 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
 export function usePinnedHorizontalScroll(itemCount: number) {
   const reduceMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
+  const dotsRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const activeRef = useRef(0);
   const [layout, setLayout] = useState({ stickyTop: -300, containerHeight: 1500 });
   const travel = useMotionValue(0);
   const scrollStart = useMotionValue(0);
@@ -32,7 +33,32 @@ export function usePinnedHorizontalScroll(itemCount: number) {
     ([progress, distance]) => -Number(progress) * Number(distance),
   );
 
+  const setDotActive = useCallback((index: number) => {
+    if (activeRef.current === index) return;
+    activeRef.current = index;
+    dotsRef.current.forEach((dot, i) => {
+      if (!dot) return;
+      if (i === index) {
+        dot.dataset.active = "true";
+      } else {
+        delete dot.dataset.active;
+      }
+    });
+  }, []);
+
+  const setDotRef = useCallback((index: number, node: HTMLSpanElement | null) => {
+    dotsRef.current[index] = node;
+    if (node) {
+      if (index === activeRef.current) {
+        node.dataset.active = "true";
+      } else {
+        delete node.dataset.active;
+      }
+    }
+  }, []);
+
   useLayoutEffect(() => {
+    let rafId = 0;
     const measure = () => {
       const container = containerRef.current;
       const track = trackRef.current;
@@ -56,28 +82,34 @@ export function usePinnedHorizontalScroll(itemCount: number) {
       );
     };
 
+    const scheduleMeasure = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(measure);
+    };
+
     measure();
-    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(measure) : null;
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(scheduleMeasure) : null;
     if (trackRef.current) ro?.observe(trackRef.current);
     if (stickyRef.current) ro?.observe(stickyRef.current);
-    window.addEventListener("resize", measure);
+    window.addEventListener("resize", scheduleMeasure, { passive: true });
     return () => {
+      cancelAnimationFrame(rafId);
       ro?.disconnect();
-      window.removeEventListener("resize", measure);
+      window.removeEventListener("resize", scheduleMeasure);
     };
   }, [scrollEnd, scrollStart, travel]);
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    setActive(
+    setDotActive(
       Math.min(itemCount - 1, Math.max(0, Math.round(latest * (itemCount - 1)))),
     );
   });
 
   return {
-    active,
     containerRef,
     layout,
     reduceMotion,
+    setDotRef,
     stickyRef,
     trackRef,
     x,

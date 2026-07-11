@@ -388,15 +388,34 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
       }
     }
 
+    let pointerRaf = 0;
+    let pendingX = 0;
+    let pendingY = 0;
+    let hasPendingPointer = false;
+
+    function flushPointer() {
+      pointerRaf = 0;
+      if (!hasPendingPointer) return;
+      hasPendingPointer = false;
+      applyPointer(pendingX, pendingY);
+      moveCursorGlow(pendingX, pendingY);
+    }
+
+    function schedulePointer(clientX: number, clientY: number) {
+      pendingX = clientX;
+      pendingY = clientY;
+      hasPendingPointer = true;
+      if (pointerRaf) return;
+      pointerRaf = requestAnimationFrame(flushPointer);
+    }
+
     function handleMouseMove(e: MouseEvent) {
-      applyPointer(e.clientX, e.clientY);
-      moveCursorGlow(e.clientX, e.clientY);
+      schedulePointer(e.clientX, e.clientY);
     }
     function handleTouchMove(e: TouchEvent) {
       if (e.touches.length === 0) return;
       const t = e.touches[0];
-      applyPointer(t.clientX, t.clientY);
-      moveCursorGlow(t.clientX, t.clientY);
+      schedulePointer(t.clientX, t.clientY);
     }
     function handleTouchStart(e: TouchEvent) {
       if (e.touches.length === 0) return;
@@ -453,6 +472,7 @@ export function SvgStudyGame({ onClear }: SvgStudyGameProps) {
     document.addEventListener("pointerup", onPointerUp);
 
     return () => {
+      cancelAnimationFrame(pointerRaf);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("touchmove", handleTouchMove);

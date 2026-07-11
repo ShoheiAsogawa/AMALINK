@@ -34,7 +34,7 @@ function ValueCardShell({
       viewport={entrance ? { once: true, amount: 0.35 } : undefined}
       transition={entrance ? { delay, duration: 0.8 } : undefined}
       className={cn(
-        "group relative overflow-hidden rounded-2xl border border-slate-100 bg-slate-50/80 p-8 backdrop-blur-sm transition-all duration-500 hover:bg-white hover:shadow-xl md:p-10",
+        "group relative overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 p-8 transition-[transform,box-shadow,background-color] duration-500 hover:bg-white hover:shadow-xl md:p-10",
         className,
       )}
       onMouseEnter={() => setHovered(true)}
@@ -291,7 +291,7 @@ function AboutCopy({ className }: { className?: string }) {
  * カード領域の縦スクロール進捗を、そのまま横方向の移動量へ変換する。
  */
 function ValuesCards({ mobileCopy }: { mobileCopy: ReactNode }) {
-  const { active, containerRef, layout, reduceMotion, stickyRef, trackRef, x } =
+  const { containerRef, layout, reduceMotion, setDotRef, stickyRef, trackRef, x } =
     usePinnedHorizontalScroll(3);
 
   if (reduceMotion) {
@@ -349,10 +349,8 @@ function ValuesCards({ mobileCopy }: { mobileCopy: ReactNode }) {
               {[0, 1, 2].map((i) => (
                 <span
                   key={i}
-                  className={cn(
-                    "h-1.5 rounded-full transition-all duration-300",
-                    active === i ? "w-6 bg-amami-blue" : "w-1.5 bg-slate-300",
-                  )}
+                  ref={(node) => setDotRef(i, node)}
+                  className="pinned-scroll-dot h-1.5 rounded-full"
                 />
               ))}
             </div>

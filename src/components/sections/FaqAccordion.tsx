@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
   FAQ_CATEGORIES,
@@ -55,19 +54,21 @@ function FaqAccordionItem({
         />
       </button>
 
-      <motion.div
+      <div
         id={panelId}
-        initial={false}
-        animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
-        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-        className="overflow-hidden"
+        className={cn(
+          "grid transition-[grid-template-rows,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+        )}
         role="region"
         aria-labelledby={buttonId}
       >
-        <p className="border-t border-slate-100 px-5 pb-5 pt-4 font-sans text-sm leading-loose text-slate-600 md:px-8 md:pb-6 md:text-base">
-          {answer}
-        </p>
-      </motion.div>
+        <div className="overflow-hidden">
+          <p className="border-t border-slate-100 px-5 pb-5 pt-4 font-sans text-sm leading-loose text-slate-600 md:px-8 md:pb-6 md:text-base">
+            {answer}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

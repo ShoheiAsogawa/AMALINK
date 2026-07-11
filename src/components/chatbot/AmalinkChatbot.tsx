@@ -203,8 +203,8 @@ export function AmalinkChatbot() {
             initial={{ opacity: 0, y: 12, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 420, damping: 32, mass: 0.7 }}
-            className="pointer-events-auto mb-2 ml-2 flex w-[min(100vw-1.5rem,22.5rem)] flex-col overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-white/95 shadow-[0_20px_50px_rgba(15,23,42,0.18)] backdrop-blur-md max-md:mb-1"
+            transition={{ type: "spring", stiffness: 280, damping: 30, mass: 0.8 }}
+            className="pointer-events-auto mb-2 ml-2 flex w-[min(100vw-1.5rem,22.5rem)] flex-col overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.14)] max-md:mb-1"
             role="dialog"
             aria-label={`${CHATBOT_NAME}チャット`}
           >
@@ -355,33 +355,14 @@ export function AmalinkChatbot() {
             aria-label={open ? "チャットを閉じる" : `${CHATBOT_NAME}に話しかける`}
             whileTap={{ scale: 0.97 }}
           >
-            <motion.div
-              animate={
-                open
-                  ? { y: 0 }
-                  : {
-                      y: [0, 0, -10, 0, 0],
-                    }
-              }
-              transition={
-                open
-                  ? { duration: 0.2 }
-                  : {
-                      duration: 0.7,
-                      times: [0, 0.72, 0.84, 0.94, 1],
-                      repeat: Infinity,
-                      repeatDelay: 2.4,
-                      ease: "easeOut",
-                    }
-              }
-            >
+            <div className={open ? undefined : "chatbot-rabbit-hop"}>
               <RabbitAvatar
                 mood={open ? mood : "idle"}
                 size={118}
                 priority
                 animateFloat={false}
               />
-            </motion.div>
+            </div>
           </motion.button>
         </div>
       </div>

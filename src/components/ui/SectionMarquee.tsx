@@ -18,6 +18,7 @@ type Props = {
 
 /**
  * Philosophy / AMALINK SERVICES 共通：スクロール連動パララックス ＋ 右→左無限ループ（スタイル同一）
+ * ループ本体は CSS（wave-bg-drift）で駆動し、パララックスだけ motion を使う。
  */
 export function SectionServicesMarquee({
   scrollTargetRef,
@@ -34,7 +35,7 @@ export function SectionServicesMarquee({
   });
   const parallaxX = useTransform(scrollYProgress, [0, 1], scrollShift);
 
-  const chunk = Array.from({ length: 12 }, () => phrase).join(separator);
+  const chunk = Array.from({ length: 8 }, () => phrase).join(separator);
 
   const band =
     "inline-block shrink-0 whitespace-nowrap px-4 font-sans uppercase text-[min(11vw,6.5rem)] font-bold tracking-[0.18em] text-slate-400/90 md:text-[min(9vw,5.5rem)]";
@@ -49,18 +50,17 @@ export function SectionServicesMarquee({
       aria-hidden
     >
       <motion.div style={{ x: parallaxX }} className="will-change-transform">
-        <motion.div
-          className="flex w-max flex-row"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            duration: durationSec,
-            repeat: Infinity,
-            ease: "linear",
+        <div
+          className="flex w-max flex-row anim-wave-drift"
+          style={{
+            willChange: "transform",
+            backfaceVisibility: "hidden",
+            animationDuration: `${durationSec}s`,
           }}
         >
           <span className={band}>{chunk}</span>
           <span className={band}>{chunk}</span>
-        </motion.div>
+        </div>
       </motion.div>
     </div>
   );
