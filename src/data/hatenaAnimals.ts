@@ -1,9 +1,9 @@
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-/** ハテナブロックから出す動物（17種）。ファイルは `/public/hatena-animals/01.png` … `17.png`。 */
+/** ハテナブロックから出す動物（17種）。軽量 WebP: `/public/hatena-animals/01.webp` … `17.webp`。 */
 export const HATENA_ANIMAL_SRC = Array.from(
   { length: 17 },
-  (_, i) => `${base}/hatena-animals/${String(i + 1).padStart(2, "0")}.png`
+  (_, i) => `${base}/hatena-animals/${String(i + 1).padStart(2, "0")}.webp`
 );
 
 /** crypto で均等な整数乱数（差し替え・並べ替えなしの単発抽選向け） */
