@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FooterTruck } from "@/components/layout/FooterTruck";
+import { PixelPlayButton } from "@/components/ui/PixelPlayButton";
 import { COMPANY_OVERVIEW } from "@/lib/site-content";
 import { LEGAL_NAME } from "@/lib/seo";
 
@@ -18,7 +19,7 @@ const FOOTER_LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-slate-200 bg-slate-50 pt-12 pb-[calc(3rem+7.25rem)] md:pt-20 md:pb-[calc(5rem+8.5rem)]">
+    <footer className="relative overflow-visible border-t border-slate-200 bg-slate-50 pt-12 pb-[calc(3rem+7.25rem)] md:pt-20 md:pb-[calc(5rem+8.5rem)]">
       <FooterTruck />
       <div className="container relative z-[1] mx-auto px-6">
         <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-start">
@@ -61,6 +62,11 @@ export default function Footer() {
               ))}
             </ul>
           </nav>
+        </div>
+
+        {/* モバイルのみ: ハテナをフッター右下に配置（右下 fixed はやめる） */}
+        <div className="mt-8 flex justify-end md:hidden">
+          <PixelPlayButton placement="footer" />
         </div>
       </div>
     </footer>
