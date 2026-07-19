@@ -38,6 +38,6 @@ export function getOfficialLineAddFriendUrl(): string {
 }
 
 export const DEFAULT_DESCRIPTION =
-  "合同会社AMALINK（AMALINK）は、鹿児島県奄美大島を拠点にホームページ制作・システム開発・デザイン・GEO対策を行うデジタル支援会社です。奄美・全国の中小事業者向けに、AIに引用されやすいWeb設計と伴走型サポートを提供します。";
+  "合同会社AMALINK（AMALINK）は、鹿児島県奄美大島を拠点にホームページ制作・デザイン・システム開発・GEO対策を行う会社です。奄美大島ホームページ制作・奄美大島デザインを中心に、AIに引用されやすいWeb設計と伴走型サポートを提供します。";
 
-export const DEFAULT_TITLE = `${LEGAL_NAME}（${SITE_NAME}）｜奄美大島のウェブ制作・システム開発・GEO対策`;
+export const DEFAULT_TITLE = `${LEGAL_NAME}（${SITE_NAME}）｜奄美大島ホームページ制作・デザイン・システム開発`;

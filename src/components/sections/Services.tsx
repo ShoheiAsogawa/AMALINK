@@ -40,10 +40,11 @@ const services = [
     id: "03",
     icon: <Smartphone className="w-6 h-6" />,
     title: "ホームページ制作",
-    enTitle: "Web Production",
-    description: "お店や会社の「顔」となるホームページ。\nただ綺麗なだけでなく、お客様が見やすく、\n使いやすいサイトを丁寧に作り上げます。",
+    enTitle: "Amami Web Production",
+    description:
+      "奄美大島のホームページ制作。\nお店や会社の「顔」となるサイトを、\n見やすさと更新しやすさ重視で丁寧に作ります。",
     href: "/web-production",
-    linkLabel: "ホームページ制作について詳しく見る",
+    linkLabel: "奄美大島ホームページ制作を詳しく見る",
     orderClass: "md:order-3",
   },
   {
@@ -51,10 +52,11 @@ const services = [
     id: "04",
     icon: <PenTool className="w-6 h-6" />,
     title: "デザイン",
-    enTitle: "Creative Design",
-    description: "ロゴマークや名刺、パンフレットなど。\nデザインから印刷手配・納品まで一気通貫で、\n見る人の心に残るカタチをご提案します。",
+    enTitle: "Amami Design",
+    description:
+      "奄美大島デザイン。ロゴ・名刺・パンフレットなど。\nデザインから印刷手配・納品まで一気通貫で、\n見る人の心に残るカタチをご提案します。",
     href: "/design",
-    linkLabel: "デザインについて詳しく見る",
+    linkLabel: "奄美大島デザインを詳しく見る",
     orderClass: "md:order-4",
   },
   {

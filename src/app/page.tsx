@@ -16,6 +16,14 @@ export const metadata: Metadata = {
     absolute: DEFAULT_TITLE,
   },
   description: DEFAULT_DESCRIPTION,
+  keywords: [
+    "奄美大島ホームページ制作",
+    "奄美大島デザイン",
+    "デザイン 奄美大島",
+    "合同会社AMALINK",
+    "AMALINK",
+    "奄美大島",
+  ],
   alternates: { canonical: "/" },
   openGraph: {
     url: absoluteUrl("/"),

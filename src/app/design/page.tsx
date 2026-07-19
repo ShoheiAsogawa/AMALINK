@@ -4,21 +4,33 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { Contact } from "@/components/sections/Contact";
+import {
+  CiteableAnswer,
+  RelatedServices,
+  ServicePageJsonLd,
+  WhyLocalSection,
+} from "@/components/seo/ServicePageGeo";
 import { absoluteUrl, LEGAL_NAME } from "@/lib/seo";
+import { DESIGN_GEO, TARGET_KEYWORDS } from "@/lib/geo-targets";
 
-const title = "奄美大島のデザイン制作";
-const description =
-  "ロゴ、名刺、パンフレット、SNS用画像など、ブランドの想いを伝えるビジュアルデザインを制作します。印刷の手配まで一気通貫で対応し、納品までお任せいただけます。";
+const title = DESIGN_GEO.title;
+const description = DESIGN_GEO.description;
 
 export const metadata: Metadata = {
   title,
   description,
-  alternates: { canonical: "/design" },
+  keywords: [...TARGET_KEYWORDS.design, LEGAL_NAME, "AMALINK"],
+  alternates: { canonical: DESIGN_GEO.canonicalPath },
   openGraph: {
     title: `${title} | ${LEGAL_NAME}`,
     description,
-    url: absoluteUrl("/design"),
+    url: absoluteUrl(DESIGN_GEO.canonicalPath),
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ${LEGAL_NAME}`,
+    description,
   },
 };
 
@@ -48,86 +60,20 @@ const steps = [
   ["04", "印刷手配・納品", "印刷の手配まで行い、完成品の納品まで一気通貫で進めます。"],
 ] as const;
 
-const faqs = [
-  {
-    id: "design-only",
-    question: "デザインだけの依頼もできますか？",
-    answer:
-      "はい。ロゴや名刺など、ビジュアルのみのご依頼も承っています。Web制作と合わせてブランド全体を整えることも可能です。",
-  },
-  {
-    id: "design-logo",
-    question: "ロゴの修正やリニューアルも相談できますか？",
-    answer:
-      "可能です。既存ロゴを活かす調整から、印象を刷新するリニューアルまでご相談ください。",
-    singleLineOnMobile: true,
-  },
-  {
-    id: "design-print",
-    question: "印刷の手配までお願いできますか？",
-    answer:
-      "はい。デザインから印刷の手配、納品まで一気通貫で対応できます。データだけ欲しい場合も、印刷まで任せたい場合もご相談ください。",
-    singleLineOnMobile: true,
-  },
-  {
-    id: "design-price",
-    question: "料金の目安はありますか？",
-    answer:
-      "制作物の種類、案の数、印刷の有無や部数によって異なります。ご希望を伺ったうえで概算をご案内します。",
-    singleLineOnMobile: true,
-  },
-];
-
-function JsonLd() {
-  const url = absoluteUrl("/design");
-  const organizationId = `${absoluteUrl("/")}#organization`;
-  const payload = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Service",
-        "@id": `${url}#service`,
-        name: "デザイン制作",
-        serviceType: "ロゴ・印刷物デザイン・印刷手配",
-        description,
-        url,
-        provider: { "@id": organizationId },
-        areaServed: [
-          { "@type": "Place", name: "奄美大島" },
-          { "@type": "AdministrativeArea", name: "奄美群島" },
-          { "@type": "Country", name: "日本" },
-        ],
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "ホーム", item: absoluteUrl("/") },
-          { "@type": "ListItem", position: 2, name: "デザイン", item: url },
-        ],
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: faqs.map((item) => ({
-          "@type": "Question",
-          name: item.question,
-          acceptedAnswer: { "@type": "Answer", text: item.answer },
-        })),
-      },
-    ],
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(payload) }}
-    />
-  );
-}
+const faqs = DESIGN_GEO.faqs;
 
 export default function DesignPage() {
   return (
     <>
-      <JsonLd />
+      <ServicePageJsonLd
+        url={DESIGN_GEO.url}
+        name={DESIGN_GEO.serviceSchemaName}
+        description={description}
+        serviceTypes={DESIGN_GEO.serviceTypes}
+        breadcrumbName="デザイン"
+        faqs={faqs}
+        keywords={TARGET_KEYWORDS.design}
+      />
       <main className="min-h-screen bg-white text-slate-800">
         <Header />
 
@@ -143,17 +89,21 @@ export default function DesignPage() {
               <span>デザイン</span>
             </nav>
             <p className="mb-4 font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
-              Creative Design
+              奄美大島デザイン
             </p>
             <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
-              <span className="block">想いをカタチにする、</span>
-              <span className="block whitespace-nowrap">伝わるデザイン制作。</span>
+              <span className="block">{DESIGN_GEO.h1Primary}</span>
+              <span className="mt-2 block text-[0.72em] font-bold text-slate-700 sm:mt-3 md:text-[0.55em]">
+                {DESIGN_GEO.h1Secondary}
+              </span>
             </h1>
-            <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
-              {LEGAL_NAME}は、ロゴや名刺、パンフレットなど、ブランドの印象を伝えるビジュアルを制作します。印刷の手配から納品まで一気通貫で対応でき、Webと合わせた統一もご相談ください。
+            <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl" data-geo-answer>
+              {LEGAL_NAME}は、奄美大島を拠点にデザイン制作を行っています。ロゴや名刺、パンフレットなど、ブランドの印象を伝えるビジュアルを、印刷手配から納品まで一気通貫で対応できます。
             </p>
           </div>
         </section>
+
+        <CiteableAnswer answer={DESIGN_GEO.citeableAnswer} keywords={TARGET_KEYWORDS.design} />
 
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
@@ -175,7 +125,14 @@ export default function DesignPage() {
           </div>
         </section>
 
-        <section className="bg-slate-50 px-6 py-20 md:py-28">
+        <WhyLocalSection
+          eyebrow="Why Amami Design"
+          heading="奄美大島デザインを依頼する理由"
+          intro="見た目を整えるだけでなく、使う場面と伝わる印象まで含めて、ブランドのカタチをそろえます。"
+          items={DESIGN_GEO.whyLocal}
+        />
+
+        <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">Process</p>
             <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">相談から納品まで</h2>
@@ -183,7 +140,7 @@ export default function DesignPage() {
               {steps.map(([number, heading, body]) => (
                 <li
                   key={number}
-                  className="grid gap-3 rounded-3xl bg-white p-7 md:grid-cols-[5rem_14rem_1fr] md:items-center md:p-9"
+                  className="grid gap-3 rounded-3xl bg-slate-50 p-7 md:grid-cols-[5rem_14rem_1fr] md:items-center md:p-9"
                 >
                   <span className="font-serif text-3xl text-amami-blue/40">{number}</span>
                   <h3 className="font-serif text-xl font-bold text-brand-gradient">{heading}</h3>
@@ -194,15 +151,19 @@ export default function DesignPage() {
           </div>
         </section>
 
-        <section className="px-6 py-20 md:py-28">
+        <section className="bg-slate-50 px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">FAQ</p>
-            <h2 className="mt-3 font-serif text-2xl md:text-5xl font-bold text-brand-gradient">デザインのよくある質問</h2>
+            <h2 className="mt-3 font-serif text-2xl md:text-5xl font-bold text-brand-gradient">
+              奄美大島デザインのよくある質問
+            </h2>
             <div className="mt-10">
-              <FaqAccordion items={faqs} />
+              <FaqAccordion items={[...faqs]} />
             </div>
           </div>
         </section>
+
+        <RelatedServices links={DESIGN_GEO.related} />
 
         <Contact
           title="まずは、気軽にお話ししませんか？"
