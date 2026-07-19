@@ -17,15 +17,32 @@ const FOOTER_LINKS = [
   { href: "/contact", label: "お問い合わせ" },
 ] as const;
 
+function ServicesNav({ className }: { className?: string }) {
+  return (
+    <nav aria-label="フッターナビ" className={className}>
+      <p className="mb-3 font-sans text-xs uppercase tracking-[0.2em] text-slate-400 md:mb-4">Services</p>
+      <ul className="grid grid-cols-3 gap-x-2 gap-y-2 font-sans text-[11px] leading-snug text-slate-600 md:grid-cols-1 md:gap-2.5 md:text-sm md:leading-normal">
+        {FOOTER_LINKS.map((item) => (
+          <li key={item.href}>
+            <Link href={item.href} className="transition hover:text-amami-blue">
+              {item.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
 export default function Footer() {
   return (
     <footer className="relative overflow-visible border-t border-slate-200 bg-slate-50 pt-12 pb-[calc(3rem+7.25rem)] md:pt-20 md:pb-[calc(5rem+8.5rem)]">
       <FooterTruck />
       <div className="container relative z-[1] mx-auto px-6">
-        <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-start">
+        <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-start md:gap-10">
           <div className="max-w-md text-left">
-            <Link href="/" className="text-xl md:text-2xl font-bold tracking-widest flex items-center gap-2 mb-4 group">
-              <div className="relative w-8 h-8 md:w-10 md:h-10">
+            <Link href="/" className="mb-4 flex items-center gap-2 text-xl font-bold tracking-widest group md:text-2xl">
+              <div className="relative h-8 w-8 md:h-10 md:w-10">
                 <Image
                   src={`${assetBase}/logo.png`}
                   alt={`${LEGAL_NAME} ロゴ`}
@@ -33,40 +50,35 @@ export default function Footer() {
                   className="object-contain"
                 />
               </div>
-              <span className="text-slate-900 font-sans group-hover:text-amami-blue transition-colors">AMALINK</span>
+              <span className="font-sans text-slate-900 transition-colors group-hover:text-amami-blue">AMALINK</span>
             </Link>
-            <p className="text-slate-500 text-xs md:text-sm font-sans leading-relaxed">
+            <p className="font-sans text-xs leading-relaxed text-slate-500 md:text-sm">
               {LEGAL_NAME}
               <br />
               {COMPANY_OVERVIEW.address}
             </p>
-            <p className="mt-[1em] text-slate-500 text-xs md:text-sm font-sans leading-relaxed">
-              島のリズムで、
-              <br />
-              <span className="text-amami-blue">未来をつくる。</span>
-            </p>
-            <p className="mt-8 text-[10px] md:text-xs tracking-wide font-sans text-slate-400">
+
+            {/* モバイル: サービスをロゴ直下で3列表示 */}
+            <ServicesNav className="mt-6 md:hidden" />
+
+            {/* タグライン下端とハテナ下端を揃えて右に配置（モバイル） */}
+            <div className="mt-6 flex items-end justify-between gap-3 md:mt-[1em]">
+              <p className="min-w-0 font-sans text-xs leading-relaxed text-slate-500 md:text-sm">
+                島のリズムで、
+                <br />
+                <span className="text-amami-blue">未来をつくる。</span>
+              </p>
+              <div className="shrink-0 md:hidden">
+                <PixelPlayButton placement="footer" />
+              </div>
+            </div>
+
+            <p className="mt-6 font-sans text-[10px] tracking-wide text-slate-400 md:mt-8 md:text-xs">
               &copy; {new Date().getFullYear()} {LEGAL_NAME}. All rights reserved.
             </p>
           </div>
 
-          <nav aria-label="フッターナビ" className="md:justify-self-end">
-            <p className="mb-4 font-sans text-xs uppercase tracking-[0.2em] text-slate-400">Services</p>
-            <ul className="grid gap-2.5 font-sans text-sm text-slate-600">
-              {FOOTER_LINKS.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="transition hover:text-amami-blue">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-
-        {/* モバイルのみ: ハテナをフッター右下に配置（右下 fixed はやめる） */}
-        <div className="mt-8 flex justify-end md:hidden">
-          <PixelPlayButton placement="footer" />
+          <ServicesNav className="hidden md:block md:justify-self-end" />
         </div>
       </div>
     </footer>
