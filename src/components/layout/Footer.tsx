@@ -68,24 +68,20 @@ export default function Footer() {
               {COMPANY_OVERVIEW.address}
             </p>
 
-            {/* PC: タグライン → コピーライト */}
-            <div className="mt-[1em] hidden md:block">
+            {/* 住所直下: タグライン＋ハテナ（モバイルは右にハテナ、PCはタグラインのみ） */}
+            <div className="mt-[1em] flex items-end justify-between gap-3">
               <Tagline />
+              <div className="shrink-0 md:hidden">
+                <PixelPlayButton placement="footer" />
+              </div>
             </div>
+
             <p className="mt-6 font-sans text-[10px] tracking-wide text-slate-400 md:mt-8 md:text-xs">
               &copy; {new Date().getFullYear()} {LEGAL_NAME}. All rights reserved.
             </p>
 
             {/* モバイル: コピーライトの下にサービス3列 */}
             <ServicesNav className="mt-6 md:hidden" />
-
-            {/* モバイル最下段: タグライン左・ハテナ右（下端揃え） */}
-            <div className="mt-6 flex items-end justify-between gap-3 md:hidden">
-              <Tagline />
-              <div className="shrink-0">
-                <PixelPlayButton placement="footer" />
-              </div>
-            </div>
           </div>
 
           <ServicesNav className="hidden md:block md:justify-self-end" />
