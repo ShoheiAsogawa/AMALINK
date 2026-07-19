@@ -229,7 +229,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 w-full z-[100] bg-transparent py-8 pointer-events-none">
+      <header className="fixed top-0 w-full z-[100] bg-transparent pt-6 pb-6 pointer-events-none md:py-8">
         {/* Container for logo and menu - blend mode applied individually */}
         <div className="container mx-auto px-6 flex justify-between items-center relative z-[100] pointer-events-auto">
           
