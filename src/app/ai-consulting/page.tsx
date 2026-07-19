@@ -77,7 +77,7 @@ const steps = [
   ["02", "効くところを見つける", "汎用AIの活用か、社内特化ボットか、または両方か。負担が少なく効く形を整理します。"],
   ["03", "小さく試す", "いきなり全社展開せず、検証しやすい範囲から試し、手応えを確認します。"],
   ["04", "導入・定着", "使い方の型や運用ルールを整え、現場で続く形に落とし込みます。"],
-  ["05", "見直し・改善", "新しいAIの変化に合わせて、必要に応じて仕組みを更新します。"],
+  ["05", "見直し・改善", "新しいモデルや機能を見ながら、使い方や社内ボットを必要に応じて育てます。"],
 ] as const;
 
 const faqs = [
@@ -105,7 +105,7 @@ const faqs = [
     id: "ai-consult-latest",
     question: "最新のAI情報をもとに提案してもらえますか？",
     answer:
-      "はい。ツールはすぐ陳腐化するため、古い前提に固定せず、最新の実用情報を踏まえてご提案します。",
+      "はい。新しいモデルや機能の動きを見ながら、御社の業務で本当に使えるかを基準にご提案します。導入後の見直しもご相談いただけます。",
     singleLineOnMobile: true,
   },
   {
@@ -223,7 +223,7 @@ export default function AiConsultingPage() {
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
               {LEGAL_NAME}は、ChatGPT・Claude
-              などの活用支援に加え、社内マニュアルや会社知識に特化した社内用チャットボットの制作にも対応します。古い手段に固定せず、その時点で実用的なやり方を一緒に選びます。
+              などの活用支援に加え、社内マニュアルや会社知識に特化した社内用チャットボットの制作にも対応します。名前を並べるだけでなく、御社の業務で使える形まで一緒に落とし込みます。
             </p>
           </div>
         </section>
@@ -235,7 +235,7 @@ export default function AiConsultingPage() {
               支援の中心
             </h2>
             <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">
-              使わないツールを並べるのではなく、現場で続くものに絞ります。
+              ChatGPT・Claude・社内特化ボットなど、実際の業務に落とせる支援に集中します。
             </p>
             <div className="mt-10 grid gap-5 md:grid-cols-2">
               {tools.map((item) => (
