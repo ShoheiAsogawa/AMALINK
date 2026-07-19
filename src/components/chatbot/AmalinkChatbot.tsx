@@ -193,8 +193,8 @@ export function AmalinkChatbot() {
     <div
       className={cn(
         "pointer-events-none fixed z-[80] flex flex-col items-start",
-        "max-md:bottom-0 max-md:left-[max(0.25rem,env(safe-area-inset-left))]",
-        "md:bottom-0 md:left-[max(0.75rem,env(safe-area-inset-left))]",
+        "max-md:bottom-0 max-md:left-[max(0.125rem,env(safe-area-inset-left))]",
+        "md:bottom-0 md:left-[max(0.5rem,env(safe-area-inset-left))]",
       )}
     >
       <AnimatePresence>
@@ -320,7 +320,7 @@ export function AmalinkChatbot() {
       </AnimatePresence>
 
       {/* 左下から顔を見せる → クリックで登場（高さ固定で開閉時のガクつき防止） */}
-      <div className="pointer-events-auto relative ml-1 h-[100px] w-[112px] max-md:h-[92px] max-md:w-[100px]">
+      <div className="pointer-events-auto relative ml-1 h-[80px] w-[88px] origin-bottom-left max-md:ml-0 max-md:h-[64px] max-md:w-[70px] max-md:scale-[0.92]">
         <AnimatePresence>
           {!open && (
             <motion.div
@@ -328,7 +328,7 @@ export function AmalinkChatbot() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 4, scale: 0.96 }}
               transition={{ duration: 0.18 }}
-              className="absolute bottom-full left-1 z-10 mb-4"
+              className="absolute bottom-full left-1 z-10 mb-3 max-md:hidden"
             >
               <button
                 type="button"
@@ -346,10 +346,10 @@ export function AmalinkChatbot() {
         </AnimatePresence>
 
         {/* 上にジャンプ余白を確保し、耳が overflow で切れないようにする */}
-        <div className="absolute -top-3 bottom-0 left-0 right-0 overflow-hidden">
+        <div className="absolute -top-2 bottom-0 left-0 right-0 overflow-hidden">
           <motion.button
             type="button"
-            className="absolute left-1/2 top-3 -translate-x-1/2"
+            className="absolute left-1/2 top-2 -translate-x-1/2"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label={open ? "チャットを閉じる" : `${CHATBOT_NAME}に話しかける`}
@@ -358,7 +358,7 @@ export function AmalinkChatbot() {
             <div className={open ? undefined : "chatbot-rabbit-hop"}>
               <RabbitAvatar
                 mood={open ? mood : "idle"}
-                size={118}
+                size={92}
                 priority
                 animateFloat={false}
               />
