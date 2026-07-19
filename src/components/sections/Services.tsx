@@ -3,7 +3,7 @@
 import { Section } from "@/components/ui/Section";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { motion } from "framer-motion";
-import { Bot, BrainCircuit, Monitor, Smartphone, PenTool, Sparkles } from "lucide-react";
+import { Bot, Monitor, Smartphone, PenTool, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { WaveBackground } from "@/components/ui/WaveBackground";
 import { cn } from "@/lib/utils";
@@ -74,11 +74,15 @@ const services = [
   {
     key: "ai-consulting",
     id: "06",
-    icon: <BrainCircuit className="w-6 h-6" />,
+    icon: (
+      <span className="font-sans text-[0.7rem] font-bold tracking-[0.08em] md:text-[0.75rem]">
+        AI
+      </span>
+    ),
     title: "AIコンサルティング",
     enTitle: "AI Consulting",
     description:
-      "最新のAI情報をもとに、業務の現状を見ながら\n効率化と導入を伴走支援します。\n何から始めるか、一緒に整理するところからです。",
+      "ChatGPT・Claude・Gemini など具体ツールを踏まえ、\n業務の現状を見ながら効率化と導入を伴走します。\n何から始めるか、一緒に整理するところからです。",
     href: "/ai-consulting",
     linkLabel: "AIコンサルティングについて詳しく見る",
     orderClass: "md:order-6",
@@ -86,6 +90,75 @@ const services = [
 ] as const;
 
 type Service = (typeof services)[number];
+
+function AiToolKeywordRain({ active }: { active: boolean }) {
+  const keywords = [
+    "ChatGPT",
+    "Claude",
+    "Gemini",
+    "Copilot",
+    "Perplexity",
+    "Cursor",
+    "Notion AI",
+    "GPT-4o",
+    "Claude 4",
+    "Gemini",
+    "Dify",
+    "Zapier",
+    "Make",
+    "Midjourney",
+    "Sora",
+    "NotebookLM",
+    "Claude",
+    "ChatGPT",
+  ] as const;
+
+  const columnCount = 3;
+
+  return (
+    <div
+      className={cn(
+        "pointer-events-none absolute inset-0 z-0 overflow-hidden transition-opacity duration-300",
+        active ? "opacity-[0.55]" : "opacity-0",
+      )}
+      aria-hidden
+    >
+      <div className="flex h-full w-full justify-between gap-3 px-6 md:gap-6 md:px-12">
+        {Array.from({ length: columnCount }, (_, col) => {
+          const duration = 13 + (col % 4) * 3.2;
+          const columnWords = Array.from({ length: 10 }, (_, row) => {
+            return keywords[(col * 5 + row * 2) % keywords.length]!;
+          });
+
+          return (
+            <div key={col} className="relative h-full min-w-0 flex-1 overflow-hidden">
+              <div
+                className={cn(
+                  "flex flex-col items-start gap-5 py-3 font-sans",
+                  active && "geo-keyword-rain-track",
+                )}
+                style={active ? { animationDuration: `${duration}s` } : undefined}
+              >
+                {[...columnWords, ...columnWords].map((word, row) => (
+                  <span
+                    key={`${col}-${row}`}
+                    className="block whitespace-nowrap text-[11px] font-medium tracking-wide text-amami-blue md:text-sm"
+                    style={{
+                      opacity: 0.08 + ((col + row) % 5) * 0.035,
+                      transform: `translateX(${((col * 9 + row * 5) % 24) - 6}px)`,
+                    }}
+                  >
+                    {word}
+                  </span>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 function GeoKeywordRain({ active }: { active: boolean }) {
   const keywords = [
@@ -336,46 +409,7 @@ function ServiceCard({
       </div>
 
       {service.key === "geo" && <GeoKeywordRain active={isHovered} />}
-
-      {service.key === "ai-consulting" && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 0.2 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
-          aria-hidden
-        >
-          <svg className="h-56 w-56 text-amami-blue" viewBox="0 0 100 100">
-            {[
-              [28, 30],
-              [72, 28],
-              [50, 52],
-              [30, 72],
-              [70, 74],
-            ].map(([cx, cy], i) => (
-              <motion.circle
-                key={`${cx}-${cy}`}
-                cx={cx}
-                cy={cy}
-                r="4"
-                fill="currentColor"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: isHovered ? 1 : 0, opacity: isHovered ? 0.7 : 0 }}
-                transition={{ type: "spring", stiffness: 160, damping: 16, delay: i * 0.05 }}
-              />
-            ))}
-            <motion.path
-              d="M28 30 L50 52 L72 28 M50 52 L30 72 M50 52 L70 74"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: isHovered ? 1 : 0, opacity: isHovered ? 0.45 : 0 }}
-              transition={{ duration: 0.55, ease: "easeOut" }}
-            />
-          </svg>
-        </motion.div>
-      )}
+      {service.key === "ai-consulting" && <AiToolKeywordRain active={isHovered} />}
 
       {service.key === "chatbot" && (
         <motion.div

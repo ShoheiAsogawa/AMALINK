@@ -6,13 +6,25 @@ import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { Contact } from "@/components/sections/Contact";
 import { absoluteUrl, LEGAL_NAME } from "@/lib/seo";
 
-const title = "AIコンサルティング";
+const title = "AIコンサルティング｜ChatGPT・Claude・Gemini導入支援";
 const description =
-  "最新のAI情報をもとに、業務の現状を整理し、効率化と導入を伴走支援します。何から始めるべきかわからない段階から、無理のない範囲でご相談いただけます。";
+  "ChatGPT、Claude、Gemini、Microsoft Copilot、Perplexity、Cursor など具体的なAIツールを踏まえ、業務の現状整理・効率化・導入を伴走支援します。何から始めるべきかわからない段階からご相談ください。";
 
 export const metadata: Metadata = {
-  title,
+  title: "AIコンサルティング",
   description,
+  keywords: [
+    "AIコンサルティング",
+    "ChatGPT 導入",
+    "Claude 導入",
+    "Gemini 業務効率化",
+    "Copilot 活用",
+    "Perplexity",
+    "Cursor",
+    "AI導入支援",
+    "生成AI コンサル",
+    LEGAL_NAME,
+  ],
   alternates: { canonical: "/ai-consulting" },
   openGraph: {
     title: `${title} | ${LEGAL_NAME}`,
@@ -22,52 +34,71 @@ export const metadata: Metadata = {
   },
 };
 
+const tools = [
+  {
+    name: "ChatGPT",
+    body: "文章作成、要約、問い合わせ下書き、社内FAQのたたき台など。日常業務の時短から始めやすい代表的な生成AIです。",
+  },
+  {
+    name: "Claude",
+    body: "長文の読み込みや丁寧な文書作成が得意。規約・マニュアル・議事録など、文量の多い業務整理に向いています。",
+  },
+  {
+    name: "Gemini",
+    body: "Googleワークスペースとの相性が良く、ドキュメントやスプレッドシート周辺の効率化を検討するときに候補になります。",
+  },
+  {
+    name: "Copilot / その他",
+    body: "Microsoft Copilot、Perplexity、Cursor、Notion AI、Dify など。目的と現場の負担に合わせて選びます。",
+  },
+];
+
 const examples = [
   {
     title: "現状の整理・診断",
-    body: "いまの業務フロー、使っているツール、手作業の多い箇所を一緒に洗い出し、AIで効きやすいポイントを整理します。",
+    body: "業務フロー、手作業、使っているツールを洗い出し、ChatGPT・Claude・Gemini などで効きやすいポイントを整理します。",
   },
   {
     title: "業務効率化の提案",
-    body: "問い合わせ対応、資料作成、社内ナレッジ整理など、最新のAI活用の選択肢を踏まえて、現実的な効率化案をご提案します。",
+    body: "問い合わせ対応、資料作成、社内ナレッジ整理など。流行ではなく、現場で続く使い方を基準にご提案します。",
   },
   {
     title: "導入支援・伴走",
-    body: "ツール選定、社内への落とし込み、運用ルールづくりまで。導入して終わりではなく、定着まで伴走します。",
+    body: "ツール選定、プロンプトや運用ルール、社内への落とし込みまで。導入して終わりではなく、定着まで伴走します。",
   },
   {
     title: "継続的なアップデート",
-    body: "AIの進化は速いため、常に新しい情報を見ながら、今の事業に合うやり方へ見直す支援も行います。",
+    body: "モデルや機能はすぐ変わるため、最新情報を見ながら、今の事業に合うやり方へ見直す支援も行います。",
   },
 ];
 
 const steps = [
   ["01", "現状を聞く", "いまの業務、困りごと、使っているツール、目指したい姿を伺います。"],
-  ["02", "効くところを見つける", "最新のAI動向を踏まえ、効果が出やすく負担が少ない導入ポイントを整理します。"],
-  ["03", "小さく試す", "いきなり大きく変えず、検証しやすい範囲から試し、手応えを確認します。"],
+  ["02", "効くところを見つける", "ChatGPT・Claude・Gemini などを踏まえ、効果が出やすく負担が少ない導入ポイントを整理します。"],
+  ["03", "小さく試す", "いきなり全社展開せず、検証しやすい範囲から試し、手応えを確認します。"],
   ["04", "導入・定着", "運用ルールや使い方を整え、現場で続く形に落とし込みます。"],
-  ["05", "見直し・改善", "新しいAI情報や運用の変化に合わせて、必要に応じて改善を続けます。"],
+  ["05", "見直し・改善", "新しいモデルや機能の変化に合わせて、必要に応じて改善を続けます。"],
 ] as const;
 
 const faqs = [
   {
     id: "ai-consult-undecided",
-    question: "AIを何に使えばいいか決まっていなくても相談できますか？",
+    question: "ChatGPT と Claude、どれを使えばいいか決まっていなくても相談できますか？",
     answer:
-      "はい。むしろその段階からのご相談が多いです。業務の現状を伺い、「まずここから」という無理のない範囲を一緒に決めます。",
+      "はい。業務内容を伺ったうえで、ChatGPT・Claude・Gemini・Copilot などから、目的に合うものを一緒に選びます。最初から1つに決める必要はありません。",
+  },
+  {
+    id: "ai-consult-tools",
+    question: "対応しているAIツールの例を教えてください。",
+    answer:
+      "ChatGPT、Claude、Gemini、Microsoft Copilot、Perplexity、Cursor、Notion AI、Dify などを中心に、用途に合わせてご提案します。新しいツールが出た場合も、必要に応じて検討対象に加えます。",
+    singleLineOnMobile: true,
   },
   {
     id: "ai-consult-latest",
     question: "最新のAI情報をもとに提案してもらえますか？",
     answer:
-      "はい。常に新しいAIの動向を踏まえつつ、流行だけで選ばず、御社の業務に本当に合うかを基準にご提案します。",
-    singleLineOnMobile: true,
-  },
-  {
-    id: "ai-consult-tool",
-    question: "特定のAIツールを導入する前提ですか？",
-    answer:
-      "いいえ。目的と現場の負担に合わせて選びます。既にお使いのツールを活かす場合も、新しく整える場合もあります。",
+      "はい。モデルや機能の更新を踏まえつつ、流行だけで選ばず、御社の業務に本当に合うかを基準にご提案します。",
     singleLineOnMobile: true,
   },
   {
@@ -96,6 +127,12 @@ function JsonLd() {
         "@type": "Service",
         "@id": `${url}#service`,
         name: "AIコンサルティング",
+        alternateName: [
+          "ChatGPT導入支援",
+          "Claude導入支援",
+          "Gemini活用支援",
+          "生成AIコンサルティング",
+        ],
         serviceType: "AI導入支援・業務効率化コンサルティング",
         description,
         url,
@@ -109,6 +146,18 @@ function JsonLd() {
           "@type": "BusinessAudience",
           audienceType: "中小事業者・観光事業者・地域団体",
         },
+        knowsAbout: [
+          "ChatGPT",
+          "Claude",
+          "Gemini",
+          "Microsoft Copilot",
+          "Perplexity",
+          "Cursor",
+          "Notion AI",
+          "Dify",
+          "生成AI",
+          "業務効率化",
+        ],
       },
       {
         "@type": "BreadcrumbList",
@@ -168,31 +217,32 @@ export default function AiConsultingPage() {
               AI Consulting
             </p>
             <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
-              <span className="block">最新のAIを、</span>
+              <span className="block">ChatGPTもClaudeも、</span>
               <span className="block sm:inline">現場に合う形で</span>
               <span className="block sm:inline">
                 導入する<span className="hidden sm:inline">。</span>
               </span>
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
-              {LEGAL_NAME}は、常に新しいAI情報を踏まえながら、業務の現状整理・効率化・導入支援を行います。流行に流されず、現場で続く使い方まで一緒に考えます。
+              {LEGAL_NAME}は、ChatGPT・Claude・Gemini・Copilot・Perplexity・Cursor
+              など具体的なAIツールを踏まえ、業務の現状整理から導入・定着まで伴走します。流行に流されず、続く使い方まで一緒に考えます。
             </p>
           </div>
         </section>
 
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
-            <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">What we offer</p>
+            <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">Tools</p>
             <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">
-              できることの例
+              扱うAIツールの例
             </h2>
             <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">
-              下記は対応例です。診断だけ、導入支援だけ、継続伴走など、必要な範囲から始められます。
+              名前のついたツールを前提に相談できます。どれが合うかは、業務の内容と負担感から一緒に決めます。
             </p>
             <div className="mt-10 grid gap-5 md:grid-cols-2">
-              {examples.map((item) => (
-                <article key={item.title} className="rounded-3xl border border-slate-100 bg-slate-50 p-7 md:p-9">
-                  <h3 className="font-serif text-2xl font-bold text-brand-gradient">{item.title}</h3>
+              {tools.map((item) => (
+                <article key={item.name} className="rounded-3xl border border-slate-100 bg-slate-50 p-7 md:p-9">
+                  <h3 className="font-serif text-2xl font-bold text-brand-gradient">{item.name}</h3>
                   <p className="mt-4 font-sans leading-loose text-slate-600">{item.body}</p>
                 </article>
               ))}
@@ -202,6 +252,26 @@ export default function AiConsultingPage() {
 
         <section className="bg-slate-50 px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
+            <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">What we offer</p>
+            <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">
+              できることの例
+            </h2>
+            <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">
+              診断だけ、導入支援だけ、継続伴走など、必要な範囲から始められます。
+            </p>
+            <div className="mt-10 grid gap-5 md:grid-cols-2">
+              {examples.map((item) => (
+                <article key={item.title} className="rounded-3xl bg-white p-7 md:p-9">
+                  <h3 className="font-serif text-2xl font-bold text-brand-gradient">{item.title}</h3>
+                  <p className="mt-4 font-sans leading-loose text-slate-600">{item.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-6 py-20 md:py-28">
+          <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">Process</p>
             <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">
               相談から定着まで
@@ -210,7 +280,7 @@ export default function AiConsultingPage() {
               {steps.map(([number, heading, body]) => (
                 <li
                   key={number}
-                  className="grid gap-3 rounded-3xl bg-white p-7 md:grid-cols-[5rem_14rem_1fr] md:items-center md:p-9"
+                  className="grid gap-3 rounded-3xl bg-slate-50 p-7 md:grid-cols-[5rem_14rem_1fr] md:items-center md:p-9"
                 >
                   <span className="font-serif text-3xl text-amami-blue/40">{number}</span>
                   <h3 className="font-serif text-xl font-bold text-brand-gradient">{heading}</h3>
@@ -221,7 +291,7 @@ export default function AiConsultingPage() {
           </div>
         </section>
 
-        <section className="px-6 py-20 md:py-28">
+        <section className="bg-slate-50 px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">FAQ</p>
             <h2 className="mt-3 font-serif text-2xl md:text-5xl font-bold text-brand-gradient">
@@ -237,7 +307,7 @@ export default function AiConsultingPage() {
           title="まずは、気軽にお話ししませんか？"
           description={
             <>
-              AIを何に使うか決まっていなくても大丈夫です。
+              ChatGPT を試しただけ、まだ何も使っていない、どちらでも大丈夫です。
               <br />
               現状の業務を伺い、進め方を一緒に整理します。
             </>
