@@ -89,21 +89,19 @@ export default function DesignPage() {
               <span>デザイン</span>
             </nav>
             <p className="mb-4 font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
-              奄美大島デザイン
+              Creative Design
             </p>
             <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
               <span className="block">{DESIGN_GEO.h1Primary}</span>
-              <span className="mt-2 block text-[0.72em] font-bold text-slate-700 sm:mt-3 md:text-[0.55em]">
-                {DESIGN_GEO.h1Secondary}
-              </span>
+              <span className="block whitespace-nowrap">{DESIGN_GEO.h1Secondary}</span>
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl" data-geo-answer>
-              {LEGAL_NAME}は、奄美大島を拠点にデザイン制作を行っています。ロゴや名刺、パンフレットなど、ブランドの印象を伝えるビジュアルを、印刷手配から納品まで一気通貫で対応できます。
+              {LEGAL_NAME}は、ロゴや名刺、パンフレットなど、ブランドの印象を伝えるビジュアルを制作します。印刷の手配から納品まで一気通貫で対応でき、Webと合わせた統一もご相談ください。拠点は奄美大島で、全国オンラインにも対応しています。
             </p>
           </div>
         </section>
 
-        <CiteableAnswer answer={DESIGN_GEO.citeableAnswer} keywords={TARGET_KEYWORDS.design} />
+        <CiteableAnswer answer={DESIGN_GEO.citeableAnswer} />
 
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
@@ -126,8 +124,8 @@ export default function DesignPage() {
         </section>
 
         <WhyLocalSection
-          eyebrow="Why Amami Design"
-          heading="奄美大島デザインを依頼する理由"
+          eyebrow="Why us"
+          heading="大切にしていること"
           intro="見た目を整えるだけでなく、使う場面と伝わる印象まで含めて、ブランドのカタチをそろえます。"
           items={DESIGN_GEO.whyLocal}
         />
@@ -155,7 +153,7 @@ export default function DesignPage() {
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">FAQ</p>
             <h2 className="mt-3 font-serif text-2xl md:text-5xl font-bold text-brand-gradient">
-              奄美大島デザインのよくある質問
+              デザインのよくある質問
             </h2>
             <div className="mt-10">
               <FaqAccordion items={[...faqs]} />

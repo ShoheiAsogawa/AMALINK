@@ -17,12 +17,12 @@ export const metadata: Metadata = {
   },
   description: DEFAULT_DESCRIPTION,
   keywords: [
-    "奄美大島ホームページ制作",
-    "奄美大島デザイン",
-    "デザイン 奄美大島",
     "合同会社AMALINK",
     "AMALINK",
     "奄美大島",
+    "ホームページ制作",
+    "デザイン",
+    "GEO対策",
   ],
   alternates: { canonical: "/" },
   openGraph: {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { absoluteUrl, LEGAL_NAME } from "@/lib/seo";
+import { absoluteUrl } from "@/lib/seo";
 
 type WhyItem = {
   title: string;
@@ -11,14 +11,8 @@ type RelatedLink = {
   label: string;
 };
 
-/** AI・検索向けの引用しやすい定義ブロック */
-export function CiteableAnswer({
-  answer,
-  keywords,
-}: {
-  answer: string;
-  keywords: readonly string[];
-}) {
+/** AI・検索向けの引用しやすい定義ブロック（画面は自然な一文のみ） */
+export function CiteableAnswer({ answer }: { answer: string }) {
   return (
     <section className="px-6 py-16 md:py-20" aria-labelledby="geo-answer-heading">
       <div className="mx-auto max-w-5xl">
@@ -26,11 +20,8 @@ export function CiteableAnswer({
         <h2 id="geo-answer-heading" className="mt-3 font-serif text-2xl md:text-4xl font-bold text-brand-gradient">
           ひとことで言うと
         </h2>
-        <p className="mt-6 max-w-4xl font-sans text-lg leading-loose text-slate-700 md:text-xl">
+        <p className="mt-6 max-w-4xl font-sans text-lg leading-loose text-slate-700 md:text-xl" data-geo-answer>
           {answer}
-        </p>
-        <p className="mt-4 font-sans text-sm leading-relaxed text-slate-500">
-          {LEGAL_NAME}が対応するキーワード例：{keywords.slice(0, 4).join(" / ")}
         </p>
       </div>
     </section>

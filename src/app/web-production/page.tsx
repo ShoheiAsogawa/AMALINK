@@ -89,27 +89,25 @@ export default function WebProductionPage() {
               <span>ホームページ制作</span>
             </nav>
             <p className="mb-4 font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
-              奄美大島ホームページ制作
+              Web Production
             </p>
             <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
               <span className="block">{WEB_PRODUCTION_GEO.h1Primary}</span>
-              <span className="mt-2 block text-[0.72em] font-bold text-slate-700 sm:mt-3 md:text-[0.55em]">
-                {WEB_PRODUCTION_GEO.h1Secondary}
-              </span>
+              <span className="block sm:inline">{WEB_PRODUCTION_GEO.h1Secondary}</span>
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl" data-geo-answer>
-              {LEGAL_NAME}は、奄美大島を拠点にホームページ制作を行っています。見やすさと更新しやすさを大切にしたサイトを、新規制作もリニューアルも、目的が固まっていない段階からご相談いただけます。
+              {LEGAL_NAME}は、見やすさと更新しやすさを大切にしたホームページを制作します。新規制作もリニューアルも、目的が固まっていない段階からご相談いただけます。拠点は奄美大島で、全国オンラインにも対応しています。
             </p>
           </div>
         </section>
 
-        <CiteableAnswer answer={WEB_PRODUCTION_GEO.citeableAnswer} keywords={TARGET_KEYWORDS.webProduction} />
+        <CiteableAnswer answer={WEB_PRODUCTION_GEO.citeableAnswer} />
 
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">What we build</p>
             <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">
-              奄美大島で対応できるサイトの例
+              対応できるサイトの例
             </h2>
             <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">
               下記は対応例です。ページ数や機能は、目的とご予算に合わせてご提案します。
@@ -126,9 +124,9 @@ export default function WebProductionPage() {
         </section>
 
         <WhyLocalSection
-          eyebrow="Why Amami"
-          heading="奄美大島でホームページ制作を依頼する理由"
-          intro="地元拠点ならではの理解と、検索・AIにも伝わる設計を、無理のない範囲から一緒に進めます。"
+          eyebrow="Why us"
+          heading="大切にしていること"
+          intro="無理のない範囲から、検索・AIにも伝わる設計まで、一緒に進めます。"
           items={WEB_PRODUCTION_GEO.whyLocal}
         />
 
@@ -155,7 +153,7 @@ export default function WebProductionPage() {
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">FAQ</p>
             <h2 className="mt-3 font-serif text-2xl md:text-5xl font-bold text-brand-gradient">
-              奄美大島ホームページ制作のよくある質問
+              ホームページ制作のよくある質問
             </h2>
             <div className="mt-10">
               <FaqAccordion items={[...faqs]} />

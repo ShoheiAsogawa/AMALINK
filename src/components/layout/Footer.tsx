@@ -7,8 +7,8 @@ import { LEGAL_NAME } from "@/lib/seo";
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const FOOTER_LINKS = [
-  { href: "/web-production", label: "奄美大島ホームページ制作" },
-  { href: "/design", label: "奄美大島デザイン" },
+  { href: "/web-production", label: "ホームページ制作" },
+  { href: "/design", label: "デザイン" },
   { href: "/geo-seo", label: "GEO・SEO対策" },
   { href: "/system-development", label: "システム開発" },
   { href: "/faq", label: "よくある質問" },
@@ -37,9 +37,6 @@ export default function Footer() {
               {LEGAL_NAME}
               <br />
               {COMPANY_OVERVIEW.address}
-            </p>
-            <p className="mt-3 text-slate-500 text-xs md:text-sm font-sans leading-relaxed">
-              奄美大島のホームページ制作・デザインを中心に、島内外の事業者さまを支援しています。
             </p>
             <p className="mt-[1em] text-slate-500 text-xs md:text-sm font-sans leading-relaxed">
               島のリズムで、
