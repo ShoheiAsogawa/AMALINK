@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     url: absoluteUrl("/faq"),
     title: `よくある質問（FAQ） | ${LEGAL_NAME}`,
-    description: `奄美大島のWeb制作・システム開発・GEO対策に関するFAQ。${LEGAL_NAME}が回答します。`,
+    description: `Web制作・システム開発・GEO対策に関するFAQ。${LEGAL_NAME}が回答します。`,
     type: "website",
   },
 };

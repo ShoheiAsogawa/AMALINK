@@ -4,21 +4,33 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { Contact } from "@/components/sections/Contact";
+import {
+  CiteableAnswer,
+  RelatedServices,
+  ServicePageJsonLd,
+  WhyLocalSection,
+} from "@/components/seo/ServicePageGeo";
 import { absoluteUrl, LEGAL_NAME } from "@/lib/seo";
+import { TARGET_KEYWORDS, WEB_PRODUCTION_GEO } from "@/lib/geo-targets";
 
-const title = "奄美大島のホームページ制作";
-const description =
-  "奄美大島・奄美群島の事業者向けに、お店や会社の顔となるホームページを制作します。見やすさ・スマホ対応・更新しやすさを重視し、集客や案内に使えるサイトをご提案します。";
+const title = WEB_PRODUCTION_GEO.title;
+const description = WEB_PRODUCTION_GEO.description;
 
 export const metadata: Metadata = {
   title,
   description,
-  alternates: { canonical: "/web-production" },
+  keywords: [...TARGET_KEYWORDS.webProduction, LEGAL_NAME, "AMALINK"],
+  alternates: { canonical: WEB_PRODUCTION_GEO.canonicalPath },
   openGraph: {
     title: `${title} | ${LEGAL_NAME}`,
     description,
-    url: absoluteUrl("/web-production"),
+    url: absoluteUrl(WEB_PRODUCTION_GEO.canonicalPath),
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ${LEGAL_NAME}`,
+    description,
   },
 };
 
@@ -48,86 +60,20 @@ const steps = [
   ["04", "公開・運用", "操作方法をご説明し、公開後の更新や改善も必要に応じて伴走します。"],
 ] as const;
 
-const faqs = [
-  {
-    id: "web-scope",
-    question: "ホームページの内容が決まっていなくても相談できますか？",
-    answer:
-      "はい。「とりあえず会社の顔が欲しい」「何を載せればいいかわからない」といった段階から一緒に整理します。",
-  },
-  {
-    id: "web-small",
-    question: "1ページだけの簡単なサイトでもお願いできますか？",
-    answer:
-      "可能です。最初は必要最低限で始めて、あとからページを増やす進め方もよくあります。",
-    singleLineOnMobile: true,
-  },
-  {
-    id: "web-update",
-    question: "自分で更新できるサイトにできますか？",
-    answer:
-      "はい。お知らせやブログなど、管理画面から更新しやすい構成にできます。納品時に操作方法もお伝えします。",
-    singleLineOnMobile: true,
-  },
-  {
-    id: "web-price",
-    question: "料金や制作期間はどのくらいですか？",
-    answer:
-      "ページ数、デザインの範囲、素材の準備状況によって変わります。ヒアリング後に概算と目安スケジュールをご案内します。",
-    singleLineOnMobile: true,
-  },
-];
-
-function JsonLd() {
-  const url = absoluteUrl("/web-production");
-  const organizationId = `${absoluteUrl("/")}#organization`;
-  const payload = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Service",
-        "@id": `${url}#service`,
-        name: "ホームページ制作",
-        serviceType: "Webサイト制作・リニューアル",
-        description,
-        url,
-        provider: { "@id": organizationId },
-        areaServed: [
-          { "@type": "Place", name: "奄美大島" },
-          { "@type": "AdministrativeArea", name: "奄美群島" },
-          { "@type": "Country", name: "日本" },
-        ],
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "ホーム", item: absoluteUrl("/") },
-          { "@type": "ListItem", position: 2, name: "ホームページ制作", item: url },
-        ],
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: faqs.map((item) => ({
-          "@type": "Question",
-          name: item.question,
-          acceptedAnswer: { "@type": "Answer", text: item.answer },
-        })),
-      },
-    ],
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(payload) }}
-    />
-  );
-}
+const faqs = WEB_PRODUCTION_GEO.faqs;
 
 export default function WebProductionPage() {
   return (
     <>
-      <JsonLd />
+      <ServicePageJsonLd
+        url={WEB_PRODUCTION_GEO.url}
+        name={WEB_PRODUCTION_GEO.serviceSchemaName}
+        description={description}
+        serviceTypes={WEB_PRODUCTION_GEO.serviceTypes}
+        breadcrumbName="ホームページ制作"
+        faqs={faqs}
+        keywords={TARGET_KEYWORDS.webProduction}
+      />
       <main className="min-h-screen bg-white text-slate-800">
         <Header />
 
@@ -146,20 +92,23 @@ export default function WebProductionPage() {
               Web Production
             </p>
             <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
-              <span className="block">お店や会社の顔になる、</span>
-              <span className="block sm:inline">伝わるホームページ</span>
-              <span className="block sm:inline">制作<span className="hidden sm:inline">。</span></span>
+              <span className="block">{WEB_PRODUCTION_GEO.h1Primary}</span>
+              <span className="block sm:inline">{WEB_PRODUCTION_GEO.h1Secondary}</span>
             </h1>
-            <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
-              {LEGAL_NAME}は、奄美大島を拠点に、見やすさと更新しやすさを大切にしたホームページを制作します。新規制作もリニューアルも、目的が固まっていない段階からご相談いただけます。
+            <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl" data-geo-answer>
+              {LEGAL_NAME}は、見やすさと更新しやすさを大切にしたホームページを制作します。新規制作もリニューアルも、目的が固まっていない段階からご相談いただけます。拠点は奄美大島で、全国オンラインにも対応しています。
             </p>
           </div>
         </section>
 
+        <CiteableAnswer answer={WEB_PRODUCTION_GEO.citeableAnswer} />
+
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">What we build</p>
-            <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">対応できるサイトの例</h2>
+            <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">
+              対応できるサイトの例
+            </h2>
             <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">
               下記は対応例です。ページ数や機能は、目的とご予算に合わせてご提案します。
             </p>
@@ -174,7 +123,14 @@ export default function WebProductionPage() {
           </div>
         </section>
 
-        <section className="bg-slate-50 px-6 py-20 md:py-28">
+        <WhyLocalSection
+          eyebrow="Why us"
+          heading="大切にしていること"
+          intro="無理のない範囲から、検索・AIにも伝わる設計まで、一緒に進めます。"
+          items={WEB_PRODUCTION_GEO.whyLocal}
+        />
+
+        <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">Process</p>
             <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">相談から公開まで</h2>
@@ -182,7 +138,7 @@ export default function WebProductionPage() {
               {steps.map(([number, heading, body]) => (
                 <li
                   key={number}
-                  className="grid gap-3 rounded-3xl bg-white p-7 md:grid-cols-[5rem_14rem_1fr] md:items-center md:p-9"
+                  className="grid gap-3 rounded-3xl bg-slate-50 p-7 md:grid-cols-[5rem_14rem_1fr] md:items-center md:p-9"
                 >
                   <span className="font-serif text-3xl text-amami-blue/40">{number}</span>
                   <h3 className="font-serif text-xl font-bold text-brand-gradient">{heading}</h3>
@@ -193,15 +149,19 @@ export default function WebProductionPage() {
           </div>
         </section>
 
-        <section className="px-6 py-20 md:py-28">
+        <section className="bg-slate-50 px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">FAQ</p>
-            <h2 className="mt-3 font-serif text-2xl md:text-5xl font-bold text-brand-gradient">ホームページ制作のよくある質問</h2>
+            <h2 className="mt-3 font-serif text-2xl md:text-5xl font-bold text-brand-gradient">
+              ホームページ制作のよくある質問
+            </h2>
             <div className="mt-10">
-              <FaqAccordion items={faqs} />
+              <FaqAccordion items={[...faqs]} />
             </div>
           </div>
         </section>
+
+        <RelatedServices links={WEB_PRODUCTION_GEO.related} />
 
         <Contact
           title="まずは、気軽にお話ししませんか？"

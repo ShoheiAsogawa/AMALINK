@@ -240,6 +240,8 @@ export default function Header() {
                 src={`${assetBase}/logo.png`}
                 alt="AMALINK Logo" 
                 fill
+                sizes="48px"
+                priority
                 className="object-contain" 
               />
             </div>

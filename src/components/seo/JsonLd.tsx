@@ -46,15 +46,29 @@ export function RootJsonLd() {
           },
         ],
         knowsAbout: [
+          "奄美大島ホームページ制作",
+          "奄美大島デザイン",
           "ホームページ制作",
           "システム開発",
           "Webデザイン",
+          "ロゴデザイン",
+          "AIコンサルティング",
+          "AI導入支援",
+          "ChatGPT",
+          "Claude",
+          "Cursor",
+          "Dify",
+          "社内チャットボット",
+          "社内マニュアル",
+          "業務効率化",
           "GEO対策",
           "Generative Engine Optimization",
           "地域DX",
           "奄美大島",
+          "奄美群島",
         ],
         sameAs: [lineUrl],
+        slogan: "島のリズムで、未来をつくる。",
       },
       {
         "@type": "WebSite",
@@ -100,7 +114,11 @@ export function FaqPageJsonLd() {
       name: item.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: item.answer,
+        text: item.moreHref
+          ? `${item.answer} ${
+              item.moreHref === "/contact" ? "お問い合わせは" : "詳しくは"
+            } ${absoluteUrl(item.moreHref)} をご覧ください。`
+          : item.answer,
       },
     })),
   };

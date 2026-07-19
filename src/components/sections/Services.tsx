@@ -41,7 +41,8 @@ const services = [
     icon: <Smartphone className="w-6 h-6" />,
     title: "ホームページ制作",
     enTitle: "Web Production",
-    description: "お店や会社の「顔」となるホームページ。\nただ綺麗なだけでなく、お客様が見やすく、\n使いやすいサイトを丁寧に作り上げます。",
+    description:
+      "お店や会社の「顔」となるホームページ。\nただ綺麗なだけでなく、お客様が見やすく、\n使いやすいサイトを丁寧に作り上げます。",
     href: "/web-production",
     linkLabel: "ホームページ制作について詳しく見る",
     orderClass: "md:order-3",
@@ -52,7 +53,8 @@ const services = [
     icon: <PenTool className="w-6 h-6" />,
     title: "デザイン",
     enTitle: "Creative Design",
-    description: "ロゴマークや名刺、パンフレットなど。\nデザインから印刷手配・納品まで一気通貫で、\n見る人の心に残るカタチをご提案します。",
+    description:
+      "ロゴマークや名刺、パンフレットなど。\nデザインから印刷手配・納品まで一気通貫で、\n見る人の心に残るカタチをご提案します。",
     href: "/design",
     linkLabel: "デザインについて詳しく見る",
     orderClass: "md:order-4",
@@ -69,9 +71,94 @@ const services = [
     linkLabel: "GEO・SEO対策について詳しく見る",
     orderClass: "md:order-5",
   },
+  {
+    key: "ai-consulting",
+    id: "06",
+    icon: (
+      <span className="font-sans text-[0.7rem] font-bold tracking-[0.08em] md:text-[0.75rem]">
+        AI
+      </span>
+    ),
+    title: "AIコンサルティング",
+    enTitle: "AI Consulting",
+    description:
+      "ChatGPT・Claude の活用から、\n社内マニュアル特化の社内用チャットボット制作まで。\n業務で使える形に落とし込み、導入後も伴走します。",
+    href: "/ai-consulting",
+    linkLabel: "AIコンサルティングについて詳しく見る",
+    orderClass: "md:order-6",
+  },
 ] as const;
 
 type Service = (typeof services)[number];
+
+function AiToolKeywordRain({ active }: { active: boolean }) {
+  const keywords = [
+    "ChatGPT",
+    "Claude",
+    "Cursor",
+    "社内ボット",
+    "社内マニュアル",
+    "Dify",
+    "ナレッジ",
+    "ChatGPT",
+    "Claude",
+    "社内FAQ",
+    "Cursor",
+    "Dify",
+    "就業ルール",
+    "商品知識",
+    "ChatGPT",
+    "Claude",
+    "社内ボット",
+    "Cursor",
+  ] as const;
+
+  const columnCount = 3;
+
+  return (
+    <div
+      className={cn(
+        "pointer-events-none absolute inset-0 z-0 overflow-hidden transition-opacity duration-300",
+        active ? "opacity-[0.55]" : "opacity-0",
+      )}
+      aria-hidden
+    >
+      <div className="flex h-full w-full justify-between gap-3 px-6 md:gap-6 md:px-12">
+        {Array.from({ length: columnCount }, (_, col) => {
+          const duration = 13 + (col % 4) * 3.2;
+          const columnWords = Array.from({ length: 10 }, (_, row) => {
+            return keywords[(col * 5 + row * 2) % keywords.length]!;
+          });
+
+          return (
+            <div key={col} className="relative h-full min-w-0 flex-1 overflow-hidden">
+              <div
+                className={cn(
+                  "flex flex-col items-start gap-5 py-3 font-sans",
+                  active && "geo-keyword-rain-track",
+                )}
+                style={active ? { animationDuration: `${duration}s` } : undefined}
+              >
+                {[...columnWords, ...columnWords].map((word, row) => (
+                  <span
+                    key={`${col}-${row}`}
+                    className="block whitespace-nowrap text-[11px] font-medium tracking-wide text-amami-blue md:text-sm"
+                    style={{
+                      opacity: 0.08 + ((col + row) % 5) * 0.035,
+                      transform: `translateX(${((col * 9 + row * 5) % 24) - 6}px)`,
+                    }}
+                  >
+                    {word}
+                  </span>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 function GeoKeywordRain({ active }: { active: boolean }) {
   const keywords = [
@@ -322,6 +409,7 @@ function ServiceCard({
       </div>
 
       {service.key === "geo" && <GeoKeywordRain active={isHovered} />}
+      {service.key === "ai-consulting" && <AiToolKeywordRain active={isHovered} />}
 
       {service.key === "chatbot" && (
         <motion.div

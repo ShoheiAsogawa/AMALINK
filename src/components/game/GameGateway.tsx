@@ -1,8 +1,13 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
-import { SvgStudyGame } from "./SvgStudyGame";
+import {
+  markGatewaySeenClass,
+  readGatewaySeen,
+  writeGatewaySeen,
+} from "@/lib/gateway";
 
 /** ミニゲームクリア後：本編のフェード */
 const CROSSFADE = {
@@ -17,35 +22,35 @@ const WHITE_OUT = { duration: 0.72, ease: [0.22, 1, 0.36, 1] as const };
 
 type WhiteFlashPhase = "idle" | "peak" | "out";
 
-const GATEWAY_SEEN_KEY = "amalink-gateway-seen";
-
-function readGatewaySeen(): boolean {
-  try {
-    return sessionStorage.getItem(GATEWAY_SEEN_KEY) === "1";
-  } catch {
-    return false;
-  }
-}
-
-function writeGatewaySeen(): void {
-  try {
-    sessionStorage.setItem(GATEWAY_SEEN_KEY, "1");
-  } catch {
-    /* private browsing 等 */
-  }
-}
+const SvgStudyGame = dynamic(
+  () => import("./SvgStudyGame").then((m) => m.SvgStudyGame),
+  {
+    ssr: false,
+    loading: () => <div className="fixed inset-0 z-[100] bg-slate-950" aria-hidden />,
+  },
+);
 
 export function GameGateway({ children }: { children: React.ReactNode }) {
-  /** null = 初回判定中, true = 本編表示, false = ゲートウェイ表示 */
-  const [mainRevealed, setMainRevealed] = useState<boolean | null>(null);
+  /** SSR では本編を出し、クライアントで未プレイならゲートウェイを被せる */
+  const [showGateway, setShowGateway] = useState(false);
+  const [mainRevealed, setMainRevealed] = useState(true);
   const [whiteFlash, setWhiteFlash] = useState<WhiteFlashPhase>("idle");
 
   useEffect(() => {
-    setMainRevealed(readGatewaySeen());
+    if (readGatewaySeen()) {
+      markGatewaySeenClass();
+      setShowGateway(false);
+      setMainRevealed(true);
+      return;
+    }
+    setShowGateway(true);
+    setMainRevealed(false);
   }, []);
 
   const handleClear = useCallback(() => {
     writeGatewaySeen();
+    markGatewaySeenClass();
+    setShowGateway(false);
     setMainRevealed(true);
     setWhiteFlash("peak");
   }, []);
@@ -56,9 +61,8 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
     return () => window.clearTimeout(id);
   }, [whiteFlash]);
 
-  /* 灯す／ミニゲーム中は背後の document スクロールとモバイルのオーバースクロールを止める */
   useEffect(() => {
-    if (mainRevealed !== false) return;
+    if (!showGateway) return;
     const html = document.documentElement;
     const body = document.body;
     const scrollY = window.scrollY;
@@ -82,21 +86,18 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
       body.style.width = "";
       window.scrollTo(0, y);
     };
-  }, [mainRevealed]);
+  }, [showGateway]);
 
-  const revealed = mainRevealed === true;
-  const showGateway = mainRevealed === false;
-
-  /* 本編表示後は素の div にする。motion の transform が残ると子の sticky/fixed が壊れる */
-  const mainShell = revealed ? (
-    <div className="relative z-0 min-h-screen">{children}</div>
+  const mainShell = mainRevealed ? (
+    <div className="amalink-main-shell relative z-0 min-h-screen">{children}</div>
   ) : (
     <motion.div
       initial={false}
       animate={{ opacity: 0 }}
       transition={CROSSFADE}
       style={{ pointerEvents: "none" }}
-      className="relative z-0 min-h-screen"
+      className="amalink-main-shell relative z-0 min-h-screen"
+      aria-hidden
     >
       {children}
     </motion.div>
@@ -131,18 +132,9 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
             transition={CROSSFADE}
             className="fixed inset-0 z-[100] max-h-[100dvh] touch-none overscroll-none"
           >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key="playing"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.45, ease: "easeOut" }}
-                className="fixed inset-0"
-              >
-                <SvgStudyGame onClear={handleClear} />
-              </motion.div>
-            </AnimatePresence>
+            <div className="fixed inset-0">
+              <SvgStudyGame onClear={handleClear} />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

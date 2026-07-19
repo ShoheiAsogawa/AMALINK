@@ -161,10 +161,10 @@ export function RabbitAvatar({
         alt="くろうさ"
         width={size * 2}
         height={size * 2}
+        sizes={`${Math.ceil(size * 1.25)}px`}
         className="relative h-full w-full object-contain"
         draggable={false}
         priority={priority}
-        unoptimized
       />
     </motion.div>
   );
