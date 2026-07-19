@@ -36,16 +36,20 @@ export function PixelPlayButton() {
 
   useEffect(() => {
     const start = () => ensurePreloaded();
+    let idleId: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
     if (typeof window !== "undefined" && "requestIdleCallback" in window) {
-      const id = window.requestIdleCallback(start, { timeout: 1500 });
-      return () => {
-        window.cancelIdleCallback(id);
-        clearHideTimer();
-      };
+      idleId = window.requestIdleCallback(start, { timeout: 1500 });
+    } else {
+      timeoutId = setTimeout(start, 400);
     }
-    const timer = window.setTimeout(start, 400);
+
     return () => {
-      window.clearTimeout(timer);
+      if (idleId !== undefined && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) clearTimeout(timeoutId);
       clearHideTimer();
     };
   }, [clearHideTimer, ensurePreloaded]);
