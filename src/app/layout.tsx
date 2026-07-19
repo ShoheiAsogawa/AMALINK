@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Zen_Old_Mincho, Zen_Kaku_Gothic_New } from "next/font/google";
 import { DeferredWidgets } from "@/components/layout/DeferredWidgets";
 import { RootJsonLd } from "@/components/seo/JsonLd";
+import { GATEWAY_BOOT_SCRIPT } from "@/lib/gateway";
 import { absoluteUrl, DEFAULT_DESCRIPTION, DEFAULT_TITLE, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
 import "./globals.css";
 
@@ -10,7 +12,8 @@ const zenMincho = Zen_Old_Mincho({
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
-  preload: true,
+  // ヒーロー用。初回ペイントを妨げないよう preload は本文フォント側に寄せる
+  preload: false,
 });
 
 const zenGothic = Zen_Kaku_Gothic_New({
@@ -100,6 +103,9 @@ export default function RootLayout({
   return (
     <html lang="ja" className={`${zenMincho.variable} ${zenGothic.variable}`}>
       <body>
+        <Script id="amalink-gateway-boot" strategy="beforeInteractive">
+          {GATEWAY_BOOT_SCRIPT}
+        </Script>
         <RootJsonLd />
         {children}
         <DeferredWidgets />
