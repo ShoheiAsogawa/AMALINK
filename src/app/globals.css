@@ -64,36 +64,6 @@ body.amalink-gateway-lock {
   min-height: 100dvh;
 }
 
-/**
- * ハードリロード時の真っ白防止:
- * - seen: 本編を最初から表示（JS 待ちなし）
- * - pending: 初回のみ暗い幕を先に出し、白画面を避ける
- */
-html.amalink-gateway-pending,
-html.amalink-gateway-pending body {
-  background: #020617;
-}
-
-html.amalink-gateway-pending .amalink-main-shell {
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-html.amalink-gateway-pending body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  background: #020617;
-  pointer-events: none;
-}
-
-html.amalink-gateway-ready body::before,
-html.amalink-gateway-seen body::before {
-  content: none;
-  display: none;
-}
-
 /* WaveBackground: % は要素自身の幅基準（幅200% × translateX(-50%) = 1タイル分シームレス） */
 @keyframes wave-bg-drift {
   from {

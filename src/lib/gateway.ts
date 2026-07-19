@@ -1,16 +1,15 @@
 /** トップのミニゲームを一度見たあとの sessionStorage キー */
 export const GATEWAY_SEEN_KEY = "amalink-gateway-seen";
 
-/** React より前に走らせ、ハードリロード時の真っ白待ちを防ぐ */
+/**
+ * React より前に実行。2回目以降は seen を付けて本編を即表示する。
+ * ※ pending で画面全体を隠さない（固まったように見えるのを防ぐ）
+ */
 export const GATEWAY_BOOT_SCRIPT = `
 (function () {
   try {
-    var path = location.pathname.replace(/\\/+$/, "") || "/";
-    var isHome = path === "/";
     if (sessionStorage.getItem(${JSON.stringify(GATEWAY_SEEN_KEY)}) === "1") {
       document.documentElement.classList.add("amalink-gateway-seen");
-    } else if (isHome) {
-      document.documentElement.classList.add("amalink-gateway-pending");
     }
   } catch (e) {
     document.documentElement.classList.add("amalink-gateway-seen");
@@ -31,15 +30,6 @@ export function writeGatewaySeen(): void {
     sessionStorage.setItem(GATEWAY_SEEN_KEY, "1");
   } catch {
     /* private browsing 等 */
-  }
-}
-
-export function markGatewayReady(): void {
-  try {
-    document.documentElement.classList.add("amalink-gateway-ready");
-    document.documentElement.classList.remove("amalink-gateway-pending");
-  } catch {
-    /* ignore */
   }
 }
 

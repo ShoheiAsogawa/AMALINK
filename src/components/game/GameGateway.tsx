@@ -4,7 +4,6 @@ import { useState, useCallback, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  markGatewayReady,
   markGatewaySeenClass,
   readGatewaySeen,
   writeGatewaySeen,
@@ -32,10 +31,7 @@ const SvgStudyGame = dynamic(
 );
 
 export function GameGateway({ children }: { children: React.ReactNode }) {
-  /**
-   * SSR / 初回 hydration は常に本編表示で揃える。
-   * 初回訪問の隠しはブートスクリプト + CSS（pending）が担当し、真っ白を出さない。
-   */
+  /** SSR では本編を出し、クライアントで未プレイならゲートウェイを被せる */
   const [showGateway, setShowGateway] = useState(false);
   const [mainRevealed, setMainRevealed] = useState(true);
   const [whiteFlash, setWhiteFlash] = useState<WhiteFlashPhase>("idle");
@@ -47,16 +43,9 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
       setMainRevealed(true);
       return;
     }
-
-    document.documentElement.classList.add("amalink-gateway-pending");
     setShowGateway(true);
     setMainRevealed(false);
   }, []);
-
-  useEffect(() => {
-    if (!showGateway) return;
-    markGatewayReady();
-  }, [showGateway]);
 
   const handleClear = useCallback(() => {
     writeGatewaySeen();
@@ -72,7 +61,6 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
     return () => window.clearTimeout(id);
   }, [whiteFlash]);
 
-  /* 灯す／ミニゲーム中は背後の document スクロールとモバイルのオーバースクロールを止める */
   useEffect(() => {
     if (!showGateway) return;
     const html = document.documentElement;
@@ -100,7 +88,6 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
     };
   }, [showGateway]);
 
-  /* 本編表示後は素の div にする。motion の transform が残ると子の sticky/fixed が壊れる */
   const mainShell = mainRevealed ? (
     <div className="amalink-main-shell relative z-0 min-h-screen">{children}</div>
   ) : (
