@@ -115,7 +115,9 @@ export function FaqPageJsonLd() {
       acceptedAnswer: {
         "@type": "Answer",
         text: item.moreHref
-          ? `${item.answer} 詳しくは ${absoluteUrl(item.moreHref)} をご覧ください。`
+          ? `${item.answer} ${
+              item.moreHref === "/contact" ? "お問い合わせは" : "詳しくは"
+            } ${absoluteUrl(item.moreHref)} をご覧ください。`
           : item.answer,
       },
     })),

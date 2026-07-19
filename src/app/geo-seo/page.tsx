@@ -54,6 +54,7 @@ const faqs = [
     question: "SEO対策とGEO対策は違うのですか？",
     answer:
       "SEOはGoogleなどの検索結果で上位表示を目指す対策、GEOはAIが生成する回答の中で引用・紹介されやすくする対策です。どちらも「見つけてもらう」ことが目的で、いまは両方を意識したWeb設計が有効です。",
+    moreHref: "/contact",
   },
   {
     id: "geo-seo-only",
@@ -61,6 +62,7 @@ const faqs = [
     answer:
       "はい。リニューアルを伴わず、情報整理・FAQ追加・メタデータや構造化データの改善など、現状のサイトを活かしたご依頼も可能です。",
     singleLineOnMobile: true,
+    moreHref: "/contact",
   },
   {
     id: "geo-seo-nocode",
@@ -68,6 +70,7 @@ const faqs = [
     answer:
       "プラットフォームの仕様次第で、構造化データの追加や細かなHTML調整ができない場合があります。できる範囲での改善か、作り直しのどちらがよいか、現状を確認したうえでお伝えします。",
     singleLineOnMobile: true,
+    moreHref: "/web-production",
   },
   {
     id: "geo-seo-price",
@@ -75,6 +78,7 @@ const faqs = [
     answer:
       "対象ページ数、新規制作の有無、改善範囲によって異なります。ご希望を伺ったうえで概算をご案内します。",
     singleLineOnMobile: true,
+    moreHref: "/contact",
   },
 ];
 

@@ -10,29 +10,37 @@ import {
   type FaqCategoryId,
 } from "@/lib/site-content";
 
+function moreLinkLabel(moreHref: string, moreLabel?: string) {
+  if (moreLabel) return moreLabel;
+  if (moreHref === "/contact") return "お問い合わせはこちら";
+  return "詳しくはこちら";
+}
+
 function FaqAnswer({
   answer,
   moreHref,
+  moreLabel,
 }: {
   answer: string;
   moreHref?: string;
+  moreLabel?: string;
 }) {
   return (
-    <p className="border-t border-slate-100 px-5 pb-5 pt-4 font-sans text-sm leading-loose text-slate-600 md:px-8 md:pb-6 md:text-base">
-      {answer}
+    <div className="border-t border-slate-100 px-5 pb-5 pt-4 md:px-8 md:pb-6">
+      <p className="font-sans text-sm leading-loose text-slate-600 md:text-base">
+        {answer}
+      </p>
       {moreHref ? (
-        <>
-          {" "}
+        <p className="mt-4">
           <Link
             href={moreHref}
-            className="font-medium text-amami-blue underline underline-offset-4 transition-opacity hover:opacity-80"
+            className="inline-flex items-center rounded-full border border-amami-blue/25 bg-amami-blue/5 px-4 py-2 font-sans text-sm font-medium text-amami-blue transition-colors hover:border-amami-blue/40 hover:bg-amami-blue/10"
           >
-            詳しくはこちら
+            {moreLinkLabel(moreHref, moreLabel)}
           </Link>
-          をご覧ください。
-        </>
+        </p>
       ) : null}
-    </p>
+    </div>
   );
 }
 
@@ -41,6 +49,7 @@ function FaqAccordionItem({
   question,
   answer,
   moreHref,
+  moreLabel,
   isOpen,
   onToggle,
   singleLineOnMobile,
@@ -49,6 +58,7 @@ function FaqAccordionItem({
   question: string;
   answer: string;
   moreHref?: string;
+  moreLabel?: string;
   isOpen: boolean;
   onToggle: () => void;
   singleLineOnMobile?: boolean;
@@ -93,7 +103,7 @@ function FaqAccordionItem({
         aria-labelledby={buttonId}
       >
         <div className="overflow-hidden">
-          <FaqAnswer answer={answer} moreHref={moreHref} />
+          <FaqAnswer answer={answer} moreHref={moreHref} moreLabel={moreLabel} />
         </div>
       </div>
     </div>
@@ -105,6 +115,7 @@ export type FaqAccordionEntry = {
   question: string;
   answer: string;
   moreHref?: string;
+  moreLabel?: string;
   singleLineOnMobile?: boolean;
 };
 
@@ -133,6 +144,7 @@ export function FaqAccordion({ items }: { items?: FaqAccordionEntry[] }) {
             question={item.question}
             answer={item.answer}
             moreHref={item.moreHref}
+            moreLabel={item.moreLabel}
             singleLineOnMobile={item.singleLineOnMobile}
             isOpen={openIds.has(item.id)}
             onToggle={() => toggle(item.id)}
@@ -163,6 +175,7 @@ export function FaqAccordion({ items }: { items?: FaqAccordionEntry[] }) {
                 question={item.question}
                 answer={item.answer}
                 moreHref={item.moreHref}
+                moreLabel={item.moreLabel}
                 isOpen={openIds.has(item.id)}
                 onToggle={() => toggle(item.id)}
               />

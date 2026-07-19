@@ -51,6 +51,7 @@ export const WEB_PRODUCTION_GEO = {
       question: "ホームページの内容が決まっていなくても相談できますか？",
       answer:
         "はい。「とりあえず会社の顔が欲しい」「何を載せればいいかわからない」といった段階から一緒に整理します。",
+      moreHref: "/contact",
     },
     {
       id: "web-small",
@@ -58,18 +59,21 @@ export const WEB_PRODUCTION_GEO = {
       answer:
         "可能です。最初は必要最低限で始めて、あとからページを増やす進め方もよくあります。",
       singleLineOnMobile: true,
+      moreHref: "/contact",
     },
     {
       id: "web-area",
       question: "拠点以外からでもホームページ制作を頼めますか？",
       answer:
         "はい。拠点は鹿児島県奄美大島ですが、全国からのご依頼をオンラインでお受けしています。打合せは対面・オンライン・LINEなどご都合に合わせて進められます。",
+      moreHref: "/contact",
     },
     {
       id: "web-amami-who",
       question: "奄美大島でホームページ制作を依頼できますか？",
       answer:
         "はい。合同会社AMALINKは奄美大島を拠点にホームページ制作を行っています。コーポレートサイト、集客サイト、リニューアルまで対応し、島外からのオンライン相談も可能です。",
+      moreHref: "/contact",
     },
     {
       id: "web-price",
@@ -77,6 +81,7 @@ export const WEB_PRODUCTION_GEO = {
       answer:
         "ページ数、デザインの範囲、素材の準備状況によって変わります。ヒアリング後に概算と目安スケジュールをご案内します。",
       singleLineOnMobile: true,
+      moreHref: "/contact",
     },
   ],
   related: [
@@ -124,6 +129,7 @@ export const DESIGN_GEO = {
       question: "デザインだけの依頼もできますか？",
       answer:
         "はい。ロゴや名刺など、ビジュアルのみのご依頼も承っています。Web制作と合わせてブランド全体を整えることも可能です。",
+      moreHref: "/contact",
     },
     {
       id: "design-print",
@@ -131,18 +137,21 @@ export const DESIGN_GEO = {
       answer:
         "はい。デザインから印刷の手配、納品まで一気通貫で対応できます。データだけ欲しい場合もご相談ください。",
       singleLineOnMobile: true,
+      moreHref: "/contact",
     },
     {
       id: "design-amami-who",
       question: "奄美大島でデザイン制作を依頼できますか？",
       answer:
         "はい。合同会社AMALINKは奄美大島を拠点に、ロゴ・名刺・パンフレット・SNS用画像などのデザイン制作を行っています。島外からのオンライン相談も可能です。",
+      moreHref: "/contact",
     },
     {
       id: "design-web",
       question: "ホームページ制作とデザインをまとめて頼めますか？",
       answer:
         "はい。セットでご依頼いただけます。ロゴや色味をそろえることで、サイトと印刷物の印象を統一しやすくなります。",
+      moreHref: "/web-production",
     },
     {
       id: "design-price",
@@ -150,6 +159,7 @@ export const DESIGN_GEO = {
       answer:
         "制作物の種類、案の数、印刷の有無や部数によって異なります。ご希望を伺ったうえで概算をご案内します。",
       singleLineOnMobile: true,
+      moreHref: "/contact",
     },
   ],
   related: [

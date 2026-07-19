@@ -55,6 +55,7 @@ const faqs = [
     question: "システム開発の内容が決まっていなくても相談できますか？",
     answer:
       "はい。「紙の記録を減らしたい」「Excelの転記が大変」といった困りごとの段階から整理します。最初から詳しい仕様書を用意する必要はありません。",
+    moreHref: "/contact",
   },
   {
     id: "system-area",
@@ -62,6 +63,7 @@ const faqs = [
     answer:
       "はい。奄美群島・鹿児島県内に加え、全国からオンラインでご相談いただけます。奄美大島では対面での打ち合わせもご相談ください。",
     singleLineOnMobile: true,
+    moreHref: "/contact",
   },
   {
     id: "system-small-start",
@@ -69,6 +71,7 @@ const faqs = [
     answer:
       "可能です。必要な機能だけで小さく始め、実際の運用を見ながら追加する進め方にも対応します。",
     singleLineOnMobile: true,
+    moreHref: "/contact",
   },
   {
     id: "system-price-timeline",
@@ -76,6 +79,7 @@ const faqs = [
     answer:
       "対象業務、利用人数、必要な機能、既存データの状態によって変わります。現状を確認したうえで、範囲・概算費用・スケジュールをご案内します。",
     singleLineOnMobile: true,
+    moreHref: "/contact",
   },
 ];
 

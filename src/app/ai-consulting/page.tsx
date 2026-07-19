@@ -86,6 +86,7 @@ const faqs = [
     question: "ChatGPT と Claude、どれを使えばいいか決まっていなくても相談できますか？",
     answer:
       "はい。業務内容を伺ったうえで選びます。汎用AIの使い方支援だけでなく、社内マニュアル特化のチャットボットが向いている場合もあります。",
+    moreHref: "/contact",
   },
   {
     id: "ai-consult-internal-bot",
@@ -93,6 +94,7 @@ const faqs = [
     answer:
       "はい。社内マニュアル、就業ルール、商品・サービス知識など、会社の情報に特化した社内用チャットボットを制作できます。Dify などの基盤を使う場合もありますが、目的に合わせて最適な形を選びます。",
     singleLineOnMobile: true,
+    moreHref: "/contact",
   },
   {
     id: "ai-consult-tools",
@@ -100,6 +102,7 @@ const faqs = [
     answer:
       "ChatGPT、Claude、Cursor、社内特化チャットボット（Dify 等での構築含む）が中心です。画像生成や使わない自動化ツールを無理に勧めることはしません。常にその時点で実用的な手段を選びます。",
     singleLineOnMobile: true,
+    moreHref: "/contact",
   },
   {
     id: "ai-consult-latest",
@@ -107,6 +110,7 @@ const faqs = [
     answer:
       "はい。新しいモデルや機能の動きを見ながら、御社の業務で本当に使えるかを基準にご提案します。導入後の見直しもご相談いただけます。",
     singleLineOnMobile: true,
+    moreHref: "/contact",
   },
   {
     id: "ai-consult-other",
@@ -114,6 +118,7 @@ const faqs = [
     answer:
       "可能です。AI導入の相談から、必要に応じて公開サイト向けチャットボット、業務システム、Web制作まで一貫してご相談いただけます。",
     singleLineOnMobile: true,
+    moreHref: "/web-production",
   },
 ];
 

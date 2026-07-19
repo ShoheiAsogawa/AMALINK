@@ -54,6 +54,7 @@ const faqs = [
     question: "AIアバターチャットボットとは何ですか？",
     answer:
       "サイト上に表示されるキャラクター付きの案内チャットです。よくある質問への回答や、問い合わせへの橋渡しを自動化し、訪問者の離脱を減らす用途で導入されます。",
+    moreHref: "/contact",
   },
   {
     id: "chatbot-custom",
@@ -61,6 +62,7 @@ const faqs = [
     answer:
       "可能です。キャラクター、口調、答える範囲、誘導先はお客様の事業に合わせて設計します。既存のFAQや会社案内を知識として使うこともできます。",
     singleLineOnMobile: true,
+    moreHref: "/contact",
   },
   {
     id: "chatbot-scope",
@@ -68,6 +70,7 @@ const faqs = [
     answer:
       "いいえ。答える範囲をあらかじめ決めて設計します。「自社サービスと地域のことだけ」など、用途に合わせて制限できます。",
     singleLineOnMobile: true,
+    moreHref: "/contact",
   },
   {
     id: "chatbot-price",
@@ -75,6 +78,7 @@ const faqs = [
     answer:
       "アバター制作の有無、回答範囲、既存サイトへの組み込み範囲によって異なります。まずはご希望を伺い、概算をご案内します。",
     singleLineOnMobile: true,
+    moreHref: "/contact",
   },
 ];
 
