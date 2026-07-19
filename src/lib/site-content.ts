@@ -209,7 +209,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: "services",
     question: "AIコンサルティングでは何をしてくれますか？",
     answer:
-      "ChatGPT・Claude の活用支援に加え、社内マニュアルや会社情報に特化した社内用チャットボットの制作にも対応します。Dify などの基盤を使う場合もありますが、古い手段に固定せず、その時点で実用的な形を選びます。詳細は https://amalink.co.jp/ai-consulting をご覧ください。",
+      "ChatGPT・Claude の活用支援に加え、社内マニュアルや会社情報に特化した社内用チャットボットの制作にも対応します。Dify などの基盤を使う場合もあります。名前を並べるだけでなく、御社の業務で使える形まで落とし込みます。詳細は https://amalink.co.jp/ai-consulting をご覧ください。",
   },
   {
     id: "service-chatbot",

@@ -82,7 +82,7 @@ const services = [
     title: "AIコンサルティング",
     enTitle: "AI Consulting",
     description:
-      "ChatGPT・Claude の活用から、\n社内マニュアル特化の社内用チャットボット制作まで。\n最新の実用情報を踏まえて伴走します。",
+      "ChatGPT・Claude の活用から、\n社内マニュアル特化の社内用チャットボット制作まで。\n業務で使える形に落とし込み、導入後も伴走します。",
     href: "/ai-consulting",
     linkLabel: "AIコンサルティングについて詳しく見る",
     orderClass: "md:order-6",
