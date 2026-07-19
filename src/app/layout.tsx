@@ -12,7 +12,7 @@ const zenMincho = Zen_Old_Mincho({
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
-  // ヒーロー用。初回ペイントを妨げないよう preload は本文フォント側に寄せる
+  // 日本語フォントは unicode-range 分割が多く、preload:true だと数十本同時取得で固まる
   preload: false,
 });
 
@@ -21,7 +21,7 @@ const zenGothic = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
-  preload: true,
+  preload: false,
 });
 
 export const metadata: Metadata = {
