@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Zen_Old_Mincho, Zen_Kaku_Gothic_New } from "next/font/google";
-import { DeferredWidgets } from "@/components/layout/DeferredWidgets";
+import { AmalinkChatbot } from "@/components/chatbot/AmalinkChatbot";
+import { PixelPlayButton } from "@/components/ui/PixelPlayButton";
 import { RootJsonLd } from "@/components/seo/JsonLd";
-import { GATEWAY_BOOT_SCRIPT } from "@/lib/gateway";
 import { absoluteUrl, DEFAULT_DESCRIPTION, DEFAULT_TITLE, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
 import "./globals.css";
 
@@ -12,7 +11,6 @@ const zenMincho = Zen_Old_Mincho({
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
-  // 日本語フォントは unicode-range 分割が多く、preload:true だと数十本同時取得で固まる
   preload: false,
 });
 
@@ -103,12 +101,10 @@ export default function RootLayout({
   return (
     <html lang="ja" className={`${zenMincho.variable} ${zenGothic.variable}`}>
       <body>
-        <Script id="amalink-gateway-boot" strategy="beforeInteractive">
-          {GATEWAY_BOOT_SCRIPT}
-        </Script>
         <RootJsonLd />
         {children}
-        <DeferredWidgets />
+        <AmalinkChatbot />
+        <PixelPlayButton />
       </body>
     </html>
   );
