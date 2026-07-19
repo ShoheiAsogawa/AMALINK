@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { HATENA_ANIMAL_SRC, randomAnimalIndex } from "@/data/hatenaAnimals";
+import { cn } from "@/lib/utils";
 
 const DISPLAY_MS = 1200;
 
@@ -14,7 +15,12 @@ function preloadAnimalImages(srcs: readonly string[]) {
   }
 }
 
-export function PixelPlayButton() {
+type PixelPlayButtonProps = {
+  /** floating: 右下固定（PC） / footer: フッター内（モバイル） */
+  placement?: "floating" | "footer";
+};
+
+export function PixelPlayButton({ placement = "floating" }: PixelPlayButtonProps) {
   const [spawn, setSpawn] = useState<{ src: string; key: number } | null>(null);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const preloadStartedRef = useRef(false);
@@ -62,20 +68,32 @@ export function PixelPlayButton() {
     const key = ++spawnSeqRef.current;
     setSpawn({ src, key });
 
-    // 画像の onLoad 待ちに依存すると AnimatePresence(mode=wait) 時に
-    // タイマーが始まらず残り続けることがあるため、出現と同時に消す。
     hideTimerRef.current = setTimeout(() => {
       setSpawn((current) => (current?.key === key ? null : current));
       hideTimerRef.current = null;
     }, DISPLAY_MS);
   }, [clearHideTimer, ensurePreloaded]);
 
+  const isFooter = placement === "footer";
+
   return (
     <div
-      className="pointer-events-auto fixed z-[70] max-md:bottom-[max(0.25rem,env(safe-area-inset-bottom))] max-md:right-[max(0.25rem,env(safe-area-inset-right))] max-md:origin-bottom-right max-md:scale-[0.62] md:bottom-[max(1rem,env(safe-area-inset-bottom))] md:right-[max(1rem,env(safe-area-inset-right))] md:origin-bottom-right md:scale-[0.82]"
+      className={cn(
+        "pointer-events-auto origin-bottom-right",
+        isFooter
+          ? "relative scale-[0.68]"
+          : "fixed z-[70] bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] hidden scale-[0.82] md:block",
+      )}
     >
       <div className="relative inline-flex flex-col items-center">
-        <div className="pointer-events-none relative mb-1 flex h-[150px] w-[140px] items-end justify-center overflow-visible">
+        <div
+          className={cn(
+            "pointer-events-none flex items-end justify-center overflow-visible",
+            isFooter
+              ? "absolute bottom-full left-1/2 mb-1 h-[150px] w-[140px] -translate-x-1/2"
+              : "relative mb-1 h-[150px] w-[140px]",
+          )}
+        >
           <AnimatePresence mode="sync">
             {spawn && (
               <motion.div
