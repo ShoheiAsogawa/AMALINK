@@ -21,6 +21,7 @@ export function FooterTruck() {
             height={432}
             className="h-full w-full object-contain object-bottom drop-shadow-[0_2px_5px_rgba(15,23,42,0.16)]"
             sizes="172px"
+            loading="lazy"
           />
         </div>
       </div>

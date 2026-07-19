@@ -67,10 +67,10 @@ export function PixelPlayButton() {
                   alt=""
                   width={160}
                   height={160}
+                  sizes="(max-width: 768px) 106px, 128px"
                   className="h-auto max-h-[128px] w-auto max-w-[128px] max-md:max-h-[106px] max-md:max-w-[106px] object-contain select-none bg-transparent"
                   draggable={false}
                   priority={false}
-                  unoptimized
                 />
               </motion.div>
             )}

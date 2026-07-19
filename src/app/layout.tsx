@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Zen_Old_Mincho, Zen_Kaku_Gothic_New } from "next/font/google";
-import { AmalinkChatbot } from "@/components/chatbot/AmalinkChatbot";
-import { PixelPlayButton } from "@/components/ui/PixelPlayButton";
+import { DeferredWidgets } from "@/components/layout/DeferredWidgets";
 import { RootJsonLd } from "@/components/seo/JsonLd";
 import { absoluteUrl, DEFAULT_DESCRIPTION, DEFAULT_TITLE, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
 import "./globals.css";
@@ -11,13 +10,15 @@ const zenMincho = Zen_Old_Mincho({
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
+  preload: true,
 });
 
 const zenGothic = Zen_Kaku_Gothic_New({
-  weight: ["300", "400", "500", "700"],
+  weight: ["400", "500", "700"],
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -101,8 +102,7 @@ export default function RootLayout({
       <body>
         <RootJsonLd />
         {children}
-        <AmalinkChatbot />
-        <PixelPlayButton />
+        <DeferredWidgets />
       </body>
     </html>
   );

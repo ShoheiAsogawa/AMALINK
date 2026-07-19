@@ -1,15 +1,26 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
-import { About } from "@/components/sections/About";
-import { Services } from "@/components/sections/Services";
-import { NewsSection } from "@/components/sections/News";
-import { Contact } from "@/components/sections/Contact";
 import { MarqueeSpacer } from "@/components/ui/MarqueeSpacer";
 import { getNewsList } from "@/lib/microcms";
 import { GameGateway } from "@/components/game/GameGateway";
 import { absoluteUrl, DEFAULT_DESCRIPTION, DEFAULT_TITLE } from "@/lib/seo";
+
+/** 初回バンドルを薄くするため、下部セクションは分割読み込み（見た目は同じ） */
+const About = dynamic(() =>
+  import("@/components/sections/About").then((m) => ({ default: m.About })),
+);
+const Services = dynamic(() =>
+  import("@/components/sections/Services").then((m) => ({ default: m.Services })),
+);
+const NewsSection = dynamic(() =>
+  import("@/components/sections/News").then((m) => ({ default: m.NewsSection })),
+);
+const Contact = dynamic(() =>
+  import("@/components/sections/Contact").then((m) => ({ default: m.Contact })),
+);
 
 export const metadata: Metadata = {
   title: {

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type WaveLayer = {
   bottom?: string;
@@ -93,7 +93,8 @@ const WAVE_LAYERS: WaveLayer[] = [
 ];
 
 export function Hero() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
+  const [inView, setInView] = useState(true);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -101,6 +102,17 @@ export function Hero() {
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(Boolean(entry?.isIntersecting)),
+      { rootMargin: "80px 0px", threshold: 0.01 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section ref={ref} className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-slate-50">
@@ -113,9 +125,10 @@ export function Hero() {
             key={layer.gradient.id}
             className={`absolute w-[200%] anim-wave-drift gpu-accelerate ${layer.height} ${layer.bottom ?? ""} ${layer.top ?? ""} ${layer.opacity ?? ""}`}
             style={{
-              willChange: "transform",
+              willChange: inView ? "transform" : "auto",
               backfaceVisibility: "hidden",
               animationDuration: `${layer.duration}s`,
+              animationPlayState: inView ? "running" : "paused",
             }}
           >
             <svg

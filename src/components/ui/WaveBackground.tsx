@@ -1,4 +1,6 @@
-import { useId } from "react";
+"use client";
+
+import { useEffect, useId, useRef, useState } from "react";
 
 interface WaveBackgroundProps {
   color?: "blue" | "blue-light" | "blue-dark" | "green" | "mixed";
@@ -17,6 +19,22 @@ export function WaveBackground({
   className = "",
 }: WaveBackgroundProps) {
   const uniqueId = useId();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(Boolean(entry?.isIntersecting));
+      },
+      { rootMargin: "120px 0px", threshold: 0.01 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const getGradientColors = () => {
     switch (color) {
@@ -44,14 +62,16 @@ export function WaveBackground({
 
   return (
     <div
+      ref={rootRef}
       className={`absolute left-0 right-0 ${positionClasses[position]} h-[50vh] overflow-hidden pointer-events-none ${className}`}
     >
       <div
         className="absolute inset-0 h-full w-[200%] anim-wave-drift"
         style={{
-          willChange: "transform",
+          willChange: inView ? "transform" : "auto",
           backfaceVisibility: "hidden",
           animationDuration: `${speed}s`,
+          animationPlayState: inView ? "running" : "paused",
         }}
       >
         <svg viewBox="0 0 2400 320" preserveAspectRatio="none" className="w-full h-full">

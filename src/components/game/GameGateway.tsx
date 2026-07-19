@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
-import { SvgStudyGame } from "./SvgStudyGame";
 
 /** ミニゲームクリア後：本編のフェード */
 const CROSSFADE = {
@@ -34,6 +34,14 @@ function writeGatewaySeen(): void {
     /* private browsing 等 */
   }
 }
+
+const SvgStudyGame = dynamic(
+  () => import("./SvgStudyGame").then((m) => m.SvgStudyGame),
+  {
+    ssr: false,
+    loading: () => <div className="fixed inset-0 bg-slate-950" aria-hidden />,
+  },
+);
 
 export function GameGateway({ children }: { children: React.ReactNode }) {
   /** null = 初回判定中, true = 本編表示, false = ゲートウェイ表示 */
@@ -87,6 +95,16 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
   const revealed = mainRevealed === true;
   const showGateway = mainRevealed === false;
 
+  const hiddenMainStyle = useMemo(
+    () =>
+      ({
+        opacity: 0,
+        pointerEvents: "none" as const,
+        contentVisibility: "hidden" as const,
+      }) as const,
+    [],
+  );
+
   /* 本編表示後は素の div にする。motion の transform が残ると子の sticky/fixed が壊れる */
   const mainShell = revealed ? (
     <div className="relative z-0 min-h-screen">{children}</div>
@@ -95,8 +113,9 @@ export function GameGateway({ children }: { children: React.ReactNode }) {
       initial={false}
       animate={{ opacity: 0 }}
       transition={CROSSFADE}
-      style={{ pointerEvents: "none" }}
+      style={hiddenMainStyle}
       className="relative z-0 min-h-screen"
+      aria-hidden
     >
       {children}
     </motion.div>
