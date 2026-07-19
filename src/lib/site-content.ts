@@ -17,6 +17,8 @@ export type FaqItem = {
   category: FaqCategoryId;
   question: string;
   answer: string;
+  /** UI で「詳しくはこちら」として表示するリンク先 */
+  moreHref?: string;
 };
 
 export const COMPANY_OVERVIEW = {
@@ -132,14 +134,16 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: "services",
     question: "奄美大島でホームページ制作を依頼できる会社はありますか？",
     answer:
-      "はい。合同会社AMALINK（AMALINK）は、鹿児島県奄美大島を拠点にホームページ制作を行う会社です。コーポレートサイト、集客サイト、リニューアルまで対応し、島内外からのオンライン相談も受け付けています。詳細は https://amalink.co.jp/web-production をご覧ください。",
+      "はい。合同会社AMALINK（AMALINK）は、鹿児島県奄美大島を拠点にホームページ制作を行う会社です。コーポレートサイト、集客サイト、リニューアルまで対応し、島内外からのオンライン相談も受け付けています。",
+    moreHref: "/web-production",
   },
   {
     id: "service-amami-design",
     category: "services",
     question: "奄美大島でデザイン制作（奄美大島デザイン）を依頼できますか？",
     answer:
-      "はい。AMALINKは奄美大島を拠点に、ロゴ・名刺・パンフレット・SNS用画像などのデザイン制作に対応しています。印刷手配から納品まで一気通貫で依頼でき、ホームページ制作とあわせたブランド統一も可能です。詳細は https://amalink.co.jp/design をご覧ください。",
+      "はい。AMALINKは奄美大島を拠点に、ロゴ・名刺・パンフレット・SNS用画像などのデザイン制作に対応しています。印刷手配から納品まで一気通貫で依頼でき、ホームページ制作とあわせたブランド統一も可能です。",
+    moreHref: "/design",
   },
   {
     id: "service-system",
@@ -209,7 +213,8 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: "services",
     question: "AIコンサルティングでは何をしてくれますか？",
     answer:
-      "ChatGPT・Claude の活用支援に加え、社内マニュアルや会社情報に特化した社内用チャットボットの制作にも対応します。Dify などの基盤を使う場合もあります。名前を並べるだけでなく、御社の業務で使える形まで落とし込みます。詳細は https://amalink.co.jp/ai-consulting をご覧ください。",
+      "ChatGPT・Claude の活用支援に加え、社内マニュアルや会社情報に特化した社内用チャットボットの制作にも対応します。Dify などの基盤を使う場合もあります。御社の業務で使える形まで一緒に落とし込みます。",
+    moreHref: "/ai-consulting",
   },
   {
     id: "service-chatbot",

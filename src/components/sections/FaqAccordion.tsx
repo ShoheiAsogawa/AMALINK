@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -9,10 +10,37 @@ import {
   type FaqCategoryId,
 } from "@/lib/site-content";
 
+function FaqAnswer({
+  answer,
+  moreHref,
+}: {
+  answer: string;
+  moreHref?: string;
+}) {
+  return (
+    <p className="border-t border-slate-100 px-5 pb-5 pt-4 font-sans text-sm leading-loose text-slate-600 md:px-8 md:pb-6 md:text-base">
+      {answer}
+      {moreHref ? (
+        <>
+          {" "}
+          <Link
+            href={moreHref}
+            className="font-medium text-amami-blue underline underline-offset-4 transition-opacity hover:opacity-80"
+          >
+            詳しくはこちら
+          </Link>
+          をご覧ください。
+        </>
+      ) : null}
+    </p>
+  );
+}
+
 function FaqAccordionItem({
   id,
   question,
   answer,
+  moreHref,
   isOpen,
   onToggle,
   singleLineOnMobile,
@@ -20,6 +48,7 @@ function FaqAccordionItem({
   id: string;
   question: string;
   answer: string;
+  moreHref?: string;
   isOpen: boolean;
   onToggle: () => void;
   singleLineOnMobile?: boolean;
@@ -64,9 +93,7 @@ function FaqAccordionItem({
         aria-labelledby={buttonId}
       >
         <div className="overflow-hidden">
-          <p className="border-t border-slate-100 px-5 pb-5 pt-4 font-sans text-sm leading-loose text-slate-600 md:px-8 md:pb-6 md:text-base">
-            {answer}
-          </p>
+          <FaqAnswer answer={answer} moreHref={moreHref} />
         </div>
       </div>
     </div>
@@ -77,6 +104,7 @@ export type FaqAccordionEntry = {
   id: string;
   question: string;
   answer: string;
+  moreHref?: string;
   singleLineOnMobile?: boolean;
 };
 
@@ -104,6 +132,7 @@ export function FaqAccordion({ items }: { items?: FaqAccordionEntry[] }) {
             id={item.id}
             question={item.question}
             answer={item.answer}
+            moreHref={item.moreHref}
             singleLineOnMobile={item.singleLineOnMobile}
             isOpen={openIds.has(item.id)}
             onToggle={() => toggle(item.id)}
@@ -133,6 +162,7 @@ export function FaqAccordion({ items }: { items?: FaqAccordionEntry[] }) {
                 id={item.id}
                 question={item.question}
                 answer={item.answer}
+                moreHref={item.moreHref}
                 isOpen={openIds.has(item.id)}
                 onToggle={() => toggle(item.id)}
               />

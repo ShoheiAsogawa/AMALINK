@@ -223,7 +223,7 @@ export default function AiConsultingPage() {
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
               {LEGAL_NAME}は、ChatGPT・Claude
-              などの活用支援に加え、社内マニュアルや会社知識に特化した社内用チャットボットの制作にも対応します。名前を並べるだけでなく、御社の業務で使える形まで一緒に落とし込みます。
+              などの活用支援に加え、社内マニュアルや会社知識に特化した社内用チャットボットの制作にも対応します。御社の業務で使える形まで一緒に落とし込みます。
             </p>
           </div>
         </section>
