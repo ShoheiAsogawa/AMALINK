@@ -3,7 +3,7 @@
 import { Section } from "@/components/ui/Section";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { motion } from "framer-motion";
-import { Bot, Monitor, Smartphone, PenTool, Sparkles } from "lucide-react";
+import { Bot, BrainCircuit, Monitor, Smartphone, PenTool, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { WaveBackground } from "@/components/ui/WaveBackground";
 import { cn } from "@/lib/utils";
@@ -70,6 +70,18 @@ const services = [
     href: "/geo-seo",
     linkLabel: "GEO・SEO対策について詳しく見る",
     orderClass: "md:order-5",
+  },
+  {
+    key: "ai-consulting",
+    id: "06",
+    icon: <BrainCircuit className="w-6 h-6" />,
+    title: "AIコンサルティング",
+    enTitle: "AI Consulting",
+    description:
+      "最新のAI情報をもとに、業務の現状を見ながら\n効率化と導入を伴走支援します。\n何から始めるか、一緒に整理するところからです。",
+    href: "/ai-consulting",
+    linkLabel: "AIコンサルティングについて詳しく見る",
+    orderClass: "md:order-6",
   },
 ] as const;
 
@@ -324,6 +336,46 @@ function ServiceCard({
       </div>
 
       {service.key === "geo" && <GeoKeywordRain active={isHovered} />}
+
+      {service.key === "ai-consulting" && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isHovered ? 0.2 : 0 }}
+          transition={{ duration: 0.3 }}
+          className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
+          aria-hidden
+        >
+          <svg className="h-56 w-56 text-amami-blue" viewBox="0 0 100 100">
+            {[
+              [28, 30],
+              [72, 28],
+              [50, 52],
+              [30, 72],
+              [70, 74],
+            ].map(([cx, cy], i) => (
+              <motion.circle
+                key={`${cx}-${cy}`}
+                cx={cx}
+                cy={cy}
+                r="4"
+                fill="currentColor"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: isHovered ? 1 : 0, opacity: isHovered ? 0.7 : 0 }}
+                transition={{ type: "spring", stiffness: 160, damping: 16, delay: i * 0.05 }}
+              />
+            ))}
+            <motion.path
+              d="M28 30 L50 52 L72 28 M50 52 L30 72 M50 52 L70 74"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: isHovered ? 1 : 0, opacity: isHovered ? 0.45 : 0 }}
+              transition={{ duration: 0.55, ease: "easeOut" }}
+            />
+          </svg>
+        </motion.div>
+      )}
 
       {service.key === "chatbot" && (
         <motion.div

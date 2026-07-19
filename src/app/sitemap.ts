@@ -8,6 +8,7 @@ const SERVICE_PATHS = [
   "/design",
   "/geo-seo",
   "/ai-avatar-chatbot",
+  "/ai-consulting",
 ] as const;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

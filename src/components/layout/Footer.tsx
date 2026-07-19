@@ -9,6 +9,7 @@ const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const FOOTER_LINKS = [
   { href: "/web-production", label: "ホームページ制作" },
   { href: "/design", label: "デザイン" },
+  { href: "/ai-consulting", label: "AIコンサルティング" },
   { href: "/geo-seo", label: "GEO・SEO対策" },
   { href: "/system-development", label: "システム開発" },
   { href: "/faq", label: "よくある質問" },

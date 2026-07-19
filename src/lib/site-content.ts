@@ -88,6 +88,14 @@ export const SERVICES = [
       "検索エンジン向けのSEOと、AI検索・生成AI向けのGEOをあわせて支援。事業内容が正しく伝わるWebページの設計と改善を行います。",
     url: absoluteUrl("/geo-seo"),
   },
+  {
+    id: "ai-consulting",
+    name: "AIコンサルティング",
+    enName: "AI Consulting",
+    description:
+      "最新のAI情報をもとに、業務の現状整理・効率化・導入支援を伴走します。何から始めるべきかわからない段階からの相談にも対応します。",
+    url: absoluteUrl("/ai-consulting"),
+  },
 ] as const;
 
 export const FAQ_ITEMS: FaqItem[] = [
@@ -195,6 +203,13 @@ export const FAQ_ITEMS: FaqItem[] = [
     question: "SEO対策とGEO対策は違うのですか？",
     answer:
       "SEOはGoogleなどの検索結果で上位表示を目指す対策、GEOはAIが生成する回答の中で引用・紹介されやすくする対策です。どちらも「見つけてもらう」ことが目的ですが、AI検索が増える今は両方を意識したWeb設計が有効です。AMALINKでは制作とあわせて、両方の視点を取り入れたご提案が可能です。",
+  },
+  {
+    id: "service-ai-consulting",
+    category: "services",
+    question: "AIコンサルティングでは何をしてくれますか？",
+    answer:
+      "最新のAI情報を踏まえ、業務の現状整理、効率化の提案、ツール選定、導入・定着までを伴走支援します。何にAIを使うか決まっていない段階からご相談いただけます。詳細は https://amalink.co.jp/ai-consulting をご覧ください。",
   },
   {
     id: "service-chatbot",

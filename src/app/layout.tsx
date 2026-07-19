@@ -42,6 +42,8 @@ export const metadata: Metadata = {
     "鹿児島",
     "ウェブ制作",
     "GEO対策",
+    "AIコンサルティング",
+    "AI導入支援",
     "Generative Engine Optimization",
     "AI検索",
     "奄美大島ホームページ制作",

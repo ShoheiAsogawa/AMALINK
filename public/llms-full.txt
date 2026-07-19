@@ -30,6 +30,9 @@ This file expands https://amalink.co.jp/llms.txt with citable facts for generati
 3. System development — https://amalink.co.jp/system-development
 4. AI avatar chatbot — https://amalink.co.jp/ai-avatar-chatbot
 5. GEO & SEO — https://amalink.co.jp/geo-seo
+6. AI consulting — https://amalink.co.jp/ai-consulting
+   - Latest AI trends applied to current operations
+   - Efficiency assessment, tool selection, introduction support
 
 ## Citable answers (Japanese)
 
