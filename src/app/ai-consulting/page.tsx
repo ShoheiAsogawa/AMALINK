@@ -6,9 +6,9 @@ import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { Contact } from "@/components/sections/Contact";
 import { absoluteUrl, LEGAL_NAME } from "@/lib/seo";
 
-const title = "AIコンサルティング｜ChatGPT・Claude・Gemini導入支援";
+const title = "AIコンサルティング｜ChatGPT・Claude・Cursor導入支援";
 const description =
-  "ChatGPT、Claude、Gemini、Microsoft Copilot、Perplexity、Cursor など具体的なAIツールを踏まえ、業務の現状整理・効率化・導入を伴走支援します。何から始めるべきかわからない段階からご相談ください。";
+  "ChatGPT、Claude、Cursor、Dify など、現場で使いやすいAIツールを中心に、業務の現状整理・効率化・導入を伴走支援します。何から始めるべきかわからない段階からご相談ください。";
 
 export const metadata: Metadata = {
   title: "AIコンサルティング",
@@ -17,12 +17,11 @@ export const metadata: Metadata = {
     "AIコンサルティング",
     "ChatGPT 導入",
     "Claude 導入",
-    "Gemini 業務効率化",
-    "Copilot 活用",
-    "Perplexity",
-    "Cursor",
-    "AI導入支援",
+    "Cursor 活用",
+    "Dify 導入",
     "生成AI コンサル",
+    "AI導入支援",
+    "業務効率化",
     LEGAL_NAME,
   ],
   alternates: { canonical: "/ai-consulting" },
@@ -37,26 +36,26 @@ export const metadata: Metadata = {
 const tools = [
   {
     name: "ChatGPT",
-    body: "文章作成、要約、問い合わせ下書き、社内FAQのたたき台など。日常業務の時短から始めやすい代表的な生成AIです。",
+    body: "文章作成、要約、問い合わせの下書き、社内FAQのたたき台など。まず試すならここ、という定番の生成AIです。",
   },
   {
     name: "Claude",
     body: "長文の読み込みや丁寧な文書作成が得意。規約・マニュアル・議事録など、文量の多い業務整理に向いています。",
   },
   {
-    name: "Gemini",
-    body: "Googleワークスペースとの相性が良く、ドキュメントやスプレッドシート周辺の効率化を検討するときに候補になります。",
+    name: "Cursor",
+    body: "Web制作やシステム開発の現場で使うAIコーディング環境。実装・修正・リファクタのスピードを上げたいときに有効です。",
   },
   {
-    name: "Copilot / その他",
-    body: "Microsoft Copilot、Perplexity、Cursor、Notion AI、Dify など。目的と現場の負担に合わせて選びます。",
+    name: "Dify / 自動化",
+    body: "社内向けチャットボットや業務フローの自動化を整えたいときに。Dify や Make、n8n など、用途に合わせて選びます。",
   },
 ];
 
 const examples = [
   {
     title: "現状の整理・診断",
-    body: "業務フロー、手作業、使っているツールを洗い出し、ChatGPT・Claude・Gemini などで効きやすいポイントを整理します。",
+    body: "業務フロー、手作業、使っているツールを洗い出し、ChatGPT・Claude・Cursor などで効きやすいポイントを整理します。",
   },
   {
     title: "業務効率化の提案",
@@ -64,7 +63,7 @@ const examples = [
   },
   {
     title: "導入支援・伴走",
-    body: "ツール選定、プロンプトや運用ルール、社内への落とし込みまで。導入して終わりではなく、定着まで伴走します。",
+    body: "ツール選定、使い方の型づくり、社内への落とし込みまで。導入して終わりではなく、定着まで伴走します。",
   },
   {
     title: "継続的なアップデート",
@@ -74,7 +73,7 @@ const examples = [
 
 const steps = [
   ["01", "現状を聞く", "いまの業務、困りごと、使っているツール、目指したい姿を伺います。"],
-  ["02", "効くところを見つける", "ChatGPT・Claude・Gemini などを踏まえ、効果が出やすく負担が少ない導入ポイントを整理します。"],
+  ["02", "効くところを見つける", "ChatGPT・Claude・Cursor などを踏まえ、効果が出やすく負担が少ない導入ポイントを整理します。"],
   ["03", "小さく試す", "いきなり全社展開せず、検証しやすい範囲から試し、手応えを確認します。"],
   ["04", "導入・定着", "運用ルールや使い方を整え、現場で続く形に落とし込みます。"],
   ["05", "見直し・改善", "新しいモデルや機能の変化に合わせて、必要に応じて改善を続けます。"],
@@ -85,13 +84,13 @@ const faqs = [
     id: "ai-consult-undecided",
     question: "ChatGPT と Claude、どれを使えばいいか決まっていなくても相談できますか？",
     answer:
-      "はい。業務内容を伺ったうえで、ChatGPT・Claude・Gemini・Copilot などから、目的に合うものを一緒に選びます。最初から1つに決める必要はありません。",
+      "はい。業務内容を伺ったうえで、ChatGPT・Claude・Cursor・Dify などから、目的に合うものを一緒に選びます。最初から1つに決める必要はありません。",
   },
   {
     id: "ai-consult-tools",
     question: "対応しているAIツールの例を教えてください。",
     answer:
-      "ChatGPT、Claude、Gemini、Microsoft Copilot、Perplexity、Cursor、Notion AI、Dify などを中心に、用途に合わせてご提案します。新しいツールが出た場合も、必要に応じて検討対象に加えます。",
+      "主に ChatGPT、Claude、Cursor、Dify、Make / n8n、画像生成（Midjourney など）を扱います。用途に合わせて選び、新しいツールが出た場合も必要に応じて検討します。",
     singleLineOnMobile: true,
   },
   {
@@ -105,7 +104,7 @@ const faqs = [
     id: "ai-consult-other",
     question: "ホームページ制作やシステム開発と組み合わせられますか？",
     answer:
-      "可能です。AI導入の相談から、必要に応じてチャットボット、業務システム、Web制作まで一貫してご相談いただけます。",
+      "可能です。AI導入の相談から、必要に応じてチャットボット、業務システム、Web制作まで一貫してご相談いただけます。Cursor を使った開発支援とも相性が良いです。",
     singleLineOnMobile: true,
   },
   {
@@ -130,7 +129,7 @@ function JsonLd() {
         alternateName: [
           "ChatGPT導入支援",
           "Claude導入支援",
-          "Gemini活用支援",
+          "Cursor活用支援",
           "生成AIコンサルティング",
         ],
         serviceType: "AI導入支援・業務効率化コンサルティング",
@@ -149,12 +148,11 @@ function JsonLd() {
         knowsAbout: [
           "ChatGPT",
           "Claude",
-          "Gemini",
-          "Microsoft Copilot",
-          "Perplexity",
           "Cursor",
-          "Notion AI",
           "Dify",
+          "Make",
+          "n8n",
+          "Midjourney",
           "生成AI",
           "業務効率化",
         ],
@@ -217,15 +215,15 @@ export default function AiConsultingPage() {
               AI Consulting
             </p>
             <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
-              <span className="block">ChatGPTもClaudeも、</span>
+              <span className="block">ChatGPTもClaudeもCursorも、</span>
               <span className="block sm:inline">現場に合う形で</span>
               <span className="block sm:inline">
                 導入する<span className="hidden sm:inline">。</span>
               </span>
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
-              {LEGAL_NAME}は、ChatGPT・Claude・Gemini・Copilot・Perplexity・Cursor
-              など具体的なAIツールを踏まえ、業務の現状整理から導入・定着まで伴走します。流行に流されず、続く使い方まで一緒に考えます。
+              {LEGAL_NAME}は、ChatGPT・Claude・Cursor・Dify
+              など、実際に使いやすいAIツールを中心に、業務の現状整理から導入・定着まで伴走します。流行に流されず、続く使い方まで一緒に考えます。
             </p>
           </div>
         </section>
@@ -237,7 +235,7 @@ export default function AiConsultingPage() {
               扱うAIツールの例
             </h2>
             <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">
-              名前のついたツールを前提に相談できます。どれが合うかは、業務の内容と負担感から一緒に決めます。
+              よく使う実用的なツールに絞っています。どれが合うかは、業務の内容と負担感から一緒に決めます。
             </p>
             <div className="mt-10 grid gap-5 md:grid-cols-2">
               {tools.map((item) => (
