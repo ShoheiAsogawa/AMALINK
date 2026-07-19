@@ -6,9 +6,9 @@ import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { Contact } from "@/components/sections/Contact";
 import { absoluteUrl, LEGAL_NAME } from "@/lib/seo";
 
-const title = "AIコンサルティング｜ChatGPT・Claude・Cursor導入支援";
+const title = "AIコンサルティング｜ChatGPT・Claude・社内チャットボット";
 const description =
-  "ChatGPT、Claude、Cursor、Dify など、現場で使いやすいAIツールを中心に、業務の現状整理・効率化・導入を伴走支援します。何から始めるべきかわからない段階からご相談ください。";
+  "ChatGPT・Claude・Cursor の活用支援に加え、社内マニュアルや会社情報に特化した社内用チャットボットの制作にも対応。最新のAI情報を踏まえ、業務効率化と導入を伴走します。";
 
 export const metadata: Metadata = {
   title: "AIコンサルティング",
@@ -18,10 +18,11 @@ export const metadata: Metadata = {
     "ChatGPT 導入",
     "Claude 導入",
     "Cursor 活用",
-    "Dify 導入",
+    "社内チャットボット",
+    "社内マニュアル AI",
+    "Dify",
     "生成AI コンサル",
     "AI導入支援",
-    "業務効率化",
     LEGAL_NAME,
   ],
   alternates: { canonical: "/ai-consulting" },
@@ -35,48 +36,48 @@ export const metadata: Metadata = {
 
 const tools = [
   {
-    name: "ChatGPT",
-    body: "文章作成、要約、問い合わせの下書き、社内FAQのたたき台など。まず試すならここ、という定番の生成AIです。",
+    name: "ChatGPT / Claude",
+    body: "文章作成、要約、問い合わせ下書きなど。汎用AIをそのまま業務に取り入れるところから支援します。どちらが合うかも一緒に整理できます。",
   },
   {
-    name: "Claude",
-    body: "長文の読み込みや丁寧な文書作成が得意。規約・マニュアル・議事録など、文量の多い業務整理に向いています。",
+    name: "社内用チャットボット",
+    body: "社内マニュアル、就業ルール、商品知識、よくある問い合わせなど、会社のことに特化したチャットボットを作れます。社員や現場がすぐ答えを引ける仕組みです。",
   },
   {
     name: "Cursor",
-    body: "Web制作やシステム開発の現場で使うAIコーディング環境。実装・修正・リファクタのスピードを上げたいときに有効です。",
+    body: "Web制作やシステム開発の現場向け。実装・修正のスピードを上げたいときに有効です。",
   },
   {
-    name: "Dify / 自動化",
-    body: "社内向けチャットボットや業務フローの自動化を整えたいときに。Dify や Make、n8n など、用途に合わせて選びます。",
+    name: "Dify など構築基盤",
+    body: "社内ボットやナレッジ検索を整えるときの選択肢のひとつ。目的に合わせて、その時点で最適な仕組みを選びます。",
   },
 ];
 
 const examples = [
   {
     title: "現状の整理・診断",
-    body: "業務フロー、手作業、使っているツールを洗い出し、ChatGPT・Claude・Cursor などで効きやすいポイントを整理します。",
+    body: "業務フロー、手作業、社内に散らばったマニュアルを洗い出し、ChatGPT / Claude の活用や社内ボット化が効くポイントを整理します。",
   },
   {
-    title: "業務効率化の提案",
-    body: "問い合わせ対応、資料作成、社内ナレッジ整理など。流行ではなく、現場で続く使い方を基準にご提案します。",
+    title: "汎用AIの使い方支援",
+    body: "ChatGPT や Claude を、誰でも同じ品質で使えるように型づくり。プロンプトや運用のコツまで落とし込みます。",
   },
   {
-    title: "導入支援・伴走",
-    body: "ツール選定、使い方の型づくり、社内への落とし込みまで。導入して終わりではなく、定着まで伴走します。",
+    title: "会社特化の社内ボット",
+    body: "社内マニュアルや会社知識をもとに、会社のことに強い社内用チャットボットを制作。問い合わせ対応や新人教育の負担を減らします。",
   },
   {
-    title: "継続的なアップデート",
-    body: "モデルや機能はすぐ変わるため、最新情報を見ながら、今の事業に合うやり方へ見直す支援も行います。",
+    title: "最新情報での見直し",
+    body: "AIはすぐ変わるので、古いやり方に固定せず、その時点で実用的な手段へ更新していく伴走も行います。",
   },
 ];
 
 const steps = [
-  ["01", "現状を聞く", "いまの業務、困りごと、使っているツール、目指したい姿を伺います。"],
-  ["02", "効くところを見つける", "ChatGPT・Claude・Cursor などを踏まえ、効果が出やすく負担が少ない導入ポイントを整理します。"],
+  ["01", "現状を聞く", "いまの業務、困りごと、マニュアルの有無、目指したい姿を伺います。"],
+  ["02", "効くところを見つける", "汎用AIの活用か、社内特化ボットか、または両方か。負担が少なく効く形を整理します。"],
   ["03", "小さく試す", "いきなり全社展開せず、検証しやすい範囲から試し、手応えを確認します。"],
-  ["04", "導入・定着", "運用ルールや使い方を整え、現場で続く形に落とし込みます。"],
-  ["05", "見直し・改善", "新しいモデルや機能の変化に合わせて、必要に応じて改善を続けます。"],
+  ["04", "導入・定着", "使い方の型や運用ルールを整え、現場で続く形に落とし込みます。"],
+  ["05", "見直し・改善", "新しいAIの変化に合わせて、必要に応じて仕組みを更新します。"],
 ] as const;
 
 const faqs = [
@@ -84,34 +85,34 @@ const faqs = [
     id: "ai-consult-undecided",
     question: "ChatGPT と Claude、どれを使えばいいか決まっていなくても相談できますか？",
     answer:
-      "はい。業務内容を伺ったうえで、ChatGPT・Claude・Cursor・Dify などから、目的に合うものを一緒に選びます。最初から1つに決める必要はありません。",
+      "はい。業務内容を伺ったうえで選びます。汎用AIの使い方支援だけでなく、社内マニュアル特化のチャットボットが向いている場合もあります。",
+  },
+  {
+    id: "ai-consult-internal-bot",
+    question: "社内用のチャットボットも作れますか？",
+    answer:
+      "はい。社内マニュアル、就業ルール、商品・サービス知識など、会社の情報に特化した社内用チャットボットを制作できます。Dify などの基盤を使う場合もありますが、目的に合わせて最適な形を選びます。",
+    singleLineOnMobile: true,
   },
   {
     id: "ai-consult-tools",
-    question: "対応しているAIツールの例を教えてください。",
+    question: "対応しているAIの例を教えてください。",
     answer:
-      "主に ChatGPT、Claude、Cursor、Dify、Make / n8n、画像生成（Midjourney など）を扱います。用途に合わせて選び、新しいツールが出た場合も必要に応じて検討します。",
+      "ChatGPT、Claude、Cursor、社内特化チャットボット（Dify 等での構築含む）が中心です。画像生成や使わない自動化ツールを無理に勧めることはしません。常にその時点で実用的な手段を選びます。",
     singleLineOnMobile: true,
   },
   {
     id: "ai-consult-latest",
     question: "最新のAI情報をもとに提案してもらえますか？",
     answer:
-      "はい。モデルや機能の更新を踏まえつつ、流行だけで選ばず、御社の業務に本当に合うかを基準にご提案します。",
+      "はい。ツールはすぐ陳腐化するため、古い前提に固定せず、最新の実用情報を踏まえてご提案します。",
     singleLineOnMobile: true,
   },
   {
     id: "ai-consult-other",
     question: "ホームページ制作やシステム開発と組み合わせられますか？",
     answer:
-      "可能です。AI導入の相談から、必要に応じてチャットボット、業務システム、Web制作まで一貫してご相談いただけます。Cursor を使った開発支援とも相性が良いです。",
-    singleLineOnMobile: true,
-  },
-  {
-    id: "ai-consult-price",
-    question: "料金の目安はありますか？",
-    answer:
-      "診断のみ、導入支援、継続伴走など範囲によって異なります。現状を伺ったうえで概算をご案内します。",
+      "可能です。AI導入の相談から、必要に応じて公開サイト向けチャットボット、業務システム、Web制作まで一貫してご相談いただけます。",
     singleLineOnMobile: true,
   },
 ];
@@ -129,10 +130,11 @@ function JsonLd() {
         alternateName: [
           "ChatGPT導入支援",
           "Claude導入支援",
-          "Cursor活用支援",
+          "社内チャットボット制作",
+          "社内マニュアルAI",
           "生成AIコンサルティング",
         ],
-        serviceType: "AI導入支援・業務効率化コンサルティング",
+        serviceType: "AI導入支援・社内チャットボット・業務効率化コンサルティング",
         description,
         url,
         provider: { "@id": organizationId },
@@ -150,9 +152,8 @@ function JsonLd() {
           "Claude",
           "Cursor",
           "Dify",
-          "Make",
-          "n8n",
-          "Midjourney",
+          "社内チャットボット",
+          "社内マニュアル",
           "生成AI",
           "業務効率化",
         ],
@@ -215,27 +216,26 @@ export default function AiConsultingPage() {
               AI Consulting
             </p>
             <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
-              <span className="block">ChatGPTもClaudeもCursorも、</span>
-              <span className="block sm:inline">現場に合う形で</span>
-              <span className="block sm:inline">
-                導入する<span className="hidden sm:inline">。</span>
+              <span className="block">汎用AIも、社内特化ボットも。</span>
+              <span className="mt-2 block text-[0.72em] font-bold text-slate-700 sm:mt-3 md:text-[0.55em]">
+                会社のことに強いAIの使い方へ。
               </span>
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
-              {LEGAL_NAME}は、ChatGPT・Claude・Cursor・Dify
-              など、実際に使いやすいAIツールを中心に、業務の現状整理から導入・定着まで伴走します。流行に流されず、続く使い方まで一緒に考えます。
+              {LEGAL_NAME}は、ChatGPT・Claude
+              などの活用支援に加え、社内マニュアルや会社知識に特化した社内用チャットボットの制作にも対応します。古い手段に固定せず、その時点で実用的なやり方を一緒に選びます。
             </p>
           </div>
         </section>
 
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
-            <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">Tools</p>
+            <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">What we do</p>
             <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">
-              扱うAIツールの例
+              支援の中心
             </h2>
             <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">
-              よく使う実用的なツールに絞っています。どれが合うかは、業務の内容と負担感から一緒に決めます。
+              使わないツールを並べるのではなく、現場で続くものに絞ります。
             </p>
             <div className="mt-10 grid gap-5 md:grid-cols-2">
               {tools.map((item) => (
@@ -255,7 +255,7 @@ export default function AiConsultingPage() {
               できることの例
             </h2>
             <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">
-              診断だけ、導入支援だけ、継続伴走など、必要な範囲から始められます。
+              診断だけ、社内ボット制作だけ、継続伴走など、必要な範囲から始められます。
             </p>
             <div className="mt-10 grid gap-5 md:grid-cols-2">
               {examples.map((item) => (
@@ -305,9 +305,9 @@ export default function AiConsultingPage() {
           title="まずは、気軽にお話ししませんか？"
           description={
             <>
-              ChatGPT を試しただけ、まだ何も使っていない、どちらでも大丈夫です。
+              ChatGPT を試しただけでも、社内マニュアルをボット化したいでも大丈夫です。
               <br />
-              現状の業務を伺い、進め方を一緒に整理します。
+              現状を伺い、進め方を一緒に整理します。
             </>
           }
         />

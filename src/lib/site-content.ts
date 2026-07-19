@@ -93,7 +93,7 @@ export const SERVICES = [
     name: "AIコンサルティング",
     enName: "AI Consulting",
     description:
-      "ChatGPT・Claude・Cursor・Dify など、現場で使いやすいAIツールを中心に、業務の現状整理・効率化・導入支援を伴走します。",
+      "ChatGPT・Claude の活用支援に加え、社内マニュアルや会社知識に特化した社内用チャットボット制作にも対応。最新の実用情報を踏まえて導入を伴走します。",
     url: absoluteUrl("/ai-consulting"),
   },
 ] as const;
@@ -209,7 +209,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: "services",
     question: "AIコンサルティングでは何をしてくれますか？",
     answer:
-      "ChatGPT・Claude・Cursor・Dify など、実際に使いやすいAIツールを中心に、業務の現状整理、効率化の提案、導入・定着までを伴走支援します。どれを使うか決まっていない段階からご相談いただけます。詳細は https://amalink.co.jp/ai-consulting をご覧ください。",
+      "ChatGPT・Claude の活用支援に加え、社内マニュアルや会社情報に特化した社内用チャットボットの制作にも対応します。Dify などの基盤を使う場合もありますが、古い手段に固定せず、その時点で実用的な形を選びます。詳細は https://amalink.co.jp/ai-consulting をご覧ください。",
   },
   {
     id: "service-chatbot",

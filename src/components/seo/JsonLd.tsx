@@ -58,6 +58,8 @@ export function RootJsonLd() {
           "Claude",
           "Cursor",
           "Dify",
+          "社内チャットボット",
+          "社内マニュアル",
           "業務効率化",
           "GEO対策",
           "Generative Engine Optimization",
