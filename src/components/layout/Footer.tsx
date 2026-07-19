@@ -34,6 +34,16 @@ function ServicesNav({ className }: { className?: string }) {
   );
 }
 
+function Tagline() {
+  return (
+    <p className="min-w-0 font-sans text-xs leading-relaxed text-slate-500 md:text-sm">
+      島のリズムで、
+      <br />
+      <span className="text-amami-blue">未来をつくる。</span>
+    </p>
+  );
+}
+
 export default function Footer() {
   return (
     <footer className="relative overflow-visible border-t border-slate-200 bg-slate-50 pt-12 pb-[calc(3rem+7.25rem)] md:pt-20 md:pb-[calc(5rem+8.5rem)]">
@@ -58,24 +68,24 @@ export default function Footer() {
               {COMPANY_OVERVIEW.address}
             </p>
 
-            {/* モバイル: サービスをロゴ直下で3列表示 */}
-            <ServicesNav className="mt-6 md:hidden" />
-
-            {/* タグライン下端とハテナ下端を揃えて右に配置（モバイル） */}
-            <div className="mt-6 flex items-end justify-between gap-3 md:mt-[1em]">
-              <p className="min-w-0 font-sans text-xs leading-relaxed text-slate-500 md:text-sm">
-                島のリズムで、
-                <br />
-                <span className="text-amami-blue">未来をつくる。</span>
-              </p>
-              <div className="shrink-0 md:hidden">
-                <PixelPlayButton placement="footer" />
-              </div>
+            {/* PC: タグライン → コピーライト */}
+            <div className="mt-[1em] hidden md:block">
+              <Tagline />
             </div>
-
             <p className="mt-6 font-sans text-[10px] tracking-wide text-slate-400 md:mt-8 md:text-xs">
               &copy; {new Date().getFullYear()} {LEGAL_NAME}. All rights reserved.
             </p>
+
+            {/* モバイル: コピーライトの下にサービス3列 */}
+            <ServicesNav className="mt-6 md:hidden" />
+
+            {/* モバイル最下段: タグライン左・ハテナ右（下端揃え） */}
+            <div className="mt-6 flex items-end justify-between gap-3 md:hidden">
+              <Tagline />
+              <div className="shrink-0">
+                <PixelPlayButton placement="footer" />
+              </div>
+            </div>
           </div>
 
           <ServicesNav className="hidden md:block md:justify-self-end" />
