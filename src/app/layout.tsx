@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     "奄美大島でAI",
     "AIコンサルティング",
     "AI導入支援",
-    "ChatGPT",
+    "生成AI",
     "社内チャットボット",
     "システム開発",
     "ホームページ制作",

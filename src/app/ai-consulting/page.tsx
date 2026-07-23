@@ -6,23 +6,20 @@ import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { Contact } from "@/components/sections/Contact";
 import { absoluteUrl, LEGAL_NAME } from "@/lib/seo";
 
-const title = "AIコンサルティング｜ChatGPT・Claude・社内チャットボット";
+const title = "AIコンサルティング｜生成AI活用・社内チャットボット";
 const description =
-  "ChatGPT・Claude・Cursor の活用支援に加え、社内マニュアルや会社情報に特化した社内用チャットボットの制作にも対応。最新のAI情報を踏まえ、業務効率化と導入を伴走します。";
+  "生成AIの活用支援に加え、社内マニュアルや会社情報に特化した社内用チャットボットの制作にも対応。最新のAI情報を踏まえ、業務効率化と導入を伴走します。";
 
 export const metadata: Metadata = {
   title: "AIコンサルティング",
   description,
   keywords: [
     "AIコンサルティング",
-    "ChatGPT 導入",
-    "Claude 導入",
-    "Cursor 活用",
+    "生成AI 活用",
+    "AI導入支援",
     "社内チャットボット",
     "社内マニュアル AI",
-    "Dify",
     "生成AI コンサル",
-    "AI導入支援",
     LEGAL_NAME,
   ],
   alternates: { canonical: "/ai-consulting" },
@@ -36,31 +33,31 @@ export const metadata: Metadata = {
 
 const tools = [
   {
-    name: "ChatGPT / Claude",
-    body: "文章作成、要約、問い合わせ下書きなど。汎用AIをそのまま業務に取り入れるところから支援します。どちらが合うかも一緒に整理できます。",
+    name: "汎用AIの活用",
+    body: "文章作成、要約、問い合わせ下書きなど。生成AIをそのまま業務に取り入れるところから支援します。御社に合う使い方も一緒に整理できます。",
   },
   {
     name: "社内用チャットボット",
     body: "社内マニュアル、就業ルール、商品知識、よくある問い合わせなど、会社のことに特化したチャットボットを作れます。社員や現場がすぐ答えを引ける仕組みです。",
   },
   {
-    name: "Cursor",
+    name: "開発向けAI",
     body: "Web制作やシステム開発の現場向け。実装・修正のスピードを上げたいときに有効です。",
   },
   {
-    name: "Dify など構築基盤",
-    body: "社内ボットやナレッジ検索を整えるときの選択肢のひとつ。目的に合わせて、その時点で最適な仕組みを選びます。",
+    name: "社内AIの構築基盤",
+    body: "社内ボットやナレッジ検索を整えるときの選択肢。目的に合わせて、その時点で最適な仕組みを選びます。",
   },
 ];
 
 const examples = [
   {
     title: "現状の整理・診断",
-    body: "業務フロー、手作業、社内に散らばったマニュアルを洗い出し、ChatGPT / Claude の活用や社内ボット化が効くポイントを整理します。",
+    body: "業務フロー、手作業、社内に散らばったマニュアルを洗い出し、生成AIの活用や社内ボット化が効くポイントを整理します。",
   },
   {
     title: "汎用AIの使い方支援",
-    body: "ChatGPT や Claude を、誰でも同じ品質で使えるように型づくり。プロンプトや運用のコツまで落とし込みます。",
+    body: "生成AIを、誰でも同じ品質で使えるように型づくり。プロンプトや運用のコツまで落とし込みます。",
   },
   {
     title: "会社特化の社内ボット",
@@ -83,7 +80,7 @@ const steps = [
 const faqs = [
   {
     id: "ai-consult-undecided",
-    question: "ChatGPT と Claude、どれを使えばいいか決まっていなくても相談できますか？",
+    question: "どのAIを使えばいいか決まっていなくても相談できますか？",
     answer:
       "はい。業務内容を伺ったうえで選びます。汎用AIの使い方支援だけでなく、社内マニュアル特化のチャットボットが向いている場合もあります。",
     moreHref: "/contact",
@@ -92,15 +89,15 @@ const faqs = [
     id: "ai-consult-internal-bot",
     question: "社内用のチャットボットも作れますか？",
     answer:
-      "はい。社内マニュアル、就業ルール、商品・サービス知識など、会社の情報に特化した社内用チャットボットを制作できます。Dify などの基盤を使う場合もありますが、目的に合わせて最適な形を選びます。",
+      "はい。社内マニュアル、就業ルール、商品・サービス知識など、会社の情報に特化した社内用チャットボットを制作できます。目的に合わせて最適な形を選びます。",
     singleLineOnMobile: true,
     moreHref: "/contact",
   },
   {
     id: "ai-consult-tools",
-    question: "対応しているAIの例を教えてください。",
+    question: "どんなAIの支援に対応していますか？",
     answer:
-      "ChatGPT、Claude、Cursor、社内特化チャットボット（Dify 等での構築含む）が中心です。画像生成や使わない自動化ツールを無理に勧めることはしません。常にその時点で実用的な手段を選びます。",
+      "生成AIの業務活用、社内特化チャットボット、開発現場向けのAI活用が中心です。画像生成や使わない自動化ツールを無理に勧めることはしません。常にその時点で実用的な手段を選びます。",
     singleLineOnMobile: true,
     moreHref: "/contact",
   },
@@ -133,8 +130,8 @@ function JsonLd() {
         "@id": `${url}#service`,
         name: "AIコンサルティング",
         alternateName: [
-          "ChatGPT導入支援",
-          "Claude導入支援",
+          "生成AI導入支援",
+          "AI活用支援",
           "社内チャットボット制作",
           "社内マニュアルAI",
           "生成AIコンサルティング",
@@ -153,13 +150,10 @@ function JsonLd() {
           audienceType: "中小事業者・観光事業者・地域団体",
         },
         knowsAbout: [
-          "ChatGPT",
-          "Claude",
-          "Cursor",
-          "Dify",
+          "生成AI",
+          "AI導入支援",
           "社内チャットボット",
           "社内マニュアル",
-          "生成AI",
           "業務効率化",
         ],
       },
@@ -227,8 +221,7 @@ export default function AiConsultingPage() {
               </span>
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
-              {LEGAL_NAME}は、ChatGPT・Claude
-              などの活用支援に加え、社内マニュアルや会社知識に特化した社内用チャットボットの制作にも対応します。御社の業務で使える形まで一緒に落とし込みます。
+              {LEGAL_NAME}は、生成AIの活用支援に加え、社内マニュアルや会社知識に特化した社内用チャットボットの制作にも対応します。御社の業務で使える形まで一緒に落とし込みます。
             </p>
           </div>
         </section>
@@ -240,7 +233,7 @@ export default function AiConsultingPage() {
               支援の中心
             </h2>
             <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">
-              ChatGPT・Claude・社内特化ボットなど、実際の業務に落とせる支援に集中します。
+              汎用AI・社内特化ボットなど、実際の業務に落とせる支援に集中します。
             </p>
             <div className="mt-10 grid gap-5 md:grid-cols-2">
               {tools.map((item) => (
@@ -310,7 +303,7 @@ export default function AiConsultingPage() {
           title="まずは、気軽にお話ししませんか？"
           description={
             <>
-              ChatGPT を試しただけでも、社内マニュアルをボット化したいでも大丈夫です。
+              AIを試しただけでも、社内マニュアルをボット化したいでも大丈夫です。
               <br />
               現状を伺い、進め方を一緒に整理します。
             </>
