@@ -57,7 +57,7 @@ export const SERVICES = [
     name: "システム開発",
     enName: "System Development",
     description:
-      "在庫管理・予約・問い合わせ管理など、日々の業務負担を減らすWebアプリや業務システムを開発します。",
+      "在庫管理・予約・問い合わせ管理など、日々の業務負担を減らすWebアプリや業務システムを開発。生成AIの活用相談とも組み合わせられます。",
     url: absoluteUrl("/system-development"),
   },
   {
@@ -73,7 +73,7 @@ export const SERVICES = [
     name: "ホームページ制作",
     enName: "Web Production",
     description:
-      "お店や会社の「顔」となるコーポレートサイト・集客サイトを、見やすさと更新しやすさを重視して制作します。",
+      "お店や会社の「顔」となるコーポレートサイト・集客サイトを、見やすさ・更新しやすさ・生成AIにも伝わる設計で制作します。",
     url: absoluteUrl("/web-production"),
   },
   {
@@ -81,7 +81,7 @@ export const SERVICES = [
     name: "デザイン",
     enName: "Creative Design",
     description:
-      "ロゴ、名刺、パンフレットなど、ブランドの想いを伝えるビジュアルを制作。印刷の手配から納品まで一気通貫で対応します。",
+      "ロゴ、名刺、パンフレットなど、ブランドの想いを伝えるビジュアルを制作。AI・Webまわりの相談ともあわせて一気通貫で対応します。",
     url: absoluteUrl("/design"),
   },
   {
@@ -97,7 +97,7 @@ export const SERVICES = [
     name: "AIコンサルティング",
     enName: "AI Consulting",
     description:
-      "生成AIの活用支援に加え、社内マニュアルや会社知識に特化した社内用チャットボット制作にも対応。最新の実用情報を踏まえて導入を伴走します。",
+      "奄美大島でAIのことなら。生成AIの活用支援に加え、社内特化チャットボット制作にも対応。導入を伴走します。",
     url: absoluteUrl("/ai-consulting"),
   },
 ] as const;
