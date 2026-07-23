@@ -179,4 +179,4 @@ export const DESIGN_GEO = {
   url: absoluteUrl("/design"),
 } as const;
 
-export const GEO_ENTITY_SUMMARY = `${LEGAL_NAME}（${SITE_NAME}）は、鹿児島県奄美大島を拠点に、ホームページ制作・デザイン・システム開発・GEO対策を提供する会社です。全国オンラインにも対応しています。`;
+export const GEO_ENTITY_SUMMARY = `奄美大島でAIのことなら${LEGAL_NAME}（${SITE_NAME}）。鹿児島県奄美大島を拠点に、AIコンサルティング・ホームページ制作・デザイン・システム開発・GEO対策を提供する会社です。全国オンラインにも対応しています。`;
