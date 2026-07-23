@@ -106,13 +106,45 @@ export default function ContactPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="text-center mb-16"
+                    className="mb-12 text-center md:mb-14"
                 >
-                    <h1 className="text-3xl md:text-5xl font-serif text-slate-800 mb-6">お問い合わせ</h1>
-                    <p className="text-slate-500 leading-loose">
-                        お仕事のご相談、ご質問など、<br className="hidden md:block" />
-                        お気軽にお問い合わせください。
+                    <p className="mb-3 font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
+                      Contact
                     </p>
+                    <h1 className="mb-6 font-serif text-3xl text-slate-800 md:text-5xl">
+                      お問い合わせ
+                    </h1>
+                    <p className="mx-auto max-w-2xl font-sans leading-loose text-slate-600">
+                      合同会社AMALINK（AMALINK）は、鹿児島県奄美大島を拠点に、
+                      AI活用支援・社内チャットボット・ホームページ制作・システム開発・デザイン・GEO対策を行うデジタル支援会社です。
+                      島内外・全国からのオンライン相談も受け付けています。
+                    </p>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.1 }}
+                    className="mb-10 grid gap-4 rounded-[1.75rem] border border-slate-100 bg-white/90 p-6 text-left shadow-sm md:mb-12 md:grid-cols-3 md:p-8"
+                >
+                    <div>
+                      <h2 className="font-serif text-lg font-bold text-brand-gradient">ご相談できること</h2>
+                      <p className="mt-3 font-sans text-sm leading-relaxed text-slate-600">
+                        生成AIの活用、社内マニュアル向けチャットボット、ホームページ制作、業務システム、ロゴ・印刷物、GEO・SEO対策まで。内容が固まっていなくても大丈夫です。
+                      </p>
+                    </div>
+                    <div>
+                      <h2 className="font-serif text-lg font-bold text-brand-gradient">対応エリア</h2>
+                      <p className="mt-3 font-sans text-sm leading-relaxed text-slate-600">
+                        拠点は鹿児島県大島郡宇検村（奄美大島）。奄美群島・鹿児島県内はもちろん、全国からのオンライン相談に対応しています。
+                      </p>
+                    </div>
+                    <div>
+                      <h2 className="font-serif text-lg font-bold text-brand-gradient">返信の目安</h2>
+                      <p className="mt-3 font-sans text-sm leading-relaxed text-slate-600">
+                        通常2営業日以内を目安にご返信します。お急ぎの場合は、その旨を内容欄に書いていただけると助かります。
+                      </p>
+                    </div>
                 </motion.div>
 
                 <motion.div
@@ -121,12 +153,18 @@ export default function ContactPage() {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="rounded-[2rem] border border-slate-100 bg-white p-8 shadow-sm md:p-12"
                 >
+                    <h2 className="mb-2 text-center font-serif text-2xl font-bold text-brand-gradient md:text-left">
+                      フォームから送る
+                    </h2>
+                    <p className="mb-8 text-center font-sans text-sm leading-relaxed text-slate-500 md:text-left">
+                      お仕事のご相談、費用感の確認、サービスについてのご質問など、お気軽にどうぞ。
+                    </p>
                     {status === "success" ? (
                         <div className="text-center py-12">
                             <h3 className="text-2xl font-serif text-slate-800 mb-4">送信完了</h3>
                             <p className="text-slate-500 leading-loose">
                                 お問い合わせありがとうございます。<br />
-                                内容を確認次第、担当者よりご連絡させていただきます。<br />
+                                合同会社AMALINKの担当より、内容確認のうえご連絡します。<br />
                                 しばらくお待ちくださいませ。
                             </p>
                             <ChunkyNextLink href="/" theme="primary" className="mt-10 inline-flex">
@@ -141,7 +179,15 @@ export default function ContactPage() {
                                     お問い合わせ項目 <span className="text-amami-blue text-xs ml-1">必須</span>
                                 </label>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                    {["システム開発について", "チャットボットについて", "ホームページ制作について", "デザインについて", "GEO・SEO対策について", "その他・ご相談"].map((cat) => (
+                                    {[
+                                      "AIコンサルティングについて",
+                                      "ホームページ制作について",
+                                      "システム開発について",
+                                      "デザインについて",
+                                      "GEO・SEO対策について",
+                                      "チャットボットについて",
+                                      "その他・ご相談",
+                                    ].map((cat) => (
                                         <label key={cat} className="relative cursor-pointer group">
                                             <input type="radio" name="category" value={cat} className="peer sr-only" required />
                                             <div className="px-4 py-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 text-sm transition-all peer-checked:bg-amami-blue-light peer-checked:border-amami-blue peer-checked:text-amami-blue group-hover:bg-white">
