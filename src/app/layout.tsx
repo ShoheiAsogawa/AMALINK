@@ -7,19 +7,21 @@ import { absoluteUrl, DEFAULT_DESCRIPTION, DEFAULT_TITLE, LEGAL_NAME, SITE_NAME 
 import "./globals.css";
 
 const zenMincho = Zen_Old_Mincho({
-  weight: ["400", "500", "700"],
+  weight: ["400", "700"],
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
   preload: false,
+  adjustFontFallback: true,
 });
 
 const zenGothic = Zen_Kaku_Gothic_New({
-  weight: ["400", "500", "700"],
+  weight: ["400", "700"],
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
   preload: false,
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {

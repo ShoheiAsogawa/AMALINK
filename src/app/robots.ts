@@ -15,16 +15,21 @@ const AI_USER_AGENTS = [
   "Applebot",
 ] as const;
 
+/** ページ以外の大量アセットをクロール対象から外す（GSCの「クロール済み-未登録」抑制） */
+const DISALLOW_ASSETS = ["/_next/static/media/", "/_next/image"] as const;
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
+        disallow: [...DISALLOW_ASSETS],
       },
       ...AI_USER_AGENTS.map((userAgent) => ({
         userAgent,
         allow: "/",
+        disallow: [...DISALLOW_ASSETS],
       })),
     ],
     sitemap: absoluteUrl("/sitemap.xml"),
