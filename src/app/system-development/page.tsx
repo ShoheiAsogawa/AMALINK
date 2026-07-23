@@ -6,9 +6,9 @@ import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { Contact } from "@/components/sections/Contact";
 import { absoluteUrl, LEGAL_NAME } from "@/lib/seo";
 
-const title = "奄美大島のシステム開発・業務効率化";
+const title = "システム開発・業務効率化｜奄美大島のAI伴走も";
 const description =
-  "奄美大島・奄美群島の事業者向けに、予約管理・在庫管理・問い合わせ管理などのWebアプリ、業務システムを開発します。Excelや紙での運用整理から相談できます。";
+  "奄美大島・奄美群島の事業者向けに、予約・在庫・問い合わせ管理などの業務システムを開発。生成AIの活用相談とも組み合わせて、日々の手間を減らす仕組みづくりを伴走します。";
 
 export const metadata: Metadata = {
   title,

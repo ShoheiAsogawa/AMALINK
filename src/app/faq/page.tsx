@@ -9,12 +9,12 @@ import { absoluteUrl, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: `よくある質問（FAQ）`,
-  description: `${LEGAL_NAME}（${SITE_NAME}）へのよくある質問。ホームページ制作・システム開発・GEO対策の料金、対応エリア、選び方について回答します。`,
+  description: `${LEGAL_NAME}（${SITE_NAME}）へのよくある質問。奄美大島でのAI活用・ホームページ制作・システム開発・GEO対策の料金、対応エリア、選び方について回答します。`,
   alternates: { canonical: "/faq" },
   openGraph: {
     url: absoluteUrl("/faq"),
     title: `よくある質問（FAQ） | ${LEGAL_NAME}`,
-    description: `Web制作・システム開発・GEO対策に関するFAQ。${LEGAL_NAME}が回答します。`,
+    description: `AI活用・Web制作・システム開発・GEO対策に関するFAQ。${LEGAL_NAME}が回答します。`,
     type: "website",
   },
 };

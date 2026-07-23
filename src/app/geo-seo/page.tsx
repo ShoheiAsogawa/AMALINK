@@ -6,9 +6,9 @@ import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { Contact } from "@/components/sections/Contact";
 import { absoluteUrl, LEGAL_NAME } from "@/lib/seo";
 
-const title = "GEO対策・SEO対策";
+const title = "GEO対策・SEO対策｜奄美大島でAIにも伝わるWebへ";
 const description =
-  "検索エンジン向けのSEOと、AI検索・生成AI向けのGEOをあわせて支援します。事業内容が正しく伝わり、引用・発見されやすいWebページの設計と改善をご提案します。";
+  "奄美大島でAIにも正しく伝わるWebへ。検索エンジン向けのSEOと、生成AI向けのGEOをあわせて支援します。事業内容が引用・発見されやすいページ設計と改善をご提案します。";
 
 export const metadata: Metadata = {
   title,
