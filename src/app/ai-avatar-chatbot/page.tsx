@@ -6,9 +6,9 @@ import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { Contact } from "@/components/sections/Contact";
 import { absoluteUrl, LEGAL_NAME } from "@/lib/seo";
 
-const title = "AIアバターチャットボット制作";
+const title = "AIアバターチャットボット制作｜奄美大島のAI支援";
 const description =
-  "自社サイト向けのAIアバターチャットボットを制作・組み込みします。答える範囲の設計、アバター演出、問い合わせ導線まで、用途に合わせてご提案します。";
+  "奄美大島でAIのことならAMALINKへ。自社サイト向けのAIアバターチャットボットを制作・組み込み。答える範囲の設計、アバター演出、問い合わせ導線まで用途に合わせてご提案します。";
 
 export const metadata: Metadata = {
   title,

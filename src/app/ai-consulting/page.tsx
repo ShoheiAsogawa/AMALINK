@@ -6,9 +6,9 @@ import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { Contact } from "@/components/sections/Contact";
 import { absoluteUrl, LEGAL_NAME } from "@/lib/seo";
 
-const title = "AIコンサルティング｜生成AI活用・社内チャットボット";
+const title = "AIコンサルティング｜奄美大島でAIのことなら";
 const description =
-  "生成AIの活用支援に加え、社内マニュアルや会社情報に特化した社内用チャットボットの制作にも対応。最新のAI情報を踏まえ、業務効率化と導入を伴走します。";
+  "奄美大島でAIのことならAMALINKへ。生成AIの活用支援に加え、社内マニュアルや会社情報に特化した社内用チャットボットの制作にも対応。最新のAI情報を踏まえ、業務効率化と導入を伴走します。";
 
 export const metadata: Metadata = {
   title: "AIコンサルティング",

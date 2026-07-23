@@ -3,26 +3,38 @@ import { getNewsList } from "@/lib/microcms";
 import { absoluteUrl } from "@/lib/seo";
 
 const SERVICE_PATHS = [
+  "/ai-consulting",
   "/system-development",
   "/web-production",
   "/design",
   "/geo-seo",
   "/ai-avatar-chatbot",
-  "/ai-consulting",
 ] as const;
 
+const HIGH_PRIORITY = new Set<string>([
+  "",
+  "/ai-consulting",
+  "/web-production",
+  "/design",
+  "/geo-seo",
+]);
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const now = new Date();
   const staticPaths = ["", ...SERVICE_PATHS, "/faq", "/news", "/contact"] as const;
 
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => {
-    const isPriorityTarget = path === "/web-production" || path === "/design";
+    const isHome = path === "";
+    const isHigh = HIGH_PRIORITY.has(path);
     return {
       url: absoluteUrl(path || "/"),
-      changeFrequency: path === "" || isPriorityTarget ? "weekly" : "monthly",
-      priority:
-        path === ""
-          ? 1
-          : isPriorityTarget
+      lastModified: now,
+      changeFrequency: isHome || isHigh ? "weekly" : "monthly",
+      priority: isHome
+        ? 1
+        : path === "/ai-consulting"
+          ? 0.98
+          : isHigh
             ? 0.95
             : (SERVICE_PATHS as readonly string[]).includes(path)
               ? 0.9
