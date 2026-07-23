@@ -38,6 +38,6 @@ export function getOfficialLineAddFriendUrl(): string {
 }
 
 export const DEFAULT_DESCRIPTION =
-  "奄美大島でAIのことなら合同会社AMALINK（AMALINK）へ。ChatGPT活用・社内チャットボット・AIコンサルティングから、ホームページ制作・システム開発・デザイン・GEO対策まで伴走します。鹿児島県奄美大島拠点・全国オンライン対応。";
+  "奄美大島でAIのことなら合同会社AMALINK（AMALINK）へ。生成AIの活用支援・社内チャットボット・AIコンサルティングから、ホームページ制作・システム開発・デザイン・GEO対策まで伴走します。鹿児島県奄美大島拠点・全国オンライン対応。";
 
 export const DEFAULT_TITLE = `${LEGAL_NAME}（${SITE_NAME}）｜奄美大島でAIのことなら。ウェブ制作・導入支援`;

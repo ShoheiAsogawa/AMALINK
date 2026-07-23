@@ -97,7 +97,7 @@ export const SERVICES = [
     name: "AIコンサルティング",
     enName: "AI Consulting",
     description:
-      "ChatGPT・Claude の活用支援に加え、社内マニュアルや会社知識に特化した社内用チャットボット制作にも対応。最新の実用情報を踏まえて導入を伴走します。",
+      "生成AIの活用支援に加え、社内マニュアルや会社知識に特化した社内用チャットボット制作にも対応。最新の実用情報を踏まえて導入を伴走します。",
     url: absoluteUrl("/ai-consulting"),
   },
 ] as const;
@@ -193,7 +193,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: "services",
     question: "GEO対策とは何ですか？",
     answer:
-      "GEO（Generative Engine Optimization）とは、ChatGPTなどのAIが回答を作る際に、あなたの会社やサービスが正しく紹介・引用されやすくするための対策です。従来の検索順位だけでなく、「AIの答えの中に名前が出るか」も重要になってきています。",
+      "GEO（Generative Engine Optimization）とは、AIが回答を作る際に、あなたの会社やサービスが正しく紹介・引用されやすくするための対策です。従来の検索順位だけでなく、「AIの答えの中に名前が出るか」も重要になってきています。",
     moreHref: "/geo-seo",
   },
   {
@@ -225,7 +225,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: "services",
     question: "AIコンサルティングでは何をしてくれますか？",
     answer:
-      "ChatGPT・Claude の活用支援に加え、社内マニュアルや会社情報に特化した社内用チャットボットの制作にも対応します。Dify などの基盤を使う場合もあります。御社の業務で使える形まで一緒に落とし込みます。",
+      "生成AIの活用支援に加え、社内マニュアルや会社情報に特化した社内用チャットボットの制作にも対応します。御社の業務で使える形まで一緒に落とし込みます。",
     moreHref: "/ai-consulting",
   },
   {

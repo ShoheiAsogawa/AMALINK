@@ -82,7 +82,7 @@ const services = [
     title: "AIコンサルティング",
     enTitle: "AI Consulting",
     description:
-      "ChatGPT・Claude の活用から、\n社内マニュアル特化の社内用チャットボット制作まで。\n業務で使える形に落とし込み、導入後も伴走します。",
+      "生成AIの活用から、\n社内マニュアル特化の社内用チャットボット制作まで。\n業務で使える形に落とし込み、導入後も伴走します。",
     href: "/ai-consulting",
     linkLabel: "AIコンサルティングについて詳しく見る",
     orderClass: "md:order-6",
@@ -93,24 +93,24 @@ type Service = (typeof services)[number];
 
 function AiToolKeywordRain({ active }: { active: boolean }) {
   const keywords = [
-    "ChatGPT",
-    "Claude",
-    "Cursor",
+    "生成AI",
     "社内ボット",
     "社内マニュアル",
-    "Dify",
     "ナレッジ",
-    "ChatGPT",
-    "Claude",
+    "業務効率化",
     "社内FAQ",
-    "Cursor",
-    "Dify",
     "就業ルール",
     "商品知識",
-    "ChatGPT",
-    "Claude",
+    "導入支援",
+    "プロンプト",
     "社内ボット",
-    "Cursor",
+    "生成AI",
+    "伴走支援",
+    "AI活用",
+    "社内マニュアル",
+    "ナレッジ",
+    "業務効率化",
+    "社内FAQ",
   ] as const;
 
   const columnCount = 3;
@@ -162,7 +162,6 @@ function AiToolKeywordRain({ active }: { active: boolean }) {
 
 function GeoKeywordRain({ active }: { active: boolean }) {
   const keywords = [
-    "ChatGPT",
     "GEO",
     "SEO",
     "AI検索",
@@ -173,13 +172,14 @@ function GeoKeywordRain({ active }: { active: boolean }) {
     "構造化データ",
     "llms.txt",
     "JSON-LD",
-    "Perplexity",
-    "Gemini",
-    "Claude",
     "AI Overview",
     "検索順位",
     "メタ情報",
     "内部リンク",
+    "AI回答",
+    "発見性",
+    "情報設計",
+    "引用されやすさ",
   ] as const;
 
   const columnCount = 3;
