@@ -108,6 +108,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className={`${zenMincho.variable} ${zenGothic.variable}`}>
+      <head>
+        {/* Google tag (gtag.js) — 全ページ共通・ここ1箇所のみ */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XHQG5H0D3" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-4XHQG5H0D3');
+            `,
+          }}
+        />
+      </head>
       <body>
         <RootJsonLd />
         {children}
