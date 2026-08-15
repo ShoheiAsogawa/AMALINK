@@ -183,25 +183,20 @@ export function Hero() {
             </span>
           </h1>
 
-          <div className="mx-auto w-full max-w-xs text-center md:hidden">
-            <p className="text-lg leading-loose text-slate-600 font-sans">
-              波音のように穏やかに、
-              <br />
-              けれど着実に。
-              <br />
-              <br />
-              奄美大島でAIのことなら、
-              <br />
-              AMALINKへ。
-              <br />
-              生成AIの活用からWeb制作まで、
-              <br />
-              島から全国へ伴走します。
+          <div className="mx-auto w-full max-w-[21rem] text-center md:hidden">
+            <p className="text-pretty text-base leading-loose text-slate-600 font-sans [word-break:keep-all] sm:text-lg">
+              <span className="block">波音のように穏やかに、</span>
+              <span className="block">けれど着実に。</span>
+              <span className="mt-6 block">奄美大島でAIのことなら、</span>
+              <span className="block">AMALINKへ。</span>
+              <span className="block">生成AIの活用から</span>
+              <span className="block">Web制作まで、</span>
+              <span className="block">島から全国へ伴走します。</span>
             </p>
           </div>
 
           <div className="hidden md:block max-w-md">
-            <p className="text-lg leading-loose text-slate-600 md:text-xl font-sans">
+            <p className="text-pretty text-lg leading-loose text-slate-600 md:text-xl font-sans">
               波音のように穏やかに、
               <br />
               けれど着実に。
