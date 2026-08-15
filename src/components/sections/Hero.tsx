@@ -196,7 +196,7 @@ export function Hero() {
           </div>
 
           <div className="hidden md:block max-w-md">
-            <p className="text-lg leading-loose text-slate-600 md:text-xl font-sans">
+            <p className="text-pretty text-lg leading-loose text-slate-600 md:text-xl font-sans">
               波音のように穏やかに、
               <br />
               けれど着実に。
