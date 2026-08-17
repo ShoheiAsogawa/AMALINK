@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getNewsList, getNewsEntry } from "@/lib/microcms";
 import { NewsArticleView } from "@/components/pages/NewsArticleView";
 import { localeMetadata } from "@/lib/i18n-meta";
+import { withLocale } from "@/lib/i18n";
 import { absoluteUrl, SITE_NAME, stripHtmlToDescription } from "@/lib/seo";
 
 export const revalidate = 60;
@@ -25,10 +26,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const published = news.publishedAt ?? news.createdAt;
     const modified = news.updatedAt ?? published;
     return {
-      ...localeMetadata("ja", path, news.title, description),
+      ...localeMetadata("en", path, news.title, description),
       openGraph: {
         type: "article",
-        url: absoluteUrl(path),
+        url: absoluteUrl(withLocale(path, "en")),
         title: news.title,
         description,
         publishedTime: published,
@@ -37,11 +38,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       },
     } satisfies Metadata;
   } catch {
-    return { title: "お知らせ" } satisfies Metadata;
+    return { title: "News" } satisfies Metadata;
   }
 }
 
-export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function EnglishNewsDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  return <NewsArticleView locale="ja" slug={slug} />;
+  return <NewsArticleView locale="en" slug={slug} />;
 }

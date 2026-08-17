@@ -9,6 +9,9 @@ import { WaveBackground } from "@/components/ui/WaveBackground";
 import { getOfficialLineAddFriendUrl } from "@/lib/seo";
 import { OfficialLineIcon } from "@/components/ui/OfficialLineIcon";
 import { ChunkyAnchor, ChunkyNextLink } from "@/components/ui/ChunkyButton";
+import { useLocale } from "@/components/i18n/useLocale";
+import { withLocale } from "@/lib/i18n";
+import { getMessages } from "@/lib/messages";
 
 type ContactProps = {
   id?: string;
@@ -18,21 +21,24 @@ type ContactProps = {
 
 export function Contact({
   id = "contact",
-  title = (
-    <>
-      まずは、<br className="md:hidden" />
-      気軽にお話ししませんか？
-    </>
-  ),
-  description = (
-    <>
-      「これって相談をしていいのかな？」
-      <br />
-      そんな気持ちのままで大丈夫。お気軽にどうぞ。
-    </>
-  ),
+  title,
+  description,
 }: ContactProps) {
+  const locale = useLocale();
+  const t = getMessages(locale).contact;
   const lineUrl = getOfficialLineAddFriendUrl();
+  const resolvedTitle = title ?? (
+    <>
+      {t.title}
+    </>
+  );
+  const resolvedDescription = description ?? (
+    <>
+      {t.description[0]}
+      <br />
+      {t.description[1]}
+    </>
+  );
 
   return (
     <Section
@@ -51,11 +57,11 @@ export function Contact({
           <SectionEyebrow label="Contact Us" color="green" />
 
           <h2 className="mb-5 max-w-3xl text-center font-serif text-[1.65rem] leading-snug text-slate-800 [letter-spacing:0] md:mb-7 md:text-4xl md:leading-tight lg:text-[2.75rem]">
-            {title}
+            {resolvedTitle}
           </h2>
 
           <p className="mb-9 max-w-xl text-center font-sans text-sm leading-relaxed text-slate-500 md:mb-11 md:text-base md:leading-loose">
-            {description}
+            {resolvedDescription}
           </p>
 
           <div className="mx-auto flex w-full max-w-[15rem] flex-col items-stretch justify-center gap-3 sm:max-w-[32rem] sm:flex-row sm:gap-5">
@@ -71,7 +77,7 @@ export function Contact({
                   <OfficialLineIcon className="relative size-[1em]" />
                 </span>
                 <span className="flex min-h-[1em] min-w-0 items-center justify-center whitespace-nowrap text-center leading-none">
-                  公式LINE
+                  {t.line}
                 </span>
                 <ArrowRight
                   className="size-[0.85em] shrink-0 translate-y-[0.11em] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-[0.11em]"
@@ -81,7 +87,7 @@ export function Contact({
             </ChunkyAnchor>
 
             <ChunkyNextLink
-              href="/contact"
+              href={withLocale("/contact", locale)}
               theme="neu"
               className="group flex w-full min-w-0 flex-1 text-[0.95rem] md:text-base"
             >
@@ -90,7 +96,7 @@ export function Contact({
                   <Mail className="size-[1em] opacity-90" strokeWidth={2} aria-hidden />
                 </span>
                 <span className="flex min-h-[1em] min-w-0 items-center justify-center whitespace-nowrap text-center leading-none">
-                  お問い合わせ
+                  {t.form}
                 </span>
                 <ArrowRight
                   className="size-[0.85em] shrink-0 translate-y-[0.11em] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-[0.11em]"
@@ -101,7 +107,7 @@ export function Contact({
           </div>
 
           <p className="mt-8 max-w-md text-center font-sans text-[11px] leading-relaxed text-slate-400 md:text-sm">
-            お問い合わせには、通常2営業日以内に返信いたします。
+            {t.replyNote}
           </p>
         </motion.div>
       </div>

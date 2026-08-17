@@ -9,26 +9,18 @@ import { Contact } from "@/components/sections/Contact";
 import { MarqueeSpacer } from "@/components/ui/MarqueeSpacer";
 import { getNewsList } from "@/lib/microcms";
 import { localeMetadata } from "@/lib/i18n-meta";
-import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from "@/lib/seo";
+import { LEGAL_NAME, SITE_NAME } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  ...localeMetadata("ja", "/", DEFAULT_TITLE, DEFAULT_DESCRIPTION),
-  title: {
-    absolute: DEFAULT_TITLE,
-  },
-  keywords: [
-    "合同会社AMALINK",
-    "AMALINK",
-    "奄美大島",
-    "ホームページ制作",
-    "デザイン",
-    "GEO対策",
-  ],
-};
+export const metadata: Metadata = localeMetadata(
+  "en",
+  "/",
+  `${LEGAL_NAME} (${SITE_NAME}) | AI, web, and design from Amami Oshima`,
+  "Godo Kaisha AMALINK is a digital creative team on Amami Oshima. AI consulting, websites, systems, design, and GEO — online nationwide.",
+);
 
 export const revalidate = 60;
 
-export default async function Home() {
+export default async function EnglishHome() {
   let news: Awaited<ReturnType<typeof getNewsList>>["contents"] = [];
   try {
     const res = await getNewsList({ limit: 5 });

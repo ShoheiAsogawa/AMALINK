@@ -6,10 +6,15 @@ import { WaveBackground } from "@/components/ui/WaveBackground";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ChunkyButton, ChunkyNextLink } from "@/components/ui/ChunkyButton";
+import { useLocale } from "@/components/i18n/useLocale";
+import { withLocale } from "@/lib/i18n";
+import { getMessages } from "@/lib/messages";
 
 const NOTIFY_EMAIL = "uken.shohei@gmail.com";
 
 export default function ContactPage() {
+  const locale = useLocale();
+  const t = getMessages(locale).contactPage;
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const web3formsKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
   const contactEndpoint = process.env.NEXT_PUBLIC_CONTACT_FORM_ENDPOINT;
@@ -41,7 +46,7 @@ export default function ContactPage() {
           },
           body: JSON.stringify({
             access_key: web3formsKey,
-            subject: `【AMALINK】お問い合わせ (${category})`,
+            subject: t.subject(category),
             name,
             email,
             message: [
@@ -112,12 +117,12 @@ export default function ContactPage() {
                       Contact
                     </p>
                     <h1 className="mb-4 font-serif text-3xl text-slate-800 md:text-5xl">
-                      お問い合わせ
+                      {t.heading}
                     </h1>
                     <p className="mx-auto max-w-xl font-sans leading-loose text-slate-600">
-                      内容が固まっていなくても大丈夫です。
+                      {t.lead1}
                       <br />
-                      通常2営業日以内にご返信します。
+                      {t.lead2}
                     </p>
                 </motion.div>
 
@@ -129,14 +134,14 @@ export default function ContactPage() {
                 >
                     {status === "success" ? (
                         <div className="text-center py-12">
-                            <h3 className="text-2xl font-serif text-slate-800 mb-4">送信完了</h3>
+                            <h3 className="text-2xl font-serif text-slate-800 mb-4">{t.successTitle}</h3>
                             <p className="text-slate-500 leading-loose">
-                                お問い合わせありがとうございます。<br />
-                                合同会社AMALINKの担当より、内容確認のうえご連絡します。<br />
-                                しばらくお待ちくださいませ。
+                                {t.successBody[0]}<br />
+                                {t.successBody[1]}<br />
+                                {t.successBody[2]}
                             </p>
-                            <ChunkyNextLink href="/" theme="primary" className="mt-10 inline-flex">
-                                トップページへ戻る
+                            <ChunkyNextLink href={withLocale("/", locale)} theme="primary" className="mt-10 inline-flex">
+                                {t.backHome}
                             </ChunkyNextLink>
                         </div>
                     ) : (
@@ -144,17 +149,10 @@ export default function ContactPage() {
                             {/* お問い合わせ項目 (Category) */}
                             <div>
                                 <label htmlFor="category" className="block text-sm font-bold text-slate-700 mb-3">
-                                    お問い合わせ項目 <span className="text-amami-blue text-xs ml-1">必須</span>
+                                    {t.category} <span className="text-amami-blue text-xs ml-1">{t.required}</span>
                                 </label>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                    {[
-                                      "AIコンサルティングについて",
-                                      "ホームページ制作について",
-                                      "システム開発について",
-                                      "デザインについて",
-                                      "GEO・SEO対策について",
-                                      "その他・ご相談",
-                                    ].map((cat) => (
+                                    {t.categories.map((cat) => (
                                         <label key={cat} className="relative cursor-pointer group">
                                             <input type="radio" name="category" value={cat} className="peer sr-only" required />
                                             <div className="px-4 py-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 text-sm transition-all peer-checked:bg-amami-blue-light peer-checked:border-amami-blue peer-checked:text-amami-blue group-hover:bg-white">
@@ -168,7 +166,7 @@ export default function ContactPage() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label htmlFor="name" className="block text-sm font-bold text-slate-700 mb-2">
-                                        お名前 <span className="text-amami-blue text-xs ml-1">必須</span>
+                                        {t.name} <span className="text-amami-blue text-xs ml-1">{t.required}</span>
                                     </label>
                                     <input
                                         type="text"
@@ -176,13 +174,13 @@ export default function ContactPage() {
                                         name="name"
                                         required
                                         className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-amami-blue focus:ring-2 focus:ring-amami-blue/20 outline-none transition-all placeholder:text-slate-300"
-                                        placeholder="例）奄美 太郎"
+                                        placeholder={t.namePlaceholder}
                                     />
                                 </div>
 
                                 <div>
                                     <label htmlFor="email" className="block text-sm font-bold text-slate-700 mb-2">
-                                        メールアドレス <span className="text-amami-blue text-xs ml-1">必須</span>
+                                        {t.email} <span className="text-amami-blue text-xs ml-1">{t.required}</span>
                                     </label>
                                     <input
                                         type="email"
@@ -197,14 +195,14 @@ export default function ContactPage() {
 
                             <div>
                                 <label htmlFor="message" className="block text-sm font-bold text-slate-700 mb-2">
-                                    お問い合わせ内容 <span className="text-slate-400 text-xs ml-1">任意</span>
+                                    {t.message} <span className="text-slate-400 text-xs ml-1">{t.optional}</span>
                                 </label>
                                 <textarea
                                     id="message"
                                     name="message"
                                     rows={5}
                                     className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-amami-blue focus:ring-2 focus:ring-amami-blue/20 outline-none transition-all resize-none placeholder:text-slate-300"
-                                    placeholder="「こんなシステムを作りたい」「費用感を知りたい」など、ざっくりとした内容でも大丈夫です。"
+                                    placeholder={t.messagePlaceholder}
                                 />
                             </div>
 
@@ -216,13 +214,13 @@ export default function ContactPage() {
                                     disabled={status === "submitting"}
                                     className="mx-auto w-full max-w-md md:inline-flex md:w-auto md:min-w-[280px]"
                                 >
-                                    {status === "submitting" ? "送信中..." : "上記の内容で送信する"}
+                                    {status === "submitting" ? t.submitting : t.submit}
                                 </ChunkyButton>
                             </div>
                             
                             {status === "error" && (
                                 <p className="text-red-500 text-center text-sm">
-                                    送信に失敗しました。お手数ですが、時間をおいて再度お試しください。
+                                    {t.error}
                                 </p>
                             )}
                         </form>

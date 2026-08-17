@@ -5,11 +5,12 @@ import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { motion } from "framer-motion";
 import { Sprout, Waves, Users } from "lucide-react";
 import { useState, type ReactNode } from "react";
-import Link from "next/link";
 import { WaveBackground } from "@/components/ui/WaveBackground";
-import { LEGAL_NAME } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import { usePinnedHorizontalScroll } from "@/components/ui/usePinnedHorizontalScroll";
+import { LocaleLink } from "@/components/i18n/LocaleLink";
+import { useLocale } from "@/components/i18n/useLocale";
+import { getMessages } from "@/lib/messages";
 
 type ValueCardShellProps = {
   children: ReactNode;
@@ -57,6 +58,7 @@ function SproutCard({
   entrance?: boolean;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const copy = getMessages(useLocale()).about.values[0];
 
   return (
     <ValueCardShell
@@ -108,13 +110,13 @@ function SproutCard({
       </div>
 
       <div className="relative z-10 mb-6 flex items-center justify-between">
-        <h3 className="font-serif text-xl text-slate-800">島に根ざす</h3>
+        <h3 className="font-serif text-xl text-slate-800">{copy.title}</h3>
         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-100 bg-white transition-transform duration-300 group-hover:scale-110">
           <Sprout className="h-5 w-5 text-amami-green" />
         </div>
       </div>
       <p className="relative z-10 font-sans text-base leading-loose text-slate-500 md:text-lg">
-        奄美の文化や風土を大切にしながら、デジタルの力で新しい可能性を育みます。
+        {copy.body}
       </p>
     </ValueCardShell>
   );
@@ -130,6 +132,7 @@ function RippleCard({
   entrance?: boolean;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const copy = getMessages(useLocale()).about.values[1];
 
   return (
     <ValueCardShell
@@ -165,13 +168,13 @@ function RippleCard({
       </div>
 
       <div className="relative z-10 mb-6 flex items-center justify-between">
-        <h3 className="font-serif text-xl text-slate-800">波紋を広げる</h3>
+        <h3 className="font-serif text-xl text-slate-800">{copy.title}</h3>
         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-100 bg-white transition-transform duration-300 group-hover:scale-110">
           <Waves className="h-5 w-5 text-amami-blue" />
         </div>
       </div>
       <p className="relative z-10 font-sans text-base leading-loose text-slate-500 md:text-lg">
-        小さな課題解決が、やがて大きな変化の波となり、島全体を豊かにしていきます。
+        {copy.body}
       </p>
     </ValueCardShell>
   );
@@ -187,6 +190,7 @@ function PeopleCard({
   entrance?: boolean;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const copy = getMessages(useLocale()).about.values[2];
 
   return (
     <ValueCardShell
@@ -234,13 +238,13 @@ function PeopleCard({
       </div>
 
       <div className="relative z-10 mb-6 flex items-center justify-between">
-        <h3 className="font-serif text-xl text-slate-800">人に寄り添う</h3>
+        <h3 className="font-serif text-xl text-slate-800">{copy.title}</h3>
         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-100 bg-white transition-transform duration-300 group-hover:scale-110">
           <Users className="h-5 w-5 text-sand-beige" />
         </div>
       </div>
       <p className="relative z-10 font-sans text-base leading-loose text-slate-500 md:text-lg">
-        難しい技術用語ではなく、分かりやすい言葉と温かい対応で、皆様の想いを形にします。
+        {copy.body}
       </p>
     </ValueCardShell>
   );
@@ -248,10 +252,10 @@ function PeopleCard({
 
 const CARD_ITEM_CLASS = "w-[min(80vw,22rem)] shrink-0";
 const CARD_CLASS = "h-full w-full";
-const ABOUT_CLOSING_COPY =
-  "最先端の技術も大切ですが、それ以上に「誰かの役に立つこと」を大切に。島の暮らしに、そっと寄り添うような温かいデジタル体験をお届けします。";
 
 function AboutCopy({ className }: { className?: string }) {
+  const locale = useLocale();
+  const t = getMessages(locale).about;
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -266,28 +270,43 @@ function AboutCopy({ className }: { className?: string }) {
       <SectionEyebrow label="About Us" color="blue" align="responsive" />
 
       <h2 className="mb-10 font-serif text-3xl leading-tight tracking-normal text-slate-800 md:mb-12 md:text-5xl">
-        デジタルだけど、<br />
-        <span className="text-slate-400">体温のある</span>仕事を。
+        {t.headingBefore}
+        <br />
+        {t.headingMuted ? (
+          <>
+            <span className="text-slate-400">{t.headingMuted}</span>
+            {t.headingAfter}
+          </>
+        ) : null}
       </h2>
 
       <div className="space-y-8 font-serif text-lg leading-loose text-slate-600 md:text-xl">
+        <p>{t.p1}</p>
         <p>
-          {LEGAL_NAME}（アマリンク）は、奄美大島で生まれたデジタルクリエイティブチームです。
+          {t.p2Before}
+          <span className="font-bold text-amami-blue">AMAMI</span>
+          {locale === "ja" ? (
+            <>
+              」と、世界への「
+              <span className="font-bold text-amami-green">LINK</span>
+              {t.p2After}
+            </>
+          ) : (
+            <>
+              {" "}
+              and a <span className="font-bold text-amami-green">LINK</span> to the world
+              {t.p2After}
+            </>
+          )}
         </p>
-        <p>
-          私たちの名前「AMALINK」には、故郷「
-          <span className="font-bold text-amami-blue">AMAMI</span>」と、世界への「
-          <span className="font-bold text-amami-green">LINK</span>
-          」という2つの願いが込められています。
-        </p>
-        <p>{ABOUT_CLOSING_COPY}</p>
+        <p>{t.p3}</p>
         <p className="pt-2">
-          <Link
+          <LocaleLink
             href="/about"
             className="font-sans text-sm tracking-wide text-amami-blue transition hover:text-amami-green"
           >
-            会社概要を見る
-          </Link>
+            {t.companyLink}
+          </LocaleLink>
         </p>
       </div>
     </motion.div>
@@ -300,6 +319,7 @@ function AboutCopy({ className }: { className?: string }) {
  * カード領域の縦スクロール進捗を、そのまま横方向の移動量へ変換する。
  */
 function ValuesCards({ mobileCopy }: { mobileCopy: ReactNode }) {
+  const valuesAria = getMessages(useLocale()).about.valuesAria;
   const { containerRef, layout, reduceMotion, setDotRef, stickyRef, trackRef, x } =
     usePinnedHorizontalScroll(3);
 
@@ -329,7 +349,7 @@ function ValuesCards({ mobileCopy }: { mobileCopy: ReactNode }) {
         ref={containerRef}
         className="relative -mx-4 w-[calc(100%+2rem)] min-w-0 max-w-[calc(100%+2rem)] md:hidden"
         style={{ height: layout.containerHeight }}
-        aria-label="価値観カード。縦スクロールで横に進みます"
+        aria-label={valuesAria}
       >
         <div
           ref={stickyRef}

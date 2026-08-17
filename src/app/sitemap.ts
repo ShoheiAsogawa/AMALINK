@@ -23,13 +23,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const staticPaths = ["", ...SERVICE_PATHS, "/about", "/faq", "/news", "/contact"] as const;
 
-  const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => {
+  const staticEntries: MetadataRoute.Sitemap = staticPaths.flatMap((path) => {
     const isHome = path === "";
     const isHigh = HIGH_PRIORITY.has(path);
-    return {
-      url: absoluteUrl(path || "/"),
+    const jaUrl = absoluteUrl(path || "/");
+    const enUrl = absoluteUrl(path === "" ? "/en" : `/en${path}`);
+    const changeFrequency: "weekly" | "monthly" = isHome || isHigh ? "weekly" : "monthly";
+    const entry = {
       lastModified: now,
-      changeFrequency: isHome || isHigh ? "weekly" : "monthly",
+      changeFrequency,
       priority: isHome
         ? 1
         : path === "/ai-consulting"
@@ -43,7 +45,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
                 : path === "/faq"
                 ? 0.8
                 : 0.7,
+      alternates: {
+        languages: {
+          ja: jaUrl,
+          en: enUrl,
+        },
+      },
     };
+    return [
+      { ...entry, url: jaUrl },
+      { ...entry, url: enUrl, priority: Math.max(0.4, entry.priority - 0.15) },
+    ];
   });
 
   const newsEntries: MetadataRoute.Sitemap = [];

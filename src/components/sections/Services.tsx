@@ -4,92 +4,48 @@ import { Section } from "@/components/ui/Section";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { motion } from "framer-motion";
 import { Bot, Monitor, Smartphone, PenTool, Sparkles } from "lucide-react";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { WaveBackground } from "@/components/ui/WaveBackground";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { RabbitAvatar } from "@/components/chatbot/RabbitAvatar";
 import { usePinnedHorizontalScroll } from "@/components/ui/usePinnedHorizontalScroll";
+import { useLocale } from "@/components/i18n/useLocale";
+import { withLocale } from "@/lib/i18n";
+import { getMessages, type ServiceCardCopy } from "@/lib/messages";
 
-const services = [
+const SERVICE_META = [
+  { key: "system" as const, id: "01", icon: <Monitor className="w-6 h-6" />, orderClass: "md:order-1" },
+  { key: "chatbot" as const, id: "02", icon: <Bot className="w-6 h-6" />, orderClass: "md:order-2" },
+  { key: "web" as const, id: "03", icon: <Smartphone className="w-6 h-6" />, orderClass: "md:order-3" },
+  { key: "design" as const, id: "04", icon: <PenTool className="w-6 h-6" />, orderClass: "md:order-4" },
+  { key: "geo" as const, id: "05", icon: <Sparkles className="w-6 h-6" />, orderClass: "md:order-5" },
   {
-    key: "system",
-    id: "01",
-    icon: <Monitor className="w-6 h-6" />,
-    title: "システム開発",
-    enTitle: "System Development",
-    description: "日々の業務で「困ったな」「大変だな」と感じることはありませんか？\n在庫管理や予約システムなど、面倒な作業を自動化して、\nもっと大切なことに時間を使えるようお手伝いします。",
-    href: "/system-development",
-    linkLabel: "システム開発について詳しく見る",
-    orderClass: "md:order-1",
-  },
-  {
-    key: "chatbot",
-    id: "02",
-    icon: <Bot className="w-6 h-6" />,
-    title: "AIアバターチャットボット",
-    enTitle: "AI Avatar Chatbot",
-    description:
-      "自社サイト向けのAIチャットボット制作に対応しています。\nアバター付きの案内ボットや、答える範囲を絞った設計など、\n用途に合わせて組み込みまでご相談いただけます。",
-    href: "/ai-avatar-chatbot",
-    linkLabel: "チャットボットについて詳しく見る",
-    orderClass: "md:order-2",
-  },
-  {
-    key: "web",
-    id: "03",
-    icon: <Smartphone className="w-6 h-6" />,
-    title: "ホームページ制作",
-    enTitle: "Web Production",
-    description:
-      "お店や会社の「顔」となるホームページ。\nただ綺麗なだけでなく、お客様が見やすく、\n使いやすいサイトを丁寧に作り上げます。",
-    href: "/web-production",
-    linkLabel: "ホームページ制作について詳しく見る",
-    orderClass: "md:order-3",
-  },
-  {
-    key: "design",
-    id: "04",
-    icon: <PenTool className="w-6 h-6" />,
-    title: "デザイン",
-    enTitle: "Creative Design",
-    description:
-      "ロゴマークや名刺、パンフレットなど。\nデザインから印刷手配・納品まで一気通貫で、\n見る人の心に残るカタチをご提案します。",
-    href: "/design",
-    linkLabel: "デザインについて詳しく見る",
-    orderClass: "md:order-4",
-  },
-  {
-    key: "geo",
-    id: "05",
-    icon: <Sparkles className="w-6 h-6" />,
-    title: "GEO・SEO対策",
-    enTitle: "GEO & SEO",
-    description:
-      "検索にもAIにも、正しく伝わるWebへ。\nSEOとGEOの両面から、事業内容が引用・発見されやすい\nページ設計と情報整理をサポートします。",
-    href: "/geo-seo",
-    linkLabel: "GEO・SEO対策について詳しく見る",
-    orderClass: "md:order-5",
-  },
-  {
-    key: "ai-consulting",
+    key: "ai-consulting" as const,
     id: "06",
     icon: (
       <span className="font-sans text-[0.7rem] font-bold tracking-[0.08em] md:text-[0.75rem]">
         AI
       </span>
     ),
-    title: "AIコンサルティング",
-    enTitle: "AI Consulting",
-    description:
-      "生成AIの活用から、\n社内マニュアル特化の社内用チャットボット制作まで。\n業務で使える形に落とし込み、導入後も伴走します。",
-    href: "/ai-consulting",
-    linkLabel: "AIコンサルティングについて詳しく見る",
     orderClass: "md:order-6",
   },
 ] as const;
 
-type Service = (typeof services)[number];
+type Service = ServiceCardCopy & {
+  id: string;
+  icon: ReactNode;
+  orderClass: string;
+};
+
+function useServices(): Service[] {
+  const locale = useLocale();
+  const cards = getMessages(locale).services.cards;
+  return SERVICE_META.map((meta) => {
+    const copy = cards.find((card) => card.key === meta.key)!;
+    return { ...copy, ...meta };
+  });
+}
 
 function AiToolKeywordRain({ active }: { active: boolean }) {
   const keywords = [
@@ -247,6 +203,7 @@ function ServiceCard({
   entrance?: boolean;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const locale = useLocale();
 
   return (
     <motion.div
@@ -446,7 +403,7 @@ function ServiceCard({
           )}
         >
           <Link
-            href={service.href}
+            href={withLocale(service.href, locale)}
             className="inline-flex items-center whitespace-nowrap font-sans text-xs font-medium text-amami-blue transition hover:text-amami-blue/80 md:text-sm"
             onClick={(e) => e.stopPropagation()}
           >
@@ -460,6 +417,7 @@ function ServiceCard({
 }
 
 function ServicesCopy({ className }: { className?: string }) {
+  const t = getMessages(useLocale()).services;
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -470,19 +428,24 @@ function ServicesCopy({ className }: { className?: string }) {
       <SectionEyebrow label="Services" color="blue" />
 
       <h2 className="mb-8 font-serif text-3xl leading-tight tracking-normal text-slate-800 md:text-5xl">
-        島暮らしを、<br />
-        ちょっと便利に。
+        {t.heading}
+        <br />
+        {t.headingLine2}
       </h2>
       <p className="mx-auto max-w-2xl font-sans text-base leading-loose text-slate-500 md:text-lg">
-        難しそうなITのことも、私たちにお任せください。<br />
-        お客様一人ひとりのペースに合わせて、<br />
-        最適な解決策をご提案します。
+        {t.body[0]}
+        <br />
+        {t.body[1]}
+        <br />
+        {t.body[2]}
       </p>
     </motion.div>
   );
 }
 
 function MobileServicesScroller() {
+  const services = useServices();
+  const cardsAria = getMessages(useLocale()).services.cardsAria;
   const { containerRef, layout, reduceMotion, setDotRef, stickyRef, trackRef, x } =
     usePinnedHorizontalScroll(services.length);
 
@@ -504,7 +467,7 @@ function MobileServicesScroller() {
       ref={containerRef}
       className="relative -mx-4 w-[calc(100%+2rem)] min-w-0 max-w-[calc(100%+2rem)] md:hidden"
       style={{ height: layout.containerHeight }}
-      aria-label="サービスカード。縦スクロールで横に進みます"
+      aria-label={cardsAria}
     >
       <div
         ref={stickyRef}
@@ -548,6 +511,7 @@ function MobileServicesScroller() {
 }
 
 export function Services() {
+  const services = useServices();
   return (
     <Section
       id="services"

@@ -9,6 +9,10 @@ import { Mail, Monitor, Newspaper, UserRound, CircleHelp } from "lucide-react";
 import { OfficialLineIcon } from "@/components/ui/OfficialLineIcon";
 import { getOfficialLineAddFriendUrl } from "@/lib/seo";
 import { ChunkyAnchor, ChunkyNextLink } from "@/components/ui/ChunkyButton";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
+import { useLocale } from "@/components/i18n/useLocale";
+import { withLocale } from "@/lib/i18n";
+import { getMessages } from "@/lib/messages";
 
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -25,6 +29,8 @@ type NavItem = {
 
 export default function Header() {
   const router = useRouter();
+  const locale = useLocale();
+  const t = getMessages(locale);
   const [isOpen, setIsOpen] = useState(false);
   const [activeMobileAnimal, setActiveMobileAnimal] = useState<string | null>(null);
   const mobileAnimalTimerRef = useRef<number | null>(null);
@@ -32,12 +38,12 @@ export default function Header() {
   const mobileNavIconClass = "size-[1em] shrink-0 opacity-90";
 
   const navItems: NavItem[] = [
-    { name: "About", href: "/about", label: "会社概要", en: "Company" },
-    { name: "Services", href: "/#services", label: "サービス", en: "Services" },
-    { name: "News", href: "/news", label: "お知らせ", en: "News" },
-    { name: "FAQ", href: "/faq", label: "よくある質問", en: "FAQ" },
-    { name: "OfficialLINE", href: lineUrl, label: "公式LINE", en: "LINE", external: true },
-    { name: "Contact", href: "/contact", label: "お問い合わせ", en: "Contact" },
+    { name: "About", href: withLocale("/about", locale), label: t.nav.About, en: "Company" },
+    { name: "Services", href: withLocale("/#services", locale), label: t.nav.Services, en: "Services" },
+    { name: "News", href: withLocale("/news", locale), label: t.nav.News, en: "News" },
+    { name: "FAQ", href: withLocale("/faq", locale), label: t.nav.FAQ, en: "FAQ" },
+    { name: "OfficialLINE", href: lineUrl, label: t.nav.OfficialLINE, en: "LINE", external: true },
+    { name: "Contact", href: withLocale("/contact", locale), label: t.nav.Contact, en: "Contact" },
   ];
 
   function mobileNavIcon(itemName: string) {
@@ -234,7 +240,7 @@ export default function Header() {
         <div className="container relative z-[100] mx-auto flex items-center justify-between px-6 pointer-events-auto">
           
           {/* Logo - mix-blend-normal to prevent color inversion */}
-          <Link href="/" className="group flex items-center gap-2 mix-blend-normal">
+          <Link href={withLocale("/", locale)} className="group flex items-center gap-2 mix-blend-normal">
             <div className="relative h-10 w-10 md:h-12 md:w-12">
               <Image 
                 src={`${assetBase}/logo.png`}
@@ -250,8 +256,8 @@ export default function Header() {
             </span>
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden space-x-10 mix-blend-normal text-slate-900 md:flex">
+          <div className="flex items-center gap-3 mix-blend-normal md:gap-8">
+          <nav className="hidden space-x-10 text-slate-900 md:flex">
             {navItems.map((item) => {
               const className =
                 "group relative font-medium tracking-wide transition-colors duration-500 hover:text-amami-blue";
@@ -275,11 +281,14 @@ export default function Header() {
             })}
           </nav>
 
-          {/* Mobile のみ — デスクトップでは nav を表示し、このラベルは md:hidden で DOM から見えない */}
+          <LanguageSwitcher className="hidden md:inline-flex" />
+
+          <div className="flex items-center gap-1.5 md:hidden">
+            <LanguageSwitcher />
           <label
-            className="amalink-hamburger relative z-[110] inline-flex items-center justify-center rounded-full p-1 text-slate-900 mix-blend-normal transition-colors hover:bg-white/10 hover:text-amami-blue md:hidden"
+            className="amalink-hamburger relative z-[110] inline-flex items-center justify-center rounded-full p-1 text-slate-900 transition-colors hover:bg-white/10 hover:text-amami-blue"
             aria-expanded={isOpen}
-            aria-label={isOpen ? "メニューを閉じる" : "メニューを開く"}
+            aria-label={isOpen ? t.menu.close : t.menu.open}
           >
             <input
               type="checkbox"
@@ -295,6 +304,8 @@ export default function Header() {
               <path className="amalink-hamburger-line" d="M7 16 27 16" />
             </svg>
           </label>
+          </div>
+          </div>
         </div>
       </header>
 
