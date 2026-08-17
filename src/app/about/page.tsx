@@ -166,6 +166,17 @@ export default function AboutPage() {
                   sizes="(max-width: 1024px) 100vw, 42vw"
                   className="object-cover"
                 />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/15">
+                  <div className="relative h-24 w-24 drop-shadow-[0_8px_24px_rgba(0,0,0,0.35)] md:h-32 md:w-32">
+                    <Image
+                      src={`${assetBase}/logo.png`}
+                      alt={`${LEGAL_NAME} ロゴ`}
+                      fill
+                      sizes="128px"
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="bg-white px-6 py-10 md:px-10 md:py-12">
