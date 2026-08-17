@@ -156,15 +156,13 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="bg-slate-50 px-6 py-10 md:py-14">
-          <div className="mx-auto max-w-6xl overflow-hidden rounded-[1.6rem] border border-slate-100 bg-white shadow-sm">
-            <div className="aspect-[16/7] md:aspect-[21/8]">
-              <AmbientVideo
-                poster="/about/band.webp"
-                src="/about/band.mp4"
-                srcSm="/about/band-sm.mp4"
-              />
-            </div>
+        <section className="w-full overflow-hidden bg-slate-50">
+          <div className="aspect-[16/7] w-full md:aspect-[21/8]">
+            <AmbientVideo
+              poster="/about/band.webp"
+              src="/about/band.mp4"
+              srcSm="/about/band-sm.mp4"
+            />
           </div>
         </section>
 
