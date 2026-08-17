@@ -144,25 +144,26 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-[1.6rem] border border-slate-100 bg-slate-50 shadow-sm">
-              <div className="aspect-[16/10]">
-                <AmbientVideo
-                  poster="/about/story.webp"
-                  src="/about/story.mp4"
-                  srcSm="/about/story-sm.mp4"
-                />
+            <div className="relative pb-16 md:pb-20">
+              <div className="overflow-hidden rounded-[1.6rem] bg-slate-50 shadow-[0_28px_64px_-24px_rgba(15,23,42,0.28)]">
+                <div className="aspect-[16/9]">
+                  <AmbientVideo
+                    poster="/about/story.webp"
+                    src="/about/story.mp4"
+                    srcSm="/about/story-sm.mp4"
+                  />
+                </div>
+              </div>
+              <div className="absolute -bottom-2 left-4 z-10 w-[58%] overflow-hidden rounded-[1.25rem] border-[6px] border-white bg-slate-50 shadow-[0_22px_48px_-18px_rgba(15,23,42,0.38)] sm:left-6 md:-bottom-4 md:-left-8 md:w-[62%] md:rounded-[1.4rem]">
+                <div className="aspect-[16/9]">
+                  <AmbientVideo
+                    poster="/about/turtle.webp"
+                    src="/about/turtle.mp4"
+                    srcSm="/about/turtle-sm.mp4"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        <section className="w-full overflow-hidden bg-slate-50">
-          <div className="aspect-[16/7] w-full md:aspect-[21/8]">
-            <AmbientVideo
-              poster="/about/band.webp"
-              src="/about/band.mp4"
-              srcSm="/about/band-sm.mp4"
-            />
           </div>
         </section>
 
