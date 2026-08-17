@@ -17,14 +17,14 @@ export const CHATBOT_SYSTEM_PROMPT = `あなたは「${CHATBOT_NAME}」です。
 # 絶対ルール
 1. 答えてよい話題は「奄美群島（8有人島・12市町村の暮らし・観光・自然・文化・歴史の一般知識）」と「AMALINK（会社・サービス・依頼の流れ）」だけ。
 2. それ以外は短く断る。例: ごめんね、くろうさは奄美群島とAMALINKのことしか話せないんだ。
-3. 知らないことや公式にない料金の断定はしない。料金は内容によるのでお問い合わせへ。
+3. 知らないことや公式にない料金の断定はしない。料金は内容によるので公式LINEへ。
 4. 回答は簡潔に。基本は1〜3文。最大でも短い段落2つまで。
 5. マークダウンは禁止。見出し記号、太字、箇条書き記号（- * # \`）、リンク記法は使わない。普通の日本語の文章だけ。URLも本文に書かない。
 6. 絵文字は使わないか、多くても1つまで。
 7. 口調はやさしく親しみやすく。ですます調ベースで、ときどき「だよ」「ね」を使ってよい。
 8. 初回や挨拶には「うがみんしょうらん」を自然に使ってよい。
-9. 料金・見積・依頼・相談・詳細確認など、お問い合わせページへの誘導が自然なときは、本文で「お問い合わせからどうぞ」などと案内し、回答の末尾に必ず [[CONTACT]] とだけ付ける（制御用。ユーザーには見せない）。不要なら付けない。
-10. 事前知識にない細部は推測で断定せず、公式確認やお問い合わせを勧める。誘導するならルール9に従う。
+9. 料金・見積・依頼・相談・詳細確認など、担当への連絡が自然なときは、本文で「公式LINEからどうぞ」などと案内し、回答の末尾に必ず [[CONTACT]] とだけ付ける（制御用。ユーザーには見せない）。名前や連絡先はサイト側の入力欄で聞くので、会話では無理に聞かない。不要なら付けない。
+10. 事前知識にない細部は推測で断定せず、公式確認や公式LINEを勧める。誘導するならルール9に従う。
 
 ${AMAMI_ANSWER_RULES}
 
@@ -54,14 +54,14 @@ export const CHATBOT_MAX_TOKENS = 400;
 export const CHATBOT_MAX_MESSAGES = 12;
 export const CHATBOT_MAX_CONTENT_LENGTH = 800;
 
-/** お問い合わせ誘導用（UI側でリンク表示。本文からは除去する） */
+/** 担当連絡の誘導用（UI側で公式LINE入力欄を表示。本文からは除去する） */
 export const CHATBOT_CONTACT_MARKER = "[[CONTACT]]";
 export const CHATBOT_CONTACT_PATH = "/contact";
 
 const CONTACT_HINT_RE =
-  /お問い合わせ|お問合せ|ご相談|見積|見積り|ご連絡|依頼|相談したい|料金|費用|値段|お願いできる/;
+  /お問い合わせ|お問合せ|公式LINE|ご相談|見積|見積り|ご連絡|依頼|相談したい|料金|費用|値段|お願いできる/;
 
-/** 返答から制御マーカーを外し、お問い合わせリンク表示要否を返す */
+/** 返答から制御マーカーを外し、公式LINE入力欄の表示要否を返す */
 export function finalizeChatReply(
   raw: string,
   userText?: string,
@@ -79,7 +79,9 @@ export function finalizeChatReply(
     typeof userText === "string" && CONTACT_HINT_RE.test(userText);
   const replyNeeds = CONTACT_HINT_RE.test(reply);
   const showContactLink =
-    hasMarker || (userNeeds && replyNeeds) || /お問い合わせ/.test(reply);
+    hasMarker ||
+    (userNeeds && replyNeeds) ||
+    /お問い合わせ|公式LINE/.test(reply);
 
   return { reply, showContactLink };
 }
@@ -291,7 +293,7 @@ export function localChatReply(userText: string): string {
       CONTACT_HINT_RE.test(userText) || /お問い合わせ|ご連絡|見積/.test(best.answer);
     return stripMarkdown(
       needsContact
-        ? `${best.answer} くわしくはお問い合わせからもどうぞ。 ${CHATBOT_CONTACT_MARKER}`
+        ? `${best.answer} くわしくは公式LINEからもどうぞ。 ${CHATBOT_CONTACT_MARKER}`
         : best.answer,
     );
   }
@@ -299,7 +301,7 @@ export function localChatReply(userText: string): string {
   if (!hasOnTopic) return OFF_TOPIC;
 
   if (CONTACT_HINT_RE.test(userText) && hasOnTopic) {
-    return `内容によって変わることが多いから、くわしくはお問い合わせで相談してね。 ${CHATBOT_CONTACT_MARKER}`;
+    return `内容によって変わることが多いから、くわしくは公式LINEで相談してね。 ${CHATBOT_CONTACT_MARKER}`;
   }
 
   return "うがみんしょうらん。もう少し具体的に聞いてくれると答えやすいよ。奄美群島のことか、AMALINKのサービスのこと、どちらが知りたい？";
