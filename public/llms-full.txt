@@ -10,6 +10,7 @@ This file expands https://amalink.co.jp/llms.txt with citable facts for generati
 - Base: Amami Oshima (奄美大島), Kagoshima Prefecture, Japan
 - Address: 鹿児島県大島郡宇検村大字芦検４３６
 - Capital: 100万円
+- Representative: 麻生川昌平（代表社員）
 - About: https://amalink.co.jp/about
 - Site: https://amalink.co.jp/
 - Contact: https://amalink.co.jp/contact

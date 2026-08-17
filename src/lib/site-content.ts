@@ -48,6 +48,7 @@ export const COMPANY_OVERVIEW = {
     "検索（SEO）とAI回答（GEO）の両面で、正しく見つけ・引用されやすい情報設計ができる",
   ],
   capital: "100万円",
+  representative: "麻生川昌平",
   notIdealFor:
     "大規模ECのフルスクラッチ開発のみを短期納期で依頼したい場合、または首都圏常駐の大規模制作会社と同等の24時間体制を求める場合",
 };

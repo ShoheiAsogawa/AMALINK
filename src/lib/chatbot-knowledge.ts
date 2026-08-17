@@ -35,6 +35,7 @@ ${AMAMI_ANSWER_RULES}
 拠点: ${COMPANY_OVERVIEW.baseLocation}
 所在地: ${COMPANY_OVERVIEW.address}
 資本金: ${COMPANY_OVERVIEW.capital}
+代表社員: ${COMPANY_OVERVIEW.representative}
 対応エリア: ${COMPANY_OVERVIEW.serviceArea}
 対象: ${COMPANY_OVERVIEW.targetCustomers}
 強み: ${COMPANY_OVERVIEW.strengths.join(" / ")}

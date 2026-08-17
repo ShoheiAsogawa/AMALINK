@@ -66,6 +66,11 @@ export function RootJsonLd() {
         ],
         sameAs: [lineUrl],
         slogan: "島のリズムで、未来をつくる。",
+        founder: {
+          "@type": "Person",
+          name: COMPANY_OVERVIEW.representative,
+          jobTitle: "代表社員",
+        },
       },
       {
         "@type": "WebSite",

@@ -15,6 +15,7 @@
 - 所在地: 鹿児島県大島郡宇検村大字芦検４３６
 - 対応エリア: 鹿児島県奄美群を拠点に、全国オンライン対応
 - 資本金: 100万円
+- 代表社員: 麻生川昌平
 - 会社概要: https://amalink.co.jp/about
 - 公式サイト: https://amalink.co.jp/
 - お問い合わせ: https://amalink.co.jp/contact
@@ -66,7 +67,7 @@
 
 ## 主要ページ
 
-- [会社概要](https://amalink.co.jp/about): 企業情報・資本金・拠点
+- [会社概要](https://amalink.co.jp/about): 企業情報・代表社員・資本金・拠点
 - [トップページ](https://amalink.co.jp/): 会社概要・サービス・お知らせ
 - [ホームページ制作](https://amalink.co.jp/web-production): コーポレート・集客サイト
 - [デザイン](https://amalink.co.jp/design): ロゴ・印刷物・印刷手配・納品
