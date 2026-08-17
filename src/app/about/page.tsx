@@ -196,23 +196,29 @@ export default function AboutPage() {
                       </dd>
                     </div>
                   ))}
+                  <div className="grid grid-cols-[7.5rem_minmax(0,1fr)] items-start gap-4 py-4 md:grid-cols-[8.5rem_minmax(0,1fr)]">
+                    <dt className="pt-0.5 font-sans text-xs tracking-wider text-slate-400">事業内容</dt>
+                    <dd>
+                      <ol className="space-y-2.5">
+                        {SERVICES.map((service, index) => (
+                          <li key={service.id}>
+                            <Link
+                              href={new URL(service.url).pathname}
+                              className="group flex items-baseline gap-3"
+                            >
+                              <span className="w-5 shrink-0 font-sans text-[11px] tabular-nums tracking-wider text-amami-blue">
+                                {String(index + 1).padStart(2, "0")}
+                              </span>
+                              <span className="font-serif text-[15px] text-slate-800 transition-colors group-hover:text-amami-blue">
+                                {service.name}
+                              </span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ol>
+                    </dd>
+                  </div>
                 </dl>
-
-                <p className="mt-8 font-sans text-[11px] uppercase tracking-[0.28em] text-slate-400">
-                  Business
-                </p>
-                <ul className="mt-3 flex flex-wrap gap-2">
-                  {SERVICES.map((service) => (
-                    <li key={service.id}>
-                      <Link
-                        href={new URL(service.url).pathname}
-                        className="inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 font-sans text-xs text-slate-600 transition hover:border-amami-blue/40 hover:text-amami-blue"
-                      >
-                        {service.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
               </div>
             </div>
           </div>
