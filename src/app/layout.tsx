@@ -9,19 +9,21 @@ import "./globals.css";
 const zenMincho = Zen_Old_Mincho({
   weight: ["400", "700"],
   subsets: ["latin"],
-  variable: "--font-serif",
-  display: "swap",
-  preload: false,
+  variable: "--font-zen-mincho",
+  display: "optional",
+  preload: true,
   adjustFontFallback: true,
+  fallback: ["Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "serif"],
 });
 
 const zenGothic = Zen_Kaku_Gothic_New({
   weight: ["400", "700"],
   subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-  preload: false,
+  variable: "--font-zen-gothic",
+  display: "optional",
+  preload: true,
   adjustFontFallback: true,
+  fallback: ["Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "Meiryo", "sans-serif"],
 });
 
 export const metadata: Metadata = {
@@ -107,7 +109,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`${zenMincho.variable} ${zenGothic.variable}`}>
+    <html lang="ja" className={`${zenMincho.variable} ${zenGothic.variable} ${zenGothic.className}`}>
       <head>
         {/* Google tag (gtag.js) — 全ページ共通・ここ1箇所のみ */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XHQG5H0D3" />

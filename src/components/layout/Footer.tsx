@@ -1,32 +1,27 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { FooterTruck } from "@/components/layout/FooterTruck";
 import { PixelPlayButton } from "@/components/ui/PixelPlayButton";
 import { COMPANY_OVERVIEW } from "@/lib/site-content";
 import { LEGAL_NAME } from "@/lib/seo";
+import { useLocale } from "@/components/i18n/useLocale";
+import { withLocale } from "@/lib/i18n";
+import { getMessages } from "@/lib/messages";
 
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-const FOOTER_LINKS = [
-  { href: "/ai-consulting", label: "AIコンサルティング" },
-  { href: "/web-production", label: "ホームページ制作" },
-  { href: "/design", label: "デザイン" },
-  { href: "/geo-seo", label: "GEO・SEO対策" },
-  { href: "/system-development", label: "システム開発" },
-  { href: "/ai-avatar-chatbot", label: "AIアバターチャットボット" },
-  { href: "/faq", label: "よくある質問" },
-  { href: "/news", label: "お知らせ" },
-  { href: "/contact", label: "お問い合わせ" },
-] as const;
-
 function ServicesNav({ className }: { className?: string }) {
+  const locale = useLocale();
+  const t = getMessages(locale);
   return (
-    <nav aria-label="フッターナビ" className={className}>
+    <nav aria-label={t.footer.navLabel} className={className}>
       <p className="mb-4 font-sans text-xs uppercase tracking-[0.2em] text-slate-400">Services</p>
       <ul className="grid gap-2.5 font-sans text-sm text-slate-600">
-        {FOOTER_LINKS.map((item) => (
+        {t.footer.links.map((item) => (
           <li key={item.href}>
-            <Link href={item.href} className="transition hover:text-amami-blue">
+            <Link href={withLocale(item.href, locale)} className="transition hover:text-amami-blue">
               {item.label}
             </Link>
           </li>
@@ -37,17 +32,19 @@ function ServicesNav({ className }: { className?: string }) {
 }
 
 export default function Footer() {
+  const locale = useLocale();
+  const t = getMessages(locale);
   return (
     <footer className="relative overflow-visible border-t border-slate-200 bg-slate-50 pt-12 pb-[calc(3rem+7.25rem)] md:pt-20 md:pb-[calc(5rem+8.5rem)]">
       <FooterTruck />
       <div className="container relative z-[1] mx-auto px-6">
         <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-start">
           <div className="flex max-w-md flex-col gap-4 text-left md:gap-5">
-            <Link href="/" className="flex items-center gap-2 text-xl font-bold tracking-widest group md:text-2xl">
+            <Link href={withLocale("/", locale)} className="flex items-center gap-2 text-xl font-bold tracking-widest group md:text-2xl">
               <div className="relative h-8 w-8 md:h-10 md:w-10">
                 <Image
                   src={`${assetBase}/logo.png`}
-                  alt={`${LEGAL_NAME} ロゴ`}
+                  alt={t.footer.logoAlt}
                   fill
                   className="object-contain"
                 />
@@ -55,12 +52,11 @@ export default function Footer() {
               <span className="font-sans text-slate-900 transition-colors group-hover:text-amami-blue">AMALINK</span>
             </Link>
 
-            {/* ロゴ直下: タグライン＋ハテナ（住所より上） */}
             <div className="flex items-end justify-between gap-3">
               <p className="min-w-0 font-sans text-xs leading-relaxed text-slate-500 md:text-sm">
-                島のリズムで、
+                {t.footer.tagline1}
                 <br />
-                <span className="text-amami-blue">未来をつくる。</span>
+                <span className="text-amami-blue">{t.footer.tagline2}</span>
               </p>
               <div className="shrink-0 md:hidden">
                 <PixelPlayButton placement="footer" />

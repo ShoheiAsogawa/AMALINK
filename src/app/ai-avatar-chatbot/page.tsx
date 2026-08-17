@@ -61,7 +61,6 @@ const faqs = [
     question: "自社用にキャラや回答内容を変えられますか？",
     answer:
       "可能です。キャラクター、口調、答える範囲、誘導先はお客様の事業に合わせて設計します。既存のFAQや会社案内を知識として使うこともできます。",
-    singleLineOnMobile: true,
     moreHref: "/contact",
   },
   {
@@ -69,7 +68,6 @@ const faqs = [
     question: "何でも答えるボットになりますか？",
     answer:
       "いいえ。答える範囲をあらかじめ決めて設計します。「自社サービスと地域のことだけ」など、用途に合わせて制限できます。",
-    singleLineOnMobile: true,
     moreHref: "/contact",
   },
   {
@@ -77,7 +75,6 @@ const faqs = [
     question: "料金の目安はありますか？",
     answer:
       "アバター制作の有無、回答範囲、既存サイトへの組み込み範囲によって異なります。まずはご希望を伺い、概算をご案内します。",
-    singleLineOnMobile: true,
     moreHref: "/contact",
   },
 ];
@@ -159,9 +156,9 @@ export default function AiAvatarChatbotPage() {
             <p className="mb-4 font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
               AI Avatar Chatbot
             </p>
-            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
+            <h1 className="max-w-4xl font-serif text-xl leading-[1.65] font-bold text-brand-gradient [word-break:keep-all] sm:text-4xl sm:leading-tight md:text-6xl">
               <span className="block">自社サイトに合う、</span>
-              <span className="block whitespace-nowrap">AIアバターチャットボット制作。</span>
+              <span className="block">AIアバターチャットボット制作。</span>
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
               {LEGAL_NAME}は、サイトに馴染むアバター付きチャットボットの制作・組み込みを行います。答える範囲の設計から問い合わせ導線まで、用途に合わせてご提案します。

@@ -4,16 +4,16 @@ import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import {
-  FAQ_CATEGORIES,
-  FAQ_ITEMS,
-  type FaqCategoryId,
-} from "@/lib/site-content";
+import { type FaqCategoryId } from "@/lib/site-content";
+import { useLocale } from "@/components/i18n/useLocale";
+import { withLocale } from "@/lib/i18n";
+import { getMessages } from "@/lib/messages";
 
-function moreLinkLabel(moreHref: string, moreLabel?: string) {
+function moreLinkLabel(moreHref: string, moreLabel?: string, locale?: "ja" | "en") {
   if (moreLabel) return moreLabel;
-  if (moreHref === "/contact") return "お問い合わせはこちら";
-  return "詳しくはこちら";
+  const t = getMessages(locale ?? "ja").faqPage;
+  if (moreHref === "/contact") return t.moreContact;
+  return t.moreDetail;
 }
 
 function FaqAnswer({
@@ -25,18 +25,20 @@ function FaqAnswer({
   moreHref?: string;
   moreLabel?: string;
 }) {
+  const locale = useLocale();
+  const href = moreHref ? withLocale(moreHref, locale) : undefined;
   return (
     <div className="border-t border-slate-100 px-5 pb-5 pt-4 md:px-8 md:pb-6">
       <p className="font-sans text-sm leading-loose text-slate-600 md:text-base">
         {answer}
       </p>
-      {moreHref ? (
+      {href ? (
         <p className="mt-4">
           <Link
-            href={moreHref}
+            href={href}
             className="inline-flex items-center rounded-full border border-amami-blue/25 bg-amami-blue/5 px-4 py-2 font-sans text-sm font-medium text-amami-blue transition-colors hover:border-amami-blue/40 hover:bg-amami-blue/10"
           >
-            {moreLinkLabel(moreHref, moreLabel)}
+            {moreLinkLabel(moreHref!, moreLabel, locale)}
           </Link>
         </p>
       ) : null}
@@ -52,7 +54,6 @@ function FaqAccordionItem({
   moreLabel,
   isOpen,
   onToggle,
-  singleLineOnMobile,
 }: {
   id: string;
   question: string;
@@ -61,7 +62,6 @@ function FaqAccordionItem({
   moreLabel?: string;
   isOpen: boolean;
   onToggle: () => void;
-  singleLineOnMobile?: boolean;
 }) {
   const buttonId = `faq-btn-${id}`;
   const panelId = `faq-panel-${id}`;
@@ -76,12 +76,7 @@ function FaqAccordionItem({
         aria-controls={panelId}
         className="flex w-full items-start justify-between gap-4 px-5 py-5 text-left md:px-8 md:py-6"
       >
-        <span
-          className={cn(
-            "font-serif text-base leading-snug text-slate-800 md:text-lg",
-            singleLineOnMobile && "whitespace-nowrap text-sm sm:text-base"
-          )}
-        >
+        <span className="font-serif text-base leading-snug text-slate-800 [overflow-wrap:anywhere] [word-break:keep-all] md:text-lg">
           {question}
         </span>
         <ChevronDown
@@ -116,11 +111,12 @@ export type FaqAccordionEntry = {
   answer: string;
   moreHref?: string;
   moreLabel?: string;
-  singleLineOnMobile?: boolean;
 };
 
 export function FaqAccordion({ items }: { items?: FaqAccordionEntry[] }) {
   const [openIds, setOpenIds] = useState<Set<string>>(new Set());
+  const locale = useLocale();
+  const t = getMessages(locale).faqPage;
 
   function toggle(id: string) {
     setOpenIds((prev) => {
@@ -145,7 +141,6 @@ export function FaqAccordion({ items }: { items?: FaqAccordionEntry[] }) {
             answer={item.answer}
             moreHref={item.moreHref}
             moreLabel={item.moreLabel}
-            singleLineOnMobile={item.singleLineOnMobile}
             isOpen={openIds.has(item.id)}
             onToggle={() => toggle(item.id)}
           />
@@ -154,10 +149,10 @@ export function FaqAccordion({ items }: { items?: FaqAccordionEntry[] }) {
     );
   }
 
-  const grouped = (Object.keys(FAQ_CATEGORIES) as FaqCategoryId[]).map((categoryId) => ({
+  const grouped = (Object.keys(t.categories) as FaqCategoryId[]).map((categoryId) => ({
     categoryId,
-    label: FAQ_CATEGORIES[categoryId],
-    items: FAQ_ITEMS.filter((item) => item.category === categoryId),
+    label: t.categories[categoryId],
+    items: t.items.filter((item) => item.category === categoryId),
   })).filter((group) => group.items.length > 0);
 
   return (

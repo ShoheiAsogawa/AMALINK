@@ -7,10 +7,12 @@ import { ExternalLink, Send, X } from "lucide-react";
 import { RabbitAvatar, type RabbitMood } from "@/components/chatbot/RabbitAvatar";
 import {
   CHATBOT_CONTACT_PATH,
-  CHATBOT_GREETING,
   CHATBOT_NAME,
 } from "@/lib/chatbot-knowledge";
 import { cn } from "@/lib/utils";
+import { useLocale } from "@/components/i18n/useLocale";
+import { withLocale } from "@/lib/i18n";
+import { getMessages } from "@/lib/messages";
 
 type UiMessage = {
   id: string;
@@ -31,12 +33,14 @@ export function openAmalinkChat() {
 }
 
 export function AmalinkChatbot() {
+  const locale = useLocale();
+  const t = getMessages(locale).chatbot;
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [pending, setPending] = useState(false);
   const [mood, setMood] = useState<RabbitMood>("idle");
   const [messages, setMessages] = useState<UiMessage[]>([
-    { id: "greet", role: "assistant", content: CHATBOT_GREETING },
+    { id: "greet", role: "assistant", content: t.greeting },
   ]);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -47,6 +51,10 @@ export function AmalinkChatbot() {
     window.addEventListener(OPEN_EVENT, onOpen);
     return () => window.removeEventListener(OPEN_EVENT, onOpen);
   }, []);
+
+  useEffect(() => {
+    setMessages([{ id: "greet", role: "assistant", content: t.greeting }]);
+  }, [t.greeting]);
 
   useEffect(() => {
     if (!open) {
@@ -183,11 +191,7 @@ export function AmalinkChatbot() {
     void sendMessage(input);
   }
 
-  const suggestions = [
-    "AMALINKってどんな会社？",
-    "ホームページ制作お願いできる？",
-    "奄美大島以外からも依頼できる？",
-  ];
+  const suggestions = t.suggestions;
 
   return (
     <div
@@ -220,14 +224,14 @@ export function AmalinkChatbot() {
                 <div className="min-w-0 flex-1">
                   <p className="font-serif text-lg leading-tight">{CHATBOT_NAME}</p>
                   <p className="truncate font-sans text-[11px] text-white/85">
-                    奄美大島 &amp; AMALINK 案内係
+                    {t.role}
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
                   className="rounded-full bg-white/15 p-2 transition hover:bg-white/25"
-                  aria-label="チャットを閉じる"
+                  aria-label={t.close}
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -258,10 +262,10 @@ export function AmalinkChatbot() {
                   </div>
                   {m.role === "assistant" && m.showContactLink && (
                     <Link
-                      href={CHATBOT_CONTACT_PATH}
+                      href={withLocale(CHATBOT_CONTACT_PATH, locale)}
                       className="inline-flex items-center gap-1.5 rounded-full border border-amami-blue/30 bg-amami-blue-light/50 px-3 py-1.5 font-sans text-xs font-medium text-amami-blue transition hover:border-amami-blue/50 hover:bg-amami-blue-light"
                     >
-                      お問い合わせページへ
+                      {t.contactPage}
                       <ExternalLink className="h-3 w-3" aria-hidden />
                     </Link>
                   )}
@@ -274,7 +278,7 @@ export function AmalinkChatbot() {
                     <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-amami-green [animation-delay:120ms]" />
                     <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-amami-blue [animation-delay:240ms]" />
                   </span>
-                  考え中…
+                  {t.thinking}
                 </div>
               )}
               {messages.length <= 1 && !pending && (
@@ -301,7 +305,7 @@ export function AmalinkChatbot() {
                 ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="奄美やAMALINKのことを聞いてね"
+                placeholder={t.placeholder}
                 maxLength={800}
                 className="min-w-0 flex-1 rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 font-sans text-sm outline-none transition focus:border-amami-blue focus:bg-white"
                 disabled={pending}
@@ -310,7 +314,7 @@ export function AmalinkChatbot() {
                 type="submit"
                 disabled={pending || !input.trim()}
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 to-emerald-500 text-white shadow-md transition enabled:hover:brightness-105 disabled:opacity-40"
-                aria-label="送信"
+                aria-label={t.send}
               >
                 <Send className="h-4 w-4" />
               </button>
@@ -335,7 +339,7 @@ export function AmalinkChatbot() {
                 onClick={() => setOpen(true)}
                 className="whitespace-nowrap rounded-2xl bg-slate-900 px-3 py-1.5 font-sans text-[11px] font-medium text-white shadow-lg"
               >
-                くろうさと話す
+                {t.talk}
               </button>
               <span
                 aria-hidden
@@ -352,7 +356,7 @@ export function AmalinkChatbot() {
             className="absolute left-1/2 top-2 -translate-x-1/2"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
-            aria-label={open ? "チャットを閉じる" : `${CHATBOT_NAME}に話しかける`}
+            aria-label={open ? t.close : t.open}
             whileTap={{ scale: 0.97 }}
           >
             <div className={open ? undefined : "chatbot-rabbit-hop"}>

@@ -61,7 +61,6 @@ const faqs = [
     question: "既存サイトのSEO・GEO改善だけお願いできますか？",
     answer:
       "はい。リニューアルを伴わず、情報整理・FAQ追加・メタデータや構造化データの改善など、現状のサイトを活かしたご依頼も可能です。",
-    singleLineOnMobile: true,
     moreHref: "/contact",
   },
   {
@@ -69,7 +68,6 @@ const faqs = [
     question: "WixやSTORESのサイトでも対応できますか？",
     answer:
       "プラットフォームの仕様次第で、構造化データの追加や細かなHTML調整ができない場合があります。できる範囲での改善か、作り直しのどちらがよいか、現状を確認したうえでお伝えします。",
-    singleLineOnMobile: true,
     moreHref: "/web-production",
   },
   {
@@ -77,7 +75,6 @@ const faqs = [
     question: "料金の目安はありますか？",
     answer:
       "対象ページ数、新規制作の有無、改善範囲によって異なります。ご希望を伺ったうえで概算をご案内します。",
-    singleLineOnMobile: true,
     moreHref: "/contact",
   },
 ];
@@ -149,10 +146,9 @@ export default function GeoSeoPage() {
             <p className="mb-4 font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
               GEO &amp; SEO
             </p>
-            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
+            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] font-bold text-brand-gradient [word-break:keep-all] sm:text-4xl sm:leading-tight md:text-6xl">
               <span className="block">検索にもAIにも、</span>
-              <span className="block sm:inline">正しく伝わる</span>
-              <span className="block sm:inline">Web設計<span className="hidden sm:inline">。</span></span>
+              <span className="block">正しく伝わるWeb設計。</span>
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
               {LEGAL_NAME}は、従来のSEOに加え、生成AIに引用されやすくするGEOの視点でもWebページを整えます。新規制作と合わせることも、既存サイトの見直しだけでもご相談いただけます。
@@ -200,7 +196,11 @@ export default function GeoSeoPage() {
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">FAQ</p>
-            <h2 className="mt-3 font-serif text-2xl md:text-5xl font-bold text-brand-gradient">GEO・SEOのよくある質問</h2>
+            <h2 className="mt-3 font-serif text-2xl font-bold text-brand-gradient [word-break:keep-all] md:text-5xl">
+              GEO・SEOの
+              <br className="md:hidden" />
+              よくある質問
+            </h2>
             <div className="mt-10">
               <FaqAccordion items={faqs} />
             </div>

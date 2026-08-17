@@ -8,13 +8,14 @@ import { NewsSection } from "@/components/sections/News";
 import { Contact } from "@/components/sections/Contact";
 import { MarqueeSpacer } from "@/components/ui/MarqueeSpacer";
 import { getNewsList } from "@/lib/microcms";
-import { absoluteUrl, DEFAULT_DESCRIPTION, DEFAULT_TITLE } from "@/lib/seo";
+import { localeMetadata } from "@/lib/i18n-meta";
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from "@/lib/seo";
 
 export const metadata: Metadata = {
+  ...localeMetadata("ja", "/", DEFAULT_TITLE, DEFAULT_DESCRIPTION),
   title: {
     absolute: DEFAULT_TITLE,
   },
-  description: DEFAULT_DESCRIPTION,
   keywords: [
     "合同会社AMALINK",
     "AMALINK",
@@ -23,13 +24,6 @@ export const metadata: Metadata = {
     "デザイン",
     "GEO対策",
   ],
-  alternates: { canonical: "/" },
-  openGraph: {
-    url: absoluteUrl("/"),
-    title: DEFAULT_TITLE,
-    description: DEFAULT_DESCRIPTION,
-    type: "website",
-  },
 };
 
 export const revalidate = 60;

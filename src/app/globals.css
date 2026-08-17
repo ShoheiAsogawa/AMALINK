@@ -22,13 +22,17 @@
   --color-amami-green-light: var(--amami-green-light);
   --color-sand-beige: var(--sand-beige);
 
-  --font-serif: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
-  --font-sans: "Zen Kaku Gothic New", "Helvetica Neue", sans-serif;
+  --font-serif: var(--font-zen-mincho), "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-sans: var(--font-zen-gothic), "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
   
   @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-20px); }
   }
+}
+
+html {
+  font-synthesis: none;
 }
 
 body {

@@ -2,6 +2,8 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { useLocale } from "@/components/i18n/useLocale";
+import { getMessages } from "@/lib/messages";
 
 type WaveLayer = {
   bottom?: string;
@@ -93,6 +95,8 @@ const WAVE_LAYERS: WaveLayer[] = [
 ];
 
 export function Hero() {
+  const locale = useLocale();
+  const t = getMessages(locale);
   const ref = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(true);
   const { scrollYProgress } = useScroll({
@@ -168,41 +172,50 @@ export function Hero() {
           className="flex w-full flex-col items-center justify-center gap-8 md:w-auto md:flex-row md:gap-24"
         >
           <h1 className="m-0 w-full text-center font-serif font-bold text-slate-800">
+            {locale === "ja" ? (
+              <>
             <span className="hidden md:flex flex-row-reverse gap-8">
               <span className="vertical-text text-5xl md:text-7xl tracking-wider leading-relaxed whitespace-nowrap">
-                島のリズムで、
+                {t.hero.line1}
               </span>
               <span className="vertical-text text-5xl md:text-7xl tracking-wider leading-relaxed whitespace-nowrap text-amami-blue">
-                未来をつくる。
+                {t.hero.line2}
               </span>
             </span>
-            <span className="mx-auto block w-full pt-4 text-center text-3xl leading-tight drop-shadow-sm sm:text-4xl md:hidden">
-              島のリズムで、
+            <span className="mx-auto block w-full pt-4 text-center text-3xl leading-tight [word-break:keep-all] drop-shadow-sm sm:text-4xl md:hidden">
+              {t.hero.line1}
               <br />
-              <span className="text-amami-blue">未来をつくる。</span>
+              <span className="text-amami-blue">{t.hero.line2}</span>
             </span>
+              </>
+            ) : (
+              <span className="mx-auto block w-full max-w-xl pt-4 text-center text-3xl leading-tight drop-shadow-sm sm:text-4xl md:max-w-none md:text-6xl md:leading-tight">
+                {t.hero.line1}
+                <br />
+                <span className="text-amami-blue">{t.hero.line2}</span>
+              </span>
+            )}
           </h1>
 
           <div className="mx-auto w-full max-w-[21rem] text-center md:hidden">
             <p className="text-pretty text-base leading-loose text-slate-600 font-sans [word-break:keep-all] sm:text-lg">
-              <span className="block">波音のように穏やかに、</span>
-              <span className="block">けれど着実に。</span>
-              <span className="mt-6 block">奄美大島でAIのことなら、</span>
-              <span className="block">AMALINKへ。</span>
-              <span className="block">生成AIの活用から</span>
-              <span className="block">Web制作まで、</span>
-              <span className="block">島から全国へ伴走します。</span>
+              <span className="block">{t.hero.body[0]}</span>
+              <span className="block">{t.hero.body[1]}</span>
+              <span className="mt-6 block">{t.hero.body[2]}</span>
+              <span className="block">{t.hero.body[3]}</span>
+              <span className="block">{t.hero.body[4]}</span>
+              <span className="block">{t.hero.body[5]}</span>
             </p>
           </div>
 
           <div className="hidden md:block max-w-lg">
             <p className="text-pretty text-lg leading-loose text-slate-600 font-sans [word-break:keep-all] md:text-xl">
-              <span className="block">波音のように穏やかに、</span>
-              <span className="block">けれど着実に。</span>
-              <span className="mt-6 block">奄美大島でAIのことなら、</span>
-              <span className="block">AMALINKへ。</span>
-              <span className="block">生成AIの活用からWeb制作まで、</span>
-              <span className="block">島から全国へ伴走します。</span>
+              <span className="block">{t.hero.body[0]}</span>
+              <span className="block">{t.hero.body[1]}</span>
+              <span className="mt-6 block">{t.hero.body[2]}</span>
+              <span className="block">{t.hero.body[3]}</span>
+              <span className="block">{t.hero.body[4]}</span>
+              <span className="block">{t.hero.body[5]}</span>
             </p>
           </div>
         </motion.div>
