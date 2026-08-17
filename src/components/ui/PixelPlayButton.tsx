@@ -16,7 +16,7 @@ function preloadAnimalImages(srcs: readonly string[]) {
 }
 
 type PixelPlayButtonProps = {
-  /** floating: 右下固定（未使用・AI相談FABへ置換） / footer: フッター内の空きに絶対配置 */
+  /** floating: 右下固定（PC） / footer: フッター内（モバイル） */
   placement?: "floating" | "footer";
 };
 

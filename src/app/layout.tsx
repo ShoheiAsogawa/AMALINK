@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Zen_Old_Mincho, Zen_Kaku_Gothic_New } from "next/font/google";
 import { AmalinkChatbot } from "@/components/chatbot/AmalinkChatbot";
-import { AiConsultButton } from "@/components/ui/AiConsultButton";
+import { PixelPlayButton } from "@/components/ui/PixelPlayButton";
 import { RootJsonLd } from "@/components/seo/JsonLd";
 import { absoluteUrl, DEFAULT_DESCRIPTION, DEFAULT_TITLE, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
 import "./globals.css";
@@ -126,7 +126,7 @@ export default function RootLayout({
         <RootJsonLd />
         {children}
         <AmalinkChatbot />
-        <AiConsultButton />
+        <PixelPlayButton />
       </body>
     </html>
   );

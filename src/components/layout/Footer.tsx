@@ -55,11 +55,17 @@ export default function Footer() {
               <span className="font-sans text-slate-900 transition-colors group-hover:text-amami-blue">AMALINK</span>
             </Link>
 
-            <p className="font-sans text-xs leading-relaxed text-slate-500 md:text-sm">
-              島のリズムで、
-              <br />
-              <span className="text-amami-blue">未来をつくる。</span>
-            </p>
+            {/* ロゴ直下: タグライン＋ハテナ（住所より上） */}
+            <div className="flex items-end justify-between gap-3">
+              <p className="min-w-0 font-sans text-xs leading-relaxed text-slate-500 md:text-sm">
+                島のリズムで、
+                <br />
+                <span className="text-amami-blue">未来をつくる。</span>
+              </p>
+              <div className="shrink-0 md:hidden">
+                <PixelPlayButton placement="footer" />
+              </div>
+            </div>
 
             <p className="font-sans text-xs leading-relaxed text-slate-500 md:text-sm">
               {LEGAL_NAME}
@@ -75,11 +81,6 @@ export default function Footer() {
           {/* サービスは PC のみ */}
           <ServicesNav className="hidden md:block md:justify-self-end" />
         </div>
-      </div>
-
-      {/* はてなBOX: 右下FABはAI相談へ。フッターの空き（下余白・FABの左）に絶対配置 */}
-      <div className="pointer-events-none absolute bottom-6 right-[max(5.75rem,calc(env(safe-area-inset-right)+5.75rem))] z-[2] md:bottom-10 md:right-[max(7.5rem,calc(env(safe-area-inset-right)+7.5rem))]">
-        <PixelPlayButton placement="footer" />
       </div>
     </footer>
   );
