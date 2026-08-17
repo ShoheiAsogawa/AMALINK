@@ -12,8 +12,8 @@ const AmalinkChatbot = dynamic(
   { ssr: false },
 );
 
-const PixelPlayButton = dynamic(
-  () => import("@/components/ui/PixelPlayButton").then((m) => m.PixelPlayButton),
+const AiConsultButton = dynamic(
+  () => import("@/components/ui/AiConsultButton").then((m) => m.AiConsultButton),
   { ssr: false },
 );
 
@@ -52,7 +52,7 @@ export function DeferredWidgets() {
   return (
     <>
       <AmalinkChatbot />
-      <PixelPlayButton />
+      <AiConsultButton />
     </>
   );
 }
