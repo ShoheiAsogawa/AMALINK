@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Mail, Monitor, Newspaper, UserRound, CircleHelp } from "lucide-react";
@@ -25,14 +25,16 @@ type NavItem = {
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const darkNav = pathname === "/about" && !isOpen;
   const [activeMobileAnimal, setActiveMobileAnimal] = useState<string | null>(null);
   const mobileAnimalTimerRef = useRef<number | null>(null);
   const lineUrl = getOfficialLineAddFriendUrl();
   const mobileNavIconClass = "size-[1em] shrink-0 opacity-90";
 
   const navItems: NavItem[] = [
-    { name: "About", href: "/#about", label: "私たちについて", en: "About Us" },
+    { name: "About", href: "/about", label: "会社概要", en: "Company" },
     { name: "Services", href: "/#services", label: "サービス", en: "Services" },
     { name: "News", href: "/news", label: "お知らせ", en: "News" },
     { name: "FAQ", href: "/faq", label: "よくある質問", en: "FAQ" },
@@ -229,13 +231,13 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 w-full z-[100] bg-transparent pt-6 pb-6 pointer-events-none md:py-8">
+      <header className="pointer-events-none fixed top-0 z-[100] w-full bg-transparent pt-6 pb-6 md:py-8">
         {/* Container for logo and menu - blend mode applied individually */}
-        <div className="container mx-auto px-6 flex justify-between items-center relative z-[100] pointer-events-auto">
+        <div className="container relative z-[100] mx-auto flex items-center justify-between px-6 pointer-events-auto">
           
           {/* Logo - mix-blend-normal to prevent color inversion */}
           <Link href="/" className="group flex items-center gap-2 mix-blend-normal">
-            <div className="relative w-10 h-10 md:w-12 md:h-12">
+            <div className="relative h-10 w-10 md:h-12 md:w-12">
               <Image 
                 src={`${assetBase}/logo.png`}
                 alt="AMALINK Logo" 
@@ -245,14 +247,25 @@ export default function Header() {
                 className="object-contain" 
               />
             </div>
-            {/* Title with gradient hover - using background-clip for smooth transition */}
-            <span className="text-xl md:text-2xl font-sans font-bold tracking-widest text-slate-900 transition-colors duration-500 group-hover:text-amami-blue">
+            <span
+              className={
+                darkNav
+                  ? "font-sans text-xl font-bold tracking-widest text-white transition-colors duration-500 group-hover:text-amami-blue md:text-2xl"
+                  : "font-sans text-xl font-bold tracking-widest text-slate-900 transition-colors duration-500 group-hover:text-amami-blue md:text-2xl"
+              }
+            >
               AMALINK
             </span>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex space-x-10 mix-blend-normal text-slate-900">
+          <nav
+            className={
+              darkNav
+                ? "hidden space-x-10 mix-blend-normal text-white md:flex"
+                : "hidden space-x-10 mix-blend-normal text-slate-900 md:flex"
+            }
+          >
             {navItems.map((item) => {
               const className =
                 "group relative font-medium tracking-wide transition-colors duration-500 hover:text-amami-blue";
@@ -278,7 +291,9 @@ export default function Header() {
 
           {/* Mobile のみ — デスクトップでは nav を表示し、このラベルは md:hidden で DOM から見えない */}
           <label
-            className="inline-flex items-center justify-center amalink-hamburger md:hidden relative z-[110] mix-blend-normal rounded-full p-1 text-slate-900 transition-colors hover:bg-white/10 hover:text-amami-blue"
+            className={`inline-flex items-center justify-center amalink-hamburger relative z-[110] mix-blend-normal rounded-full p-1 transition-colors hover:bg-white/10 hover:text-amami-blue md:hidden ${
+              darkNav ? "text-white" : "text-slate-900"
+            }`}
             aria-expanded={isOpen}
             aria-label={isOpen ? "メニューを閉じる" : "メニューを開く"}
           >

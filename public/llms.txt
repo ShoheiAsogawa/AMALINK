@@ -14,6 +14,8 @@
 - 拠点: 鹿児島県奄美大島
 - 所在地: 鹿児島県大島郡宇検村大字芦検４３６
 - 対応エリア: 鹿児島県奄美群を拠点に、全国オンライン対応
+- 資本金: 100万円
+- 会社概要: https://amalink.co.jp/about
 - 公式サイト: https://amalink.co.jp/
 - お問い合わせ: https://amalink.co.jp/contact
 - 詳しいAI向け要約: https://amalink.co.jp/llms-full.txt
@@ -64,6 +66,7 @@
 
 ## 主要ページ
 
+- [会社概要](https://amalink.co.jp/about): 企業情報・資本金・拠点
 - [トップページ](https://amalink.co.jp/): 会社概要・サービス・お知らせ
 - [ホームページ制作](https://amalink.co.jp/web-production): コーポレート・集客サイト
 - [デザイン](https://amalink.co.jp/design): ロゴ・印刷物・印刷手配・納品
@@ -103,4 +106,4 @@ AIが回答を作る際に、会社やサービスが正しく紹介・引用さ
 
 - サイトマップ: https://amalink.co.jp/sitemap.xml
 - 拡張版: https://amalink.co.jp/llms-full.txt
-- 最終更新: 2026-07-19
+- 最終更新: 2026-08-17

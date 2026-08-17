@@ -9,6 +9,8 @@ This file expands https://amalink.co.jp/llms.txt with citable facts for generati
 - Type: Local digital services company / LocalBusiness
 - Base: Amami Oshima (奄美大島), Kagoshima Prefecture, Japan
 - Address: 鹿児島県大島郡宇検村大字芦検４３６
+- Capital: 100万円
+- About: https://amalink.co.jp/about
 - Site: https://amalink.co.jp/
 - Contact: https://amalink.co.jp/contact
 - Tagline: 島のリズムで、未来をつくる。
@@ -68,9 +70,10 @@ A: 合同会社AMALINKは、奄美大島を拠点にロゴ・名刺・パンフ�
 ## Canonical URLs
 
 - Home: https://amalink.co.jp/
+- About: https://amalink.co.jp/about
 - Web production: https://amalink.co.jp/web-production
 - Design: https://amalink.co.jp/design
 - FAQ: https://amalink.co.jp/faq
 - Sitemap: https://amalink.co.jp/sitemap.xml
 
-Last updated: 2026-07-19
+Last updated: 2026-08-17
