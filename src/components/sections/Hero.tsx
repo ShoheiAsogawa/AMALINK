@@ -182,7 +182,7 @@ export function Hero() {
                 {t.hero.line2}
               </span>
             </span>
-            <span className="mx-auto block w-full pt-4 text-center text-3xl leading-tight drop-shadow-sm sm:text-4xl md:hidden">
+            <span className="mx-auto block w-full pt-4 text-center text-3xl leading-tight [word-break:keep-all] drop-shadow-sm sm:text-4xl md:hidden">
               {t.hero.line1}
               <br />
               <span className="text-amami-blue">{t.hero.line2}</span>

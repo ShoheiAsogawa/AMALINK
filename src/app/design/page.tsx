@@ -91,9 +91,9 @@ export default function DesignPage() {
             <p className="mb-4 font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
               Creative Design
             </p>
-            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
+            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] font-bold text-brand-gradient [word-break:keep-all] sm:text-4xl sm:leading-tight md:text-6xl">
               <span className="block">{DESIGN_GEO.h1Primary}</span>
-              <span className="block whitespace-nowrap">{DESIGN_GEO.h1Secondary}</span>
+              <span className="block">{DESIGN_GEO.h1Secondary}</span>
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl" data-geo-answer>
               {LEGAL_NAME}は、ロゴや名刺、パンフレットなど、ブランドの印象を伝えるビジュアルを制作します。印刷の手配から納品まで一気通貫で対応でき、Webと合わせた統一もご相談ください。拠点は奄美大島で、全国オンラインにも対応しています。
@@ -106,8 +106,10 @@ export default function DesignPage() {
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">What we design</p>
-            <h2 className="mt-3 whitespace-nowrap font-serif text-[clamp(1.35rem,5.5vw,3rem)] md:text-5xl font-bold text-brand-gradient">
-              対応できるデザインの例
+            <h2 className="mt-3 font-serif text-3xl font-bold text-brand-gradient [word-break:keep-all] md:text-5xl">
+              対応できる
+              <br className="md:hidden" />
+              デザインの例
             </h2>
             <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">
               下記は対応例です。単体のご依頼から、複数媒体の統一までご相談いただけます。
@@ -152,7 +154,7 @@ export default function DesignPage() {
         <section className="bg-slate-50 px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">FAQ</p>
-            <h2 className="mt-3 font-serif text-2xl md:text-5xl font-bold text-brand-gradient">
+            <h2 className="mt-3 font-serif text-2xl font-bold text-brand-gradient [word-break:keep-all] md:text-5xl">
               デザインのよくある質問
             </h2>
             <div className="mt-10">

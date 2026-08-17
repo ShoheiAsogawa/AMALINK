@@ -17,7 +17,7 @@ export function FaqPageView({ locale }: { locale: Locale }) {
         <p className="mb-3 text-center text-xs font-sans uppercase tracking-widest text-amami-blue">
           FAQ
         </p>
-        <h1 className="mb-4 text-center font-serif text-3xl text-slate-800 md:text-5xl">
+        <h1 className="mb-4 text-center font-serif text-3xl text-slate-800 [word-break:keep-all] md:text-5xl">
           {t.heading}
         </h1>
         <p className="mb-12 text-center font-sans leading-loose text-slate-500">

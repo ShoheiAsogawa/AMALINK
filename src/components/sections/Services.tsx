@@ -427,7 +427,7 @@ function ServicesCopy({ className }: { className?: string }) {
     >
       <SectionEyebrow label="Services" color="blue" />
 
-      <h2 className="mb-8 font-serif text-3xl leading-tight tracking-normal text-slate-800 md:text-5xl">
+      <h2 className="mb-8 font-serif text-3xl leading-tight tracking-normal text-slate-800 [word-break:keep-all] md:text-5xl">
         {t.heading}
         <br />
         {t.headingLine2}

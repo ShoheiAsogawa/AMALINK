@@ -17,7 +17,7 @@ export function CiteableAnswer({ answer }: { answer: string }) {
     <section className="px-6 py-16 md:py-20" aria-labelledby="geo-answer-heading">
       <div className="mx-auto max-w-5xl">
         <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">Quick answer</p>
-        <h2 id="geo-answer-heading" className="mt-3 font-serif text-2xl md:text-4xl font-bold text-brand-gradient">
+        <h2 id="geo-answer-heading" className="mt-3 font-serif text-2xl font-bold text-brand-gradient [word-break:keep-all] md:text-4xl">
           ひとことで言うと
         </h2>
         <p className="mt-6 max-w-4xl font-sans text-lg leading-loose text-slate-700 md:text-xl" data-geo-answer>
@@ -43,7 +43,7 @@ export function WhyLocalSection({
     <section className="bg-slate-50 px-6 py-20 md:py-28">
       <div className="mx-auto max-w-5xl">
         <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">{eyebrow}</p>
-        <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">{heading}</h2>
+        <h2 className="mt-3 font-serif text-3xl font-bold text-brand-gradient [word-break:keep-all] md:text-5xl">{heading}</h2>
         <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">{intro}</p>
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {items.map((item) => (
@@ -63,7 +63,7 @@ export function RelatedServices({ links }: { links: readonly RelatedLink[] }) {
     <section className="px-6 pb-8 pt-4 md:pb-12">
       <div className="mx-auto max-w-5xl">
         <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">Related</p>
-        <h2 className="mt-3 font-serif text-2xl md:text-3xl font-bold text-brand-gradient">あわせてご覧ください</h2>
+        <h2 className="mt-3 font-serif text-2xl font-bold text-brand-gradient [word-break:keep-all] md:text-3xl">あわせてご覧ください</h2>
         <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3 font-sans text-sm md:text-base">
           {links.map((link) => (
             <li key={link.href}>

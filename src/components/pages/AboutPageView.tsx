@@ -24,7 +24,7 @@ export function AboutPageView({ locale }: { locale: Locale }) {
     <main className="min-h-screen bg-slate-50 text-slate-800">
       <Header />
 
-      <section className="relative isolate flex min-h-[100dvh] items-end overflow-hidden md:items-center">
+      <section className="relative isolate flex min-h-[100dvh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <AmbientVideo
             poster="/about/hero.webp"
@@ -35,7 +35,7 @@ export function AboutPageView({ locale }: { locale: Locale }) {
         <div className="absolute inset-0 bg-gradient-to-b from-white/78 via-white/62 to-white" />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white to-transparent" />
 
-        <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-6 pb-20 pt-36 text-center md:pb-24 md:pt-28">
+        <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-6 pt-16 pb-36 text-center md:py-24">
           <div className="relative mb-8 h-28 w-28 md:mb-10 md:h-40 md:w-40">
             <Image
               src={`${assetBase}/logo.png`}
@@ -49,9 +49,10 @@ export function AboutPageView({ locale }: { locale: Locale }) {
           <p className="mb-3 font-sans text-[11px] uppercase tracking-[0.42em] text-amami-blue">
             Company
           </p>
-          <h1 className="font-serif text-4xl tracking-wide text-slate-800 md:text-6xl">{t.heading}</h1>
-          <p className="mt-5 font-sans text-sm tracking-[0.18em] text-slate-500 md:text-base">
-            {t.taglineBefore}{" "}
+          <h1 className="font-serif text-4xl tracking-wide text-slate-800 [word-break:keep-all] md:text-6xl">{t.heading}</h1>
+          <p className="mt-5 font-sans text-sm tracking-[0.12em] text-slate-500 [word-break:keep-all] md:text-base md:tracking-[0.18em]">
+            {t.taglineBefore}
+            <br />
             <span className="text-brand-gradient">{t.taglineAccent}</span>
           </p>
         </div>
@@ -63,10 +64,18 @@ export function AboutPageView({ locale }: { locale: Locale }) {
             <p className="mb-4 font-sans text-xs uppercase tracking-[0.28em] text-amami-blue">
               About
             </p>
-            <h2 className="mb-8 font-serif text-3xl leading-tight text-slate-800 md:text-4xl">
-              {t.storyHeading}
+            <h2 className="mb-8 font-serif text-3xl leading-tight text-slate-800 [word-break:keep-all] md:text-4xl">
+              {locale === "ja" ? (
+                <>
+                  デジタルだけど、
+                  <br />
+                  体温のある仕事を。
+                </>
+              ) : (
+                t.storyHeading
+              )}
             </h2>
-            <div className="space-y-6 font-serif text-base leading-loose text-slate-600 md:text-lg">
+            <div className="space-y-6 font-serif text-base leading-loose text-slate-600 [word-break:keep-all] md:text-lg">
               <p>{t.storyP1}</p>
               <p>
                 {t.storyP2Before}
@@ -131,20 +140,20 @@ export function AboutPageView({ locale }: { locale: Locale }) {
               <p className="mb-3 font-sans text-xs uppercase tracking-[0.28em] text-amami-blue">
                 {t.profile}
               </p>
-              <h2 className="mb-8 font-serif text-3xl text-slate-800">{t.profileHeading}</h2>
+              <h2 className="mb-8 font-serif text-3xl text-slate-800 [word-break:keep-all]">{t.profileHeading}</h2>
               <dl className="divide-y divide-slate-100">
                 {profile.map((row) => (
                   <div
                     key={row.label}
-                    className="grid grid-cols-[7.5rem_minmax(0,1fr)] gap-4 py-3.5 md:grid-cols-[8.5rem_minmax(0,1fr)]"
+                    className="grid grid-cols-1 gap-1 py-3.5 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-4 md:grid-cols-[8.5rem_minmax(0,1fr)]"
                   >
                     <dt className="font-sans text-xs tracking-wider text-slate-400">{row.label}</dt>
-                    <dd className="font-sans text-sm leading-relaxed text-slate-700 md:text-[15px]">
+                    <dd className="font-sans text-sm leading-relaxed text-slate-700 [overflow-wrap:anywhere] [word-break:keep-all] md:text-[15px]">
                       {row.value}
                     </dd>
                   </div>
                 ))}
-                <div className="grid grid-cols-[7.5rem_minmax(0,1fr)] items-start gap-4 py-4 md:grid-cols-[8.5rem_minmax(0,1fr)]">
+                <div className="grid grid-cols-1 items-start gap-1 py-4 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-4 md:grid-cols-[8.5rem_minmax(0,1fr)]">
                   <dt className="pt-0.5 font-sans text-xs tracking-wider text-slate-400">{t.labels.businesses}</dt>
                   <dd>
                     <ol className="space-y-2.5">
@@ -157,7 +166,7 @@ export function AboutPageView({ locale }: { locale: Locale }) {
                             <span className="w-5 shrink-0 font-sans text-[11px] tabular-nums tracking-wider text-amami-blue">
                               {String(index + 1).padStart(2, "0")}
                             </span>
-                            <span className="font-serif text-[15px] text-slate-800 transition-colors group-hover:text-amami-blue">
+                              <span className="font-serif text-[15px] text-slate-800 [word-break:keep-all] transition-colors group-hover:text-amami-blue">
                               {locale === "en" ? service.enName : service.name}
                             </span>
                           </Link>

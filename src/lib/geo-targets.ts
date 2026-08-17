@@ -58,7 +58,6 @@ export const WEB_PRODUCTION_GEO = {
       question: "1ページだけの簡単なサイトでもお願いできますか？",
       answer:
         "可能です。最初は必要最低限で始めて、あとからページを増やす進め方もよくあります。",
-      singleLineOnMobile: true,
       moreHref: "/contact",
     },
     {
@@ -80,7 +79,6 @@ export const WEB_PRODUCTION_GEO = {
       question: "料金や制作期間はどのくらいですか？",
       answer:
         "ページ数、デザインの範囲、素材の準備状況によって変わります。ヒアリング後に概算と目安スケジュールをご案内します。",
-      singleLineOnMobile: true,
       moreHref: "/contact",
     },
   ],
@@ -136,7 +134,6 @@ export const DESIGN_GEO = {
       question: "印刷の手配までお願いできますか？",
       answer:
         "はい。デザインから印刷の手配、納品まで一気通貫で対応できます。データだけ欲しい場合もご相談ください。",
-      singleLineOnMobile: true,
       moreHref: "/contact",
     },
     {
@@ -158,7 +155,6 @@ export const DESIGN_GEO = {
       question: "料金の目安はありますか？",
       answer:
         "制作物の種類、案の数、印刷の有無や部数によって異なります。ご希望を伺ったうえで概算をご案内します。",
-      singleLineOnMobile: true,
       moreHref: "/contact",
     },
   ],

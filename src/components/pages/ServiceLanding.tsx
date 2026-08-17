@@ -29,7 +29,7 @@ export function ServiceLanding({ slug, locale }: { slug: string; locale: Locale 
           <p className="mb-4 font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
             {copy.eyebrow}
           </p>
-          <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] font-bold text-brand-gradient sm:text-4xl sm:leading-tight md:text-6xl">
+          <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] font-bold text-brand-gradient [word-break:keep-all] sm:text-4xl sm:leading-tight md:text-6xl">
             {copy.h1.map((line) => (
               <span key={line} className="block">
                 {line}
@@ -58,7 +58,7 @@ export function ServiceLanding({ slug, locale }: { slug: string; locale: Locale 
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
               {section.eyebrow}
             </p>
-            <h2 className="mt-3 font-serif text-3xl font-bold text-brand-gradient md:text-5xl">
+            <h2 className="mt-3 font-serif text-3xl font-bold text-brand-gradient [word-break:keep-all] md:text-5xl">
               {section.heading}
             </h2>
             {section.body ? (
@@ -100,7 +100,7 @@ export function ServiceLanding({ slug, locale }: { slug: string; locale: Locale 
       <section className="bg-slate-50 px-6 py-20 md:py-28">
         <div className="mx-auto max-w-5xl">
           <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">FAQ</p>
-          <h2 className="mt-3 font-serif text-2xl font-bold text-brand-gradient md:text-5xl">
+          <h2 className="mt-3 font-serif text-2xl font-bold text-brand-gradient [word-break:keep-all] md:text-5xl">
             {copy.faqHeading}
           </h2>
           <div className="mt-10">

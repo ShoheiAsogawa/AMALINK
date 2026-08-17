@@ -19,6 +19,19 @@ type ContactProps = {
   description?: ReactNode;
 };
 
+function jaMobileTitle(title: ReactNode): ReactNode {
+  if (typeof title !== "string") return title;
+  const idx = title.indexOf("、");
+  if (idx === -1) return title;
+  return (
+    <>
+      {title.slice(0, idx + 1)}
+      <br className="md:hidden" />
+      {title.slice(idx + 1)}
+    </>
+  );
+}
+
 export function Contact({
   id = "contact",
   title,
@@ -27,11 +40,8 @@ export function Contact({
   const locale = useLocale();
   const t = getMessages(locale).contact;
   const lineUrl = getOfficialLineAddFriendUrl();
-  const resolvedTitle = title ?? (
-    <>
-      {t.title}
-    </>
-  );
+  const resolvedTitle = title ?? t.title;
+  const displayTitle = locale === "ja" ? jaMobileTitle(resolvedTitle) : resolvedTitle;
   const resolvedDescription = description ?? (
     <>
       {t.description[0]}
@@ -56,8 +66,8 @@ export function Contact({
         >
           <SectionEyebrow label="Contact Us" color="green" />
 
-          <h2 className="mb-5 max-w-3xl text-center font-serif text-[1.65rem] leading-snug text-slate-800 [letter-spacing:0] md:mb-7 md:text-4xl md:leading-tight lg:text-[2.75rem]">
-            {resolvedTitle}
+          <h2 className="mb-5 max-w-3xl text-center font-serif text-[1.65rem] leading-snug text-slate-800 [letter-spacing:0] [word-break:keep-all] md:mb-7 md:text-4xl md:leading-tight lg:text-[2.75rem]">
+            {displayTitle}
           </h2>
 
           <p className="mb-9 max-w-xl text-center font-sans text-sm leading-relaxed text-slate-500 md:mb-11 md:text-base md:leading-loose">

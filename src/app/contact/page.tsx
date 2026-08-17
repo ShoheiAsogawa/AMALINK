@@ -116,7 +116,7 @@ export default function ContactPage() {
                     <p className="mb-3 font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
                       Contact
                     </p>
-                    <h1 className="mb-4 font-serif text-3xl text-slate-800 md:text-5xl">
+                    <h1 className="mb-4 font-serif text-3xl text-slate-800 [word-break:keep-all] md:text-5xl">
                       {t.heading}
                     </h1>
                     <p className="mx-auto max-w-xl font-sans leading-loose text-slate-600">

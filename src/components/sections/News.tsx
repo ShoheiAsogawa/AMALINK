@@ -62,7 +62,7 @@ export function NewsSection({ news }: { news: News[] }) {
       <div className="container relative z-10 mx-auto max-w-4xl px-4">
         <div className="mb-12 flex flex-col items-center text-center md:mb-16">
           <SectionEyebrow label="News" color="green" />
-          <h2 className="text-3xl font-serif leading-tight text-slate-800 [letter-spacing:0] md:text-5xl">
+          <h2 className="text-3xl font-serif leading-tight text-slate-800 [letter-spacing:0] [word-break:keep-all] md:text-5xl">
             {t.heading}
           </h2>
           {news.length > 0 && (

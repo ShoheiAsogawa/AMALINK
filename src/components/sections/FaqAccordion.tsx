@@ -54,7 +54,6 @@ function FaqAccordionItem({
   moreLabel,
   isOpen,
   onToggle,
-  singleLineOnMobile,
 }: {
   id: string;
   question: string;
@@ -63,7 +62,6 @@ function FaqAccordionItem({
   moreLabel?: string;
   isOpen: boolean;
   onToggle: () => void;
-  singleLineOnMobile?: boolean;
 }) {
   const buttonId = `faq-btn-${id}`;
   const panelId = `faq-panel-${id}`;
@@ -78,12 +76,7 @@ function FaqAccordionItem({
         aria-controls={panelId}
         className="flex w-full items-start justify-between gap-4 px-5 py-5 text-left md:px-8 md:py-6"
       >
-        <span
-          className={cn(
-            "font-serif text-base leading-snug text-slate-800 md:text-lg",
-            singleLineOnMobile && "whitespace-nowrap text-sm sm:text-base"
-          )}
-        >
+        <span className="font-serif text-base leading-snug text-slate-800 [overflow-wrap:anywhere] [word-break:keep-all] md:text-lg">
           {question}
         </span>
         <ChevronDown
@@ -118,7 +111,6 @@ export type FaqAccordionEntry = {
   answer: string;
   moreHref?: string;
   moreLabel?: string;
-  singleLineOnMobile?: boolean;
 };
 
 export function FaqAccordion({ items }: { items?: FaqAccordionEntry[] }) {
@@ -149,7 +141,6 @@ export function FaqAccordion({ items }: { items?: FaqAccordionEntry[] }) {
             answer={item.answer}
             moreHref={item.moreHref}
             moreLabel={item.moreLabel}
-            singleLineOnMobile={item.singleLineOnMobile}
             isOpen={openIds.has(item.id)}
             onToggle={() => toggle(item.id)}
           />

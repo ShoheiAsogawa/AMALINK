@@ -269,7 +269,7 @@ function AboutCopy({ className }: { className?: string }) {
     >
       <SectionEyebrow label="About Us" color="blue" align="responsive" />
 
-      <h2 className="mb-10 font-serif text-3xl leading-tight tracking-normal text-slate-800 md:mb-12 md:text-5xl">
+      <h2 className="mb-10 font-serif text-3xl leading-tight tracking-normal text-slate-800 [word-break:keep-all] md:mb-12 md:text-5xl">
         {t.headingBefore}
         <br />
         {t.headingMuted ? (

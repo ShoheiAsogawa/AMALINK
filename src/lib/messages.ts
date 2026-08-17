@@ -855,7 +855,7 @@ en.servicePages = {
     metaDescription:
       "AI consulting from Amami Oshima. We help you use generative AI in real work and can build internal chatbots from your company knowledge.",
     crumb: "AI consulting",
-    h1: ["General-purpose AI, and bots that know your company."],
+    h1: ["General-purpose AI,", "and bots that know your company."],
     h1Sub: "Practical ways to use AI on your own work.",
     intro:
       "Godo Kaisha AMALINK helps you adopt generative AI and can also build internal chatbots trained on manuals and company knowledge — until they are actually usable in your operations.",

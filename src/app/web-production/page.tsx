@@ -91,9 +91,9 @@ export default function WebProductionPage() {
             <p className="mb-4 font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
               Web Production
             </p>
-            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
+            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] font-bold text-brand-gradient [word-break:keep-all] sm:text-4xl sm:leading-tight md:text-6xl">
               <span className="block">{WEB_PRODUCTION_GEO.h1Primary}</span>
-              <span className="block sm:inline">{WEB_PRODUCTION_GEO.h1Secondary}</span>
+              <span className="block">{WEB_PRODUCTION_GEO.h1Secondary}</span>
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl" data-geo-answer>
               {LEGAL_NAME}は、見やすさと更新しやすさを大切にしたホームページを制作します。新規制作もリニューアルも、目的が固まっていない段階からご相談いただけます。拠点は奄美大島で、全国オンラインにも対応しています。
@@ -106,7 +106,7 @@ export default function WebProductionPage() {
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">What we build</p>
-            <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">
+            <h2 className="mt-3 font-serif text-3xl font-bold text-brand-gradient [word-break:keep-all] md:text-5xl">
               対応できるサイトの例
             </h2>
             <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">
@@ -152,8 +152,10 @@ export default function WebProductionPage() {
         <section className="bg-slate-50 px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">FAQ</p>
-            <h2 className="mt-3 font-serif text-2xl md:text-5xl font-bold text-brand-gradient">
-              ホームページ制作のよくある質問
+            <h2 className="mt-3 font-serif text-2xl font-bold text-brand-gradient [word-break:keep-all] md:text-5xl">
+              ホームページ制作の
+              <br className="md:hidden" />
+              よくある質問
             </h2>
             <div className="mt-10">
               <FaqAccordion items={[...faqs]} />

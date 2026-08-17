@@ -33,7 +33,7 @@ export async function NewsListView({ locale }: { locale: Locale }) {
               <div className="w-12 h-[1px] bg-amami-green" />
               <span className="text-amami-green text-xs font-bold tracking-[0.2em] uppercase">News</span>
             </div>
-            <h1 className="text-3xl md:text-5xl font-serif text-slate-800 leading-tight">{t.heading}</h1>
+            <h1 className="text-3xl md:text-5xl font-serif text-slate-800 leading-tight [word-break:keep-all]">{t.heading}</h1>
             {t.japaneseNote ? (
               <p className="mt-4 font-sans text-sm text-slate-500">{t.japaneseNote}</p>
             ) : null}

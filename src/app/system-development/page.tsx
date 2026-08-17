@@ -62,7 +62,6 @@ const faqs = [
     question: "奄美大島以外からも依頼できますか？",
     answer:
       "はい。奄美群島・鹿児島県内に加え、全国からオンラインでご相談いただけます。奄美大島では対面での打ち合わせもご相談ください。",
-    singleLineOnMobile: true,
     moreHref: "/contact",
   },
   {
@@ -70,7 +69,6 @@ const faqs = [
     question: "小規模な業務改善でも依頼できますか？",
     answer:
       "可能です。必要な機能だけで小さく始め、実際の運用を見ながら追加する進め方にも対応します。",
-    singleLineOnMobile: true,
     moreHref: "/contact",
   },
   {
@@ -78,7 +76,6 @@ const faqs = [
     question: "料金や開発期間はどのくらいですか？",
     answer:
       "対象業務、利用人数、必要な機能、既存データの状態によって変わります。現状を確認したうえで、範囲・概算費用・スケジュールをご案内します。",
-    singleLineOnMobile: true,
     moreHref: "/contact",
   },
 ];
@@ -160,10 +157,9 @@ export default function SystemDevelopmentPage() {
             <p className="mb-4 font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
               System Development
             </p>
-            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
+            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] font-bold text-brand-gradient [word-break:keep-all] sm:text-4xl sm:leading-tight md:text-6xl">
               <span className="block">奄美大島の事業に合う、</span>
-              <span className="block sm:inline">小さく始める</span>
-              <span className="block sm:inline">システム開発<span className="hidden sm:inline">。</span></span>
+              <span className="block">小さく始めるシステム開発。</span>
             </h1>
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
               {LEGAL_NAME}は、奄美大島を拠点に、予約・在庫・問い合わせ管理などのWebアプリや業務システムを開発します。紙やExcelで続けてきた業務の整理から相談でき、奄美群島では地域の運用事情を踏まえてご提案します。
@@ -174,8 +170,10 @@ export default function SystemDevelopmentPage() {
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">What we build</p>
-            <h2 className="mt-3 whitespace-nowrap font-serif text-[clamp(1.35rem,5.5vw,3rem)] md:text-5xl font-bold text-brand-gradient">
-              対応できるシステムの例
+            <h2 className="mt-3 font-serif text-3xl font-bold text-brand-gradient [word-break:keep-all] md:text-5xl">
+              対応できる
+              <br className="md:hidden" />
+              システムの例
             </h2>
             <p className="mt-6 max-w-3xl font-sans leading-loose text-slate-600">
               下記は対応例です。既製サービスで十分な場合も含め、業務に合う方法を一緒に検討します。
@@ -210,7 +208,11 @@ export default function SystemDevelopmentPage() {
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">FAQ</p>
-            <h2 className="mt-3 whitespace-nowrap font-serif text-[1.375rem] md:text-5xl font-bold text-brand-gradient">システム開発のよくある質問</h2>
+            <h2 className="mt-3 font-serif text-2xl font-bold text-brand-gradient [word-break:keep-all] md:text-5xl">
+              システム開発の
+              <br className="md:hidden" />
+              よくある質問
+            </h2>
             <div className="mt-10">
               <FaqAccordion items={faqs} />
             </div>

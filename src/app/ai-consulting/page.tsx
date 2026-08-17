@@ -90,7 +90,6 @@ const faqs = [
     question: "社内用のチャットボットも作れますか？",
     answer:
       "はい。社内マニュアル、就業ルール、商品・サービス知識など、会社の情報に特化した社内用チャットボットを制作できます。目的に合わせて最適な形を選びます。",
-    singleLineOnMobile: true,
     moreHref: "/contact",
   },
   {
@@ -98,7 +97,6 @@ const faqs = [
     question: "どんなAIの支援に対応していますか？",
     answer:
       "生成AIの業務活用、社内特化チャットボット、開発現場向けのAI活用が中心です。画像生成や使わない自動化ツールを無理に勧めることはしません。常にその時点で実用的な手段を選びます。",
-    singleLineOnMobile: true,
     moreHref: "/contact",
   },
   {
@@ -106,7 +104,6 @@ const faqs = [
     question: "最新のAI情報をもとに提案してもらえますか？",
     answer:
       "はい。新しいモデルや機能の動きを見ながら、御社の業務で本当に使えるかを基準にご提案します。導入後の見直しもご相談いただけます。",
-    singleLineOnMobile: true,
     moreHref: "/contact",
   },
   {
@@ -114,7 +111,6 @@ const faqs = [
     question: "ホームページ制作やシステム開発と組み合わせられますか？",
     answer:
       "可能です。AI導入の相談から、必要に応じて公開サイト向けチャットボット、業務システム、Web制作まで一貫してご相談いただけます。",
-    singleLineOnMobile: true,
     moreHref: "/web-production",
   },
 ];
@@ -214,8 +210,9 @@ export default function AiConsultingPage() {
             <p className="mb-4 font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">
               AI Consulting
             </p>
-            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] sm:text-4xl sm:leading-tight md:text-6xl font-bold text-brand-gradient">
-              <span className="block">汎用AIも、社内特化ボットも。</span>
+            <h1 className="max-w-4xl font-serif text-2xl leading-[1.65] font-bold text-brand-gradient [word-break:keep-all] sm:text-4xl sm:leading-tight md:text-6xl">
+              <span className="block">汎用AIも、</span>
+              <span className="block">社内特化ボットも。</span>
               <span className="mt-2 block text-[0.72em] font-bold text-slate-700 sm:mt-3 md:text-[0.55em]">
                 会社のことに強いAIの使い方へ。
               </span>
@@ -290,8 +287,10 @@ export default function AiConsultingPage() {
         <section className="bg-slate-50 px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
             <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">FAQ</p>
-            <h2 className="mt-3 font-serif text-2xl md:text-5xl font-bold text-brand-gradient">
-              AIコンサルティングのよくある質問
+            <h2 className="mt-3 font-serif text-2xl font-bold text-brand-gradient [word-break:keep-all] md:text-5xl">
+              AIコンサルティングの
+              <br className="md:hidden" />
+              よくある質問
             </h2>
             <div className="mt-10">
               <FaqAccordion items={faqs} />
