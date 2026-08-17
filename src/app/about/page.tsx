@@ -37,12 +37,9 @@ export const metadata: Metadata = {
 
 const PROFILE = [
   { label: "商号", value: COMPANY_OVERVIEW.legalName },
-  { label: "ブランド名", value: `${COMPANY_OVERVIEW.brandName}（アマリンク）` },
   { label: "代表社員", value: COMPANY_OVERVIEW.representative },
   { label: "資本金", value: COMPANY_OVERVIEW.capital },
   { label: "所在地", value: COMPANY_OVERVIEW.address },
-  { label: "拠点", value: COMPANY_OVERVIEW.baseLocation },
-  { label: "対応エリア", value: COMPANY_OVERVIEW.serviceArea },
 ] as const;
 
 function AboutJsonLd() {
