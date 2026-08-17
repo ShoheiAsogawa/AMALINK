@@ -8,11 +8,13 @@ const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 type Props = {
   className?: string;
   poster: string;
+  src: string;
+  srcSm?: string;
   /** 画面内に入ったときだけ再生。外れたら止めて負荷を落とす */
   ariaHidden?: boolean;
 };
 
-export function AmbientVideo({ className, poster, ariaHidden = true }: Props) {
+export function AmbientVideo({ className, poster, src, srcSm, ariaHidden = true }: Props) {
   const ref = useRef<HTMLVideoElement>(null);
   const [canLoad, setCanLoad] = useState(false);
 
@@ -61,8 +63,10 @@ export function AmbientVideo({ className, poster, ariaHidden = true }: Props) {
     >
       {canLoad ? (
         <>
-          <source src={`${assetBase}/about/amami-loop-sm.mp4`} type="video/mp4" media="(max-width: 767px)" />
-          <source src={`${assetBase}/about/amami-loop.mp4`} type="video/mp4" />
+          {srcSm ? (
+            <source src={`${assetBase}${srcSm}`} type="video/mp4" media="(max-width: 767px)" />
+          ) : null}
+          <source src={`${assetBase}${src}`} type="video/mp4" />
         </>
       ) : null}
     </video>

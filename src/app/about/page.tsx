@@ -86,7 +86,11 @@ export default function AboutPage() {
 
         <section className="relative isolate flex min-h-[100dvh] items-end overflow-hidden md:items-center">
           <div className="absolute inset-0">
-            <AmbientVideo poster="/about/poster-1.webp" />
+            <AmbientVideo
+              poster="/about/hero.webp"
+              src="/about/hero.mp4"
+              srcSm="/about/hero-sm.mp4"
+            />
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-white/78 via-white/62 to-white" />
           <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white to-transparent" />
@@ -142,8 +146,24 @@ export default function AboutPage() {
 
             <div className="overflow-hidden rounded-[1.6rem] border border-slate-100 bg-slate-50 shadow-sm">
               <div className="aspect-[16/10]">
-                <AmbientVideo poster="/about/poster-2.webp" />
+                <AmbientVideo
+                  poster="/about/story.webp"
+                  src="/about/story.mp4"
+                  srcSm="/about/story-sm.mp4"
+                />
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-slate-50 px-6 py-10 md:py-14">
+          <div className="mx-auto max-w-6xl overflow-hidden rounded-[1.6rem] border border-slate-100 bg-white shadow-sm">
+            <div className="aspect-[16/7] md:aspect-[21/8]">
+              <AmbientVideo
+                poster="/about/band.webp"
+                src="/about/band.mp4"
+                srcSm="/about/band-sm.mp4"
+              />
             </div>
           </div>
         </section>
@@ -151,24 +171,15 @@ export default function AboutPage() {
         <section className="bg-white px-6 py-20 md:py-28">
           <div className="mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-slate-100 bg-slate-50">
             <div className="grid lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-              <div className="relative min-h-[16rem] lg:min-h-full">
-                <Image
-                  src={`${assetBase}/about/poster-3.webp`}
-                  alt="奄美大島の風景"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 42vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/15">
-                  <div className="relative h-24 w-24 drop-shadow-[0_8px_24px_rgba(0,0,0,0.35)] md:h-32 md:w-32">
-                    <Image
-                      src={`${assetBase}/logo.png`}
-                      alt={`${LEGAL_NAME} ロゴ`}
-                      fill
-                      sizes="128px"
-                      className="object-contain"
-                    />
-                  </div>
+              <div className="flex min-h-[16rem] items-center justify-center bg-slate-50 lg:min-h-full">
+                <div className="relative h-28 w-28 md:h-36 md:w-36">
+                  <Image
+                    src={`${assetBase}/logo.png`}
+                    alt={`${LEGAL_NAME} ロゴ`}
+                    fill
+                    sizes="144px"
+                    className="object-contain"
+                  />
                 </div>
               </div>
 
