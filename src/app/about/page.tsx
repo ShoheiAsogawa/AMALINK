@@ -45,24 +45,6 @@ const PROFILE = [
   { label: "対応エリア", value: COMPANY_OVERVIEW.serviceArea },
 ] as const;
 
-const VALUES = [
-  {
-    en: "Rooted",
-    title: "島に根ざす",
-    body: "奄美の文化や風土を大切にしながら、デジタルの力で新しい可能性を育みます。",
-  },
-  {
-    en: "Ripple",
-    title: "波紋を広げる",
-    body: "小さな課題解決が、やがて大きな変化の波となり、島全体を豊かにしていきます。",
-  },
-  {
-    en: "Beside",
-    title: "人に寄り添う",
-    body: "難しい技術用語ではなく、分かりやすい言葉と温かい対応で、想いを形にします。",
-  },
-] as const;
-
 function AboutJsonLd() {
   const url = absoluteUrl("/about");
   const payload = {
@@ -170,23 +152,6 @@ export default function AboutPage() {
                 <AmbientVideo poster="/about/poster-2.webp" />
               </div>
             </div>
-          </div>
-        </section>
-
-        <section className="bg-slate-50 px-6 py-16 md:py-24">
-          <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-3">
-            {VALUES.map((item) => (
-              <article
-                key={item.en}
-                className="rounded-3xl border border-slate-100 bg-white p-7 shadow-sm md:p-8"
-              >
-                <p className="mb-3 font-sans text-[10px] uppercase tracking-[0.28em] text-amami-blue">
-                  {item.en}
-                </p>
-                <h3 className="mb-4 font-serif text-xl text-slate-800">{item.title}</h3>
-                <p className="font-sans text-sm leading-loose text-slate-500">{item.body}</p>
-              </article>
-            ))}
           </div>
         </section>
 
