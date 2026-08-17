@@ -5,7 +5,6 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { AmbientVideo } from "@/components/about/AmbientVideo";
 import { Contact } from "@/components/sections/Contact";
-import { WaveBackground } from "@/components/ui/WaveBackground";
 import { COMPANY_OVERVIEW, SERVICES } from "@/lib/site-content";
 import { absoluteUrl, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
 
@@ -82,38 +81,35 @@ export default function AboutPage() {
   return (
     <>
       <AboutJsonLd />
-      <main className="relative min-h-screen overflow-hidden bg-slate-50 text-slate-800">
+      <main className="min-h-screen bg-slate-50 text-slate-800">
         <Header />
 
-        <section className="relative px-6 pb-12 pt-32 md:pb-16 md:pt-40">
-          <div className="pointer-events-none absolute inset-0">
-            <WaveBackground color="blue-light" position="top" opacity={0.16} speed={18} />
+        <section className="relative isolate flex min-h-[100dvh] items-end overflow-hidden md:items-center">
+          <div className="absolute inset-0">
+            <AmbientVideo poster="/about/poster-1.webp" />
           </div>
-          <div className="relative mx-auto max-w-6xl text-center">
-            <div className="relative mx-auto mb-6 h-20 w-20 md:mb-8 md:h-28 md:w-28">
+          <div className="absolute inset-0 bg-gradient-to-b from-white/78 via-white/62 to-white" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white to-transparent" />
+
+          <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-6 pb-20 pt-36 text-center md:pb-24 md:pt-28">
+            <div className="relative mb-8 h-28 w-28 md:mb-10 md:h-40 md:w-40">
               <Image
                 src={`${assetBase}/logo.png`}
                 alt={`${LEGAL_NAME} ロゴ`}
                 fill
                 priority
-                sizes="112px"
-                className="object-contain"
+                sizes="160px"
+                className="object-contain drop-shadow-[0_12px_28px_rgba(15,23,42,0.12)]"
               />
             </div>
-            <p className="mb-3 font-sans text-xs uppercase tracking-[0.28em] text-amami-blue">
+            <p className="mb-3 font-sans text-[11px] uppercase tracking-[0.42em] text-amami-blue">
               Company
             </p>
-            <h1 className="font-serif text-4xl text-slate-800 md:text-6xl">会社概要</h1>
-            <p className="mt-5 font-sans text-sm leading-loose text-slate-500 md:text-base">
+            <h1 className="font-serif text-4xl tracking-wide text-slate-800 md:text-6xl">会社概要</h1>
+            <p className="mt-5 font-sans text-sm tracking-[0.18em] text-slate-500 md:text-base">
               島のリズムで、
-              <span className="text-amami-blue">未来をつくる。</span>
+              <span className="text-brand-gradient">未来をつくる。</span>
             </p>
-          </div>
-
-          <div className="relative mx-auto mt-10 max-w-6xl overflow-hidden rounded-[1.75rem] border border-slate-100 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.08)] md:mt-14">
-            <div className="aspect-[16/9] md:aspect-[21/9]">
-              <AmbientVideo poster="/about/poster-1.webp" />
-            </div>
           </div>
         </section>
 
