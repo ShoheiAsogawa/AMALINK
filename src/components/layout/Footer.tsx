@@ -8,6 +8,7 @@ import { LEGAL_NAME } from "@/lib/seo";
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const FOOTER_LINKS = [
+  { href: "/about", label: "会社概要" },
   { href: "/ai-consulting", label: "AIコンサルティング" },
   { href: "/web-production", label: "ホームページ制作" },
   { href: "/design", label: "デザイン" },

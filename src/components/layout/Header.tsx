@@ -32,7 +32,7 @@ export default function Header() {
   const mobileNavIconClass = "size-[1em] shrink-0 opacity-90";
 
   const navItems: NavItem[] = [
-    { name: "About", href: "/#about", label: "私たちについて", en: "About Us" },
+    { name: "About", href: "/about", label: "会社概要", en: "Company" },
     { name: "Services", href: "/#services", label: "サービス", en: "Services" },
     { name: "News", href: "/news", label: "お知らせ", en: "News" },
     { name: "FAQ", href: "/faq", label: "よくある質問", en: "FAQ" },

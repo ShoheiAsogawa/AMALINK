@@ -21,7 +21,7 @@ const HIGH_PRIORITY = new Set<string>([
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const staticPaths = ["", ...SERVICE_PATHS, "/faq", "/news", "/contact"] as const;
+  const staticPaths = ["", ...SERVICE_PATHS, "/about", "/faq", "/news", "/contact"] as const;
 
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => {
     const isHome = path === "";
@@ -38,7 +38,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             ? 0.95
             : (SERVICE_PATHS as readonly string[]).includes(path)
               ? 0.9
-              : path === "/faq"
+              : path === "/about" || path === "/faq"
                 ? 0.8
                 : 0.7,
     };

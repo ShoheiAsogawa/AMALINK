@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Sprout, Waves, Users } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { WaveBackground } from "@/components/ui/WaveBackground";
+import Link from "next/link";
 import { LEGAL_NAME } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import { usePinnedHorizontalScroll } from "@/components/ui/usePinnedHorizontalScroll";
@@ -280,6 +281,14 @@ function AboutCopy({ className }: { className?: string }) {
           」という2つの願いが込められています。
         </p>
         <p>{ABOUT_CLOSING_COPY}</p>
+        <p className="pt-2">
+          <Link
+            href="/about"
+            className="font-sans text-sm tracking-wide text-amami-blue transition hover:text-amami-green"
+          >
+            会社概要を見る
+          </Link>
+        </p>
       </div>
     </motion.div>
   );
