@@ -1,28 +1,9 @@
 import type { Metadata } from "next";
-import { Zen_Old_Mincho, Zen_Kaku_Gothic_New } from "next/font/google";
 import { AmalinkChatbot } from "@/components/chatbot/AmalinkChatbot";
 import { PixelPlayButton } from "@/components/ui/PixelPlayButton";
 import { RootJsonLd } from "@/components/seo/JsonLd";
 import { absoluteUrl, DEFAULT_DESCRIPTION, DEFAULT_TITLE, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
 import "./globals.css";
-
-const zenMincho = Zen_Old_Mincho({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-  variable: "--font-serif",
-  display: "swap",
-  preload: false,
-  adjustFontFallback: true,
-});
-
-const zenGothic = Zen_Kaku_Gothic_New({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-  preload: false,
-  adjustFontFallback: true,
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(absoluteUrl("/")),
@@ -107,7 +88,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`${zenMincho.variable} ${zenGothic.variable}`}>
+    <html lang="ja">
       <head>
         {/* Google tag (gtag.js) — 全ページ共通・ここ1箇所のみ */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XHQG5H0D3" />

@@ -384,7 +384,7 @@
   bottom: 2rem;
   right: 2rem;
   z-index: 55;
-  font-family: var(--font-serif, "Zen Old Mincho", serif);
+  font-family: var(--font-serif, "Hiragino Mincho ProN", serif);
   font-size: 12px;
   letter-spacing: 0.12em;
   color: rgba(186, 230, 253, 0.35);

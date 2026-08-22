@@ -22,8 +22,9 @@
   --color-amami-green-light: var(--amami-green-light);
   --color-sand-beige: var(--sand-beige);
 
-  --font-serif: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
-  --font-sans: "Zen Kaku Gothic New", "Helvetica Neue", sans-serif;
+  /* next/font/google の Zen は CJK が 200本超に分割され、本番で全件 preload される */
+  --font-serif: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", "Hiragino Mincho Pro", serif;
+  --font-sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, "Noto Sans JP", "Helvetica Neue", sans-serif;
   
   @keyframes float {
     0%, 100% { transform: translateY(0); }
