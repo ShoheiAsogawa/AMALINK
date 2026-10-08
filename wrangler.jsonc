@@ -6,6 +6,10 @@
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "account_id": "d2874089eebcda705bf220d39f117aec",
   "workers_dev": true,
+  "routes": [
+    { "pattern": "amalink.co.jp", "custom_domain": true },
+    { "pattern": "www.amalink.co.jp", "custom_domain": true }
+  ],
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
