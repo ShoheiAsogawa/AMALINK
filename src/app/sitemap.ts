@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getNewsList } from "@/lib/microcms";
+import { getNewsList } from "@/lib/cms";
 import { absoluteUrl } from "@/lib/seo";
 
 const SERVICE_PATHS = [

@@ -2,8 +2,8 @@ import { WaveBackground } from "@/components/ui/WaveBackground";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { ArrowRight, Newspaper } from "lucide-react";
 import Link from "next/link";
-import type { News } from "@/lib/microcms";
-import { formatMicroCmsDate, getContentCategories } from "@/lib/microcms";
+import type { News } from "@/lib/cms";
+import { formatNewsDate, getContentCategories } from "@/lib/cms";
 
 function CategoryBadge({ category }: { category: { id: string; title: string } }) {
   return (
@@ -20,7 +20,7 @@ function NewsItem({ item }: { item: News }) {
       className="group grid grid-cols-[auto_1fr_auto] md:grid-cols-[120px_auto_1fr_32px] items-center gap-3 md:gap-6 py-5 md:py-6 border-b border-slate-100 last:border-b-0 hover:bg-slate-50/50 transition-colors duration-200 px-2 -mx-2 rounded-lg"
     >
       <time className="text-xs md:text-sm text-slate-400 font-sans tabular-nums whitespace-nowrap">
-        {formatMicroCmsDate(item.publishedAt ?? item.createdAt)}
+        {formatNewsDate(item.publishedAt ?? item.createdAt)}
       </time>
       <div className="hidden md:flex gap-2">
         {getContentCategories(item.category).map((cat) => (

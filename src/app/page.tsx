@@ -7,7 +7,7 @@ import { Services } from "@/components/sections/Services";
 import { NewsSection } from "@/components/sections/News";
 import { Contact } from "@/components/sections/Contact";
 import { MarqueeSpacer } from "@/components/ui/MarqueeSpacer";
-import { getNewsList } from "@/lib/microcms";
+import { getNewsList } from "@/lib/cms";
 import { absoluteUrl, DEFAULT_DESCRIPTION, DEFAULT_TITLE } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ export default async function Home() {
     const res = await getNewsList({ limit: 5 });
     news = res.contents;
   } catch {
-    // microCMS 未接続時は空配列のまま表示
+    // CMS に届かないときは同梱の移行データに戻る
   }
 
   return (

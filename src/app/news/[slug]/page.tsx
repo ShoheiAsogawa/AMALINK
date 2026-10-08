@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { getNewsList, getNewsEntry, formatMicroCmsDate, getContentCategories } from "@/lib/microcms";
+import { getNewsList, getNewsEntry, formatNewsDate, getContentCategories } from "@/lib/cms";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   try {
     const news = await getNewsEntry(slug);
+    if (!news) return { title: "お知らせ" } satisfies Metadata;
     const path = `/news/${news.slug ?? slug}`;
     const description = stripHtmlToDescription(news.content) || news.title;
     const published = news.publishedAt ?? news.createdAt;
@@ -55,12 +56,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  let news;
-  try {
-    news = await getNewsEntry(slug);
-  } catch {
-    notFound();
-  }
+  const news = await getNewsEntry(slug).catch(() => null);
+  if (!news) notFound();
 
   const pathSegment = news.slug ?? slug;
 
@@ -87,7 +84,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
           </Link>
           <header className="mb-10">
             <time className="text-sm text-slate-400 font-sans tabular-nums block mb-4">
-              {formatMicroCmsDate(news.publishedAt ?? news.createdAt)}
+              {formatNewsDate(news.publishedAt ?? news.createdAt)}
             </time>
             <div className="flex flex-wrap gap-2 mb-6">
               {getContentCategories(news.category).map((cat) => (
@@ -102,7 +99,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
             <h1 className="text-2xl md:text-4xl font-serif text-slate-800 leading-snug">{news.title}</h1>
           </header>
           <div
-            className="font-sans text-slate-700 leading-loose [&_p]:mb-4 [&_h2]:text-xl [&_h2]:font-serif [&_h2]:mt-10 [&_h2]:mb-3 [&_h3]:text-lg [&_h3]:font-serif [&_h3]:mt-8 [&_h3]:mb-2 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_a]:text-amami-blue [&_a]:underline"
+            className="font-sans text-slate-700 leading-loose [&_p]:mb-4 [&_h2]:text-xl [&_h2]:font-serif [&_h2]:mt-10 [&_h2]:mb-3 [&_h3]:text-lg [&_h3]:font-serif [&_h3]:mt-8 [&_h3]:mb-2 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_a]:text-amami-blue [&_a]:underline [&_img]:my-8 [&_img]:w-full [&_img]:rounded-2xl"
             dangerouslySetInnerHTML={{ __html: news.content }}
           />
         </div>

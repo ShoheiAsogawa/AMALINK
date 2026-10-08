@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { getNewsList, formatMicroCmsDate, getContentCategories } from "@/lib/microcms";
+import { getNewsList, formatNewsDate, getContentCategories } from "@/lib/cms";
 import { ArrowRight, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { absoluteUrl, SITE_NAME } from "@/lib/seo";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "お知らせ",
@@ -43,7 +43,7 @@ export default async function NewsListPage() {
                   className="group flex flex-col md:flex-row md:items-center gap-2 md:gap-8 py-6 md:py-8 hover:bg-slate-50/50 transition-colors duration-200 px-2 -mx-2 rounded-lg"
                 >
                   <time className="text-xs md:text-sm text-slate-400 font-sans tabular-nums whitespace-nowrap shrink-0">
-                    {formatMicroCmsDate(item.publishedAt ?? item.createdAt)}
+                    {formatNewsDate(item.publishedAt ?? item.createdAt)}
                   </time>
                   <div className="flex gap-2 shrink-0">
                     {getContentCategories(item.category).map((cat) => (

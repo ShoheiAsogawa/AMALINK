@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/cms/node_modules
+/cms/.wrangler
 /.pnp
 .pnp.*
 .yarn/*

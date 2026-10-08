@@ -1,0 +1,27 @@
+{
+  "name": "amalink-cms",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-08",
+  "account_id": "d2874089eebcda705bf220d39f117aec",
+  "workers_dev": true,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "amalink-cms",
+      "database_id": "add869a1-6cd2-4ff7-a084-b5cf9ed4a9de"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "amalink-cms-media"
+    }
+  ],
+  "rules": [
+    {
+      "type": "Text",
+      "globs": ["**/*.html"],
+      "fallthrough": true
+    }
+  ]
+}
