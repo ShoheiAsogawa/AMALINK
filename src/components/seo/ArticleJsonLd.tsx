@@ -2,10 +2,11 @@ import { absoluteUrl, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
 
 type ArticleJsonLdProps = {
   title: string;
-  pathPrefix: "/news" | "/articles";
+  pathPrefix: "/news" | "/column" | "/articles";
   pathSegment: string;
   schemaType: "NewsArticle" | "BlogPosting";
   description?: string;
+  image?: string;
   publishedAt?: string;
   createdAt: string;
   updatedAt?: string;
@@ -18,6 +19,7 @@ export function ArticleJsonLd({
   pathSegment,
   schemaType,
   description,
+  image,
   publishedAt,
   createdAt,
   updatedAt,
@@ -57,6 +59,9 @@ export function ArticleJsonLd({
 
   if (description) {
     payload.description = description;
+  }
+  if (image) {
+    payload.image = [image];
   }
   if (articleSection) {
     payload.articleSection = articleSection;

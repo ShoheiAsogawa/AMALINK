@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { getNewsList, formatNewsDate, getContentCategories } from "@/lib/cms";
+import { ContentSwitch } from "@/components/content/ContentSwitch";
+import { CoverImage } from "@/components/content/CoverImage";
+import { getNewsList, formatNewsDate, getContentCategories, postHref } from "@/lib/cms";
 import { ArrowRight, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { absoluteUrl, SITE_NAME } from "@/lib/seo";
@@ -25,47 +27,59 @@ export default async function NewsListPage() {
   return (
     <main className="overflow-hidden">
       <Header />
-      <section className="pt-32 md:pt-40 pb-20 md:pb-32 min-h-screen bg-gradient-to-b from-slate-50 to-white">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <div className="mb-12 md:mb-16">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-[1px] bg-amami-green" />
-              <span className="text-amami-green text-xs font-bold tracking-[0.2em] uppercase">News</span>
+      <section className="min-h-screen bg-gradient-to-b from-slate-50 to-white pt-32 pb-20 md:pt-40 md:pb-32">
+        <div className="container mx-auto max-w-4xl px-6">
+          <div className="mb-8 md:mb-10">
+            <div className="mb-4 flex items-center gap-4">
+              <div className="h-[1px] w-12 bg-amami-green" />
+              <span className="text-xs font-bold tracking-[0.2em] text-amami-green uppercase">News</span>
             </div>
-            <h1 className="text-3xl md:text-5xl font-serif text-slate-800 leading-tight">お知らせ</h1>
+            <h1 className="font-serif text-3xl leading-tight text-slate-800 md:text-5xl">お知らせ</h1>
           </div>
+          <ContentSwitch current="news" />
           {news.length > 0 ? (
-            <div className="space-y-0 divide-y divide-slate-100">
+            <div className="divide-y divide-slate-100">
               {news.map((item) => (
                 <Link
                   key={item.id}
-                  href={`/news/${item.slug ?? item.id}`}
-                  className="group flex flex-col md:flex-row md:items-center gap-2 md:gap-8 py-6 md:py-8 hover:bg-slate-50/50 transition-colors duration-200 px-2 -mx-2 rounded-lg"
+                  href={postHref(item)}
+                  className="group flex items-center gap-4 rounded-2xl px-2 py-5 transition-colors duration-200 hover:bg-white md:gap-6 md:py-6"
                 >
-                  <time className="text-xs md:text-sm text-slate-400 font-sans tabular-nums whitespace-nowrap shrink-0">
-                    {formatNewsDate(item.publishedAt ?? item.createdAt)}
-                  </time>
-                  <div className="flex gap-2 shrink-0">
-                    {getContentCategories(item.category).map((cat) => (
-                      <span
-                        key={cat.id}
-                        className="inline-block text-[10px] md:text-xs px-3 py-0.5 rounded-full bg-amami-blue-light/40 text-amami-blue font-sans tracking-wide"
-                      >
-                        {cat.title}
-                      </span>
-                    ))}
+                  <div className="h-16 w-24 shrink-0 overflow-hidden rounded-xl bg-slate-100 md:h-20 md:w-32">
+                    {item.coverUrl ? (
+                      <CoverImage src={item.coverUrl} alt="" className="h-full w-full object-cover" />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center text-slate-300">
+                        <Newspaper className="h-5 w-5" aria-hidden />
+                      </div>
+                    )}
                   </div>
-                  <div className="text-sm md:text-base text-slate-700 font-sans group-hover:text-amami-blue transition-colors duration-200 flex-1 min-w-0 truncate">
-                    {item.title}
+                  <div className="min-w-0 flex-1">
+                    <div className="mb-1.5 flex flex-wrap items-center gap-2">
+                      <time className="font-sans text-xs text-slate-400 tabular-nums">
+                        {formatNewsDate(item.publishedAt ?? item.createdAt)}
+                      </time>
+                      {getContentCategories(item.category).map((cat) => (
+                        <span
+                          key={cat.id}
+                          className="inline-block rounded-full bg-amami-blue-light/40 px-2.5 py-0.5 font-sans text-[10px] tracking-wide text-amami-blue md:text-xs"
+                        >
+                          {cat.title}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="line-clamp-2 font-sans text-sm leading-snug text-slate-800 transition-colors duration-200 group-hover:text-amami-blue md:text-base">
+                      {item.title}
+                    </div>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-amami-blue group-hover:translate-x-1 transition-all duration-200 shrink-0 hidden md:block" />
+                  <ArrowRight className="hidden h-4 w-4 shrink-0 text-slate-300 transition-all duration-200 group-hover:translate-x-1 group-hover:text-amami-blue md:block" />
                 </Link>
               ))}
             </div>
           ) : (
-            <div className="text-center py-24">
-              <Newspaper className="w-12 h-12 text-slate-200 mx-auto mb-4" />
-              <p className="text-slate-400 text-sm font-sans">お知らせはまだありません</p>
+            <div className="py-24 text-center">
+              <Newspaper className="mx-auto mb-4 h-12 w-12 text-slate-200" />
+              <p className="font-sans text-sm text-slate-400">お知らせはまだありません</p>
             </div>
           )}
         </div>

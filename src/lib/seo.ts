@@ -8,6 +8,13 @@ export function getSiteOrigin(): string {
   return "http://localhost:3000";
 }
 
+export function absoluteCover(coverUrl?: string | null): string | undefined {
+  const value = coverUrl?.trim();
+  if (!value) return undefined;
+  if (value.startsWith("https://") || value.startsWith("http://")) return value;
+  return absoluteUrl(value.startsWith("/") ? value : `/${value}`);
+}
+
 export function absoluteUrl(path: string): string {
   const origin = getSiteOrigin();
   const prefix = process.env.NEXT_PUBLIC_BASE_PATH ?? "";

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Mail, Monitor, Newspaper, UserRound, CircleHelp } from "lucide-react";
+import { BookOpen, Mail, Monitor, Newspaper, UserRound, CircleHelp } from "lucide-react";
 import { OfficialLineIcon } from "@/components/ui/OfficialLineIcon";
 import { getOfficialLineAddFriendUrl } from "@/lib/seo";
 import { ChunkyAnchor, ChunkyNextLink } from "@/components/ui/ChunkyButton";
@@ -35,6 +35,7 @@ export default function Header() {
     { name: "About", href: "/about", label: "会社概要", en: "Company" },
     { name: "Services", href: "/#services", label: "サービス", en: "Services" },
     { name: "News", href: "/news", label: "お知らせ", en: "News" },
+    { name: "Column", href: "/column", label: "コラム", en: "Column" },
     { name: "FAQ", href: "/faq", label: "よくある質問", en: "FAQ" },
     { name: "OfficialLINE", href: lineUrl, label: "公式LINE", en: "LINE", external: true },
     { name: "Contact", href: "/contact", label: "お問い合わせ", en: "Contact" },
@@ -48,6 +49,8 @@ export default function Header() {
         return <Monitor className={mobileNavIconClass} strokeWidth={2} aria-hidden />;
       case "News":
         return <Newspaper className={mobileNavIconClass} strokeWidth={2} aria-hidden />;
+      case "Column":
+        return <BookOpen className={mobileNavIconClass} strokeWidth={2} aria-hidden />;
       case "FAQ":
         return <CircleHelp className={mobileNavIconClass} strokeWidth={2} aria-hidden />;
       case "OfficialLINE":
@@ -252,7 +255,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex space-x-10 mix-blend-normal text-slate-900">
+          <nav className="hidden items-center gap-x-4 text-sm text-slate-900 mix-blend-normal md:flex lg:gap-x-6 xl:gap-x-8 xl:text-base">
             {navItems.map((item) => {
               const className =
                 "group relative font-medium tracking-wide transition-colors duration-500 hover:text-amami-blue";

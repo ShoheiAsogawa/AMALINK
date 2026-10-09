@@ -86,7 +86,7 @@
     .error { min-height: 1.2em; margin: 0; color: var(--danger); font-size: 13px; }
     .workspace {
       display: grid;
-      grid-template-columns: 280px minmax(0, 1fr) 300px;
+      grid-template-columns: 320px minmax(0, 1fr) 300px;
       height: calc(100dvh - 64px);
       overflow: hidden;
     }
@@ -111,11 +111,22 @@
     .filters button.is-on span { color: var(--muted); }
     .posts { display: grid; gap: 4px; align-content: start; }
     .post {
-      text-align: left; width: 100%; border: 0; border-radius: 12px; background: transparent; padding: 10px 10px 10px 12px;
+      display: flex; gap: 10px; align-items: center;
+      text-align: left; width: 100%; border: 0; border-radius: 12px; background: transparent; padding: 8px;
     }
     .post:hover { background: #f3f1ee; }
     .post.is-on { background: #e0f2fe; }
-    .post b { display: block; font-weight: 650; line-height: 1.45; font-size: 14px; }
+    .post-copy { min-width: 0; }
+    .post b {
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+      font-weight: 650; line-height: 1.45; font-size: 14px;
+    }
+    .thumb {
+      width: 64px; height: 48px; object-fit: cover; border-radius: 8px; background: #efece7; flex: none;
+    }
+    .thumb.ph {
+      display: grid; place-items: center; font-size: 9px; letter-spacing: 0.08em; color: #94a3b8; font-weight: 700;
+    }
     .meta { display: flex; gap: 8px; align-items: center; margin-top: 6px; color: var(--muted); font-size: 12px; }
     .dot { width: 7px; height: 7px; border-radius: 99px; background: #cbd5e1; flex: none; }
     .dot.live { background: var(--green); }
@@ -236,12 +247,12 @@
       <img class="logo" src="https://amalink.co.jp/logo.png" alt="" width="456" height="307" />
       <div>
         <strong>AMALINK</strong>
-        <small>お知らせの管理</small>
+        <small>記事の管理</small>
       </div>
     </div>
     <div class="top-actions" id="top-actions">
       <span id="save-state" class="save-state hidden">保存済み</span>
-      <a class="btn-ghost" href="https://amalink.co.jp/news" target="_blank" rel="noreferrer">公開サイト</a>
+      <a class="btn-ghost" href="https://amalink.co.jp" target="_blank" rel="noreferrer">公開サイト</a>
       <button class="btn hidden" id="save" type="button" title="⌘S / Ctrl+S">保存する</button>
     </div>
   </header>
@@ -251,7 +262,7 @@
     <form class="card stack hidden" id="auth-form">
       <div>
         <h1 id="auth-title">管理画面</h1>
-        <p class="lead" id="auth-lead">公開中のお知らせを、ここから編集できます。</p>
+        <p class="lead" id="auth-lead">お知らせとコラムを、ここから編集できます。</p>
       </div>
       <label class="field">パスワード<input id="password" type="password" autocomplete="current-password" required /></label>
       <label class="field hidden" id="confirm-wrap">確認<input id="password2" type="password" autocomplete="new-password" /></label>
@@ -262,9 +273,13 @@
 
   <section id="app" class="workspace hidden" data-pane="edit">
     <aside class="sidebar">
-      <button class="btn new-post" id="new-post" type="button">新しい記事</button>
+      <button class="btn new-post" id="new-post" type="button">新しいお知らせ</button>
       <input class="search" id="search" type="search" placeholder="タイトルを検索" aria-label="タイトルを検索" />
-      <div class="filters" role="tablist">
+      <div class="filters" id="kind-filters" role="tablist" aria-label="記事の種類">
+        <button type="button" data-kind="news" class="is-on">お知らせ</button>
+        <button type="button" data-kind="column">コラム</button>
+      </div>
+      <div class="filters" id="status-filters" role="tablist" aria-label="公開状態">
         <button type="button" data-filter="all" class="is-on">すべて <span data-count="all">0</span></button>
         <button type="button" data-filter="published">公開 <span data-count="published">0</span></button>
         <button type="button" data-filter="draft">下書き <span data-count="draft">0</span></button>
@@ -302,6 +317,12 @@
     </div>
 
     <aside class="side">
+      <h3>種類</h3>
+      <div class="seg" id="kind-seg" role="tablist">
+        <button type="button" data-kind="news" class="is-on">お知らせ</button>
+        <button type="button" data-kind="column">コラム</button>
+      </div>
+      <p class="hint" id="kind-hint">短い告知はお知らせ。読み物はコラムで、サムネイル付きのカードになります。</p>
       <h3>公開</h3>
       <div class="seg" id="status-seg" role="tablist">
         <button type="button" data-status="draft">下書き</button>
@@ -320,7 +341,8 @@
         <input id="new-category" placeholder="カテゴリを追加" />
         <button class="btn-ghost" id="add-category" type="button">追加</button>
       </div>
-      <h3>カバー</h3>
+      <h3>サムネイル</h3>
+      <p class="hint">一覧、トップ、SNSの画像に使います。横長の画像がきれいに収まります。</p>
       <button class="cover-drop" id="upload" type="button">
         <img id="cover-preview" class="cover-preview hidden" alt="" />
         <span id="cover-empty">クリック、または画像をドロップ<br />PNG / JPEG / WebP / GIF・5MBまで</span>
@@ -402,7 +424,7 @@
 
   <script>
     const PUBLIC_ORIGIN = "https://amalink.co.jp";
-    const state = { posts: [], categories: [], filter: "all", currentId: null, dirty: false, status: "published", needsSetup: false };
+    const state = { posts: [], categories: [], filter: "all", desk: "news", kind: "news", currentId: null, dirty: false, status: "published", needsSetup: false };
     let caret = { start: 0, end: 0 };
     let pendingLeave = null;
 
@@ -460,7 +482,7 @@
     }
 
     function blankPost() {
-      return { id: null, title: "", slug: "", content: "", categoryId: state.categories[0]?.id || "", status: "draft", publishedAt: today() + "T00:00:00.000Z", coverUrl: "" };
+      return { id: null, title: "", slug: "", content: "", categoryId: state.categories[0]?.id || "", status: "draft", publishedAt: today() + "T00:00:00.000Z", coverUrl: "", kind: state.desk };
     }
 
     function currentDraft() {
@@ -470,9 +492,31 @@
         content: $("content").value,
         categoryId: $("category").value,
         status: state.status,
+        kind: state.kind,
         publishedAt: $("published-at").value ? $("published-at").value + "T00:00:00.000Z" : null,
         coverUrl: $("cover").value.trim(),
       };
+    }
+
+    function kindOf(post) {
+      return post && post.kind === "column" ? "column" : "news";
+    }
+
+    function publicPath(kind, slug) {
+      return PUBLIC_ORIGIN + (kind === "column" ? "/column/" : "/news/") + (slug || "");
+    }
+
+    function syncKindButtons() {
+      document.querySelectorAll("#kind-seg button").forEach((button) => {
+        button.classList.toggle("is-on", button.dataset.kind === state.kind);
+      });
+      document.querySelectorAll("#kind-filters button").forEach((button) => {
+        button.classList.toggle("is-on", button.dataset.kind === state.desk);
+      });
+      $("new-post").textContent = state.desk === "column" ? "新しいコラム" : "新しいお知らせ";
+      $("kind-hint").textContent = state.kind === "column"
+        ? "コラムは /column に、サムネイル付きのカードで出ます。"
+        : "お知らせは /news とトップの一覧に出ます。サムネイルも並びます。";
     }
 
     function prettyHtml(html) {
@@ -501,12 +545,15 @@
       $("cover").value = post.coverUrl || "";
       $("published-at").value = (post.publishedAt || "").slice(0, 10) || today();
       $("category").value = post.categoryId || "";
+      state.kind = kindOf(post);
+      state.desk = state.kind;
       document.querySelectorAll("#status-seg button").forEach((button) => {
         button.classList.toggle("is-on", button.dataset.status === state.status);
       });
-      const href = post.publicUrl || (post.slug ? PUBLIC_ORIGIN + "/news/" + post.slug : PUBLIC_ORIGIN + "/news");
+      syncKindButtons();
+      const href = post.publicUrl || (post.slug ? publicPath(state.kind, post.slug) : PUBLIC_ORIGIN + (state.kind === "column" ? "/column" : "/news"));
       $("open-public").href = href;
-      $("open-public").textContent = post.slug ? "この記事を見る" : "お知らせ一覧を見る";
+      $("open-public").textContent = post.slug ? "この記事を見る" : (state.kind === "column" ? "コラム一覧を見る" : "お知らせ一覧を見る");
       state.dirty = false;
       markDirty();
       renderPreview();
@@ -530,9 +577,13 @@
       if (current) select.value = current;
     }
 
+    function deskPosts() {
+      return state.posts.filter((post) => kindOf(post) === state.desk);
+    }
+
     function visiblePosts() {
       const q = $("search").value.trim();
-      return state.posts.filter((post) => {
+      return deskPosts().filter((post) => {
         if (state.filter !== "all" && post.status !== state.filter) return false;
         if (q && !post.title.includes(q)) return false;
         return true;
@@ -540,10 +591,11 @@
     }
 
     function updateCounts() {
+      const posts = deskPosts();
       const counts = {
-        all: state.posts.length,
-        published: state.posts.filter((post) => post.status === "published").length,
-        draft: state.posts.filter((post) => post.status !== "published").length,
+        all: posts.length,
+        published: posts.filter((post) => post.status === "published").length,
+        draft: posts.filter((post) => post.status !== "published").length,
       };
       document.querySelectorAll("[data-count]").forEach((node) => {
         node.textContent = String(counts[node.dataset.count] || 0);
@@ -554,12 +606,19 @@
       updateCounts();
       const posts = visiblePosts();
       const query = $("search").value.trim();
-      $("post-list").innerHTML = posts.length ? posts.map((post) => `
+      $("post-list").innerHTML = posts.length ? posts.map((post) => {
+        const thumb = post.coverUrl
+          ? `<img class="thumb" src="${escapeAttr(absoluteSrc(post.coverUrl))}" alt="" />`
+          : `<span class="thumb ph">${kindOf(post) === "column" ? "Column" : "News"}</span>`;
+        return `
         <button class="post ${post.id === state.currentId ? "is-on" : ""}" type="button" data-id="${post.id}">
-          <b>${escapeHtml(post.title || "無題")}</b>
-          <span class="meta"><i class="dot ${post.status === "published" ? "live" : ""}"></i>${post.status === "published" ? "公開" : "下書き"} · ${escapeHtml(formatDay(post.publishedAt || post.updatedAt))}</span>
-        </button>
-      `).join("") : `<div class="empty">${query ? "一致する記事はありません" : state.filter === "draft" ? "下書きはありません" : state.filter === "published" ? "公開中の記事はありません" : "まだ記事がありません"}</div>`;
+          ${thumb}
+          <span class="post-copy">
+            <b>${escapeHtml(post.title || "無題")}</b>
+            <span class="meta"><i class="dot ${post.status === "published" ? "live" : ""}"></i>${post.status === "published" ? "公開" : "下書き"} · ${escapeHtml(formatDay(post.publishedAt || post.updatedAt))}</span>
+          </span>
+        </button>`;
+      }).join("") : `<div class="empty">${query ? "一致する記事はありません" : state.filter === "draft" ? "下書きはありません" : state.filter === "published" ? "公開中の記事はありません" : state.desk === "column" ? "コラムはまだありません" : "お知らせはまだありません"}</div>`;
     }
 
     function absoluteSrc(src) {
@@ -608,7 +667,9 @@
         cover.classList.add("hidden");
         empty.classList.remove("hidden");
       }
-      $("slug-preview").textContent = draft.slug ? "amalink.co.jp/news/" + draft.slug : "保存するとアドレスが付きます";
+      $("slug-preview").textContent = draft.slug
+        ? "amalink.co.jp/" + (state.kind === "column" ? "column/" : "news/") + draft.slug
+        : "保存するとアドレスが付きます";
       $("remove").textContent = state.currentId ? "この記事を削除" : "入力をクリア";
     }
 
@@ -720,11 +781,33 @@
     });
 
     $("search").addEventListener("input", renderList);
-    document.querySelector(".filters").addEventListener("click", (event) => {
+    $("kind-filters").addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+      const nextDesk = button.dataset.kind;
+      const openMatching = () => {
+        state.desk = nextDesk;
+        syncKindButtons();
+        const current = state.posts.find((post) => post.id === state.currentId);
+        if (!current || kindOf(current) !== state.desk) {
+          const next = deskPosts()[0];
+          if (next) fill(next);
+          else fill(blankPost());
+          return;
+        }
+        renderList();
+      };
+      if (state.kind !== nextDesk && state.dirty) {
+        confirmLeave(openMatching);
+        return;
+      }
+      openMatching();
+    });
+    $("status-filters").addEventListener("click", (event) => {
       const button = event.target.closest("button");
       if (!button) return;
       state.filter = button.dataset.filter;
-      document.querySelectorAll(".filters button").forEach((item) => item.classList.toggle("is-on", item === button));
+      document.querySelectorAll("#status-filters button").forEach((item) => item.classList.toggle("is-on", item === button));
       renderList();
     });
 
@@ -783,6 +866,16 @@
       document.querySelectorAll("#status-seg button").forEach((item) => item.classList.toggle("is-on", item === button));
       state.dirty = true;
       markDirty();
+    });
+
+    $("kind-seg").addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button || button.dataset.kind === state.kind) return;
+      state.kind = button.dataset.kind;
+      state.dirty = true;
+      syncKindButtons();
+      markDirty();
+      renderPreview();
     });
 
     $("surface").addEventListener("click", (event) => {

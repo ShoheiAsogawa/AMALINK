@@ -1,9 +1,10 @@
 import { WaveBackground } from "@/components/ui/WaveBackground";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
+import { CoverImage } from "@/components/content/CoverImage";
 import { ArrowRight, Newspaper } from "lucide-react";
 import Link from "next/link";
 import type { News } from "@/lib/cms";
-import { formatNewsDate, getContentCategories } from "@/lib/cms";
+import { formatNewsDate, getContentCategories, postHref } from "@/lib/cms";
 
 function CategoryBadge({ category }: { category: { id: string; title: string } }) {
   return (
@@ -16,10 +17,19 @@ function CategoryBadge({ category }: { category: { id: string; title: string } }
 function NewsItem({ item }: { item: News }) {
   return (
     <Link
-      href={`/news/${item.slug ?? item.id}`}
-      className="group grid grid-cols-[auto_1fr_auto] md:grid-cols-[120px_auto_1fr_32px] items-center gap-3 md:gap-6 py-5 md:py-6 border-b border-slate-100 last:border-b-0 hover:bg-slate-50/50 transition-colors duration-200 px-2 -mx-2 rounded-lg"
+      href={postHref(item)}
+      className="group grid grid-cols-[72px_minmax(0,1fr)_auto] items-center gap-3 border-b border-slate-100 px-2 py-4 last:border-b-0 hover:bg-slate-50/50 transition-colors duration-200 md:grid-cols-[104px_120px_auto_minmax(0,1fr)_32px] md:gap-5 md:py-5 -mx-2 rounded-lg"
     >
-      <time className="text-xs md:text-sm text-slate-400 font-sans tabular-nums whitespace-nowrap">
+      <div className="h-12 w-[72px] overflow-hidden rounded-lg bg-slate-100 md:h-14 md:w-[104px]">
+        {item.coverUrl ? (
+          <CoverImage src={item.coverUrl} alt="" className="h-full w-full object-cover" />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center text-slate-300">
+            <Newspaper className="h-4 w-4" aria-hidden />
+          </div>
+        )}
+      </div>
+      <time className="hidden text-xs text-slate-400 font-sans tabular-nums whitespace-nowrap md:block md:text-sm">
         {formatNewsDate(item.publishedAt ?? item.createdAt)}
       </time>
       <div className="hidden md:flex gap-2">
@@ -27,8 +37,13 @@ function NewsItem({ item }: { item: News }) {
           <CategoryBadge key={cat.id} category={cat} />
         ))}
       </div>
-      <div className="text-sm md:text-base text-slate-700 font-sans truncate group-hover:text-amami-blue transition-colors duration-200">
-        {item.title}
+      <div className="min-w-0">
+        <time className="mb-1 block font-sans text-[11px] text-slate-400 tabular-nums md:hidden">
+          {formatNewsDate(item.publishedAt ?? item.createdAt)}
+        </time>
+        <div className="line-clamp-2 font-sans text-sm leading-snug text-slate-700 transition-colors duration-200 group-hover:text-amami-blue md:text-base">
+          {item.title}
+        </div>
       </div>
       <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-amami-blue group-hover:translate-x-1 transition-all duration-200" />
     </Link>

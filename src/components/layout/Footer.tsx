@@ -17,6 +17,7 @@ const FOOTER_LINKS = [
   { href: "/ai-avatar-chatbot", label: "AIアバターチャットボット" },
   { href: "/faq", label: "よくある質問" },
   { href: "/news", label: "お知らせ" },
+  { href: "/column", label: "コラム" },
   { href: "/contact", label: "お問い合わせ" },
 ] as const;
 

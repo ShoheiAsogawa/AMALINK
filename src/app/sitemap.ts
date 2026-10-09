@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getNewsList } from "@/lib/cms";
+import { getColumnList, getNewsList } from "@/lib/cms";
 import { absoluteUrl } from "@/lib/seo";
 
 const SERVICE_PATHS = [
@@ -21,7 +21,7 @@ const HIGH_PRIORITY = new Set<string>([
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const staticPaths = ["", ...SERVICE_PATHS, "/about", "/faq", "/news", "/contact"] as const;
+  const staticPaths = ["", ...SERVICE_PATHS, "/about", "/faq", "/news", "/column", "/contact"] as const;
 
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => {
     const isHome = path === "";
@@ -47,13 +47,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const newsEntries: MetadataRoute.Sitemap = [];
 
   try {
-    const { contents } = await getNewsList({ limit: 100 });
+    const [{ contents }, { contents: columns }] = await Promise.all([
+      getNewsList({ limit: 100 }),
+      getColumnList({ limit: 100 }),
+    ]);
     newsEntries.push(
       ...(contents ?? []).map((item) => ({
         url: absoluteUrl(`/news/${item.slug ?? item.id}`),
         lastModified: new Date(item.updatedAt ?? item.publishedAt ?? item.createdAt),
         changeFrequency: "monthly" as const,
         priority: 0.6,
+      })),
+      ...(columns ?? []).map((item) => ({
+        url: absoluteUrl(`/column/${item.slug ?? item.id}`),
+        lastModified: new Date(item.updatedAt ?? item.publishedAt ?? item.createdAt),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
       })),
     );
   } catch {

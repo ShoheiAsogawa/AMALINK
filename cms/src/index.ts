@@ -62,6 +62,7 @@ type PostRow = {
   created_at: string;
   updated_at: string;
   cover_url: string | null;
+  kind: string | null;
   category_title?: string | null;
 };
 
@@ -135,7 +136,8 @@ async function ensureReady(env: Env) {
             published_at TEXT,
             created_at TEXT NOT NULL,
             updated_at TEXT NOT NULL,
-            cover_url TEXT
+            cover_url TEXT,
+            kind TEXT NOT NULL DEFAULT 'news'
           )`,
         ),
         env.DB.prepare(
@@ -151,6 +153,11 @@ async function ensureReady(env: Env) {
           )`,
         ),
       ]);
+
+      const columns = await env.DB.prepare("PRAGMA table_info(posts)").all<{ name: string }>();
+      if (!columns.results.some((column) => column.name === "kind")) {
+        await env.DB.prepare("ALTER TABLE posts ADD COLUMN kind TEXT NOT NULL DEFAULT 'news'").run();
+      }
 
       const count = await env.DB.prepare("SELECT COUNT(*) AS n FROM posts").first<{ n: number }>();
       if (!count || Number(count.n) === 0) {
@@ -196,18 +203,20 @@ async function ensureReady(env: Env) {
 
 async function publicApi(request: Request, env: Env, url: URL): Promise<Response> {
   if (request.method !== "GET") return json({ error: "method" }, 405);
-  const list = url.pathname === "/api/public/news";
-  const detail = url.pathname.match(/^\/api\/public\/news\/([^/]+)$/);
-  if (list) {
+  const listKind = url.pathname === "/api/public/columns" ? "column" : url.pathname === "/api/public/news" ? "news" : "";
+  const detail = url.pathname.match(/^\/api\/public\/(news|columns)\/([^/]+)$/);
+  if (listKind) {
     const limit = clamp(Number(url.searchParams.get("limit") ?? 100), 1, 100);
     const rows = await env.DB.prepare(
-      `${postSelect()} WHERE p.status = 'published' ORDER BY p.published_at DESC LIMIT ?`,
+      `${postSelect()} WHERE p.status = 'published' AND p.kind = ? ORDER BY p.published_at DESC LIMIT ?`,
     )
-      .bind(limit)
+      .bind(listKind, limit)
       .all<PostRow>();
     const total = await env.DB.prepare(
-      "SELECT COUNT(*) AS n FROM posts WHERE status = 'published'",
-    ).first<{ n: number }>();
+      "SELECT COUNT(*) AS n FROM posts WHERE status = 'published' AND kind = ?",
+    )
+      .bind(listKind)
+      .first<{ n: number }>();
     return json(
       { contents: rows.results.map(toPublic), totalCount: Number(total?.n ?? rows.results.length) },
       200,
@@ -215,11 +224,12 @@ async function publicApi(request: Request, env: Env, url: URL): Promise<Response
     );
   }
   if (detail) {
-    const key = decodeURIComponent(detail[1]);
+    const kind = detail[1] === "columns" ? "column" : "news";
+    const key = decodeURIComponent(detail[2]);
     const row = await env.DB.prepare(
-      `${postSelect()} WHERE p.status = 'published' AND (p.slug = ? OR p.id = ?) LIMIT 1`,
+      `${postSelect()} WHERE p.status = 'published' AND p.kind = ? AND (p.slug = ? OR p.id = ?) LIMIT 1`,
     )
-      .bind(key, key)
+      .bind(kind, key, key)
       .first<PostRow>();
     if (!row) return json({ error: "not_found" }, 404, publicHeaders());
     return json(toPublic(row), 200, publicHeaders());
@@ -286,6 +296,7 @@ async function savePost(request: Request, env: Env, existingId: string | null) {
   const publishedAt = status === "published" ? body.publishedAt || now : body.publishedAt || null;
   const categoryId = body.categoryId || null;
   const coverUrl = (body.coverUrl ?? "").trim() || null;
+  const kind = body.kind === "column" ? "column" : "news";
 
   const dup = await env.DB.prepare("SELECT id FROM posts WHERE slug = ? AND id != ?")
     .bind(slug, id)
@@ -297,19 +308,19 @@ async function savePost(request: Request, env: Env, existingId: string | null) {
     if (!current) return json({ error: "not_found" }, 404);
     await env.DB.prepare(
       `UPDATE posts
-       SET slug = ?, title = ?, content_html = ?, category_id = ?, status = ?, published_at = ?, updated_at = ?, cover_url = ?
+       SET slug = ?, title = ?, content_html = ?, category_id = ?, status = ?, published_at = ?, updated_at = ?, cover_url = ?, kind = ?
        WHERE id = ?`,
     )
-      .bind(slug, title, content, categoryId, status, publishedAt, now, coverUrl, existingId)
+      .bind(slug, title, content, categoryId, status, publishedAt, now, coverUrl, kind, existingId)
       .run();
     return json({ post: await getAdminPost(env, existingId) });
   }
 
   await env.DB.prepare(
-    `INSERT INTO posts (id, slug, title, content_html, category_id, status, published_at, created_at, updated_at, cover_url)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO posts (id, slug, title, content_html, category_id, status, published_at, created_at, updated_at, cover_url, kind)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   )
-    .bind(id, slug, title, content, categoryId, status, publishedAt, now, now, coverUrl)
+    .bind(id, slug, title, content, categoryId, status, publishedAt, now, now, coverUrl, kind)
     .run();
   return json({ post: await getAdminPost(env, id) }, 201);
 }
@@ -458,8 +469,16 @@ async function isAuthed(request: Request, env: Env) {
 }
 
 function postSelect() {
-  return `SELECT p.id, p.slug, p.title, p.content_html, p.category_id, p.status, p.published_at, p.created_at, p.updated_at, p.cover_url, c.title AS category_title
+  return `SELECT p.id, p.slug, p.title, p.content_html, p.category_id, p.status, p.published_at, p.created_at, p.updated_at, p.cover_url, p.kind, c.title AS category_title
           FROM posts p LEFT JOIN categories c ON c.id = p.category_id`;
+}
+
+function postKind(kind: string | null | undefined) {
+  return kind === "column" ? "column" : "news";
+}
+
+function publicPath(kind: string, slug: string) {
+  return `${PUBLIC_SITE}/${kind === "column" ? "column" : "news"}/${slug}`;
 }
 
 function toPublic(row: PostRow) {
@@ -471,6 +490,8 @@ function toPublic(row: PostRow) {
     publishedAt: row.published_at,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
+    coverUrl: row.cover_url ?? "",
+    kind: postKind(row.kind),
     category: row.category_id ? [{ id: row.category_id, title: row.category_title ?? "お知らせ" }] : [],
   };
 }
@@ -488,7 +509,8 @@ function toAdmin(row: PostRow) {
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     coverUrl: row.cover_url,
-    publicUrl: `${PUBLIC_SITE}/news/${row.slug}`,
+    kind: postKind(row.kind),
+    publicUrl: publicPath(postKind(row.kind), row.slug),
   };
 }
 
@@ -505,6 +527,7 @@ type PostInput = {
   status?: string;
   publishedAt?: string | null;
   coverUrl?: string | null;
+  kind?: string | null;
 };
 
 function sanitizeHtml(html: string) {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getNewsEntry, getNewsList } from "@/lib/cms";
+import { getColumnEntry, getColumnList } from "@/lib/cms";
 import { articleMetadata } from "@/lib/article-meta";
 import { ArticleView } from "@/components/content/ArticleView";
 import { notFound } from "next/navigation";
@@ -9,7 +9,7 @@ export const dynamicParams = true;
 
 export async function generateStaticParams() {
   try {
-    const { contents } = await getNewsList({ limit: 100 });
+    const { contents } = await getColumnList({ limit: 100 });
     return (contents ?? []).map((item) => ({ slug: item.slug ?? item.id }));
   } catch {
     return [];
@@ -19,17 +19,17 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const news = await getNewsEntry(slug);
-    if (!news) return { title: "お知らせ" };
-    return articleMetadata(news);
+    const column = await getColumnEntry(slug);
+    if (!column) return { title: "コラム" };
+    return articleMetadata(column);
   } catch {
-    return { title: "お知らせ" };
+    return { title: "コラム" };
   }
 }
 
-export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ColumnDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const news = await getNewsEntry(slug).catch(() => null);
-  if (!news) notFound();
-  return <ArticleView post={news} />;
+  const column = await getColumnEntry(slug).catch(() => null);
+  if (!column) notFound();
+  return <ArticleView post={column} />;
 }
