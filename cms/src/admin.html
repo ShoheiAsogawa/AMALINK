@@ -44,10 +44,8 @@
       backdrop-filter: blur(16px);
     }
     .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
-    .mark {
-      width: 36px; height: 36px; border-radius: 12px; flex: none;
-      background: linear-gradient(135deg, var(--blue), var(--green));
-      color: white; display: grid; place-items: center; font-weight: 700;
+    .logo {
+      height: 40px; width: auto; flex: none; display: block;
     }
     .brand strong { display: block; font-size: 15px; letter-spacing: 0.12em; }
     .brand small { color: var(--muted); font-size: 12px; }
@@ -169,7 +167,7 @@
 <body>
   <header class="topbar">
     <div class="brand">
-      <div class="mark" aria-hidden="true">A</div>
+      <img class="logo" src="https://amalink.co.jp/logo.png" alt="" width="456" height="307" />
       <div>
         <strong>AMALINK</strong>
         <small>お知らせの管理</small>
