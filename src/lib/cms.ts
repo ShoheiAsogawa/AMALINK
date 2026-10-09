@@ -18,6 +18,10 @@ export type News = {
   updatedAt?: string;
   coverUrl?: string;
   kind?: PostKind;
+  /** 検索結果・SNS用の説明文（CMSで手入力。空なら本文の最初の2文） */
+  description?: string | null;
+  /** カバー画像の説明（alt） */
+  coverAlt?: string | null;
 };
 
 type SeedPost = (typeof seed.posts)[number];
@@ -99,16 +103,53 @@ async function fetchCms<T>(path: string): Promise<T | null> {
   }
 }
 
-export async function getNewsList(queries?: { limit?: number }) {
+export async function getNewsList(queries?: { limit?: number; category?: string }) {
   const limit = queries?.limit ?? 100;
-  const remote = await fetchCms<{ contents: News[]; totalCount: number }>(
-    `/api/public/news?limit=${limit}`,
-  );
+  const category = queries?.category;
+  const params = new URLSearchParams({ limit: String(limit) });
+  if (category) params.set("category", category);
+  const remote = await fetchCms<{ contents: News[]; totalCount: number }>(`/api/public/news?${params}`);
   if (remote?.contents) {
-    const contents = remote.contents.filter((item) => postKind(item.kind) === "news");
+    // 古いCMS（category 指定に未対応）でも正しく絞り込めるよう、念のためここでも絞る
+    const contents = remote.contents.filter(
+      (item) =>
+        postKind(item.kind) === "news" &&
+        (!category || getContentCategories(item.category).some((cat) => cat.id === category)),
+    );
     return { contents, totalCount: contents.length };
   }
-  return seedList(limit);
+  const local = seedList();
+  const contents = category
+    ? local.contents.filter((item) => getContentCategories(item.category).some((cat) => cat.id === category))
+    : local.contents;
+  return { contents: contents.slice(0, limit), totalCount: contents.length };
+}
+
+export type CategoryIndex = {
+  categories: NewsCategory[];
+  /** 旧ID → 現在のID（IDを変えたカテゴリの転送用） */
+  aliases: Record<string, string>;
+};
+
+export async function getCategoryIndex(): Promise<CategoryIndex> {
+  const remote = await fetchCms<{
+    categories: { id: string; title: string }[];
+    aliases?: { oldId: string; categoryId: string }[];
+  }>("/api/public/categories");
+  if (remote?.categories) {
+    return {
+      categories: remote.categories.map(({ id, title }) => ({ id, title })),
+      aliases: Object.fromEntries((remote.aliases ?? []).map((alias) => [alias.oldId, alias.categoryId])),
+    };
+  }
+  return {
+    categories: seed.categories.map(({ id, title }) => ({ id, title })),
+    aliases: {},
+  };
+}
+
+export function categoryPath(id: string): string {
+  return `/news/category/${encodeURIComponent(id)}`;
 }
 
 export async function getNewsEntry(slugOrId: string): Promise<News | null> {

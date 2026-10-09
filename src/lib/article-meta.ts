@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import type { News } from "@/lib/cms";
 import { postHref } from "@/lib/cms";
-import { absoluteCover, absoluteUrl, SITE_NAME, stripHtmlToDescription } from "@/lib/seo";
+import { absoluteCover, absoluteUrl, buildArticleDescription, SITE_NAME } from "@/lib/seo";
 
 export function articleMetadata(post: News): Metadata {
   const path = postHref(post);
-  const description = stripHtmlToDescription(post.content) || post.title;
+  // 手入力の説明文があればそれ、無ければ本文の最初の2文（160字まで）
+  const description = buildArticleDescription(post);
   const published = post.publishedAt ?? post.createdAt;
   const modified = post.updatedAt ?? published;
   const image = absoluteCover(post.coverUrl);
@@ -22,7 +23,7 @@ export function articleMetadata(post: News): Metadata {
       publishedTime: published,
       modifiedTime: modified,
       siteName: SITE_NAME,
-      images: image ? [{ url: image, alt: post.title }] : undefined,
+      images: image ? [{ url: image, alt: post.coverAlt || post.title }] : undefined,
     },
     twitter: {
       card: "summary_large_image",

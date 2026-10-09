@@ -60,3 +60,6 @@ Downloads/
 .cloudflare/
 .open-next/
 .wrangler/
+
+# wrangler のローカル用の変数（秘密を入れることがあるので上げない）
+.dev.vars*

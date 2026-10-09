@@ -1,6 +1,12 @@
 import type { MetadataRoute } from "next";
-import { getColumnList, getNewsList } from "@/lib/cms";
+import { categoryPath, getCategoryIndex, getColumnList, getNewsList } from "@/lib/cms";
 import { absoluteUrl } from "@/lib/seo";
+
+/**
+ * CMS（amalink-cms）に記事が増えたら再デプロイなしで載るよう、ISR で定期的に作り直す。
+ * 再生成は open-next.config.ts の memoryQueue（WORKER_SELF_REFERENCE）経由で行われる。
+ */
+export const revalidate = 60;
 
 const SERVICE_PATHS = [
   "/ai-consulting",
@@ -69,5 +75,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // news API 未接続
   }
 
-  return [...staticEntries, ...newsEntries];
+  const categoryEntries: MetadataRoute.Sitemap = [];
+  try {
+    const { categories } = await getCategoryIndex();
+    categoryEntries.push(
+      ...categories.map((category) => ({
+        url: absoluteUrl(categoryPath(category.id)),
+        lastModified: now,
+        changeFrequency: "weekly" as const,
+        priority: 0.5,
+      })),
+    );
+  } catch {
+    // categories API 未接続
+  }
+
+  return [...staticEntries, ...newsEntries, ...categoryEntries];
 }

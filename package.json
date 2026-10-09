@@ -29,6 +29,8 @@
     "esbuild": "^0.27.7",
     "eslint": "^9",
     "eslint-config-next": "16.3.8",
+    "markdown-it": "^14.3.2",
+    "markdown-it-cjk-friendly": "^3.0.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "wrangler": "^4.125.0"

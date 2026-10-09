@@ -20,6 +20,18 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
+      // カテゴリ一覧の別の書き方（/news?category=ID）を正式なURLへ。旧IDならその先でさらに新IDへ転送される
+      {
+        source: "/news",
+        has: [{ type: "query", key: "category", value: "(?<category>[a-z0-9-]+)" }],
+        destination: "/news/category/:category",
+        permanent: true,
+      },
+      {
+        source: "/news/category",
+        destination: "/news",
+        permanent: true,
+      },
       // 廃止したコラムは一時リダイレクトをやめ、ニュースへ恒久誘導（ソフト404感を解消）
       {
         source: "/articles",

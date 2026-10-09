@@ -13,7 +13,10 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "お知らせ",
   description: `${SITE_NAME}からのお知らせ一覧です。イベント・リリース情報などを掲載しています。`,
-  alternates: { canonical: "/news" },
+  alternates: {
+    canonical: "/news",
+    types: { "application/rss+xml": [{ url: "/rss.xml", title: `お知らせ | ${SITE_NAME}` }] },
+  },
   openGraph: {
     url: absoluteUrl("/news"),
     title: `お知らせ | ${SITE_NAME}`,

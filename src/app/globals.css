@@ -513,3 +513,191 @@ body.amalink-gateway-lock {
     animation: none;
   }
 }
+
+/* ------------------------------------------------------------------
+ * 記事本文（/news/[slug] の本文だけ）
+ * 色はロゴの青緑グラデーション（--amami-blue → #06b6d4 → --amami-green）から。
+ * 文字に使う色は同じ色相の濃い側（sky / teal）にして、コントラスト比 4.5 以上を確保。
+ *   本文 #334155 9.9 / H2 #0c4a6e 9.0 / H3 #0f766e 5.2 / リンク #0369a1 5.7（背景 #f8fafc）
+ * ------------------------------------------------------------------ */
+.article-body {
+  --article-text: #334155;
+  --article-strong: #1e293b;
+  --article-h2: #0c4a6e;
+  --article-accent: #0f766e;
+  --article-link: #0369a1;
+  --article-link-hover: #075985;
+  --article-marker: #0d9488;
+  color: var(--article-text);
+}
+.article-body p { margin-bottom: 1rem; }
+.article-body h2 {
+  /* 左の縦線は使わない（CEO指示）。色・太さ・大きさ・余白と、細く薄い下線で区切る */
+  margin: 3.5rem 0 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.55;
+  color: var(--article-h2);
+}
+.article-body h3 {
+  margin: 2rem 0 0.5rem;
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--article-accent);
+}
+.article-body strong {
+  color: var(--article-strong);
+  font-weight: 700;
+  background: linear-gradient(transparent 60%, rgba(16, 185, 129, 0.28) 60%);
+  padding: 0 0.1em;
+}
+.article-body a {
+  color: var(--article-link);
+  text-decoration: underline;
+  text-decoration-color: rgba(3, 105, 161, 0.4);
+  text-underline-offset: 0.2em;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+.article-body a:hover { color: var(--article-link-hover); text-decoration-color: currentColor; }
+.article-body strong a { color: var(--article-link-hover); }
+.article-body ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+.article-body ol { list-style: decimal; padding-left: 1.5rem; margin-bottom: 1rem; }
+.article-body li { margin: 0.25rem 0; padding-left: 0.25rem; }
+.article-body li::marker { color: var(--article-marker); font-weight: 700; }
+.article-body img { margin: 2rem 0; width: 100%; border-radius: 1rem; }
+.article-body blockquote {
+  /* 引用は左の線を使わず、字下げと文字色で控えめに出す */
+  margin: 1.5rem 0;
+  padding: 0 1.5rem;
+  color: #475569;
+}
+.article-body blockquote p:last-child { margin-bottom: 0; }
+
+/* 表：枠線・余白・見出しの背景。スマホでは表だけ横スクロール */
+.article-body table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 2rem 0;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  line-height: 1.625;
+}
+.article-body th,
+.article-body td {
+  /* 縦の罫線は使わない（左の縦線を出さないため）。横の罫線だけ */
+  border: 0;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: top;
+}
+.article-body th {
+  min-width: 8rem;
+  background: #f0fdfa;
+  color: var(--article-strong);
+  font-weight: 600;
+  border-bottom: 2px solid #99f6e4;
+}
+.article-body td { min-width: 12rem; }
+.article-body tbody tr:nth-child(even) { background: #f8fafc; }
+
+/* ------------------------------------------------------------------
+ * 囲みボックス・要点ボックス（src/lib/article-style.ts で切り替え）
+ * 共通ルール：左の縦線は使わない（CEO指示）。
+ * - box-plain: 囲みは普通の段落と同じ見た目、ラベルは出さない。要点ボックスも出さない
+ * - box-a / box-b / box-c: 新しいデザインの3案。本番は box-c（CEOが選んだ案）
+ * ラベルは小さな英字（SUMMARY / KEY POINT / CAUTION / NOTE）。HTMLの日本語ラベルは
+ * 文字サイズ0にして、英字を ::before で出す。
+ * ------------------------------------------------------------------ */
+.article-body:not(.box-a):not(.box-b):not(.box-c) .callout { display: contents; }
+.article-body:not(.box-a):not(.box-b):not(.box-c) .callout-label { display: none; }
+
+.article-body:is(.box-a, .box-b, .box-c) .callout,
+.article-body:is(.box-a, .box-b, .box-c).has-summary > p:first-child {
+  margin: 2rem 0;
+  --box-label: #0f766e;
+}
+.article-body:is(.box-a, .box-b, .box-c) .callout > :last-child { margin-bottom: 0; }
+.article-body:is(.box-a, .box-b, .box-c) .callout-label {
+  margin: 0 0 0.5rem;
+  font-size: 0;
+  line-height: 0;
+}
+.article-body:is(.box-a, .box-b, .box-c) .callout-label::before,
+.article-body:is(.box-a, .box-b, .box-c).has-summary > p:first-child::before {
+  content: "KEY POINT";
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.16em;
+  color: var(--box-label);
+}
+.article-body:is(.box-a, .box-b, .box-c).has-summary > p:first-child::before {
+  content: "SUMMARY";
+  margin-bottom: 0.5rem;
+}
+.article-body:is(.box-a, .box-b, .box-c) .callout-warning { --box-label: #b45309; }
+.article-body:is(.box-a, .box-b, .box-c) .callout-warning .callout-label::before { content: "CAUTION"; }
+.article-body:is(.box-a, .box-b, .box-c) .callout-note { --box-label: #475569; }
+.article-body:is(.box-a, .box-b, .box-c) .callout-note .callout-label::before { content: "NOTE"; }
+
+/* 案A：細い1pxの線で全体を囲む。背景は白 */
+.article-body.box-a .callout,
+.article-body.box-a.has-summary > p:first-child {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.25rem;
+  background: #fff;
+}
+.article-body.box-a.has-summary > p:first-child {
+  border-color: #0f766e;
+  color: var(--article-strong);
+}
+
+/* 案B：上下の罫線だけ。雑誌のプルクォート風 */
+.article-body.box-b .callout,
+.article-body.box-b.has-summary > p:first-child {
+  padding: 1.25rem 0.25rem;
+  border-top: 2px solid var(--box-rule, #0f766e);
+  border-bottom: 1px solid #cbd5e1;
+}
+.article-body.box-b.has-summary > p:first-child {
+  margin-bottom: 2.5rem;
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  color: var(--article-strong);
+}
+.article-body.box-b .callout-warning { --box-rule: #c2410c; }
+.article-body.box-b .callout-note { --box-rule: #94a3b8; }
+
+/* 案C：黒地に白文字。サムネイルの雰囲気 */
+.article-body.box-c .callout,
+.article-body.box-c.has-summary > p:first-child {
+  padding: 1.5rem 1.75rem;
+  border-radius: 0.75rem;
+  background: #0b1220;
+  color: #e2e8f0;
+  --box-label: #5eead4;
+}
+.article-body.box-c .callout-warning { --box-label: #fdba74; }
+.article-body.box-c .callout-note { --box-label: #cbd5e1; }
+.article-body.box-c .callout strong,
+.article-body.box-c.has-summary > p:first-child strong {
+  color: #fff;
+  background: linear-gradient(transparent 60%, rgba(45, 212, 191, 0.35) 60%);
+}
+.article-body.box-c .callout a,
+.article-body.box-c.has-summary > p:first-child a {
+  color: #7dd3fc;
+  text-decoration-color: rgba(125, 211, 252, 0.5);
+}
+.article-body.box-c .callout li::marker { color: #5eead4; }
