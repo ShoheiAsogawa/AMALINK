@@ -55,3 +55,8 @@ AppData/
 Desktop/
 Documents/
 Downloads/
+/dist/
+.vinext/
+.cloudflare/
+.open-next/
+.wrangler/
