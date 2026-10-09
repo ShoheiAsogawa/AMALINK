@@ -63,6 +63,8 @@ type PostRow = {
   updated_at: string;
   cover_url: string | null;
   kind: string | null;
+  cover_alt: string | null;
+  description: string | null;
   category_title?: string | null;
 };
 
@@ -137,7 +139,9 @@ async function ensureReady(env: Env) {
             created_at TEXT NOT NULL,
             updated_at TEXT NOT NULL,
             cover_url TEXT,
-            kind TEXT NOT NULL DEFAULT 'news'
+            kind TEXT NOT NULL DEFAULT 'news',
+            cover_alt TEXT,
+            description TEXT
           )`,
         ),
         env.DB.prepare(
@@ -154,10 +158,23 @@ async function ensureReady(env: Env) {
         ),
       ]);
 
+      // カテゴリIDを変えたときの旧ID（転送用の別名）
+      await env.DB.prepare(
+        `CREATE TABLE IF NOT EXISTS category_aliases (
+          old_id TEXT PRIMARY KEY,
+          category_id TEXT NOT NULL,
+          created_at TEXT NOT NULL
+        )`,
+      ).run();
+
+      // 既存DB向け: kind / cover_alt / description 列が無ければ足す（何度走っても安全）
       const columns = await env.DB.prepare("PRAGMA table_info(posts)").all<{ name: string }>();
-      if (!columns.results.some((column) => column.name === "kind")) {
-        await env.DB.prepare("ALTER TABLE posts ADD COLUMN kind TEXT NOT NULL DEFAULT 'news'").run();
-      }
+      const names = new Set(columns.results.map((column) => column.name));
+      const alters: D1Prepared[] = [];
+      if (!names.has("kind")) alters.push(env.DB.prepare("ALTER TABLE posts ADD COLUMN kind TEXT NOT NULL DEFAULT 'news'"));
+      if (!names.has("cover_alt")) alters.push(env.DB.prepare("ALTER TABLE posts ADD COLUMN cover_alt TEXT"));
+      if (!names.has("description")) alters.push(env.DB.prepare("ALTER TABLE posts ADD COLUMN description TEXT"));
+      if (alters.length) await env.DB.batch(alters);
 
       const count = await env.DB.prepare("SELECT COUNT(*) AS n FROM posts").first<{ n: number }>();
       if (!count || Number(count.n) === 0) {
@@ -203,19 +220,32 @@ async function ensureReady(env: Env) {
 
 async function publicApi(request: Request, env: Env, url: URL): Promise<Response> {
   if (request.method !== "GET") return json({ error: "method" }, 405);
+  if (url.pathname === "/api/public/categories") {
+    const categories = await env.DB.prepare(
+      "SELECT id, title, sort_order AS sortOrder FROM categories ORDER BY sort_order, title",
+    ).all<{ id: string; title: string; sortOrder: number }>();
+    const aliases = await env.DB.prepare(
+      "SELECT old_id AS oldId, category_id AS categoryId FROM category_aliases ORDER BY created_at",
+    ).all<{ oldId: string; categoryId: string }>();
+    return json({ categories: categories.results, aliases: aliases.results }, 200, publicHeaders());
+  }
   const listKind = url.pathname === "/api/public/columns" ? "column" : url.pathname === "/api/public/news" ? "news" : "";
   const detail = url.pathname.match(/^\/api\/public\/(news|columns)\/([^/]+)$/);
   if (listKind) {
     const limit = clamp(Number(url.searchParams.get("limit") ?? 100), 1, 100);
+    const requested = (url.searchParams.get("category") ?? "").trim();
+    const category = requested ? await resolveCategoryId(env, requested) : null;
+    const where = category ? "p.status = 'published' AND p.category_id = ?" : "p.status = 'published'";
+    const binds = category ? [category] : [];
     const rows = await env.DB.prepare(
-      `${postSelect()} WHERE p.status = 'published' AND p.kind = ? ORDER BY p.published_at DESC LIMIT ?`,
+      `${postSelect()} WHERE ${where} AND p.kind = ? ORDER BY p.published_at DESC LIMIT ?`,
     )
-      .bind(listKind, limit)
+      .bind(...binds, listKind, limit)
       .all<PostRow>();
     const total = await env.DB.prepare(
-      "SELECT COUNT(*) AS n FROM posts WHERE status = 'published' AND kind = ?",
+      `SELECT COUNT(*) AS n FROM posts p WHERE ${where} AND p.kind = ?`,
     )
-      .bind(listKind)
+      .bind(...binds, listKind)
       .first<{ n: number }>();
     return json(
       { contents: rows.results.map(toPublic), totalCount: Number(total?.n ?? rows.results.length) },
@@ -268,6 +298,10 @@ async function adminApi(request: Request, env: Env, url: URL): Promise<Response>
 
   if (url.pathname === "/api/categories" && request.method === "GET") return listCategories(env);
   if (url.pathname === "/api/categories" && request.method === "POST") return createCategory(request, env);
+  const categoryMatch = url.pathname.match(/^\/api\/categories\/([^/]+)$/);
+  if (categoryMatch && request.method === "PUT") {
+    return updateCategory(request, env, decodeURIComponent(categoryMatch[1]));
+  }
 
   if (url.pathname === "/api/media" && request.method === "POST") return uploadMedia(request, env);
   if (url.pathname === "/api/settings/password" && request.method === "PUT") return changePassword(request, env);
@@ -296,7 +330,20 @@ async function savePost(request: Request, env: Env, existingId: string | null) {
   const publishedAt = status === "published" ? body.publishedAt || now : body.publishedAt || null;
   const categoryId = body.categoryId || null;
   const coverUrl = (body.coverUrl ?? "").trim() || null;
-  const kind = body.kind === "column" ? "column" : "news";
+  // 送られてこなかった項目は、今の値を残す（管理画面の版によって送る項目が違っても消えないように）
+  const existing = existingId
+    ? await env.DB.prepare("SELECT kind, cover_alt, description FROM posts WHERE id = ?")
+        .bind(existingId)
+        .first<{ kind: string | null; cover_alt: string | null; description: string | null }>()
+    : null;
+  const kind =
+    body.kind === undefined || body.kind === null ? (existing?.kind === "column" ? "column" : "news") : body.kind === "column" ? "column" : "news";
+  const coverAlt =
+    body.coverAlt === undefined ? (existing?.cover_alt ?? null) : (body.coverAlt ?? "").trim().slice(0, 200) || null;
+  const description =
+    body.description === undefined
+      ? (existing?.description ?? null)
+      : (body.description ?? "").replace(/\s+/g, " ").trim().slice(0, 200) || null;
 
   const dup = await env.DB.prepare("SELECT id FROM posts WHERE slug = ? AND id != ?")
     .bind(slug, id)
@@ -308,19 +355,20 @@ async function savePost(request: Request, env: Env, existingId: string | null) {
     if (!current) return json({ error: "not_found" }, 404);
     await env.DB.prepare(
       `UPDATE posts
-       SET slug = ?, title = ?, content_html = ?, category_id = ?, status = ?, published_at = ?, updated_at = ?, cover_url = ?, kind = ?
+       SET slug = ?, title = ?, content_html = ?, category_id = ?, status = ?, published_at = ?, updated_at = ?, cover_url = ?,
+           kind = ?, cover_alt = ?, description = ?
        WHERE id = ?`,
     )
-      .bind(slug, title, content, categoryId, status, publishedAt, now, coverUrl, kind, existingId)
+      .bind(slug, title, content, categoryId, status, publishedAt, now, coverUrl, kind, coverAlt, description, existingId)
       .run();
     return json({ post: await getAdminPost(env, existingId) });
   }
 
   await env.DB.prepare(
-    `INSERT INTO posts (id, slug, title, content_html, category_id, status, published_at, created_at, updated_at, cover_url, kind)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO posts (id, slug, title, content_html, category_id, status, published_at, created_at, updated_at, cover_url, kind, cover_alt, description)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   )
-    .bind(id, slug, title, content, categoryId, status, publishedAt, now, now, coverUrl, kind)
+    .bind(id, slug, title, content, categoryId, status, publishedAt, now, now, coverUrl, kind, coverAlt, description)
     .run();
   return json({ post: await getAdminPost(env, id) }, 201);
 }
@@ -337,13 +385,81 @@ async function listCategories(env: Env) {
   return json({ categories: rows.results });
 }
 
+/** カテゴリID: 英小文字・数字・ハイフン（先頭と末尾は英数字）、40字まで */
+const CATEGORY_ID_RE = /^[a-z0-9](?:[a-z0-9-]{0,38}[a-z0-9])?$/;
+
+/** ID がカテゴリか、別のカテゴリの旧ID（転送用）として使われているか */
+async function categoryIdTaken(env: Env, id: string, self: string | null) {
+  const category = await env.DB.prepare("SELECT id FROM categories WHERE id = ?").bind(id).first();
+  if (category) return true;
+  const alias = await env.DB.prepare("SELECT category_id AS categoryId FROM category_aliases WHERE old_id = ?")
+    .bind(id)
+    .first<{ categoryId: string }>();
+  return Boolean(alias && alias.categoryId !== self);
+}
+
+/** 現在のIDか旧IDを、現在のカテゴリIDにする。見つからなければ null */
+async function resolveCategoryId(env: Env, id: string) {
+  const category = await env.DB.prepare("SELECT id FROM categories WHERE id = ?").bind(id).first<{ id: string }>();
+  if (category) return category.id;
+  const alias = await env.DB.prepare("SELECT category_id AS categoryId FROM category_aliases WHERE old_id = ?")
+    .bind(id)
+    .first<{ categoryId: string }>();
+  return alias?.categoryId ?? null;
+}
+
 async function createCategory(request: Request, env: Env) {
-  const body = await readJson<{ title?: string }>(request);
+  const body = await readJson<{ title?: string; id?: string }>(request);
   const title = (body?.title ?? "").trim();
   if (!title || title.length > 40) return json({ error: "bad_title" }, 400);
-  const id = newId();
+  const requested = (body?.id ?? "").trim();
+  if (requested && !CATEGORY_ID_RE.test(requested)) return json({ error: "bad_category_id" }, 400);
+  const id = requested || newId();
+  if (await categoryIdTaken(env, id, null)) return json({ error: "category_id_taken" }, 409);
   await env.DB.prepare("INSERT INTO categories (id, title, sort_order) VALUES (?, ?, ?)").bind(id, title, 10).run();
   return json({ category: { id, title, sortOrder: 10 } }, 201);
+}
+
+/**
+ * カテゴリの名前・IDを変える。IDを変えたときは、記事の参照を付け替え、
+ * 旧IDを category_aliases に残す（サイト側で旧URL→新URLの転送に使う）。
+ */
+async function updateCategory(request: Request, env: Env, currentId: string) {
+  const body = await readJson<{ title?: string; id?: string }>(request);
+  if (!body) return json({ error: "invalid" }, 400);
+  const current = await env.DB.prepare("SELECT id, title, sort_order AS sortOrder FROM categories WHERE id = ?")
+    .bind(currentId)
+    .first<{ id: string; title: string; sortOrder: number }>();
+  if (!current) return json({ error: "not_found" }, 404);
+  const title = (body.title ?? current.title).trim();
+  if (!title || title.length > 40) return json({ error: "bad_title" }, 400);
+  const nextId = (body.id ?? current.id).trim();
+  if (!CATEGORY_ID_RE.test(nextId)) return json({ error: "bad_category_id" }, 400);
+
+  if (nextId === current.id) {
+    await env.DB.prepare("UPDATE categories SET title = ? WHERE id = ?").bind(title, current.id).run();
+    return json({ category: { ...current, title } });
+  }
+  if (await categoryIdTaken(env, nextId, current.id)) return json({ error: "category_id_taken" }, 409);
+
+  const now = new Date().toISOString();
+  await env.DB.batch([
+    env.DB.prepare("INSERT INTO categories (id, title, sort_order) VALUES (?, ?, ?)").bind(
+      nextId,
+      title,
+      current.sortOrder,
+    ),
+    env.DB.prepare("UPDATE posts SET category_id = ? WHERE category_id = ?").bind(nextId, current.id),
+    // これまでの旧IDも、新しいIDへ向け直す（転送が多段にならないように）
+    env.DB.prepare("UPDATE category_aliases SET category_id = ? WHERE category_id = ?").bind(nextId, current.id),
+    // 元のIDに戻したときは、その別名は不要
+    env.DB.prepare("DELETE FROM category_aliases WHERE old_id = ?").bind(nextId),
+    env.DB.prepare(
+      "INSERT INTO category_aliases (old_id, category_id, created_at) VALUES (?, ?, ?) ON CONFLICT(old_id) DO UPDATE SET category_id = excluded.category_id",
+    ).bind(current.id, nextId, now),
+    env.DB.prepare("DELETE FROM categories WHERE id = ?").bind(current.id),
+  ]);
+  return json({ category: { id: nextId, title, sortOrder: current.sortOrder }, previousId: current.id });
 }
 
 async function uploadMedia(request: Request, env: Env) {
@@ -469,7 +585,7 @@ async function isAuthed(request: Request, env: Env) {
 }
 
 function postSelect() {
-  return `SELECT p.id, p.slug, p.title, p.content_html, p.category_id, p.status, p.published_at, p.created_at, p.updated_at, p.cover_url, p.kind, c.title AS category_title
+  return `SELECT p.id, p.slug, p.title, p.content_html, p.category_id, p.status, p.published_at, p.created_at, p.updated_at, p.cover_url, p.kind, p.cover_alt, p.description, c.title AS category_title
           FROM posts p LEFT JOIN categories c ON c.id = p.category_id`;
 }
 
@@ -490,7 +606,9 @@ function toPublic(row: PostRow) {
     publishedAt: row.published_at,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
+    description: row.description,
     coverUrl: row.cover_url ?? "",
+    coverAlt: row.cover_alt,
     kind: postKind(row.kind),
     category: row.category_id ? [{ id: row.category_id, title: row.category_title ?? "お知らせ" }] : [],
   };
@@ -510,6 +628,8 @@ function toAdmin(row: PostRow) {
     updatedAt: row.updated_at,
     coverUrl: row.cover_url,
     kind: postKind(row.kind),
+    coverAlt: row.cover_alt,
+    description: row.description,
     publicUrl: publicPath(postKind(row.kind), row.slug),
   };
 }
@@ -528,6 +648,8 @@ type PostInput = {
   publishedAt?: string | null;
   coverUrl?: string | null;
   kind?: string | null;
+  coverAlt?: string | null;
+  description?: string | null;
 };
 
 function sanitizeHtml(html: string) {
