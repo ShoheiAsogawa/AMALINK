@@ -10,73 +10,74 @@
       color-scheme: light;
       --blue: #0ea5e9;
       --blue-deep: #0369a1;
-      --green: #10b981;
-      --ink: #1e293b;
-      --muted: #64748b;
-      --line: #e2e8f0;
-      --bg: #f4f7fb;
+      --green: #059669;
+      --ink: #1c2430;
+      --muted: #6b7280;
+      --line: #e6e4e1;
+      --bg: #f6f5f3;
       --panel: #ffffff;
       --danger: #be123c;
-      --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+      --serif: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", serif;
+      --sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, "Noto Sans JP", sans-serif;
+      --shadow: 0 24px 60px rgba(28, 36, 48, 0.08);
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
     body {
       margin: 0;
       color: var(--ink);
-      background:
-        radial-gradient(900px 420px at 0% -10%, rgba(14, 165, 233, 0.16), transparent 60%),
-        radial-gradient(700px 380px at 100% 0%, rgba(16, 185, 129, 0.12), transparent 55%),
-        var(--bg);
-      font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, "Noto Sans JP", sans-serif;
+      background: var(--bg);
+      font-family: var(--sans);
       letter-spacing: 0.01em;
+      -webkit-font-smoothing: antialiased;
     }
     button, input, textarea, select { font: inherit; color: inherit; }
     button { cursor: pointer; }
     button:disabled { opacity: 0.45; cursor: default; }
+    :focus-visible { outline: 2px solid rgba(14, 165, 233, 0.7); outline-offset: 2px; }
     .hidden { display: none !important; }
     .topbar {
       position: sticky; top: 0; z-index: 20;
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      padding: 14px 22px;
-      background: rgba(255,255,255,0.9);
-      border-bottom: 1px solid rgba(226,232,240,0.9);
+      display: flex; align-items: center; gap: 16px;
+      min-height: 64px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.92);
+      border-bottom: 1px solid var(--line);
       backdrop-filter: blur(16px);
     }
-    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
-    .logo {
-      height: 40px; width: auto; flex: none; display: block;
-    }
-    .brand strong { display: block; font-size: 15px; letter-spacing: 0.12em; }
-    .brand small { color: var(--muted); font-size: 12px; }
-    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .btn, .btn-ghost, .btn-danger {
-      height: 36px; padding: 0 14px; border-radius: 999px; border: 0;
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .logo { height: 36px; width: auto; flex: none; display: block; }
+    .brand strong { display: block; font-size: 14px; letter-spacing: 0.14em; font-weight: 700; }
+    .brand small { color: var(--muted); font-size: 12px; font-weight: 500; }
+    .top-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .save-state { color: var(--muted); font-size: 12px; min-width: 6em; text-align: right; }
+    .btn, .btn-ghost, .btn-danger, .text-btn {
+      height: 36px; padding: 0 14px; border-radius: 999px;
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
       text-decoration: none; font-size: 13px; font-weight: 650;
     }
-    .btn { background: linear-gradient(105deg, var(--blue), #06b6d4 45%, var(--green)); color: white; }
-    .btn:hover { filter: brightness(1.05); }
+    .btn { border: 0; background: #123044; color: white; }
+    .btn:hover { background: #0c2534; }
     .btn-ghost { background: white; color: var(--ink); border: 1px solid var(--line); }
-    .btn-ghost:hover { border-color: #bae6fd; color: var(--blue-deep); }
+    .btn-ghost:hover { border-color: #cbd5e1; }
     .btn-danger { background: white; color: var(--danger); border: 1px solid #fecdd3; }
-    .text-btn { border: 0; background: transparent; color: var(--muted); height: 32px; padding: 0 8px; border-radius: 8px; }
-    .text-btn:hover { background: #f1f5f9; color: var(--ink); }
+    .text-btn { border: 0; background: transparent; color: var(--muted); padding: 0 8px; }
+    .text-btn:hover { background: #f3f1ee; color: var(--ink); }
     .gate {
-      min-height: calc(100vh - 65px);
-      display: grid; place-items: center; padding: 24px;
+      min-height: calc(100dvh - 64px);
+      display: grid; place-items: center; padding: 32px 20px;
     }
     .card {
-      width: min(420px, 100%);
+      width: min(400px, 100%);
       background: var(--panel);
-      border: 1px solid rgba(226,232,240,0.9);
-      border-radius: 28px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
       box-shadow: var(--shadow);
-      padding: 28px;
+      padding: 32px 28px 28px;
     }
-    .card h1 { margin: 0 0 8px; font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: 28px; font-weight: 500; }
-    .lead { margin: 0 0 22px; color: var(--muted); line-height: 1.7; font-size: 14px; }
-    label { display: grid; gap: 6px; font-size: 12px; font-weight: 700; color: #475569; }
+    .card h1 { margin: 0 0 8px; font-family: var(--serif); font-size: 32px; font-weight: 500; letter-spacing: 0.02em; }
+    .lead { margin: 0 0 22px; color: var(--muted); line-height: 1.75; font-size: 14px; }
+    .field { display: grid; gap: 6px; font-size: 12px; font-weight: 650; color: #4b5563; }
     input, textarea, select {
       width: 100%; border: 1px solid var(--line); background: #fff; border-radius: 12px; padding: 11px 12px;
     }
@@ -85,82 +86,141 @@
     .error { min-height: 1.2em; margin: 0; color: var(--danger); font-size: 13px; }
     .workspace {
       display: grid;
-      grid-template-columns: 320px minmax(0, 1fr);
-      gap: 18px;
-      padding: 18px;
-      align-items: start;
+      grid-template-columns: 280px minmax(0, 1fr) 300px;
+      height: calc(100dvh - 64px);
+      overflow: hidden;
     }
-    .sidebar, .editor, .preview, .side {
-      background: rgba(255,255,255,0.92);
-      border: 1px solid rgba(226,232,240,0.95);
-      border-radius: 22px;
+    .sidebar, .side {
+      background: #fbfaf8;
+      min-height: 0;
+      overflow: auto;
     }
-    .sidebar { padding: 14px; position: sticky; top: 84px; max-height: calc(100vh - 102px); display: grid; grid-template-rows: auto auto auto minmax(0, 1fr); gap: 10px; }
-    .filters { display: flex; gap: 4px; padding: 4px; background: #eef6fb; border-radius: 999px; }
-    .filters button { flex: 1; height: 30px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-size: 12px; font-weight: 700; }
-    .filters button.is-on { background: white; color: var(--ink); box-shadow: 0 1px 2px rgba(15,23,42,0.08); }
-    .posts { overflow: auto; display: grid; gap: 8px; align-content: start; padding-right: 2px; }
+    .sidebar { border-right: 1px solid var(--line); padding: 16px 14px 24px; display: flex; flex-direction: column; gap: 12px; }
+    .side { border-left: 1px solid var(--line); padding: 20px 16px 28px; display: grid; gap: 14px; align-content: start; }
+    .stage { min-height: 0; overflow: auto; background: white; }
+    .sheet { max-width: 740px; margin: 0 auto; padding: 36px 40px 80px; }
+    .new-post { width: 100%; }
+    .search { background: white; }
+    .filters { display: flex; gap: 4px; padding: 4px; background: #efece7; border-radius: 999px; }
+    .filters button {
+      flex: 1; height: 30px; border: 0; border-radius: 999px; background: transparent;
+      color: var(--muted); font-size: 12px; font-weight: 700;
+    }
+    .filters button.is-on { background: white; color: var(--ink); box-shadow: 0 1px 2px rgba(28,36,48,0.06); }
+    .filters span { font-weight: 600; color: #94a3b8; }
+    .filters button.is-on span { color: var(--muted); }
+    .posts { display: grid; gap: 4px; align-content: start; }
     .post {
-      text-align: left; width: 100%; border: 1px solid var(--line); background: white; border-radius: 16px; padding: 12px;
+      text-align: left; width: 100%; border: 0; border-radius: 12px; background: transparent; padding: 10px 10px 10px 12px;
     }
-    .post:hover { border-color: #bae6fd; }
-    .post.is-on { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(14,165,233,0.15); }
-    .post b { display: block; font-weight: 700; line-height: 1.45; }
-    .post span { display: flex; gap: 6px; align-items: center; margin-top: 8px; color: var(--muted); font-size: 12px; }
-    .badge { border-radius: 999px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
-    .badge.live { background: #d1fae5; color: #047857; }
-    .badge.draft { background: #f1f5f9; color: #475569; }
-    .editor-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; min-width: 0; }
-    .editor { padding: 18px; display: grid; gap: 12px; }
+    .post:hover { background: #f3f1ee; }
+    .post.is-on { background: #e0f2fe; }
+    .post b { display: block; font-weight: 650; line-height: 1.45; font-size: 14px; }
+    .meta { display: flex; gap: 8px; align-items: center; margin-top: 6px; color: var(--muted); font-size: 12px; }
+    .dot { width: 7px; height: 7px; border-radius: 99px; background: #cbd5e1; flex: none; }
+    .dot.live { background: var(--green); }
+    .empty { padding: 28px 8px; text-align: center; color: var(--muted); font-size: 13px; line-height: 1.7; }
+    .kicker { margin: 0 0 8px; color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+    .chip {
+      display: inline-flex; margin: 0 0 14px; padding: 2px 10px; border-radius: 999px;
+      background: #e0f2fe; color: var(--blue-deep); font-size: 12px; font-weight: 700;
+    }
     .title {
-      border: 0; font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
-      font-size: 28px; font-weight: 500; padding: 4px 2px; border-radius: 0;
-      resize: none; overflow: hidden; line-height: 1.45; min-height: 44px;
+      width: 100%; border: 0; background: transparent; border-radius: 0; padding: 0;
+      font-family: var(--serif); font-size: 36px; font-weight: 500; line-height: 1.35;
+      resize: none; overflow: hidden; min-height: 52px;
     }
-    .title:focus { outline: none; }
+    .title:focus { outline: none; box-shadow: inset 0 -1px 0 var(--line); }
+    .editor-bar {
+      display: flex; justify-content: space-between; gap: 12px; align-items: center;
+      margin: 22px 0 16px; flex-wrap: wrap;
+    }
     .tools { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tools button { height: 30px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--line); background: #f8fafc; font-size: 12px; }
-    .tools button:hover { border-color: #7dd3fc; color: var(--blue-deep); }
-    textarea.content { min-height: 180px; max-height: 240px; resize: vertical; line-height: 1.7; font-size: 13px; }
-    .preview { padding: 18px 18px 8px; min-height: 280px; max-height: 460px; overflow: auto; background: #f8fafc; }
-    .preview .kicker { color: var(--green); font-size: 11px; letter-spacing: 0.18em; font-weight: 700; }
-    .preview h2 { margin: 8px 0 14px; font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; font-weight: 500; font-size: 26px; line-height: 1.45; }
-    .preview time { color: var(--muted); font-size: 13px; }
-    .prose { margin-top: 18px; line-height: 1.9; color: #334155; }
-    .prose p { margin: 0 0 14px; }
-    .prose h2, .prose h3 { font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; font-weight: 500; }
+    .tools button, .surface button {
+      height: 30px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--line);
+      background: #fafaf9; font-size: 12px; font-weight: 650; color: #475569;
+    }
+    .tools button:hover, .surface button:hover { border-color: #cbd5e1; color: var(--ink); }
+    .surface { display: flex; padding: 3px; background: #f3f1ee; border-radius: 999px; }
+    .surface button { border: 0; background: transparent; }
+    .surface button.is-on { background: white; color: var(--ink); box-shadow: 0 1px 2px rgba(28,36,48,0.06); }
+    .preview { padding: 8px 0 12px; }
+    .prose { line-height: 1.9; color: #334155; font-size: 16px; }
+    .prose p { margin: 0 0 1em; }
+    .prose h2, .prose h3 { font-family: var(--serif); font-weight: 500; color: var(--ink); }
+    .prose h2 { font-size: 22px; margin: 1.6em 0 0.5em; }
+    .prose h3 { font-size: 18px; margin: 1.4em 0 0.4em; }
     .prose a { color: var(--blue-deep); }
     .prose img { width: 100%; border-radius: 16px; margin: 8px 0 16px; }
     .prose ul { padding-left: 1.2em; }
-    .side { padding: 16px; display: grid; gap: 12px; align-content: start; position: sticky; top: 84px; max-height: calc(100vh - 102px); overflow: auto; }
-    .side h3 { margin: 0; font-size: 13px; letter-spacing: 0.08em; color: var(--muted); }
-    .seg { display: flex; padding: 4px; background: #eef6fb; border-radius: 999px; }
-    .seg button { flex: 1; height: 32px; border: 0; border-radius: 999px; background: transparent; font-weight: 700; font-size: 13px; }
-    .seg button.is-on { background: white; box-shadow: 0 1px 2px rgba(15,23,42,0.08); }
-    .status-line { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 12px; }
-    .empty { padding: 28px 12px; text-align: center; color: var(--muted); font-size: 13px; line-height: 1.7; }
-    .hint { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
-    .cover-preview { width: 100%; max-height: 140px; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); background: #f8fafc; }
+    textarea.content {
+      min-height: 52vh; resize: vertical; line-height: 1.7; font-size: 13px;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      background: #fbfaf8;
+    }
+    .stage[data-surface="preview"] .content,
+    .stage[data-surface="preview"] .html-hint { display: none; }
+    .stage[data-surface="html"] .preview { display: none; }
+    .hint { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .side h3 { margin: 8px 0 0; font-size: 11px; letter-spacing: 0.14em; color: var(--muted); font-weight: 700; }
+    .seg { display: flex; padding: 4px; background: #efece7; border-radius: 999px; }
+    .seg button { flex: 1; height: 34px; border: 0; border-radius: 999px; background: transparent; font-weight: 700; font-size: 13px; color: var(--muted); }
+    .seg button.is-on { background: white; color: var(--ink); box-shadow: 0 1px 2px rgba(28,36,48,0.06); }
+    .slug {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      font-size: 13px; letter-spacing: 0;
+    }
+    .cover-drop {
+      width: 100%; min-height: 148px; padding: 0; border-radius: 16px; overflow: hidden;
+      border: 1px dashed #d6d3d1; background: white; color: var(--muted);
+      display: grid; place-items: center; text-align: center; font-size: 13px; line-height: 1.6;
+    }
+    .cover-drop.is-drag { border-color: var(--blue); background: #f0f9ff; color: var(--blue-deep); }
+    .cover-preview { width: 100%; height: 160px; object-fit: cover; display: block; }
+    #cover-empty { padding: 18px; }
+    .danger-zone { display: grid; gap: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
     .boot { margin: 0; color: var(--muted); font-size: 14px; }
     .toast {
-      position: fixed; right: 18px; bottom: 18px; z-index: 40;
-      background: #0f172a; color: white; border-radius: 14px; padding: 12px 16px;
-      box-shadow: var(--shadow); font-size: 13px;
+      position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 40;
+      background: #123044; color: white; border-radius: 999px; padding: 12px 18px;
+      box-shadow: var(--shadow); font-size: 13px; max-width: calc(100% - 32px);
     }
-    dialog { border: 0; border-radius: 22px; padding: 22px; width: min(420px, calc(100% - 32px)); box-shadow: var(--shadow); }
-    dialog::backdrop { background: rgba(15, 23, 42, 0.35); }
-    dialog h2 { margin: 0 0 8px; font-size: 20px; }
-    dialog p { margin: 0 0 16px; color: var(--muted); line-height: 1.6; font-size: 14px; }
+    dialog { border: 0; border-radius: 22px; padding: 24px; width: min(420px, calc(100% - 32px)); box-shadow: var(--shadow); }
+    dialog::backdrop { background: rgba(18, 24, 32, 0.4); }
+    dialog h2 { margin: 0 0 8px; font-family: var(--serif); font-size: 24px; font-weight: 500; }
+    dialog p { margin: 0 0 16px; color: var(--muted); line-height: 1.7; font-size: 14px; }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
     .row input { width: auto; flex: 1; min-width: 140px; }
+    .dock { display: none; }
     @media (max-width: 980px) {
-      .workspace, .editor-wrap { grid-template-columns: 1fr; }
-      .sidebar, .side { position: static; max-height: none; }
-      .title { font-size: 22px; }
-      .topbar { flex-wrap: wrap; align-items: center; padding: 12px 14px; }
-      .brand { flex: none; }
+      .workspace { display: block; height: auto; overflow: visible; }
+      .workspace .sidebar, .workspace .stage, .workspace .side { display: none; border: 0; max-height: none; }
+      .workspace[data-pane="list"] .sidebar { display: flex; min-height: calc(100dvh - 128px); }
+      .workspace[data-pane="edit"] .stage { display: block; }
+      .workspace[data-pane="publish"] .side { display: grid; padding-bottom: 108px; }
+      .sidebar { padding-bottom: 96px; }
+      .sheet { padding: 24px 18px 96px; }
+      .title { font-size: 26px; }
+      .topbar { padding: 10px 14px; flex-wrap: wrap; }
       .brand small { display: none; }
       .brand strong { letter-spacing: 0.08em; }
-      #top-actions { width: 100%; justify-content: flex-start; }
+      .save-state { display: none; }
+      .dock {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+        background: rgba(255,255,255,0.96); border-top: 1px solid var(--line);
+        padding: 6px 10px calc(6px + env(safe-area-inset-bottom));
+        backdrop-filter: blur(16px);
+      }
+      .dock button {
+        height: 42px; border: 0; background: transparent; border-radius: 12px;
+        color: var(--muted); font-weight: 700; font-size: 13px;
+      }
+      .dock button.is-on { background: #f3f1ee; color: var(--ink); }
+      .toast { bottom: 74px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
     }
   </style>
 </head>
@@ -173,10 +233,10 @@
         <small>お知らせの管理</small>
       </div>
     </div>
-    <div class="row" id="top-actions">
+    <div class="top-actions" id="top-actions">
+      <span id="save-state" class="save-state hidden">保存済み</span>
       <a class="btn-ghost" href="https://amalink.co.jp/news" target="_blank" rel="noreferrer">公開サイト</a>
-      <button class="text-btn hidden" id="password-open" type="button">パスワード</button>
-      <button class="text-btn hidden" id="logout" type="button">ログアウト</button>
+      <button class="btn hidden" id="save" type="button" title="⌘S / Ctrl+S">保存する</button>
     </div>
   </header>
 
@@ -187,85 +247,141 @@
         <h1 id="auth-title">管理画面</h1>
         <p class="lead" id="auth-lead">公開中のお知らせを、ここから編集できます。</p>
       </div>
-      <label>パスワード<input id="password" type="password" autocomplete="current-password" required /></label>
-      <label class="hidden" id="confirm-wrap">確認<input id="password2" type="password" autocomplete="new-password" /></label>
+      <label class="field">パスワード<input id="password" type="password" autocomplete="current-password" required /></label>
+      <label class="field hidden" id="confirm-wrap">確認<input id="password2" type="password" autocomplete="new-password" /></label>
       <p class="error" id="auth-error" role="alert"></p>
       <button class="btn" type="submit" id="auth-submit">入る</button>
     </form>
   </main>
 
-  <section id="app" class="workspace hidden">
+  <section id="app" class="workspace hidden" data-pane="edit">
     <aside class="sidebar">
-      <button class="btn" id="new-post" type="button">新しい記事</button>
-      <input id="search" type="search" placeholder="タイトルを検索" />
+      <button class="btn new-post" id="new-post" type="button">新しい記事</button>
+      <input class="search" id="search" type="search" placeholder="タイトルを検索" aria-label="タイトルを検索" />
       <div class="filters" role="tablist">
-        <button type="button" data-filter="all" class="is-on">すべて</button>
-        <button type="button" data-filter="published">公開</button>
-        <button type="button" data-filter="draft">下書き</button>
+        <button type="button" data-filter="all" class="is-on">すべて <span data-count="all">0</span></button>
+        <button type="button" data-filter="published">公開 <span data-count="published">0</span></button>
+        <button type="button" data-filter="draft">下書き <span data-count="draft">0</span></button>
       </div>
       <div class="posts" id="post-list"></div>
     </aside>
-    <div class="editor-wrap">
-      <div class="editor">
+
+    <div class="stage" id="stage" data-surface="preview">
+      <div class="sheet">
+        <p class="kicker" id="preview-date"></p>
+        <p class="chip" id="preview-cat"></p>
         <textarea class="title" id="title" rows="2" placeholder="タイトル"></textarea>
-        <div class="tools">
-          <button type="button" data-insert="p">段落</button>
-          <button type="button" data-insert="h2">見出し</button>
-          <button type="button" data-insert="h3">小見出し</button>
-          <button type="button" data-insert="a">リンク</button>
-          <button type="button" data-insert="ul">箇条書き</button>
-          <button type="button" id="insert-image" >画像</button>
+        <div class="editor-bar">
+          <div class="tools">
+            <button type="button" data-insert="p">段落</button>
+            <button type="button" data-insert="h2">見出し</button>
+            <button type="button" data-insert="h3">小見出し</button>
+            <button type="button" data-insert="a">リンク</button>
+            <button type="button" data-insert="ul">箇条書き</button>
+            <button type="button" id="insert-image">画像</button>
+          </div>
+          <div class="surface" id="surface" role="tablist" aria-label="本文の表示">
+            <button type="button" data-surface="preview" class="is-on">見た目</button>
+            <button type="button" data-surface="html">HTML</button>
+          </div>
         </div>
-        <article class="preview">
-          <div class="kicker">プレビュー</div>
-          <time id="preview-date"></time>
-          <h2 id="preview-title">無題の記事</h2>
+        <article class="preview" id="preview">
           <div class="prose" id="preview-body"></div>
         </article>
-        <textarea class="content" id="content" placeholder="本文（HTML）"></textarea>
-        <p class="hint">上は公開ページと同じ見た目です。下のHTMLを直すとすぐ反映されます。保存は ⌘S / Ctrl+S です。</p>
+        <textarea class="content" id="content" placeholder="ここに本文のHTMLを書きます" aria-label="本文のHTML"></textarea>
+        <p class="hint html-hint">見た目はすぐ上に反映されます。保存は ⌘S / Ctrl+S です。</p>
       </div>
-      <aside class="side">
-        <h3>公開設定</h3>
-        <div class="seg" id="status-seg">
-          <button type="button" data-status="draft">下書き</button>
-          <button type="button" data-status="published" class="is-on">公開</button>
-        </div>
-        <label>公開日<input id="published-at" type="date" /></label>
-        <label>スラッグ<input id="slug" placeholder="自動で付きます" spellcheck="false" /></label>
-        <label>カテゴリ
-          <select id="category"></select>
-        </label>
-        <div class="row">
-          <input id="new-category" placeholder="カテゴリを追加" />
-          <button class="btn-ghost" id="add-category" type="button">追加</button>
-        </div>
-        <label>カバー画像URL<input id="cover" placeholder="https:// または /news/..." /></label>
+    </div>
+
+    <aside class="side">
+      <h3>公開</h3>
+      <div class="seg" id="status-seg" role="tablist">
+        <button type="button" data-status="draft">下書き</button>
+        <button type="button" data-status="published" class="is-on">公開</button>
+      </div>
+      <p class="hint" id="status-hint">保存すると、公開サイトに表示されます。</p>
+      <label class="field">公開日<input id="published-at" type="date" /></label>
+      <label class="field">アドレス
+        <input class="slug" id="slug" placeholder="自動で付きます" spellcheck="false" autocapitalize="off" />
+      </label>
+      <p class="hint" id="slug-preview"></p>
+      <label class="field">カテゴリ
+        <select id="category"></select>
+      </label>
+      <div class="row">
+        <input id="new-category" placeholder="カテゴリを追加" />
+        <button class="btn-ghost" id="add-category" type="button">追加</button>
+      </div>
+      <h3>カバー</h3>
+      <button class="cover-drop" id="upload" type="button">
         <img id="cover-preview" class="cover-preview hidden" alt="" />
-        <input id="file" type="file" accept="image/png,image/jpeg,image/webp,image/gif" class="hidden" />
-        <button class="btn-ghost" id="upload" type="button">カバー画像をアップロード</button>
-        <button class="btn" id="save" type="button">保存する</button>
+        <span id="cover-empty">クリック、または画像をドロップ<br />PNG / JPEG / WebP / GIF・5MBまで</span>
+      </button>
+      <label class="field">画像URL<input id="cover" placeholder="https:// または /news/..." /></label>
+      <input id="file" type="file" accept="image/png,image/jpeg,image/webp,image/gif" class="hidden" />
+      <div class="danger-zone">
         <a class="btn-ghost" id="open-public" href="https://amalink.co.jp/news" target="_blank" rel="noreferrer">公開ページを見る</a>
         <button class="btn-danger" id="remove" type="button">この記事を削除</button>
-        <div class="status-line"><span id="save-state">未保存の変更はありません</span><span id="dirty"></span></div>
-      </aside>
-    </div>
+        <button class="text-btn hidden" id="password-open" type="button">パスワードを変更</button>
+        <button class="text-btn hidden" id="logout" type="button">ログアウト</button>
+      </div>
+    </aside>
+
+    <nav class="dock" aria-label="画面の切り替え">
+      <button type="button" data-pane="list">一覧</button>
+      <button type="button" data-pane="edit" class="is-on">編集</button>
+      <button type="button" data-pane="publish">設定</button>
+    </nav>
   </section>
 
   <dialog id="confirm">
     <h2>この記事を削除しますか？</h2>
-    <p>公開ページからも消えます。この操作は戻せません。</p>
+    <p id="confirm-copy">公開ページからも消えます。この操作は戻せません。</p>
     <div class="row">
       <button class="btn-ghost" id="confirm-cancel" type="button">やめる</button>
       <button class="btn-danger" id="confirm-ok" type="button">削除する</button>
     </div>
   </dialog>
 
+  <dialog id="leave">
+    <h2>保存していない変更があります</h2>
+    <p>このまま移動すると、いまの編集は失われます。</p>
+    <div class="row">
+      <button class="btn-ghost" id="leave-cancel" type="button">戻る</button>
+      <button class="btn-ghost" id="leave-discard" type="button">破棄して移動</button>
+      <button class="btn" id="leave-save" type="button">保存して移動</button>
+    </div>
+  </dialog>
+
+  <dialog id="link-dialog">
+    <form method="dialog" class="stack">
+      <h2>リンク先</h2>
+      <label class="field">URL<input id="link-url" inputmode="url" spellcheck="false" /></label>
+      <div class="row">
+        <button class="btn-ghost" value="cancel">やめる</button>
+        <button class="btn" value="ok">入れる</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="alt-dialog">
+    <form method="dialog" id="alt-form" class="stack">
+      <h2>画像の説明</h2>
+      <p>読み上げや検索に使います。空のままでも追加できます。</p>
+      <label class="field">説明<input id="alt-text" /></label>
+      <div class="row">
+        <button class="btn-ghost" value="cancel">やめる</button>
+        <button class="btn" value="ok">追加する</button>
+      </div>
+    </form>
+  </dialog>
+
   <dialog id="password-dialog">
     <form class="stack" id="password-form">
       <h2>パスワードを変更</h2>
-      <label>現在のパスワード<input id="pw-current" type="password" required /></label>
-      <label>新しいパスワード<input id="pw-next" type="password" minlength="10" required /></label>
+      <p>10文字以上にしてください。</p>
+      <label class="field">現在のパスワード<input id="pw-current" type="password" autocomplete="current-password" required /></label>
+      <label class="field">新しいパスワード<input id="pw-next" type="password" autocomplete="new-password" minlength="10" required /></label>
       <p class="error" id="pw-error"></p>
       <div class="row">
         <button class="btn-ghost" id="pw-cancel" type="button">閉じる</button>
@@ -279,6 +395,8 @@
   <script>
     const PUBLIC_ORIGIN = "https://amalink.co.jp";
     const state = { posts: [], categories: [], filter: "all", currentId: null, dirty: false, status: "published", needsSetup: false };
+    let caret = { start: 0, end: 0 };
+    let pendingLeave = null;
 
     const $ = (id) => document.getElementById(id);
     const toastBox = $("toast");
@@ -288,7 +406,7 @@
       toastBox.textContent = message;
       toastBox.classList.remove("hidden");
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toastBox.classList.add("hidden"), 2400);
+      toastTimer = setTimeout(() => toastBox.classList.add("hidden"), 2600);
     }
 
     async function api(path, options = {}) {
@@ -311,10 +429,26 @@
       $("app").classList.toggle("hidden", !on);
       $("logout").classList.toggle("hidden", !on);
       $("password-open").classList.toggle("hidden", !on);
+      $("save").classList.toggle("hidden", !on);
+      $("save-state").classList.toggle("hidden", !on);
+    }
+
+    function setPane(pane) {
+      $("app").dataset.pane = pane;
+      document.querySelectorAll(".dock button").forEach((button) => {
+        button.classList.toggle("is-on", button.dataset.pane === pane);
+      });
     }
 
     function today() {
       return new Date().toISOString().slice(0, 10);
+    }
+
+    function formatDay(iso) {
+      if (!iso) return "";
+      const [year, month, day] = iso.slice(0, 10).split("-");
+      if (!year || !month || !day) return "";
+      return year + "/" + month + "/" + day;
     }
 
     function blankPost() {
@@ -343,6 +477,11 @@
       title.style.height = title.scrollHeight + "px";
     }
 
+    function rememberCaret() {
+      const area = $("content");
+      caret = { start: area.selectionStart, end: area.selectionEnd };
+    }
+
     function fill(post) {
       state.currentId = post.id;
       state.status = post.status || "draft";
@@ -350,6 +489,7 @@
       resizeTitle();
       $("slug").value = post.slug || "";
       $("content").value = prettyHtml(post.content || "");
+      caret = { start: $("content").value.length, end: $("content").value.length };
       $("cover").value = post.coverUrl || "";
       $("published-at").value = (post.publishedAt || "").slice(0, 10) || today();
       $("category").value = post.categoryId || "";
@@ -358,15 +498,21 @@
       });
       const href = post.publicUrl || (post.slug ? PUBLIC_ORIGIN + "/news/" + post.slug : PUBLIC_ORIGIN + "/news");
       $("open-public").href = href;
+      $("open-public").textContent = post.slug ? "この記事を見る" : "お知らせ一覧を見る";
       state.dirty = false;
       markDirty();
       renderPreview();
       renderList();
+      const selected = document.querySelector(".post.is-on");
+      if (selected) selected.scrollIntoView({ block: "nearest" });
     }
 
     function markDirty() {
-      $("dirty").textContent = state.dirty ? "未保存" : "";
-      $("save-state").textContent = state.dirty ? "変更があります" : "保存済み";
+      $("save-state").textContent = state.dirty ? "未保存の変更" : "保存済み";
+      $("save").textContent = !state.dirty ? "保存する" : state.status === "published" ? "公開する" : "下書き保存";
+      $("status-hint").textContent = state.status === "published"
+        ? "保存すると、公開サイトに表示されます。"
+        : "下書きのあいだは、公開サイトに出ません。";
     }
 
     function renderCategories() {
@@ -385,14 +531,27 @@
       });
     }
 
+    function updateCounts() {
+      const counts = {
+        all: state.posts.length,
+        published: state.posts.filter((post) => post.status === "published").length,
+        draft: state.posts.filter((post) => post.status !== "published").length,
+      };
+      document.querySelectorAll("[data-count]").forEach((node) => {
+        node.textContent = String(counts[node.dataset.count] || 0);
+      });
+    }
+
     function renderList() {
+      updateCounts();
       const posts = visiblePosts();
+      const query = $("search").value.trim();
       $("post-list").innerHTML = posts.length ? posts.map((post) => `
         <button class="post ${post.id === state.currentId ? "is-on" : ""}" type="button" data-id="${post.id}">
           <b>${escapeHtml(post.title || "無題")}</b>
-          <span><i class="badge ${post.status === "published" ? "live" : "draft"}">${post.status === "published" ? "公開" : "下書き"}</i>${escapeHtml((post.publishedAt || post.updatedAt || "").slice(0, 10))}</span>
+          <span class="meta"><i class="dot ${post.status === "published" ? "live" : ""}"></i>${post.status === "published" ? "公開" : "下書き"} · ${escapeHtml(formatDay(post.publishedAt || post.updatedAt))}</span>
         </button>
-      `).join("") : `<div class="empty">該当する記事はありません</div>`;
+      `).join("") : `<div class="empty">${query ? "一致する記事はありません" : state.filter === "draft" ? "下書きはありません" : state.filter === "published" ? "公開中の記事はありません" : "まだ記事がありません"}</div>`;
     }
 
     function absoluteSrc(src) {
@@ -404,18 +563,24 @@
 
     function renderPreview() {
       const draft = currentDraft();
-      $("preview-title").textContent = draft.title || "無題の記事";
-      $("preview-date").textContent = ($("published-at").value || "").replaceAll("-", "/");
+      $("preview-date").textContent = formatDay($("published-at").value);
+      const category = $("category").selectedOptions[0]?.textContent || "";
+      $("preview-cat").textContent = category;
+      $("preview-cat").classList.toggle("hidden", !category);
       const html = (draft.coverUrl && !draft.content.includes(draft.coverUrl) ? `<img src="${escapeAttr(draft.coverUrl)}" alt="">` : "") + draft.content;
       $("preview-body").innerHTML = html.replace(/src="([^"]+)"/g, (_, src) => `src="${escapeAttr(absoluteSrc(src))}"`);
       const cover = $("cover-preview");
+      const empty = $("cover-empty");
       if (draft.coverUrl) {
         cover.src = absoluteSrc(draft.coverUrl);
         cover.classList.remove("hidden");
+        empty.classList.add("hidden");
       } else {
         cover.removeAttribute("src");
         cover.classList.add("hidden");
+        empty.classList.remove("hidden");
       }
+      $("slug-preview").textContent = draft.slug ? "amalink.co.jp/news/" + draft.slug : "保存するとアドレスが付きます";
       $("remove").textContent = state.currentId ? "この記事を削除" : "入力をクリア";
     }
 
@@ -424,19 +589,28 @@
     }
     function escapeAttr(value) { return escapeHtml(value); }
 
-    function surround(tag) {
+    async function surround(tag) {
       const area = $("content");
-      const start = area.selectionStart;
-      const end = area.selectionEnd;
+      const active = document.activeElement === area;
+      const start = active ? area.selectionStart : caret.start;
+      const end = active ? area.selectionEnd : caret.end;
       const selected = area.value.slice(start, end) || "テキスト";
       let insert = `<${tag}>${selected}</${tag}>`;
       if (tag === "a") {
-        const href = window.prompt("リンク先URL", "https://amalink.co.jp/");
+        $("link-url").value = "https://";
+        $("link-dialog").showModal();
+        const href = await new Promise((resolve) => {
+          $("link-dialog").addEventListener("close", () => {
+            resolve($("link-dialog").returnValue === "ok" ? $("link-url").value.trim() : "");
+          }, { once: true });
+        });
         if (!href) return;
         insert = `<a href="${escapeAttr(href)}">${selected}</a>`;
       }
       if (tag === "ul") insert = `<ul>\n  <li>${selected}</li>\n</ul>`;
+      if (!active && start === end && area.value && !area.value.endsWith("\n")) insert = "\n" + insert;
       area.setRangeText(insert, start, end, "end");
+      caret = { start: area.selectionStart, end: area.selectionEnd };
       state.dirty = true;
       markDirty();
       renderPreview();
@@ -445,6 +619,16 @@
     function showGate() {
       $("boot-status").classList.add("hidden");
       $("auth-form").classList.remove("hidden");
+      $("password").focus();
+    }
+
+    function confirmLeave(action) {
+      if (!state.dirty) {
+        action();
+        return;
+      }
+      pendingLeave = action;
+      $("leave").showModal();
     }
 
     async function boot() {
@@ -470,6 +654,7 @@
       state.categories = categories.categories;
       renderCategories();
       showApp(true);
+      if (window.matchMedia("(max-width: 980px)").matches) setPane("list");
       const first = state.posts[0];
       fill(first || blankPost());
     }
@@ -477,6 +662,7 @@
     $("auth-form").addEventListener("submit", async (event) => {
       event.preventDefault();
       $("auth-error").textContent = "";
+      $("auth-submit").disabled = true;
       try {
         if (state.needsSetup) {
           if ($("password").value !== $("password2").value) {
@@ -495,6 +681,8 @@
           : error.message === "invalid"
             ? "パスワードが違います。"
             : "接続できませんでした。しばらくしてからもう一度お試しください。";
+      } finally {
+        $("auth-submit").disabled = false;
       }
     });
 
@@ -515,25 +703,39 @@
     $("post-list").addEventListener("click", (event) => {
       const button = event.target.closest("[data-id]");
       if (!button) return;
-      if (state.dirty && !window.confirm("保存していない変更があります。移動しますか？")) return;
-      const post = state.posts.find((item) => item.id === button.dataset.id);
-      if (post) fill(post);
+      confirmLeave(() => {
+        const post = state.posts.find((item) => item.id === button.dataset.id);
+        if (post) fill(post);
+        if (window.matchMedia("(max-width: 980px)").matches) setPane("edit");
+      });
     });
 
     $("new-post").addEventListener("click", () => {
-      if (state.dirty && !window.confirm("保存していない変更があります。新しい記事にしますか？")) return;
-      fill(blankPost());
-      $("title").focus();
+      confirmLeave(() => {
+        fill(blankPost());
+        setPane("edit");
+        $("title").focus();
+      });
+    });
+
+    document.querySelector(".dock").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-pane]");
+      if (!button) return;
+      setPane(button.dataset.pane);
     });
 
     ["title", "slug", "content", "cover", "published-at", "category"].forEach((id) => {
       $(id).addEventListener("input", () => {
         if (id === "title") resizeTitle();
+        if (id === "content") rememberCaret();
         state.dirty = true;
         markDirty();
         renderPreview();
       });
     });
+    $("content").addEventListener("keyup", rememberCaret);
+    $("content").addEventListener("mouseup", rememberCaret);
+    $("content").addEventListener("blur", rememberCaret);
 
     $("status-seg").addEventListener("click", (event) => {
       const button = event.target.closest("button");
@@ -544,28 +746,35 @@
       markDirty();
     });
 
+    $("surface").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-surface]");
+      if (!button) return;
+      $("stage").dataset.surface = button.dataset.surface;
+      document.querySelectorAll("#surface button").forEach((item) => item.classList.toggle("is-on", item === button));
+      if (button.dataset.surface === "html") $("content").focus();
+    });
+
     document.querySelector(".tools").addEventListener("click", (event) => {
       const button = event.target.closest("[data-insert]");
       if (!button) return;
       surround(button.dataset.insert);
     });
 
-    $("insert-image").addEventListener("click", () => {
-      $("file").dataset.mode = "body";
-      $("file").click();
-    });
-    $("upload").addEventListener("click", () => {
-      $("file").dataset.mode = "cover";
-      $("file").click();
-    });
-    $("file").addEventListener("change", async () => {
-      const file = $("file").files[0];
-      const mode = $("file").dataset.mode || "body";
-      $("file").value = "";
+    function askAlt() {
+      $("alt-text").value = "";
+      $("alt-dialog").showModal();
+      return new Promise((resolve) => {
+        $("alt-dialog").addEventListener("close", () => {
+          resolve($("alt-dialog").returnValue === "ok" ? $("alt-text").value : null);
+        }, { once: true });
+      });
+    }
+
+    async function uploadFile(file, mode) {
       if (!file) return;
       let alt = "";
       if (mode === "body") {
-        const entered = window.prompt("画像の説明（読み上げや検索に使います）", "");
+        const entered = await askAlt();
         if (entered === null) return;
         alt = entered;
       }
@@ -576,7 +785,10 @@
         if (mode === "body") {
           const area = $("content");
           const tag = `<img src="${result.url}" alt="${escapeAttr(alt)}">`;
-          area.setRangeText(tag, area.selectionStart, area.selectionEnd, "end");
+          const start = document.activeElement === area ? area.selectionStart : caret.start;
+          const end = document.activeElement === area ? area.selectionEnd : caret.end;
+          area.setRangeText(tag, start, end, "end");
+          caret = { start: area.selectionStart, end: area.selectionEnd };
         }
         if (mode === "cover" || !$("cover").value) $("cover").value = result.url;
         state.dirty = true;
@@ -591,6 +803,31 @@
             : "画像を追加できませんでした";
         toast(message);
       }
+    }
+
+    $("insert-image").addEventListener("click", () => {
+      $("file").dataset.mode = "body";
+      $("file").click();
+    });
+    $("upload").addEventListener("click", () => {
+      $("file").dataset.mode = "cover";
+      $("file").click();
+    });
+    $("upload").addEventListener("dragover", (event) => {
+      event.preventDefault();
+      $("upload").classList.add("is-drag");
+    });
+    $("upload").addEventListener("dragleave", () => $("upload").classList.remove("is-drag"));
+    $("upload").addEventListener("drop", (event) => {
+      event.preventDefault();
+      $("upload").classList.remove("is-drag");
+      uploadFile(event.dataTransfer.files[0], "cover");
+    });
+    $("file").addEventListener("change", () => {
+      const file = $("file").files[0];
+      const mode = $("file").dataset.mode || "body";
+      $("file").value = "";
+      uploadFile(file, mode);
     });
 
     $("add-category").addEventListener("click", async () => {
@@ -605,6 +842,7 @@
         $("category").value = result.category.id;
         state.dirty = true;
         markDirty();
+        renderPreview();
         toast("カテゴリを追加しました");
       } catch {
         toast("カテゴリを追加できませんでした");
@@ -617,8 +855,9 @@
       const draft = currentDraft();
       if (!draft.title) {
         toast("タイトルを入力してください");
+        setPane("edit");
         $("title").focus();
-        return;
+        return false;
       }
       $("save").disabled = true;
       $("save-state").textContent = "保存しています";
@@ -631,16 +870,18 @@
         else state.posts.unshift(result.post);
         fill(result.post);
         toast(result.post.status === "published" ? "公開しました" : "下書きを保存しました");
+        return true;
       } catch (error) {
         const message = error.message === "slug_taken"
-          ? "そのスラッグは使われています"
+          ? "そのアドレスは使われています"
           : error.message === "bad_slug"
-            ? "スラッグは英小文字・数字・ハイフン・アンダースコアにしてください"
+            ? "アドレスは英小文字、数字、ハイフン、アンダースコアにしてください"
             : error.status === 401
               ? "ログインの期限が切れました。入り直してください"
               : "保存できませんでした";
         toast(message);
         markDirty();
+        return false;
       } finally {
         $("save").disabled = false;
       }
@@ -648,9 +889,17 @@
 
     $("save").addEventListener("click", save);
     document.addEventListener("keydown", (event) => {
-      if ((event.metaKey || event.ctrlKey) && event.key === "s") {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
         event.preventDefault();
         if (!$("app").classList.contains("hidden")) save();
+        return;
+      }
+      if (event.key === "/" && !$("app").classList.contains("hidden") && !event.metaKey && !event.ctrlKey && !event.altKey) {
+        const tag = document.activeElement?.tagName;
+        if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+        event.preventDefault();
+        setPane("list");
+        $("search").focus();
       }
     });
 
@@ -659,6 +908,9 @@
         fill(blankPost());
         return;
       }
+      $("confirm-copy").textContent = state.status === "published"
+        ? "公開ページからも消えます。この操作は戻せません。"
+        : "この下書きを削除します。この操作は戻せません。";
       $("confirm").showModal();
     });
     $("confirm-cancel").addEventListener("click", () => $("confirm").close());
@@ -674,9 +926,32 @@
       }
     });
 
+    $("leave").addEventListener("close", () => {
+      pendingLeave = null;
+    });
+    $("leave-cancel").addEventListener("click", () => {
+      pendingLeave = null;
+      $("leave").close();
+    });
+    $("leave-discard").addEventListener("click", () => {
+      const action = pendingLeave;
+      pendingLeave = null;
+      state.dirty = false;
+      $("leave").close();
+      if (action) action();
+    });
+    $("leave-save").addEventListener("click", async () => {
+      const action = pendingLeave;
+      pendingLeave = null;
+      $("leave").close();
+      const ok = await save();
+      if (ok && action) action();
+    });
+
     $("password-open").addEventListener("click", () => {
       $("pw-error").textContent = "";
       $("password-dialog").showModal();
+      $("pw-current").focus();
     });
     $("pw-cancel").addEventListener("click", () => $("password-dialog").close());
     $("password-form").addEventListener("submit", async (event) => {
