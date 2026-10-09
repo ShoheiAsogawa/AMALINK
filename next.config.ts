@@ -20,13 +20,8 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
-      // カテゴリ一覧の別の書き方（/news?category=ID）を正式なURLへ。旧IDならその先でさらに新IDへ転送される
-      {
-        source: "/news",
-        has: [{ type: "query", key: "category", value: "(?<category>[a-z0-9-]+)" }],
-        destination: "/news/category/:category",
-        permanent: true,
-      },
+      // /news?category=ID と、コラムに移したカテゴリの転送は worker.ts（src/lib/legacy-redirects.ts）で行う
+      // （ここで書くと ?category= が転送先に残るため）
       {
         source: "/news/category",
         destination: "/news",

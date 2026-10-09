@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { getNewsEntry, getNewsList } from "@/lib/cms";
+import { getColumnEntry, getNewsEntry, getNewsList, postHref } from "@/lib/cms";
 import { articleMetadata } from "@/lib/article-meta";
 import { ArticleView } from "@/components/content/ArticleView";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 export const revalidate = 60;
 export const dynamicParams = true;
@@ -30,6 +30,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const news = await getNewsEntry(slug).catch(() => null);
-  if (!news) notFound();
+  if (!news) {
+    // コラムの種類に移した記事は、/column/<slug> へ恒久転送（308）
+    const column = await getColumnEntry(slug).catch(() => null);
+    if (column) permanentRedirect(postHref(column));
+    notFound();
+  }
   return <ArticleView post={news} />;
 }

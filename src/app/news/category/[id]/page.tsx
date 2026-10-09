@@ -6,6 +6,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { ArrowLeft, ArrowRight, Newspaper } from "lucide-react";
 import { categoryPath, formatNewsDate, getCategoryIndex, getNewsList, postHref } from "@/lib/cms";
 import { absoluteUrl, SITE_NAME } from "@/lib/seo";
+import { COLUMN_LIST_PATH, isColumnCategoryId } from "@/lib/legacy-redirects";
 
 export const revalidate = 60;
 export const dynamicParams = true;
@@ -13,7 +14,7 @@ export const dynamicParams = true;
 export async function generateStaticParams() {
   try {
     const { categories } = await getCategoryIndex();
-    return categories.map((category) => ({ id: category.id }));
+    return categories.filter((category) => !isColumnCategoryId(category.id)).map((category) => ({ id: category.id }));
   } catch {
     return [];
   }
@@ -51,6 +52,10 @@ export default async function NewsCategoryPage({ params }: { params: Promise<{ i
   const { id } = await params;
   const { category, movedTo } = await resolveCategory(id);
   // IDを変えたカテゴリの旧URLは、新しいURLへ恒久転送（308）
+  // コラムのカテゴリ（旧IDを含む）は /column にまとめた（ふだんは worker.ts で先に転送される）
+  if (isColumnCategoryId(decodeURIComponent(id)) || (movedTo && isColumnCategoryId(movedTo)) || (category && isColumnCategoryId(category.id))) {
+    permanentRedirect(COLUMN_LIST_PATH);
+  }
   if (movedTo) permanentRedirect(categoryPath(movedTo));
   if (!category) notFound();
 

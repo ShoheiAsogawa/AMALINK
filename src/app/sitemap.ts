@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { categoryPath, getCategoryIndex, getColumnList, getNewsList } from "@/lib/cms";
 import { absoluteUrl } from "@/lib/seo";
+import { isColumnCategoryId } from "@/lib/legacy-redirects";
 
 /**
  * CMS（amalink-cms）に記事が増えたら再デプロイなしで載るよう、ISR で定期的に作り直す。
@@ -79,7 +80,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const { categories } = await getCategoryIndex();
     categoryEntries.push(
-      ...categories.map((category) => ({
+      ...categories.filter((category) => !isColumnCategoryId(category.id)).map((category) => ({
         url: absoluteUrl(categoryPath(category.id)),
         lastModified: now,
         changeFrequency: "weekly" as const,
