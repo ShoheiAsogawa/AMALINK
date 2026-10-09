@@ -4,8 +4,8 @@ import Footer from "@/components/layout/Footer";
 import { ContentSwitch } from "@/components/content/ContentSwitch";
 import { CoverImage } from "@/components/content/CoverImage";
 import { formatNewsDate, getColumnList, getContentCategories, postHref } from "@/lib/cms";
-import { absoluteUrl, SITE_NAME, stripHtmlToDescription } from "@/lib/seo";
-import { BookOpen } from "lucide-react";
+import { absoluteUrl, SITE_NAME } from "@/lib/seo";
+import { ArrowRight, BookOpen } from "lucide-react";
 import Link from "next/link";
 
 export const revalidate = 60;
@@ -28,7 +28,7 @@ export default async function ColumnListPage() {
     <main className="overflow-hidden">
       <Header />
       <section className="min-h-screen bg-gradient-to-b from-slate-50 to-white pt-32 pb-20 md:pt-40 md:pb-32">
-        <div className="container mx-auto max-w-5xl px-6">
+        <div className="container mx-auto max-w-4xl px-6">
           <div className="mb-8 md:mb-10">
             <div className="mb-4 flex items-center gap-4">
               <div className="h-[1px] w-12 bg-amami-blue" />
@@ -41,47 +41,42 @@ export default async function ColumnListPage() {
           </div>
           <ContentSwitch current="column" />
           {columns.length > 0 ? (
-            <div className="grid gap-6 sm:grid-cols-2">
+            // お知らせの一覧（/news）と同じ、サムネイル付きの1行リスト
+            <div className="divide-y divide-slate-100">
               {columns.map((item) => (
                 <Link
                   key={item.id}
                   href={postHref(item)}
-                  className="group overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md"
+                  className="group flex items-center gap-4 rounded-2xl px-2 py-5 transition-colors duration-200 hover:bg-white md:gap-6 md:py-6"
                 >
-                  <div className="aspect-[16/10] overflow-hidden bg-slate-100">
+                  <div className="h-16 w-24 shrink-0 overflow-hidden rounded-xl bg-slate-100 md:h-20 md:w-32">
                     {item.coverUrl ? (
-                      <CoverImage
-                        src={item.coverUrl}
-                        alt=""
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                      />
+                      <CoverImage src={item.coverUrl} alt="" className="h-full w-full object-cover" />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center text-slate-300">
-                        <BookOpen className="h-8 w-8" aria-hidden />
+                        <BookOpen className="h-5 w-5" aria-hidden />
                       </div>
                     )}
                   </div>
-                  <div className="p-5 md:p-6">
-                    <div className="mb-3 flex flex-wrap items-center gap-2">
+                  <div className="min-w-0 flex-1">
+                    <div className="mb-1.5 flex flex-wrap items-center gap-2">
                       <time className="font-sans text-xs text-slate-400 tabular-nums">
                         {formatNewsDate(item.publishedAt ?? item.createdAt)}
                       </time>
                       {getContentCategories(item.category).map((cat) => (
                         <span
                           key={cat.id}
-                          className="inline-block rounded-full bg-amami-blue-light/40 px-2.5 py-0.5 font-sans text-[10px] tracking-wide text-amami-blue"
+                          className="inline-block rounded-full bg-amami-blue-light/40 px-2.5 py-0.5 font-sans text-[10px] tracking-wide text-amami-blue md:text-xs"
                         >
                           {cat.title}
                         </span>
                       ))}
                     </div>
-                    <h2 className="font-serif text-xl leading-snug text-slate-800 transition-colors group-hover:text-amami-blue">
+                    <div className="line-clamp-2 font-sans text-sm leading-snug text-slate-800 transition-colors duration-200 group-hover:text-amami-blue md:text-base">
                       {item.title}
-                    </h2>
-                    <p className="mt-3 line-clamp-3 font-sans text-sm leading-relaxed text-slate-500">
-                      {stripHtmlToDescription(item.content, 96)}
-                    </p>
+                    </div>
                   </div>
+                  <ArrowRight className="hidden h-4 w-4 shrink-0 text-slate-300 transition-all duration-200 group-hover:translate-x-1 group-hover:text-amami-blue md:block" />
                 </Link>
               ))}
             </div>
