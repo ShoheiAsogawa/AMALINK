@@ -145,7 +145,11 @@
     .surface button { border: 0; background: transparent; }
     .surface button.is-on { background: white; color: var(--ink); box-shadow: 0 1px 2px rgba(28,36,48,0.06); }
     .preview { padding: 8px 0 12px; }
-    .prose { line-height: 1.9; color: #334155; font-size: 16px; }
+    .prose { line-height: 1.9; color: #334155; font-size: 16px; min-height: 280px; padding: 4px 2px; cursor: text; }
+    .prose:focus { outline: none; background: #fffdf8; border-radius: 12px; }
+    .prose:empty:before { content: "ここをクリックして、本文を直接書けます"; color: #94a3b8; }
+    .preview-cover { width: 100%; border-radius: 16px; margin: 0 0 18px; display: block; }
+    .edit-hint { margin: 0 0 10px; }
     .prose p { margin: 0 0 1em; }
     .prose h2, .prose h3 { font-family: var(--serif); font-weight: 500; color: var(--ink); }
     .prose h2 { font-size: 22px; margin: 1.6em 0 0.5em; }
@@ -160,6 +164,8 @@
     }
     .stage[data-surface="preview"] .content,
     .stage[data-surface="preview"] .html-hint { display: none; }
+    .stage[data-surface="html"] .edit-hint,
+    .stage[data-surface="html"] .preview-cover { display: none; }
     .stage[data-surface="html"] .preview { display: none; }
     .hint { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
     .side h3 { margin: 8px 0 0; font-size: 11px; letter-spacing: 0.14em; color: var(--muted); font-weight: 700; }
@@ -285,8 +291,10 @@
             <button type="button" data-surface="html">HTML</button>
           </div>
         </div>
+        <p class="hint edit-hint">本文をクリックすると、その場で編集できます。</p>
         <article class="preview" id="preview">
-          <div class="prose" id="preview-body"></div>
+          <img id="preview-cover" class="preview-cover hidden" alt="" />
+          <div class="prose" id="preview-body" contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="本文"></div>
         </article>
         <textarea class="content" id="content" placeholder="ここに本文のHTMLを書きます" aria-label="本文のHTML"></textarea>
         <p class="hint html-hint">見た目はすぐ上に反映されます。保存は ⌘S / Ctrl+S です。</p>
@@ -561,14 +569,34 @@
       return src;
     }
 
+    function fromPreviewHtml(html) {
+      const root = document.createElement("div");
+      root.innerHTML = html;
+      root.querySelectorAll("[src], [href]").forEach((node) => {
+        ["src", "href"].forEach((attr) => {
+          const value = node.getAttribute(attr) || "";
+          if (value.startsWith(PUBLIC_ORIGIN)) node.setAttribute(attr, value.slice(PUBLIC_ORIGIN.length));
+        });
+      });
+      return root.innerHTML;
+    }
+
     function renderPreview() {
       const draft = currentDraft();
       $("preview-date").textContent = formatDay($("published-at").value);
       const category = $("category").selectedOptions[0]?.textContent || "";
       $("preview-cat").textContent = category;
       $("preview-cat").classList.toggle("hidden", !category);
-      const html = (draft.coverUrl && !draft.content.includes(draft.coverUrl) ? `<img src="${escapeAttr(draft.coverUrl)}" alt="">` : "") + draft.content;
-      $("preview-body").innerHTML = html.replace(/src="([^"]+)"/g, (_, src) => `src="${escapeAttr(absoluteSrc(src))}"`);
+      const rendered = draft.content.replace(/src="([^"]+)"/g, (_, src) => `src="${escapeAttr(absoluteSrc(src))}"`);
+      if (document.activeElement !== $("preview-body")) $("preview-body").innerHTML = rendered;
+      const inline = $("preview-cover");
+      if (draft.coverUrl && !draft.content.includes(draft.coverUrl)) {
+        inline.src = absoluteSrc(draft.coverUrl);
+        inline.classList.remove("hidden");
+      } else {
+        inline.removeAttribute("src");
+        inline.classList.add("hidden");
+      }
       const cover = $("cover-preview");
       const empty = $("cover-empty");
       if (draft.coverUrl) {
@@ -733,6 +761,17 @@
         renderPreview();
       });
     });
+    $("preview-body").addEventListener("input", () => {
+      $("content").value = fromPreviewHtml($("preview-body").innerHTML);
+      caret = { start: $("content").value.length, end: $("content").value.length };
+      state.dirty = true;
+      markDirty();
+    });
+    $("preview-body").addEventListener("click", (event) => {
+      if (event.target.closest("a")) event.preventDefault();
+    });
+    try { document.execCommand("defaultParagraphSeparator", false, "p"); } catch (error) { /* 段落区切りは未対応でも編集できる */ }
+
     $("content").addEventListener("keyup", rememberCaret);
     $("content").addEventListener("mouseup", rememberCaret);
     $("content").addEventListener("blur", rememberCaret);
