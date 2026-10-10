@@ -1,15 +1,11 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { ExternalLink, Send, X } from "lucide-react";
+import { Send, X } from "lucide-react";
 import { RabbitAvatar, type RabbitMood } from "@/components/chatbot/RabbitAvatar";
-import {
-  CHATBOT_CONTACT_PATH,
-  CHATBOT_GREETING,
-  CHATBOT_NAME,
-} from "@/lib/chatbot-knowledge";
+import { LineConsultForm } from "@/components/chatbot/LineConsultForm";
+import { CHATBOT_GREETING, CHATBOT_NAME } from "@/lib/chatbot-knowledge";
 import { cn } from "@/lib/utils";
 
 type UiMessage = {
@@ -83,7 +79,7 @@ export function AmalinkChatbot() {
           id: `a-${Date.now()}`,
           role: "assistant",
           content:
-            "いっぱい話してくれてありがとう。続きはお問い合わせからもどうぞ。",
+            "いっぱい話してくれてありがとう。続きは公式LINEからもどうぞ。",
           showContactLink: true,
         },
       ]);
@@ -189,6 +185,13 @@ export function AmalinkChatbot() {
     "奄美大島以外からも依頼できる？",
   ];
 
+  const lastContactId = [...messages]
+    .reverse()
+    .find((m) => m.role === "assistant" && m.showContactLink)?.id;
+  const lineTranscript = messages
+    .filter((item) => item.id !== "greet")
+    .map((item) => ({ role: item.role, content: item.content }));
+
   return (
     <div
       className={cn(
@@ -256,14 +259,8 @@ export function AmalinkChatbot() {
                   >
                     {m.content}
                   </div>
-                  {m.role === "assistant" && m.showContactLink && (
-                    <Link
-                      href={CHATBOT_CONTACT_PATH}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-amami-blue/30 bg-amami-blue-light/50 px-3 py-1.5 font-sans text-xs font-medium text-amami-blue transition hover:border-amami-blue/50 hover:bg-amami-blue-light"
-                    >
-                      お問い合わせページへ
-                      <ExternalLink className="h-3 w-3" aria-hidden />
-                    </Link>
+                  {m.role === "assistant" && m.showContactLink && m.id === lastContactId && (
+                    <LineConsultForm transcript={lineTranscript} />
                   )}
                 </div>
               ))}
