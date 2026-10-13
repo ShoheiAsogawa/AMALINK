@@ -7,12 +7,21 @@ const AI_USER_AGENTS = [
   "ChatGPT-User",
   "OAI-SearchBot",
   "ClaudeBot",
+  "Claude-SearchBot",
+  "Claude-User",
   "anthropic-ai",
   "PerplexityBot",
+  "Perplexity-User",
   "Google-Extended",
+  "GoogleOther",
   "Googlebot",
   "Bingbot",
   "Applebot",
+  "Applebot-Extended",
+  "Amazonbot",
+  "CCBot",
+  "Meta-ExternalAgent",
+  "DuckAssistBot",
 ] as const;
 
 /** ページ以外の大量アセットをクロール対象から外す（GSCの「クロール済み-未登録」抑制） */

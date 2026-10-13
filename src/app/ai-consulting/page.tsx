@@ -79,6 +79,13 @@ const steps = [
 
 const faqs = [
   {
+    id: "ai-consult-amami",
+    question: "奄美大島で生成AIの導入を相談できますか？",
+    answer:
+      "はい。合同会社AMALINKは、鹿児島県奄美大島・宇検村を拠点に、事業者向けの生成AI導入を相談できます。どのAIを使うか決まっていなくても、業務を伺ったうえで小さく試すところから伴走します。",
+    moreHref: "/contact",
+  },
+  {
     id: "ai-consult-undecided",
     question: "どのAIを使えばいいか決まっていなくても相談できますか？",
     answer:

@@ -1,3 +1,4 @@
+import { COMPANY_OVERVIEW } from "@/lib/site-content";
 import { absoluteUrl, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
 
 type ArticleJsonLdProps = {
@@ -41,13 +42,14 @@ export function ArticleJsonLd({
       "@id": url,
     },
     author: {
-      "@type": "Organization",
-      name: LEGAL_NAME,
-      alternateName: SITE_NAME,
-      url: absoluteUrl("/"),
+      "@type": "Person",
+      name: COMPANY_OVERVIEW.representative,
+      jobTitle: "代表社員",
+      worksFor: { "@id": `${absoluteUrl("/")}#organization` },
     },
     publisher: {
       "@type": "Organization",
+      "@id": `${absoluteUrl("/")}#organization`,
       name: LEGAL_NAME,
       alternateName: SITE_NAME,
       logo: {

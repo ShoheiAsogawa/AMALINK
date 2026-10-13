@@ -50,6 +50,13 @@ const steps = [
 
 const faqs = [
   {
+    id: "geo-seo-amami",
+    question: "奄美大島でGEO対策を相談できる会社はありますか？",
+    answer:
+      "はい。合同会社AMALINKは、奄美大島を拠点にSEOとGEOの両方を扱います。AIの回答に会社やサービスが正しく引用されやすいよう、文章、FAQ、構造化データ、llms.txtを整えます。既存サイトの改善だけでも相談できます。",
+    moreHref: "/contact",
+  },
+  {
     id: "geo-seo-diff",
     question: "SEO対策とGEO対策は違うのですか？",
     answer:

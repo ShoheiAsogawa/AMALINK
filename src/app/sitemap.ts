@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { categoryPath, getCategoryIndex, getColumnList, getNewsList } from "@/lib/cms";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, CONTENT_UPDATED } from "@/lib/seo";
 import { isColumnCategoryId } from "@/lib/legacy-redirects";
 
 /**
@@ -27,7 +27,7 @@ const HIGH_PRIORITY = new Set<string>([
 ]);
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
+  const revised = new Date(CONTENT_UPDATED);
   const staticPaths = ["", ...SERVICE_PATHS, "/about", "/faq", "/news", "/column", "/contact"] as const;
 
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => {
@@ -35,7 +35,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const isHigh = HIGH_PRIORITY.has(path);
     return {
       url: absoluteUrl(path || "/"),
-      lastModified: now,
+      lastModified: revised,
       changeFrequency: isHome || isHigh ? "weekly" : "monthly",
       priority: isHome
         ? 1
@@ -82,7 +82,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     categoryEntries.push(
       ...categories.filter((category) => !isColumnCategoryId(category.id)).map((category) => ({
         url: absoluteUrl(categoryPath(category.id)),
-        lastModified: now,
+        lastModified: revised,
         changeFrequency: "weekly" as const,
         priority: 0.5,
       })),
