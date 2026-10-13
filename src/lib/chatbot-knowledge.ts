@@ -7,6 +7,37 @@ import { COMPANY_OVERVIEW, FAQ_ITEMS, SERVICES } from "@/lib/site-content";
 
 export { AMAMI_KNOWLEDGE } from "@/lib/amami-knowledge";
 
+/** 公開サイト（amalink.co.jp）のページ構成。2026-10-13 の本番に合わせる */
+export const SITE_PAGES = [
+  { name: "会社概要", path: "/about" },
+  { name: "AIコンサルティング", path: "/ai-consulting" },
+  { name: "ホームページ制作", path: "/web-production" },
+  { name: "デザイン", path: "/design" },
+  { name: "GEO・SEO対策", path: "/geo-seo" },
+  { name: "システム開発", path: "/system-development" },
+  { name: "AIアバターチャットボット", path: "/ai-avatar-chatbot" },
+  { name: "よくある質問", path: "/faq" },
+  { name: "お知らせ", path: "/news" },
+  { name: "コラム", path: "/column" },
+  { name: "お問い合わせ", path: "/contact" },
+] as const;
+
+export const CONTACT_INFO =
+  "お問い合わせフォーム（お問い合わせページ。項目はAIコンサルティング・ホームページ制作・システム開発・デザイン・GEO・SEO対策・その他）と、公式LINE（サイト上部メニューとページ下部の「公式LINE」ボタン）の2つ。内容が固まっていなくても相談できる。返信は通常2営業日以内。";
+
+export const COLUMN_ARTICLES = [
+  { title: "奄美大島でホームページ制作を頼む前に読むガイド", keys: ["ホームページ", "奄美"] },
+  { title: "ホームページ制作の費用は何で決まる？離島・地方の事業者向けに見積もりの見方を解説", keys: ["費用", "見積"] },
+  { title: "AIチャットボット導入ガイド（奄美・離島の中小企業向け）", keys: ["チャットボット"] },
+  { title: "AIコンサルティングで何を頼める？奄美・鹿児島の中小企業の生成AI導入支援", keys: ["生成ai", "aiコンサル", "ai導入"] },
+] as const;
+
+export const NEWS_ITEMS = [
+  "AMALINKのサイトを公開しました",
+  "「AIコンサルティング」サービスを開始しました",
+  "「AIアバターチャットボット」サービスを開始。自社サイトにデモ機を導入しました",
+] as const;
+
 export const CHATBOT_NAME = "くろうさ";
 
 export const CHATBOT_GREETING =
@@ -24,7 +55,9 @@ export const CHATBOT_SYSTEM_PROMPT = `あなたは「${CHATBOT_NAME}」です。
 7. 口調はやさしく親しみやすく。ですます調ベースで、ときどき「だよ」「ね」を使ってよい。
 8. 初回や挨拶には「うがみんしょうらん」を自然に使ってよい。
 9. 料金・見積・依頼・相談・詳細確認など、お問い合わせページへの誘導が自然なときは、本文で「お問い合わせからどうぞ」などと案内し、回答の末尾に必ず [[CONTACT]] とだけ付ける（制御用。ユーザーには見せない）。不要なら付けない。
-10. 事前知識にない細部は推測で断定せず、公式確認やお問い合わせを勧める。誘導するならルール9に従う。
+10. 事前知識にない細部は推測で断定せず、お問い合わせフォームか公式LINEへの相談を勧める。誘導するならルール9に従う。
+11. 下の「AMALINK公式情報」にない料金・実績・納期・取引先・約束は作らない。サイトに金額の記載はない。
+12. 詳しい説明があるページを案内するときは、URLではなくページ名（例: サイト上部メニューの「AIコンサルティング」ページ）で伝える。
 
 ${AMAMI_ANSWER_RULES}
 
@@ -39,6 +72,11 @@ ${AMAMI_ANSWER_RULES}
 強み: ${COMPANY_OVERVIEW.strengths.join(" / ")}
 向かないケース: ${COMPANY_OVERVIEW.notIdealFor}
 サービス: ${SERVICES.map((s) => `${s.name}（${s.enName}）: ${s.description}`).join(" / ")}
+サイトのページ: ${SITE_PAGES.map((p) => `${p.name}（${p.path}）`).join(" / ")}
+相談の窓口: ${CONTACT_INFO}
+コラム（/column）の記事: ${COLUMN_ARTICLES.map((a) => a.title).join(" / ")}
+お知らせ（/news）: ${NEWS_ITEMS.join(" / ")}
+補足: 記事・読み物は「コラム」、会社からの告知は「お知らせ」に分かれている。昔お知らせにあった記事はコラムに移っている。
 FAQ:
 ${FAQ_ITEMS.map((f) => `Q:${f.question} A:${f.answer}`).join("\n")}
 
@@ -46,9 +84,9 @@ ${FAQ_ITEMS.map((f) => `Q:${f.question} A:${f.answer}`).join("\n")}
 ${AMAMI_KNOWLEDGE}
 `;
 
-/** OpenAI Chat Completions 向けの固定設定 */
-export const CHATBOT_MODEL_DEFAULT = "gpt-5.4-mini";
-/** GPT-5.4系は temperature 非対応のため未使用（互換用に残置） */
+/** DeepSeek（OpenAI互換 Chat Completions）向けの固定設定 */
+export const CHATBOT_MODEL_DEFAULT = "deepseek-chat";
+/** 未使用（互換用に残置） */
 export const CHATBOT_TEMPERATURE = 0.25;
 export const CHATBOT_MAX_TOKENS = 400;
 export const CHATBOT_MAX_MESSAGES = 12;
@@ -59,7 +97,7 @@ export const CHATBOT_CONTACT_MARKER = "[[CONTACT]]";
 export const CHATBOT_CONTACT_PATH = "/contact";
 
 const CONTACT_HINT_RE =
-  /お問い合わせ|お問合せ|ご相談|見積|見積り|ご連絡|依頼|相談したい|料金|費用|値段|お願いできる/;
+  /お問い合わせ|公式LINE|LINEで|お問合せ|ご相談|見積|見積り|ご連絡|依頼|相談したい|料金|費用|値段|お願いできる/;
 
 /** 返答から制御マーカーを外し、お問い合わせリンク表示要否を返す */
 export function finalizeChatReply(
@@ -231,6 +269,18 @@ export function localChatReply(userText: string): string {
     "百合",
     "ケイビング",
     "鍾乳",
+    "line",
+    "ライン",
+    "コラム",
+    "記事",
+    "お知らせ",
+    "ニュース",
+    "チャットボット",
+    "コンサル",
+    "生成ai",
+    "問い合わせ",
+    "連絡",
+    "返信",
   ];
 
   const hasOnTopic = onTopicHints.some((h) => q.includes(normalize(h)));
@@ -253,6 +303,18 @@ export function localChatReply(userText: string): string {
     (q.includes("だれ") || q.includes("誰") || q.includes("お前") || q.includes("なに"))
   ) {
     return "ぼくはくろうさ。アマミノクロウサギをモチーフにした、AMALINKの案内キャラクターだよ。";
+  }
+
+  if (q.includes("line") || q.includes("ライン")) {
+    return `はい、公式LINEからも相談できるよ。サイト上部メニューやページ下部の「公式LINE」ボタンから友だち追加してね。フォームがよければお問い合わせページからどうぞ。返信は通常2営業日以内だよ。 ${CHATBOT_CONTACT_MARKER}`;
+  }
+  if (q.includes("コラム") || q.includes("記事") || q.includes("読み物")) {
+    const hit = COLUMN_ARTICLES.find((a) => a.keys.some((k) => q.includes(normalize(k))));
+    if (hit) return `コラムに「${hit.title}」という記事があるよ。サイト上部メニューの「コラム」から読めるよ。`;
+    return `コラムでは、ホームページ制作の進め方や費用の考え方、AIチャットボットや生成AI導入の記事を読めるよ。サイト上部メニューの「コラム」から見てね。`;
+  }
+  if (q.includes("お知らせ") || q.includes("ニュース") || q.includes("新着")) {
+    return `お知らせでは、サイト公開や「AIコンサルティング」「AIアバターチャットボット」のサービス開始を案内しているよ。サイト上部メニューの「お知らせ」から見てね。`;
   }
 
   const amami = amamiLocalReply(userText, q);
@@ -280,6 +342,15 @@ export function localChatReply(userText: string): string {
     if (q.includes("デザイン") || q.includes("ロゴ")) {
       if (item.id === "service-design-only") score += 15;
     }
+    if (q.includes("コンサル") || q.includes("生成ai") || q.includes("ai導入")) {
+      if (item.id.includes("consult")) score += 15;
+    }
+    if (q.includes("チャットボット")) {
+      if (item.id.includes("chatbot")) score += 15;
+    }
+    if (q.includes("返信") || q.includes("連絡")) {
+      if (item.id === "support-response") score += 15;
+    }
     if (q.includes("会社") || q.includes("どんな")) {
       if (item.id === "about-company") score += 12;
     }
@@ -291,7 +362,7 @@ export function localChatReply(userText: string): string {
       CONTACT_HINT_RE.test(userText) || /お問い合わせ|ご連絡|見積/.test(best.answer);
     return stripMarkdown(
       needsContact
-        ? `${best.answer} くわしくはお問い合わせからもどうぞ。 ${CHATBOT_CONTACT_MARKER}`
+        ? `${best.answer} くわしくはお問い合わせか公式LINEからどうぞ。 ${CHATBOT_CONTACT_MARKER}`
         : best.answer,
     );
   }
@@ -299,7 +370,7 @@ export function localChatReply(userText: string): string {
   if (!hasOnTopic) return OFF_TOPIC;
 
   if (CONTACT_HINT_RE.test(userText) && hasOnTopic) {
-    return `内容によって変わることが多いから、くわしくはお問い合わせで相談してね。 ${CHATBOT_CONTACT_MARKER}`;
+    return `内容によって変わることが多いから、くわしくはお問い合わせか公式LINEで相談してね。 ${CHATBOT_CONTACT_MARKER}`;
   }
 
   return "うがみんしょうらん。もう少し具体的に聞いてくれると答えやすいよ。奄美群島のことか、AMALINKのサービスのこと、どちらが知りたい？";

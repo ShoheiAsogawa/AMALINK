@@ -121,7 +121,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "メッセージが空です" }, { status: 400 });
   }
 
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
+  const apiKey = process.env.DEEPSEEK_API_KEY?.trim();
   if (!apiKey) {
     const local = finalizeChatReply(localChatReply(lastUser.content), lastUser.content);
     return NextResponse.json(
@@ -134,10 +134,10 @@ export async function POST(request: Request) {
     );
   }
 
-  const model = process.env.OPENAI_CHAT_MODEL?.trim() || CHATBOT_MODEL_DEFAULT;
+  const model = process.env.DEEPSEEK_CHAT_MODEL?.trim() || CHATBOT_MODEL_DEFAULT;
 
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("https://api.deepseek.com/chat/completions", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -145,7 +145,7 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         model,
-        max_completion_tokens: CHATBOT_MAX_TOKENS,
+        max_tokens: CHATBOT_MAX_TOKENS,
         messages: [
           { role: "system", content: CHATBOT_SYSTEM_PROMPT },
           ...cleaned,
@@ -155,7 +155,7 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       const detail = await response.text();
-      console.error("OpenAI chat error", response.status, detail);
+      console.error("DeepSeek chat error", response.status, detail);
       const local = finalizeChatReply(localChatReply(lastUser.content), lastUser.content);
       return NextResponse.json(
         {
@@ -180,7 +180,7 @@ export async function POST(request: Request) {
       {
         reply: finalized.reply,
         showContactLink: finalized.showContactLink,
-        mode: "openai" as const,
+        mode: "deepseek" as const,
       },
       { headers: rateLimitHeaders(undefined, limited.remainingMinute) },
     );
