@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { Contact } from "@/components/sections/Contact";
+import { ServiceHeroCta, ServiceProblems, ServiceSteps } from "@/components/sections/ServiceGuide";
 import { absoluteUrl, LEGAL_NAME } from "@/lib/seo";
 
 const title = "システム開発・業務効率化｜奄美大島のAI伴走も";
@@ -168,8 +169,11 @@ export default function SystemDevelopmentPage() {
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
               {LEGAL_NAME}は、奄美大島を拠点に、予約・在庫・問い合わせ管理などのWebアプリや業務システムを開発します。紙やExcelで続けてきた業務の整理から相談でき、奄美群島では地域の運用事情を踏まえてご提案します。
             </p>
+            <ServiceHeroCta />
           </div>
         </section>
+
+        <ServiceProblems slug="system-development" />
 
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
@@ -191,21 +195,7 @@ export default function SystemDevelopmentPage() {
           </div>
         </section>
 
-        <section className="bg-slate-50 px-6 py-20 md:py-28">
-          <div className="mx-auto max-w-5xl">
-            <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">Process</p>
-            <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">相談から運用まで</h2>
-            <ol className="mt-12 grid gap-5">
-              {steps.map(([number, heading, body]) => (
-                <li key={number} className="grid gap-3 rounded-3xl bg-white p-7 md:grid-cols-[5rem_14rem_1fr] md:items-center md:p-9">
-                  <span className="font-serif text-3xl text-amami-blue/40">{number}</span>
-                  <h3 className="font-serif text-xl font-bold text-brand-gradient">{heading}</h3>
-                  <p className="font-sans leading-loose text-slate-600">{body}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
+        <ServiceSteps slug="system-development" heading="相談から運用まで" steps={steps} />
 
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">

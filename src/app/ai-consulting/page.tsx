@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { Contact } from "@/components/sections/Contact";
+import { ServiceHeroCta, ServiceProblems, ServiceSteps } from "@/components/sections/ServiceGuide";
 import { absoluteUrl, LEGAL_NAME } from "@/lib/seo";
 
 const title = "AIコンサルティング｜奄美大島でAIのことなら";
@@ -223,8 +224,11 @@ export default function AiConsultingPage() {
             <p className="mt-8 max-w-3xl font-sans text-lg leading-loose text-slate-600 md:text-xl">
               {LEGAL_NAME}は、生成AIの活用支援に加え、社内マニュアルや会社知識に特化した社内用チャットボットの制作にも対応します。御社の業務で使える形まで一緒に落とし込みます。
             </p>
+            <ServiceHeroCta />
           </div>
         </section>
+
+        <ServiceProblems slug="ai-consulting" />
 
         <section className="px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
@@ -266,26 +270,7 @@ export default function AiConsultingPage() {
           </div>
         </section>
 
-        <section className="px-6 py-20 md:py-28">
-          <div className="mx-auto max-w-5xl">
-            <p className="font-sans text-xs uppercase tracking-[0.24em] text-amami-blue">Process</p>
-            <h2 className="mt-3 font-serif text-3xl md:text-5xl font-bold text-brand-gradient">
-              相談から定着まで
-            </h2>
-            <ol className="mt-12 grid gap-5">
-              {steps.map(([number, heading, body]) => (
-                <li
-                  key={number}
-                  className="grid gap-3 rounded-3xl bg-slate-50 p-7 md:grid-cols-[5rem_14rem_1fr] md:items-center md:p-9"
-                >
-                  <span className="font-serif text-3xl text-amami-blue/40">{number}</span>
-                  <h3 className="font-serif text-xl font-bold text-brand-gradient">{heading}</h3>
-                  <p className="font-sans leading-loose text-slate-600">{body}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
+        <ServiceSteps slug="ai-consulting" heading="相談から定着まで" steps={steps} />
 
         <section className="bg-slate-50 px-6 py-20 md:py-28">
           <div className="mx-auto max-w-5xl">
