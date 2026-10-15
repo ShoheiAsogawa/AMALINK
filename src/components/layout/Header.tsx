@@ -9,6 +9,7 @@ import { BookOpen, Mail, Monitor, Newspaper, UserRound, CircleHelp } from "lucid
 import { OfficialLineIcon } from "@/components/ui/OfficialLineIcon";
 import { getOfficialLineAddFriendUrl } from "@/lib/seo";
 import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
+import { splitLocalePath } from "@/lib/i18n-config";
 import { ChunkyAnchor, ChunkyNextLink } from "@/components/ui/ChunkyButton";
 
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -27,6 +28,11 @@ type NavItem = {
 export default function Header() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  /** /en など日本語以外のページか（メニューのボタンには短い英語ラベルを出す） */
+  const [isForeign, setIsForeign] = useState(false);
+  useEffect(() => {
+    setIsForeign(splitLocalePath(window.location.pathname).locale !== null);
+  }, []);
   const [activeMobileAnimal, setActiveMobileAnimal] = useState<string | null>(null);
   const mobileAnimalTimerRef = useRef<number | null>(null);
   const lineUrl = getOfficialLineAddFriendUrl();
@@ -321,76 +327,84 @@ export default function Header() {
               transition: { duration: 0.26, ease: [0.4, 0, 1, 1] },
             }}
             style={{ willChange: "transform" }}
-            className="fixed inset-0 z-[80] flex flex-col items-center justify-center bg-white px-5 pb-12 pt-24 md:hidden"
+            className="fixed inset-0 z-[80] flex flex-col items-center overflow-y-auto overscroll-contain bg-white px-6 pb-10 pt-24 md:hidden"
           >
             <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-slate-50 opacity-50" />
             <div className="pointer-events-none absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-slate-50 opacity-50" />
 
-            <div className="relative z-10 flex w-full max-w-[18rem] flex-col items-stretch gap-2.5">
-              {navItems.map((item, i) => (
-                <div
-                  key={item.name}
-                  className="amalink-mobile-nav-item relative w-full overflow-visible"
-                  style={{ "--amalink-nav-i": i } as React.CSSProperties}
-                >
-                  {navMenuAnimal(item.name, activeMobileAnimal === item.name)}
-                  {item.external ? (
-                    <ChunkyAnchor
-                      href={item.href}
-                      theme="blue"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group relative z-10 flex w-full min-w-0"
-                      onPointerDown={() => triggerMobileAnimal(item.name)}
-                      onClick={(e) => {
-                        if (shouldDeferMobileNavClick(e)) return;
-                        e.preventDefault();
-                        window.setTimeout(() => {
-                          window.open(item.href, "_blank", "noopener,noreferrer");
-                          setIsOpen(false);
-                        }, MOBILE_NAV_DELAY_MS);
-                      }}
-                    >
-                      <span className="flex w-full min-w-0 items-center justify-center gap-2 px-2">
-                        <span className="flex shrink-0 translate-y-[0.11em] items-center justify-center">
-                          {mobileNavIcon(item.name)}
+            <div className="relative z-10 my-auto flex w-full max-w-[20rem] flex-col gap-7 py-2">
+              {[
+                { key: "menu", label: "Menu", items: navItems.filter((it) => it.name !== "OfficialLINE" && it.name !== "Contact"), theme: "neu" as const },
+                { key: "contact", label: "Contact", items: navItems.filter((it) => it.name === "OfficialLINE" || it.name === "Contact"), theme: "blue" as const },
+              ].map((group, gi) => (
+                <nav key={group.key} aria-label={group.label}>
+                  <p className="mb-3 text-center font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400">{group.label}</p>
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-3.5">
+                    {group.items.map((item, i) => {
+                      const last = group.key === "menu" && i === group.items.length - 1 && group.items.length % 2 === 1;
+                      const label = isForeign ? item.en : item.label;
+                      const inner = (
+                        <span className="flex w-full min-w-0 items-center justify-center gap-1.5 px-1 text-[0.9rem]">
+                          <span className="flex shrink-0 translate-y-[0.11em] items-center justify-center">{mobileNavIcon(item.name)}</span>
+                          <span className="flex min-h-[1em] min-w-0 items-center justify-center whitespace-nowrap text-center leading-none">{label}</span>
                         </span>
-                        <span className="flex min-h-[1em] min-w-0 items-center justify-center whitespace-nowrap text-center leading-none">
-                          {item.label}
-                        </span>
-                      </span>
-                    </ChunkyAnchor>
-                  ) : (
-                    <ChunkyNextLink
-                      href={item.href}
-                      theme="blue"
-                      className="group relative z-10 flex w-full min-w-0"
-                      onPointerDown={() => triggerMobileAnimal(item.name)}
-                      onClick={(e) => {
-                        if (shouldDeferMobileNavClick(e)) return;
-                        e.preventDefault();
-                        window.setTimeout(() => {
-                          setIsOpen(false);
-                          router.push(item.href);
-                        }, MOBILE_NAV_DELAY_MS);
-                      }}
-                    >
-                      <span className="flex w-full min-w-0 items-center justify-center gap-2 px-2">
-                        <span className="flex shrink-0 translate-y-[0.11em] items-center justify-center">
-                          {mobileNavIcon(item.name)}
-                        </span>
-                        <span className="flex min-h-[1em] min-w-0 items-center justify-center whitespace-nowrap text-center leading-none">
-                          {item.label}
-                        </span>
-                      </span>
-                    </ChunkyNextLink>
-                  )}
-                </div>
+                      );
+                      return (
+                        <div
+                          key={item.name}
+                          className={`amalink-mobile-nav-item relative w-full min-w-0 overflow-visible ${last ? "col-span-2 mx-auto max-w-[calc(50%-0.375rem)]" : ""}`}
+                          style={{ "--amalink-nav-i": gi * 5 + i } as React.CSSProperties}
+                        >
+                          {navMenuAnimal(item.name, activeMobileAnimal === item.name)}
+                          {item.external ? (
+                            <ChunkyAnchor
+                              href={item.href}
+                              theme={group.theme}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="group relative z-10 flex w-full min-w-0"
+                              onPointerDown={() => triggerMobileAnimal(item.name)}
+                              onClick={(e) => {
+                                if (shouldDeferMobileNavClick(e)) return;
+                                e.preventDefault();
+                                window.setTimeout(() => {
+                                  window.open(item.href, "_blank", "noopener,noreferrer");
+                                  setIsOpen(false);
+                                }, MOBILE_NAV_DELAY_MS);
+                              }}
+                            >
+                              {inner}
+                            </ChunkyAnchor>
+                          ) : (
+                            <ChunkyNextLink
+                              href={item.href}
+                              theme={group.theme}
+                              className="group relative z-10 flex w-full min-w-0"
+                              onPointerDown={() => triggerMobileAnimal(item.name)}
+                              onClick={(e) => {
+                                if (shouldDeferMobileNavClick(e)) return;
+                                e.preventDefault();
+                                window.setTimeout(() => {
+                                  setIsOpen(false);
+                                  if (isForeign) window.location.href = (window.location.pathname.split("/").slice(0, 2).join("/") + (item.href === "/" ? "" : item.href));
+                                  else router.push(item.href);
+                                }, MOBILE_NAV_DELAY_MS);
+                              }}
+                            >
+                              {inner}
+                            </ChunkyNextLink>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </nav>
               ))}
-            </div>
 
-            <div className="amalink-mobile-nav-footer pointer-events-none absolute bottom-12 text-center">
-              <p className="text-[10px] font-sans tracking-widest text-slate-300">© AMALINK</p>
+              <div className="amalink-mobile-nav-footer flex flex-col items-center gap-3 pt-1">
+                <LanguageSwitcher className="text-sm" />
+                <p className="font-sans text-[10px] tracking-widest text-slate-300">© AMALINK</p>
+              </div>
             </div>
           </motion.div>
         )}
