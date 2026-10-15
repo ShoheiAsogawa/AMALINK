@@ -39,7 +39,10 @@ function rateLimitHeaders(retryAfterSec?: number, remainingMinute?: number) {
   return headers;
 }
 
-const CHAT_UPSTREAM_TIMEOUT_MS = 15000;
+/** DeepSeek は短めに待ち、だめなら OpenAI へ。合計でも約20秒以内 */
+const DEEPSEEK_TIMEOUT_MS = 9000;
+const OPENAI_TIMEOUT_MS = 11000;
+const OPENAI_MODEL_DEFAULT = "gpt-4o-mini";
 
 export async function POST(request: Request) {
   if (!isAllowedChatOrigin(request)) {
@@ -123,83 +126,82 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "メッセージが空です" }, { status: 400 });
   }
 
-  const apiKey = process.env.DEEPSEEK_API_KEY?.trim();
-  if (!apiKey) {
-    const local = finalizeChatReply(localChatReply(lastUser.content), lastUser.content);
-    return NextResponse.json(
-      {
-        reply: local.reply,
-        showContactLink: local.showContactLink,
-        mode: "local" as const,
-      },
-      { headers: rateLimitHeaders(undefined, limited.remainingMinute) },
-    );
-  }
+  const headers = rateLimitHeaders(undefined, limited.remainingMinute);
+  const upstreamMessages = [
+    { role: "system", content: CHATBOT_SYSTEM_PROMPT },
+    ...cleaned,
+  ];
+  const startedAt = Date.now();
 
-  const model = process.env.DEEPSEEK_CHAT_MODEL?.trim() || CHATBOT_MODEL_DEFAULT;
+  const providers: { name: "deepseek" | "openai"; url: string; key?: string; model: string; timeoutMs: number }[] = [
+    {
+      name: "deepseek",
+      url: "https://api.deepseek.com/chat/completions",
+      key: process.env.DEEPSEEK_API_KEY?.trim(),
+      model: process.env.DEEPSEEK_CHAT_MODEL?.trim() || CHATBOT_MODEL_DEFAULT,
+      timeoutMs: DEEPSEEK_TIMEOUT_MS,
+    },
+    {
+      name: "openai",
+      url: "https://api.openai.com/v1/chat/completions",
+      key: process.env.OPENAI_API_KEY?.trim(),
+      model: process.env.OPENAI_CHAT_MODEL?.trim() || OPENAI_MODEL_DEFAULT,
+      timeoutMs: OPENAI_TIMEOUT_MS,
+    },
+  ];
 
-  try {
-    const response = await fetch("https://api.deepseek.com/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model,
-        max_tokens: CHATBOT_MAX_TOKENS,
-        messages: [
-          { role: "system", content: CHATBOT_SYSTEM_PROMPT },
-          ...cleaned,
-        ],
-      }),
-      // DeepSeek が混んで返ってこないときは、15秒で打ち切って簡易回答に切り替える（下の catch）
-      signal: AbortSignal.timeout(CHAT_UPSTREAM_TIMEOUT_MS),
-    });
-
-    if (!response.ok) {
-      const detail = await response.text();
-      console.error("DeepSeek chat error", response.status, detail);
-      const local = finalizeChatReply(localChatReply(lastUser.content), lastUser.content);
+  for (const p of providers) {
+    if (!p.key) continue;
+    const t0 = Date.now();
+    const content = await callChatProvider(p.url, p.key, p.model, upstreamMessages, p.timeoutMs);
+    if (content) {
+      console.log(`[chat] provider=${p.name} model=${p.model} ms=${Date.now() - t0} total_ms=${Date.now() - startedAt}`);
+      const finalized = finalizeChatReply(content, lastUser.content);
       return NextResponse.json(
-        {
-          reply: local.reply,
-          showContactLink: local.showContactLink,
-          mode: "local" as const,
-          warning: "AI接続に失敗したため、簡易回答に切り替えました。",
-        },
-        { headers: rateLimitHeaders(undefined, limited.remainingMinute) },
+        { reply: finalized.reply, showContactLink: finalized.showContactLink, mode: p.name },
+        { headers },
       );
     }
+    console.warn(`[chat] provider=${p.name} failed ms=${Date.now() - t0}, trying next`);
+  }
 
-    const data = (await response.json()) as {
-      choices?: { message?: { content?: string } }[];
-    };
-    const raw =
-      data.choices?.[0]?.message?.content?.trim() ||
-      localChatReply(lastUser.content);
-    const finalized = finalizeChatReply(raw, lastUser.content);
+  console.warn(`[chat] provider=local total_ms=${Date.now() - startedAt}`);
+  const local = finalizeChatReply(localChatReply(lastUser.content), lastUser.content);
+  return NextResponse.json(
+    {
+      reply: local.reply,
+      showContactLink: local.showContactLink,
+      mode: "local" as const,
+      warning: "一時的に接続できないため、簡易回答に切り替えました。",
+    },
+    { headers },
+  );
+}
 
-    return NextResponse.json(
-      {
-        reply: finalized.reply,
-        showContactLink: finalized.showContactLink,
-        mode: "deepseek" as const,
-      },
-      { headers: rateLimitHeaders(undefined, limited.remainingMinute) },
-    );
+/** OpenAI互換の Chat Completions を呼ぶ。タイムアウト・5xx/429等・通信エラー・空応答は null */
+async function callChatProvider(
+  url: string,
+  key: string,
+  model: string,
+  messages: { role: string; content: string }[],
+  timeoutMs: number,
+): Promise<string | null> {
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ model, max_tokens: CHATBOT_MAX_TOKENS, messages }),
+      signal: AbortSignal.timeout(timeoutMs),
+    });
+    if (!response.ok) {
+      console.error("[chat] upstream error", url, response.status, (await response.text()).slice(0, 300));
+      return null;
+    }
+    const data = (await response.json()) as { choices?: { message?: { content?: string } }[] };
+    return data.choices?.[0]?.message?.content?.trim() || null;
   } catch (error) {
-    console.error("Chat route failed", error);
-    const local = finalizeChatReply(localChatReply(lastUser.content), lastUser.content);
-    return NextResponse.json(
-      {
-        reply: local.reply,
-        showContactLink: local.showContactLink,
-        mode: "local" as const,
-        warning: "一時的に接続できないため、簡易回答に切り替えました。",
-      },
-      { headers: rateLimitHeaders(undefined, limited.remainingMinute) },
-    );
+    console.error("[chat] upstream failed", url, String(error));
+    return null;
   }
 }
 
