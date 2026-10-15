@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { categoryPath, getCategoryIndex, getColumnList, getNewsList } from "@/lib/cms";
 import { absoluteUrl } from "@/lib/seo";
 import { isColumnCategoryId } from "@/lib/legacy-redirects";
+import { DEFAULT_LOCALE, LOCALES, localizedPath } from "@/lib/i18n-config";
 
 /**
  * CMS（amalink-cms）に記事が増えたら再デプロイなしで載るよう、ISR で定期的に作り直す。
@@ -91,5 +92,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // categories API 未接続
   }
 
-  return [...staticEntries, ...newsEntries, ...categoryEntries];
+  return withLocales([...staticEntries, ...newsEntries, ...categoryEntries]);
+}
+
+/** 各URLに hreflang の対応先を付け、各言語版（/en/... など）のURLも足す。 */
+function withLocales(entries: MetadataRoute.Sitemap): MetadataRoute.Sitemap {
+  const origin = absoluteUrl("/").replace(/\/$/, "");
+  const out: MetadataRoute.Sitemap = [];
+  const localized: MetadataRoute.Sitemap = [];
+  for (const e of entries) {
+    const base = e.url.slice(origin.length) || "/";
+    const languages: Record<string, string> = {
+      [DEFAULT_LOCALE.hreflang]: absoluteUrl(base),
+      "x-default": absoluteUrl(base),
+    };
+    for (const l of LOCALES) languages[l.hreflang] = absoluteUrl(localizedPath(base, l.code));
+    out.push({ ...e, alternates: { languages } });
+    for (const l of LOCALES) {
+      localized.push({
+        ...e,
+        url: absoluteUrl(localizedPath(base, l.code)),
+        priority: Math.max(0.1, Math.round(((e.priority ?? 0.5) - 0.2) * 100) / 100),
+        alternates: { languages },
+      });
+    }
+  }
+  return [...out, ...localized];
 }

@@ -8,6 +8,7 @@ import Image from "next/image";
 import { BookOpen, Mail, Monitor, Newspaper, UserRound, CircleHelp } from "lucide-react";
 import { OfficialLineIcon } from "@/components/ui/OfficialLineIcon";
 import { getOfficialLineAddFriendUrl } from "@/lib/seo";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { ChunkyAnchor, ChunkyNextLink } from "@/components/ui/ChunkyButton";
 
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -254,6 +255,7 @@ export default function Header() {
             </span>
           </Link>
 
+          <div className="flex items-center gap-3 md:gap-5">
           {/* Desktop Nav */}
           <nav className="hidden items-center gap-x-4 text-sm text-slate-900 mix-blend-normal md:flex lg:gap-x-6 xl:gap-x-8 xl:text-base">
             {navItems.map((item) => {
@@ -279,6 +281,8 @@ export default function Header() {
             })}
           </nav>
 
+          <LanguageSwitcher />
+
           {/* Mobile のみ — デスクトップでは nav を表示し、このラベルは md:hidden で DOM から見えない */}
           <label
             className="inline-flex items-center justify-center amalink-hamburger md:hidden relative z-[110] mix-blend-normal rounded-full p-1 text-slate-900 transition-colors hover:bg-white/10 hover:text-amami-blue"
@@ -299,6 +303,7 @@ export default function Header() {
               <path className="amalink-hamburger-line" d="M7 16 27 16" />
             </svg>
           </label>
+          </div>
         </div>
       </header>
 

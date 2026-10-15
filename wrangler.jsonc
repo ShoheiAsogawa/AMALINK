@@ -26,6 +26,13 @@
       "bucket_name": "amalink-next-cache"
     }
   ],
+  "d1_databases": [
+    {
+      "binding": "I18N_DB",
+      "database_name": "amalink-i18n",
+      "database_id": "0313d233-e7bc-4b95-b4a3-96796e56e0d5"
+    }
+  ],
   "images": {
     "binding": "IMAGES"
   }
