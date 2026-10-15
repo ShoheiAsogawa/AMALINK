@@ -168,7 +168,7 @@ export function Hero() {
           className="flex w-full flex-col items-center justify-center gap-8 md:w-auto md:flex-row md:gap-24"
         >
           <h1 className="m-0 w-full text-center font-serif font-bold text-slate-800">
-            <span className="hidden md:flex flex-row-reverse gap-8">
+            <span className="hero-vertical hidden md:flex flex-row-reverse gap-8">
               <span className="vertical-text text-5xl md:text-7xl tracking-wider leading-relaxed whitespace-nowrap">
                 島のリズムで、
               </span>

@@ -210,9 +210,9 @@ function hreflangTags(origin: string, basePath: string): string {
 }
 
 const CLIENT = `(function(){var D=window.__I18N__||{},L=document.documentElement.getAttribute("data-locale"),P="/"+L,J=/[\\u3040-\\u30ff\\u3400-\\u9fff]/;
-function tr(s){var m=s.match(/^(\\s*)([\\s\\S]*?)(\\s*)$/),k=m[2];if(!k||!J.test(k)||!D[k])return null;return m[1]+D[k]+m[3]}
+function tr(s,x){var m=s.match(/^(\\s*)([\\s\\S]*?)(\\s*)$/),k=m[2];if(!k||!J.test(k)||!D[k])return null;var v=D[k];return (x&&!m[1]&&/^[A-Za-z0-9"\'\u201c\u2018(]/.test(v)?" ":"")+m[1]+v+m[3]}
 function sk(n){return n.closest&&n.closest("script,style,noscript,[data-no-translate]")}
-function dt(t){var p=t.parentElement;if(!p||sk(p))return;var r=tr(t.nodeValue);if(r!==null&&r!==t.nodeValue)t.nodeValue=r}
+function dt(t){var p=t.parentElement;if(!p||sk(p))return;var r=tr(t.nodeValue,1);if(r!==null&&r!==t.nodeValue)t.nodeValue=r}
 function de(e){if(sk(e))return;["alt","title","aria-label","placeholder"].forEach(function(a){var v=e.getAttribute(a);if(v){var r=tr(v);if(r!==null&&r!==v)e.setAttribute(a,r)}})}
 function wk(r){if(!r)return;if(r.nodeType===3)return dt(r);if(r.nodeType!==1)return;de(r);var w=document.createTreeWalker(r,5),n;while((n=w.nextNode()))n.nodeType===3?dt(n):de(n)}
 var HL=document.documentElement.getAttribute("lang");new MutationObserver(function(ms){ms.forEach(function(m){if(m.target===document.documentElement&&m.attributeName==="lang"){if(document.documentElement.getAttribute("lang")!==HL)document.documentElement.setAttribute("lang",HL);return}if(m.type==="characterData")dt(m.target);else if(m.type==="attributes")de(m.target);else m.addedNodes.forEach(wk)})}).observe(document.documentElement,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["alt","title","aria-label","placeholder","lang"]});
@@ -289,10 +289,14 @@ export async function handleLocalized(request: Request, env: I18nEnv, ctx: Ctx, 
   if (missing.length && env.I18N_DB && env.DEEPSEEK_API_KEY) {
     ctx.waitUntil(translateMissing(env, locale, `${locale.code}:${basePath}`, missing).catch((e) => console.error("i18n", String(e))));
   }
-  const trOf = (raw: string) => {
+  const trOf = (raw: string, inText = false) => {
     const [a, core, b] = split(decode(raw));
     const tr = core && dict.get(core);
-    return tr ? a + tr + b : null;
+    if (!tr) return null;
+    // 日本語はタグの境目に空白が無いので、英語などでは単語がくっつく。前に空白が無く、訳が英数字で始まるなら1つ足す
+    // （行頭やブロックの先頭の空白は表示されないので害はない）。
+    const pad = inText && !a && /^[A-Za-z0-9"'“‘(]/.test(tr) ? " " : "";
+    return pad + a + tr + b;
   };
 
   // 2回目: 置き換え
@@ -346,7 +350,7 @@ export async function handleLocalized(request: Request, env: I18nEnv, ctx: Ctx, 
           t.replace(full, { html: true });
           return;
         }
-        const tr = trOf(full);
+        const tr = trOf(full, true);
         t.replace(tr ? escapeHtml(tr) : full, { html: true });
       },
     })

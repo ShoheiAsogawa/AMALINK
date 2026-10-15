@@ -155,6 +155,21 @@ body.amalink-gateway-lock {
   text-orientation: upright;
 }
 
+/* 日本語以外（/en など）では、トップの大見出しを横書きにする（縦書きだと英字が1文字ずつ縦に並ぶ） */
+html:not([lang="ja"]) .hero-vertical {
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15em;
+}
+html:not([lang="ja"]) .hero-vertical .vertical-text {
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+  white-space: normal;
+  letter-spacing: normal;
+  font-size: clamp(2.5rem, 4.6vw, 4.25rem);
+  line-height: 1.15;
+}
+
 /* Custom Scrollbar - Thinner and subtler */
 ::-webkit-scrollbar {
   width: 6px;
