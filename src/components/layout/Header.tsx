@@ -77,7 +77,7 @@ export default function Header() {
         return "pointer-events-none absolute right-3 top-[36%] z-0 h-[2.25rem] w-[2.6rem]";
       case "News":
         return "pointer-events-none absolute left-3 top-[22%] z-0 h-[2.35rem] w-[2.25rem] overflow-visible [clip-path:inset(0_0_12%_0)]";
-      case "OfficialLINE":
+      case "Column":
         return "pointer-events-none absolute right-4 top-[28%] z-0 h-[2.45rem] w-[2.35rem]";
       case "Contact":
         return "pointer-events-none absolute left-4 top-[32%] z-0 h-[2.15rem] w-[3rem]";
@@ -156,21 +156,21 @@ export default function Header() {
             />
           </motion.div>
         );
-      case "OfficialLINE":
+      case "Column":
         return (
           <motion.div
-            className={animalShellClass("OfficialLINE")}
+            className={animalShellClass("Column")}
             initial={false}
             animate={
               isActive
-                ? { x: 46, rotate: 6, opacity: 1, scale: 1 }
-                : { x: 0, rotate: 3, opacity: 0.96, scale: 0.86 }
+                ? { y: -44, rotate: 4, opacity: 1, scale: 1 }
+                : { y: 0, rotate: 3, opacity: 0.96, scale: 0.86 }
             }
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
               src={`${assetBase}/menu-line-rabbit.png`}
-              alt="公式LINEを表すウサギのイラスト"
+              alt="コラムを表すウサギのイラスト"
               width={317}
               height={344}
               className="h-full w-full object-contain object-right-center drop-shadow-[0_3px_5px_rgba(15,23,42,0.18)]"
