@@ -79,7 +79,7 @@ export default function Header() {
         return "pointer-events-none absolute left-3 top-[22%] z-0 h-[2.35rem] w-[2.25rem] overflow-visible [clip-path:inset(0_0_12%_0)]";
       case "Column":
         return "pointer-events-none absolute right-4 top-[28%] z-0 h-[2.45rem] w-[2.35rem]";
-      case "Contact":
+      case "FAQ":
         return "pointer-events-none absolute left-4 top-[32%] z-0 h-[2.15rem] w-[3rem]";
       default:
         return "";
@@ -178,10 +178,10 @@ export default function Header() {
             />
           </motion.div>
         );
-      case "Contact":
+      case "FAQ":
         return (
           <motion.div
-            className={animalShellClass("Contact")}
+            className={animalShellClass("FAQ")}
             initial={false}
             animate={
               isActive
@@ -192,7 +192,7 @@ export default function Header() {
           >
             <Image
               src={`${assetBase}/menu-contact-snake.png`}
-              alt="Contact セクションを表すヘビのイラスト"
+              alt="FAQ セクションを表すヘビのイラスト"
               width={390}
               height={285}
               className="h-full w-full object-contain object-left-center drop-shadow-[0_3px_5px_rgba(15,23,42,0.18)]"
