@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { ArrowRight, ListOrdered, Mail } from "lucide-react";
+import { ChunkyAnchor, ChunkyNextLink } from "@/components/ui/ChunkyButton";
 import { SERVICE_GUIDES, type ServiceGuideKey } from "@/lib/service-guides";
 
 const TEAL = "#188a8c";
@@ -41,24 +42,35 @@ function CheckIcon() {
   );
 }
 
+
+/** トップページ（Contact セクション）と同じ Chunky ボタンの中身：アイコン＋文字＋矢印 */
+function ButtonInner({ icon, label }: { icon: React.ReactNode; label: string }) {
+  return (
+    <span className="grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 sm:gap-x-2.5">
+      <span className="flex shrink-0 translate-y-[0.11em] items-center justify-center">{icon}</span>
+      <span className="flex min-h-[1em] min-w-0 items-center justify-center whitespace-nowrap text-center leading-none">
+        {label}
+      </span>
+      <ArrowRight
+        className="size-[0.85em] shrink-0 translate-y-[0.11em] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-[0.11em]"
+        aria-hidden
+      />
+    </span>
+  );
+}
+const BTN = "group flex w-full min-w-0 flex-1 text-[0.95rem] md:text-base";
+const MAIL = <Mail className="size-[1em] opacity-90" strokeWidth={2} aria-hidden />;
+
 /** ヒーロー下の行動ボタン */
 export function ServiceHeroCta() {
   return (
-    <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-      <Link
-        href="/contact"
-        className="inline-flex items-center justify-center rounded-full px-8 py-4 font-sans font-bold text-white shadow-lg transition hover:opacity-90"
-        style={{ backgroundColor: TEAL }}
-      >
-        相談してみる
-      </Link>
-      <a
-        href="#service-flow"
-        className="inline-flex items-center justify-center rounded-full border-2 bg-white px-8 py-4 font-sans font-bold transition hover:bg-slate-50"
-        style={{ borderColor: TEAL, color: TEAL }}
-      >
-        進め方を見る
-      </a>
+    <div className="mt-10 flex w-full max-w-[15rem] flex-col items-stretch gap-3 sm:max-w-[32rem] sm:flex-row sm:gap-5">
+      <ChunkyNextLink href="/contact" theme="neu" className={BTN}>
+        <ButtonInner icon={MAIL} label="相談してみる" />
+      </ChunkyNextLink>
+      <ChunkyAnchor href="#service-flow" theme="neu" className={BTN}>
+        <ButtonInner icon={<ListOrdered className="size-[1em] opacity-90" strokeWidth={2} aria-hidden />} label="進め方を見る" />
+      </ChunkyAnchor>
     </div>
   );
 }
@@ -165,13 +177,11 @@ export function ServiceSteps({
           <p className="mt-3 font-sans leading-loose text-slate-300">
             いまの困りごとを聞かせてください。何から始めるか、一緒に整理します。
           </p>
-          <Link
-            href="/contact"
-            className="mt-7 inline-flex items-center justify-center rounded-full px-8 py-4 font-sans font-bold text-white transition hover:opacity-90"
-            style={{ backgroundColor: TEAL }}
-          >
-            相談してみる
-          </Link>
+          <div className="mx-auto mt-7 flex w-full max-w-[15rem]">
+            <ChunkyNextLink href="/contact" theme="neu" className={BTN}>
+              <ButtonInner icon={MAIL} label="相談してみる" />
+            </ChunkyNextLink>
+          </div>
         </div>
       </div>
     </section>
