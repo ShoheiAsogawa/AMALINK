@@ -31,6 +31,7 @@ export const COLUMN_ARTICLES = [
   { title: "AIチャットボット導入ガイド（奄美・離島の中小企業向け）", keys: ["チャットボット"] },
   { title: "AIコンサルティングで何を頼める？奄美・鹿児島の中小企業の生成AI導入支援", keys: ["生成ai", "aiコンサル", "ai導入"] },
   { title: "ホームページ制作は自作（Wix・ペライチ等）と依頼のどちらがいい？奄美・離島の小さな事業者の判断基準", keys: ["自作", "wix", "ペライチ"] },
+  { title: "AIコンサルティングの前に知りたい、奄美・離島の小さな会社のAI活用｜中小企業は何から始める？", keys: ["ai活用", "何から", "始め方"] },
 ] as const;
 
 export const NEWS_ITEMS = [
@@ -312,7 +313,7 @@ export function localChatReply(userText: string): string {
   if (q.includes("コラム") || q.includes("記事") || q.includes("読み物")) {
     const hit = COLUMN_ARTICLES.find((a) => a.keys.some((k) => q.includes(normalize(k))));
     if (hit) return `コラムに「${hit.title}」という記事があるよ。サイト上部メニューの「コラム」から読めるよ。`;
-    return `コラムでは、ホームページ制作の進め方や費用の考え方、自作と依頼のどちらがいいか、AIチャットボットや生成AI導入の記事を読めるよ。サイト上部メニューの「コラム」から見てね。`;
+    return `コラムでは、ホームページ制作の進め方や費用の考え方、自作と依頼のどちらがいいか、小さな会社のAI活用の始め方、AIチャットボットや生成AI導入の記事を読めるよ。サイト上部メニューの「コラム」から見てね。`;
   }
   if (q.includes("お知らせ") || q.includes("ニュース") || q.includes("新着")) {
     return `お知らせでは、サイト公開や「AIコンサルティング」「AIアバターチャットボット」のサービス開始を案内しているよ。サイト上部メニューの「お知らせ」から見てね。`;
