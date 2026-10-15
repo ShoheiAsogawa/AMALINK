@@ -39,6 +39,8 @@ function rateLimitHeaders(retryAfterSec?: number, remainingMinute?: number) {
   return headers;
 }
 
+const CHAT_UPSTREAM_TIMEOUT_MS = 15000;
+
 export async function POST(request: Request) {
   if (!isAllowedChatOrigin(request)) {
     return NextResponse.json(
@@ -151,6 +153,8 @@ export async function POST(request: Request) {
           ...cleaned,
         ],
       }),
+      // DeepSeek が混んで返ってこないときは、15秒で打ち切って簡易回答に切り替える（下の catch）
+      signal: AbortSignal.timeout(CHAT_UPSTREAM_TIMEOUT_MS),
     });
 
     if (!response.ok) {
