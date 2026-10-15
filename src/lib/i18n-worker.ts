@@ -34,7 +34,13 @@ const ATTRS = ["alt", "title", "aria-label", "placeholder"] as const;
 const META_SEL =
   'meta[name="description"], meta[property="og:title"], meta[property="og:description"], meta[name="twitter:title"], meta[name="twitter:description"], meta[property="og:site_name"]';
 const SKIP_SEL = "script, style, noscript, template, [data-no-translate]";
-const MEM = new Map<string, string>(); // isolate 内の小さなキャッシュ
+const MEM = new Map<string, string>();
+/** 訳の対象にならない、日本語の記号だけの文字（例: 見出し末尾の「。」）を英語の記号にする */
+const PUNCT: Record<string, string> = { "。": ".", "、": ",", "！": "!", "？": "?", "「": "\u201c", "」": "\u201d", "『": "\u201c", "』": "\u201d", "（": "(", "）": ")", "・": "\u00b7", "：": ":", "；": ";", "〜": "~", "～": "~", "…": "…", "　": " " };
+const PUNCT_ONLY = /^[。、！？「」『』（）・：；〜～…　]+$/;
+function mapPunct(core: string): string | null {
+  return PUNCT_ONLY.test(core) ? [...core].map((c) => PUNCT[c] ?? c).join("") : null;
+} // isolate 内の小さなキャッシュ
 
 function decode(s: string): string {
   return s
@@ -212,7 +218,8 @@ function hreflangTags(origin: string, basePath: string): string {
 const CLIENT = `(function(){var D=window.__I18N__||{},L=document.documentElement.getAttribute("data-locale"),P="/"+L,J=/[\\u3040-\\u30ff\\u3400-\\u9fff]/;
 function tr(s,x){var m=s.match(/^(\\s*)([\\s\\S]*?)(\\s*)$/),k=m[2];if(!k||!J.test(k)||!D[k])return null;var v=D[k];return (x&&!m[1]&&/^[A-Za-z0-9"\'\u201c\u2018(]/.test(v)?" ":"")+m[1]+v+m[3]}
 function sk(n){return n.closest&&n.closest("script,style,noscript,[data-no-translate]")}
-function dt(t){var p=t.parentElement;if(!p||sk(p))return;var r=tr(t.nodeValue,1);if(r!==null&&r!==t.nodeValue)t.nodeValue=r}
+var PM={"。":".","、":",","！":"!","？":"?","「":"\u201c","」":"\u201d","『":"\u201c","』":"\u201d","（":"(","）":")","・":"\u00b7","：":":","；":";","〜":"~","～":"~","　":" "};
+function dt(t){var p=t.parentElement;if(!p||sk(p)||p.closest("title"))return;var v=t.nodeValue;if(/^\\s*[。、！？「」『』（）・：；〜～　]+\\s*$/.test(v)){var w=v.replace(/[。、！？「」『』（）・：；〜～　]/g,function(c){return PM[c]});if(w!==v)t.nodeValue=w;return}var r=tr(v,1);if(r!==null&&r!==t.nodeValue)t.nodeValue=r}
 function de(e){if(sk(e))return;["alt","title","aria-label","placeholder"].forEach(function(a){var v=e.getAttribute(a);if(v){var r=tr(v);if(r!==null&&r!==v)e.setAttribute(a,r)}})}
 function wk(r){if(!r)return;if(r.nodeType===3)return dt(r);if(r.nodeType!==1)return;de(r);var w=document.createTreeWalker(r,5),n;while((n=w.nextNode()))n.nodeType===3?dt(n):de(n)}
 var HL=document.documentElement.getAttribute("lang");new MutationObserver(function(ms){ms.forEach(function(m){if(m.target===document.documentElement&&m.attributeName==="lang"){if(document.documentElement.getAttribute("lang")!==HL)document.documentElement.setAttribute("lang",HL);return}if(m.type==="characterData")dt(m.target);else if(m.type==="attributes")de(m.target);else m.addedNodes.forEach(wk)})}).observe(document.documentElement,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["alt","title","aria-label","placeholder","lang"]});
@@ -306,7 +313,9 @@ export async function handleLocalized(request: Request, env: I18nEnv, ctx: Ctx, 
   const seedJson = JSON.stringify(seed).replace(/</g, "\\u003c");
   skip = 0;
   buf = "";
+  let inTitle = 0;
   const out = new HTMLRewriter()
+    .on("title", { element: (e) => { inTitle++; e.onEndTag(() => void inTitle--); } })
     .on("html", { element: (e) => { e.setAttribute("lang", locale.htmlLang); e.setAttribute("data-locale", locale.code); } })
     .on(SKIP_SEL, { element: (e) => { skip++; e.onEndTag(() => void skip--); } })
     .on("*", {
@@ -348,6 +357,17 @@ export async function handleLocalized(request: Request, env: I18nEnv, ctx: Ctx, 
         buf = "";
         if (skip) {
           t.replace(full, { html: true });
+          return;
+        }
+        if (inTitle) {
+          const tt = trOf(full);
+          t.replace(tt ? escapeHtml(tt.trim()) : full, { html: true });
+          return;
+        }
+        const [pa, pcore, pb] = split(decode(full));
+        const p = pcore ? mapPunct(pcore) : null;
+        if (p !== null) {
+          t.replace(escapeHtml(pa + p + pb), { html: true });
           return;
         }
         const tr = trOf(full, true);
