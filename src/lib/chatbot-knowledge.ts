@@ -34,6 +34,7 @@ export const COLUMN_ARTICLES = [
   { title: "AIコンサルティングの前に知りたい、奄美・離島の小さな会社のAI活用｜中小企業は何から始める？", keys: ["ai活用", "何から", "始め方"] },
   { title: "生成AIの社内ルール、何を決めればいい？中小企業が最初に整える情報漏えい・著作権対策", keys: ["社内ルール", "情報漏", "著作権"] },
   { title: "少人数の会社でAIエージェントは使える？中小企業の業務活用の方法と注意点", keys: ["aiエージェント", "エージェント"] },
+  { title: "GoogleのAI検索でお店の公式サイトは選ばれる？2026年10月の更新と、奄美の小さな会社のGEO・SEO対策", keys: ["ai検索", "aiモード", "ai overview", "geo"] },
 ] as const;
 
 export const NEWS_ITEMS = [
