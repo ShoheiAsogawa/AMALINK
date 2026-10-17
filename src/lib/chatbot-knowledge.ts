@@ -36,6 +36,7 @@ export const COLUMN_ARTICLES = [
   { title: "少人数の会社でAIエージェントは使える？中小企業の業務活用の方法と注意点", keys: ["aiエージェント", "エージェント"] },
   { title: "GoogleのAI検索でお店の公式サイトは選ばれる？2026年10月の更新と、奄美の小さな会社のGEO・SEO対策", keys: ["ai検索", "aiモード", "ai overview", "geo"] },
   { title: "AIアバターで接客はできる？キャラクター型AIチャットボットのメリットと注意点", keys: ["aiアバター", "アバター", "キャラクター"] },
+  { title: "AIチャットボットを公式LINEにつなぐと何が変わる？奄美のお店・宿の問い合わせ対応の悩みを減らす方法", keys: ["lineのai", "lineにai", "line ai", "lineの自動"] },
 ] as const;
 
 export const NEWS_ITEMS = [
