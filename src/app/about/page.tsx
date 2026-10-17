@@ -62,9 +62,19 @@ function AboutJsonLd() {
         name: COMPANY_OVERVIEW.representative,
         jobTitle: "代表社員",
       },
+      identifier: {
+        "@type": "PropertyValue",
+        name: "法人番号",
+        value: COMPANY_OVERVIEW.corporateNumber,
+      },
       address: {
         "@type": "PostalAddress",
         ...COMPANY_OVERVIEW.postalAddress,
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: COMPANY_OVERVIEW.geo.latitude,
+        longitude: COMPANY_OVERVIEW.geo.longitude,
       },
     },
   };

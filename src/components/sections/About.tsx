@@ -274,6 +274,9 @@ function AboutCopy({ className }: { className?: string }) {
         <p>
           {LEGAL_NAME}（アマリンク）は、奄美大島で生まれたデジタルクリエイティブチームです。
         </p>
+        <p data-geo-answer>
+          代表社員は麻生川昌平です。生成AIの導入、ホームページ制作、デザイン、システム開発、検索とAI検索の対策を、宇検村から全国へ伴走しています。
+        </p>
         <p>
           私たちの名前「AMALINK」には、故郷「
           <span className="font-bold text-amami-blue">AMAMI</span>」と、世界への「

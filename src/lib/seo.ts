@@ -85,6 +85,9 @@ export function buildArticleDescription(article: {
   return firstSentences(article.content, 2, 160) || article.title;
 }
 
+/** 静的ページの sitemap lastmod。本文を直した日だけ更新する（毎回「今」にすると更新日が信用されなくなる）。 */
+export const CONTENT_UPDATED = "2026-10-13";
+
 export const SITE_NAME = "AMALINK";
 export const LEGAL_NAME = "合同会社AMALINK";
 export const TAGLINE = "島のリズムで、未来をつくる。";
