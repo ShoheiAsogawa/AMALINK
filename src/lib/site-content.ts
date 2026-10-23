@@ -28,9 +28,9 @@ export const COMPANY_OVERVIEW = {
   brandName: SITE_NAME,
   tagline: "島のリズムで、未来をつくる。",
   description: DEFAULT_DESCRIPTION,
-  region: "鹿児島県奄美群（奄美大島を拠点とした離島エリア）",
+  region: "鹿児島県奄美群島（奄美大島を拠点とした離島エリア）",
   baseLocation: "鹿児島県奄美大島",
-  serviceArea: "鹿児島県奄美群を拠点に、全国オンライン対応",
+  serviceArea: "鹿児島県奄美群島を拠点に、全国オンライン対応",
   address: "鹿児島県大島郡宇検村大字芦検４３６",
   postalAddress: {
     streetAddress: "大字芦検４３６",
@@ -251,7 +251,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: "process",
     question: "奄美大島以外からも依頼できますか？",
     answer:
-      "対応できます。拠点は鹿児島県奄美大島ですが、奄美群・鹿児島県内はもちろん、全国からのご依頼もオンラインでお受けしています。打合せや制作はリモートで進められますので、離島・本土を問わずお気軽にご相談ください。",
+      "対応できます。拠点は鹿児島県奄美大島ですが、奄美群島・鹿児島県内はもちろん、全国からのご依頼もオンラインでお受けしています。打合せや制作はリモートで進められますので、離島・本土を問わずお気軽にご相談ください。",
     moreHref: "/contact",
   },
   {
