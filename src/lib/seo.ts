@@ -87,7 +87,10 @@ export function buildArticleDescription(article: {
 
 export const SITE_NAME = "AMALINK";
 export const LEGAL_NAME = "合同会社AMALINK";
-export const TAGLINE = "島のリズムで、未来をつくる。";
+/** ヒーロー・フッターで色分けする2行 */
+export const TAGLINE_LEAD = "AIのことなら、";
+export const TAGLINE_MARK = "AMALINK。";
+export const TAGLINE = `${TAGLINE_LEAD}${TAGLINE_MARK}`;
 
 /** 公式LINEの友だち追加URL。`NEXT_PUBLIC_OFFICIAL_LINE_URL` が無いときはデフォルトを使う */
 export function getOfficialLineAddFriendUrl(): string {

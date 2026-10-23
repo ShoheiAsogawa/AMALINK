@@ -6,7 +6,7 @@ import Footer from "@/components/layout/Footer";
 import { AmbientVideo } from "@/components/about/AmbientVideo";
 import { Contact } from "@/components/sections/Contact";
 import { COMPANY_OVERVIEW, SERVICES } from "@/lib/site-content";
-import { absoluteUrl, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
+import { absoluteUrl, LEGAL_NAME, SITE_NAME, TAGLINE_LEAD, TAGLINE_MARK } from "@/lib/seo";
 
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const title = "会社概要";
@@ -113,9 +113,9 @@ export default function AboutPage() {
               会社概要
             </h1>
             <p className="mt-5 font-sans text-sm tracking-[0.12em] text-slate-500 [word-break:keep-all] md:text-base md:tracking-[0.18em]">
-              島のリズムで、
+              {TAGLINE_LEAD}
               <br />
-              <span className="text-brand-gradient">未来をつくる。</span>
+              <span className="text-brand-gradient">{TAGLINE_MARK}</span>
             </p>
           </div>
         </section>

@@ -1,7 +1,7 @@
 /**
  * AI・SEO向けの一次情報（llms.txt / JSON-LD / FAQ で共通利用）
  */
-import { absoluteUrl, DEFAULT_DESCRIPTION, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
+import { absoluteUrl, DEFAULT_DESCRIPTION, LEGAL_NAME, SITE_NAME, TAGLINE } from "@/lib/seo";
 
 export type FaqCategoryId = "about" | "services" | "process" | "support";
 
@@ -26,7 +26,7 @@ export type FaqItem = {
 export const COMPANY_OVERVIEW = {
   legalName: LEGAL_NAME,
   brandName: SITE_NAME,
-  tagline: "島のリズムで、未来をつくる。",
+  tagline: TAGLINE,
   description: DEFAULT_DESCRIPTION,
   region: "鹿児島県奄美群（奄美大島を拠点とした離島エリア）",
   baseLocation: "鹿児島県奄美大島",

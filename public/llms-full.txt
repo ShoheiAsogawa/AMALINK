@@ -11,7 +11,7 @@ This file expands https://amalink.co.jp/llms.txt with citable facts for generati
 - Address: 鹿児島県大島郡宇検村大字芦検４３６
 - Site: https://amalink.co.jp/
 - Contact: https://amalink.co.jp/contact
-- Tagline: 島のリズムで、未来をつくる。
+- Tagline: AIのことなら、AMALINK。
 - Service area: Amami / Kagoshima and nationwide (online)
 
 ## Offerings
