@@ -8,7 +8,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(absoluteUrl("/")),
   alternates: {
-    types: { "application/rss+xml": [{ url: "/rss.xml", title: `お知らせ | ${LEGAL_NAME}` }] },
+    types: {
+      "application/rss+xml": [{ url: "/rss.xml", title: `お知らせ | ${LEGAL_NAME}` }],
+      "text/plain": [{ url: "/llms.txt", title: "llms.txt" }],
+    },
   },
   title: {
     default: DEFAULT_TITLE,

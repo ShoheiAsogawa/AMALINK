@@ -33,11 +33,16 @@ export const COMPANY_OVERVIEW = {
   serviceArea: "鹿児島県奄美群を拠点に、全国オンライン対応",
   address: "鹿児島県大島郡宇検村大字芦検４３６",
   postalAddress: {
+    postalCode: "894-3302",
     streetAddress: "大字芦検４３６",
     addressLocality: "大島郡宇検村",
     addressRegion: "鹿児島県",
     addressCountry: "JP",
   },
+  /** 法人番号（国税庁の公表情報） */
+  corporateNumber: "6340003005139",
+  /** 大字芦検の代表点。番地そのもののピンではない（国土地理院由来の公開値） */
+  geo: { latitude: 28.291686, longitude: 129.266775 },
   targetCustomers:
     "奄美大島および離島エリアの中小事業者、観光・特産品事業者、自治体・地域団体、島内で自社運用しやすいWebサイトや業務システムを検討している方",
   strengths: [
@@ -110,7 +115,23 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: "about",
     question: "AMALINK（合同会社AMALINK）とはどんな会社ですか？",
     answer:
-      "鹿児島県奄美大島を拠点に、ホームページ制作・システム開発・デザインを行うデジタルクリエイティブチームです。島内外の事業者さまの「顔」となるWebサイトや、日々の業務をラクにするシステムを、分かりやすい言葉で一緒に形にしています。",
+      "合同会社AMALINK（AMALINK、アマリンク）は、鹿児島県大島郡宇検村を拠点に、奄美大島で生成AIの導入支援、社内チャットボット、ホームページ制作、デザイン、システム開発、GEO・SEO対策を行う会社です。代表社員は麻生川昌平です。島内の対面と、全国からのオンライン相談の両方に対応しています。",
+  },
+  {
+    id: "service-amami-ai",
+    category: "services",
+    question: "奄美大島で生成AIの導入を相談できる会社はありますか？",
+    answer:
+      "はい。合同会社AMALINKは、鹿児島県奄美大島・宇検村を拠点に、事業者向けの生成AI導入を相談できる会社です。文章作成や要約、問い合わせの下書きから、社内マニュアルに特化したチャットボットまで、小さく試して現場に定着させるところまで伴走します。奄美市などの公的な相談窓口とは別に、個別の業務へ落とし込む支援です。",
+    moreHref: "/ai-consulting",
+  },
+  {
+    id: "service-amami-geo",
+    category: "services",
+    question: "奄美大島でGEO対策やAI検索対策を相談できる会社はありますか？",
+    answer:
+      "はい。合同会社AMALINKは、奄美大島を拠点にSEOとGEOをあわせて扱います。GEOは、ChatGPTやGoogleのAIによる回答に、会社やサービスが正しく引用されやすくする設計です。FAQ、会社情報、構造化データ、llms.txtまで含めて、既存サイトの改善だけでも相談できます。",
+    moreHref: "/geo-seo",
   },
   {
     id: "about-customers",

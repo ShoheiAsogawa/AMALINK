@@ -35,6 +35,28 @@ export function RootJsonLd() {
           "@type": "PostalAddress",
           ...COMPANY_OVERVIEW.postalAddress,
         },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: COMPANY_OVERVIEW.geo.latitude,
+          longitude: COMPANY_OVERVIEW.geo.longitude,
+        },
+        founder: {
+          "@type": "Person",
+          name: COMPANY_OVERVIEW.representative,
+          jobTitle: "代表社員",
+        },
+        identifier: {
+          "@type": "PropertyValue",
+          name: "法人番号",
+          value: COMPANY_OVERVIEW.corporateNumber,
+        },
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer support",
+          url: absoluteUrl("/contact"),
+          availableLanguage: ["ja"],
+          areaServed: "JP",
+        },
         areaServed: [
           {
             "@type": "Place",
@@ -43,6 +65,10 @@ export function RootJsonLd() {
           {
             "@type": "AdministrativeArea",
             name: "鹿児島県",
+          },
+          {
+            "@type": "Country",
+            name: "日本",
           },
         ],
         knowsAbout: [
@@ -60,10 +86,20 @@ export function RootJsonLd() {
           "業務効率化",
           "GEO対策",
           "Generative Engine Optimization",
+          "AI検索",
+          "奄美大島 生成AI",
           "地域DX",
           "奄美大島",
           "奄美群島",
         ],
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "AMALINKのサービス",
+          itemListElement: SERVICES.map((service) => ({
+            "@type": "Offer",
+            itemOffered: { "@id": `${root}#${service.id}` },
+          })),
+        },
         sameAs: [lineUrl],
         slogan: "島のリズムで、未来をつくる。",
       },

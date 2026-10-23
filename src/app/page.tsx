@@ -23,6 +23,9 @@ export const metadata: Metadata = {
     "ホームページ制作",
     "デザイン",
     "GEO対策",
+    "奄美大島 AI",
+    "奄美大島 生成AI",
+    "奄美大島 ホームページ制作",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -34,6 +37,34 @@ export const metadata: Metadata = {
 };
 
 export const revalidate = 60;
+
+function HomeJsonLd() {
+  const url = absoluteUrl("/");
+  const payload = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
+    url,
+    name: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    inLanguage: "ja",
+    isPartOf: { "@id": `${url}#website` },
+    about: { "@id": `${url}#organization` },
+    mainEntity: { "@id": `${url}#organization` },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", "[data-geo-answer]"],
+    },
+    publisher: { "@id": `${url}#organization` },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(payload) }}
+    />
+  );
+}
 
 export default async function Home() {
   let news: Awaited<ReturnType<typeof getNewsList>>["contents"] = [];
@@ -51,6 +82,7 @@ export default async function Home() {
 
   return (
     <main className="overflow-x-clip">
+      <HomeJsonLd />
       <Header />
       <Hero />
       <MarqueeSpacer phrase="PHILOSOPHY" />
