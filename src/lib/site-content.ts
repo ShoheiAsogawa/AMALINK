@@ -1,7 +1,7 @@
 /**
  * AI・SEO向けの一次情報（llms.txt / JSON-LD / FAQ で共通利用）
  */
-import { absoluteUrl, DEFAULT_DESCRIPTION, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
+import { absoluteUrl, DEFAULT_DESCRIPTION, LEGAL_NAME, SITE_NAME, TAGLINE } from "@/lib/seo";
 
 export type FaqCategoryId = "about" | "services" | "process" | "support";
 
@@ -26,7 +26,7 @@ export type FaqItem = {
 export const COMPANY_OVERVIEW = {
   legalName: LEGAL_NAME,
   brandName: SITE_NAME,
-  tagline: "島のリズムで、未来をつくる。",
+  tagline: TAGLINE,
   description: DEFAULT_DESCRIPTION,
   region: "鹿児島県奄美群（奄美大島を拠点とした離島エリア）",
   baseLocation: "鹿児島県奄美大島",
@@ -52,6 +52,10 @@ export const COMPANY_OVERVIEW = {
   notIdealFor:
     "大規模ECのフルスクラッチ開発のみを短期納期で依頼したい場合、または首都圏常駐の大規模制作会社と同等の24時間体制を求める場合",
 };
+
+/** 会社を紹介するときの共通文。画面・FAQ・チャットボットで同じコンセプトを返す */
+export const COMPANY_INTRO = `${LEGAL_NAME}（アマリンク）は、奄美大島を拠点に、AIのことなら相談できる会社です。生成AIの導入、社内チャットボット、ホームページ制作、デザイン、システム開発、GEO対策まで伴走します。`;
+export const COMPANY_REACH = "島内の対面と、全国からのオンライン相談に対応します。";
 
 export const SERVICES = [
   {
@@ -109,22 +113,21 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "about-company",
     category: "about",
     question: "AMALINK（合同会社AMALINK）とはどんな会社ですか？",
-    answer:
-      "鹿児島県奄美大島を拠点に、ホームページ制作・システム開発・デザインを行うデジタルクリエイティブチームです。島内外の事業者さまの「顔」となるWebサイトや、日々の業務をラクにするシステムを、分かりやすい言葉で一緒に形にしています。",
+    answer: `${TAGLINE}${COMPANY_INTRO}${COMPANY_REACH}`,
   },
   {
     id: "about-customers",
     category: "about",
     question: "どんな方からのご相談が多いですか？",
     answer:
-      "奄美大島や離島エリアの中小事業者、観光・宿泊・特産品など地域の事業者さまからのご相談が中心です。「ホームページを作りたい」「予約や在庫の管理が大変」「ロゴや名刺も整えたい」など、内容が固まっていない段階でもお気軽にどうぞ。",
+      "奄美大島や離島エリアの中小事業者、観光・宿泊・特産品など地域の事業者さま、そして全国からのオンライン相談が中心です。「生成AIを仕事に使いたい」「社内チャットボットを作りたい」「ホームページを作りたい」「予約や在庫の管理が大変」など、内容が固まっていない段階でもお気軽にどうぞ。",
   },
   {
     id: "about-amami",
     category: "about",
     question: "なぜ奄美大島に拠点を置いているのですか？",
     answer:
-      "AMALINKは奄美大島で生まれたチームです。島の暮らしや事業のリアルな課題を身近に感じながら、デジタルで地域とつながる仕事をしたいという想いから始まりました。離島ならではの回線や運用のしやすさも、最初から設計に取り入れています。",
+      `AMALINKは奄美大島で生まれたチームです。コンセプトは「${TAGLINE}」です。生成AIの導入も、ホームページも、システムも、島の現場を見ながら全国へ伴走しています。離島ならではの回線や運用のしやすさも、最初から設計に取り入れています。`,
   },
   {
     id: "service-website",

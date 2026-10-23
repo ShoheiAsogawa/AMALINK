@@ -3,7 +3,7 @@ import Image from "next/image";
 import { FooterTruck } from "@/components/layout/FooterTruck";
 import { PixelPlayButton } from "@/components/ui/PixelPlayButton";
 import { COMPANY_OVERVIEW } from "@/lib/site-content";
-import { LEGAL_NAME } from "@/lib/seo";
+import { LEGAL_NAME, TAGLINE_LEAD, TAGLINE_MARK } from "@/lib/seo";
 
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -60,9 +60,9 @@ export default function Footer() {
             {/* ロゴ直下: タグライン＋ハテナ（住所より上） */}
             <div className="flex items-end justify-between gap-3">
               <p className="min-w-0 font-sans text-xs leading-relaxed text-slate-500 md:text-sm">
-                島のリズムで、
+                {TAGLINE_LEAD}
                 <br />
-                <span className="text-amami-blue">未来をつくる。</span>
+                <span className="text-amami-blue">{TAGLINE_MARK}</span>
               </p>
               <div className="shrink-0 md:hidden">
                 <PixelPlayButton placement="footer" />

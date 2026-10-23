@@ -3,11 +3,12 @@
 import { Section } from "@/components/ui/Section";
 import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
 import { motion } from "framer-motion";
-import { Sprout, Waves, Users } from "lucide-react";
+import { Globe, MessageCircle, Sparkles } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { WaveBackground } from "@/components/ui/WaveBackground";
 import Link from "next/link";
-import { LEGAL_NAME } from "@/lib/seo";
+import { LEGAL_NAME, TAGLINE_LEAD, TAGLINE_MARK } from "@/lib/seo";
+import { COMPANY_INTRO, COMPANY_REACH } from "@/lib/site-content";
 import { cn } from "@/lib/utils";
 import { usePinnedHorizontalScroll } from "@/components/ui/usePinnedHorizontalScroll";
 
@@ -108,13 +109,13 @@ function SproutCard({
       </div>
 
       <div className="relative z-10 mb-6 flex items-center justify-between">
-        <h3 className="font-serif text-xl text-slate-800">島に根ざす</h3>
+        <h3 className="font-serif text-xl text-slate-800">AIを現場に</h3>
         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-100 bg-white transition-transform duration-300 group-hover:scale-110">
-          <Sprout className="h-5 w-5 text-amami-green" />
+          <Sparkles className="h-5 w-5 text-amami-green" />
         </div>
       </div>
       <p className="relative z-10 font-sans text-base leading-loose text-slate-500 md:text-lg">
-        奄美の文化や風土を大切にしながら、デジタルの力で新しい可能性を育みます。
+        生成AIの導入を、いまの仕事のやり方に合わせて伴走します。
       </p>
     </ValueCardShell>
   );
@@ -165,13 +166,13 @@ function RippleCard({
       </div>
 
       <div className="relative z-10 mb-6 flex items-center justify-between">
-        <h3 className="font-serif text-xl text-slate-800">波紋を広げる</h3>
+        <h3 className="font-serif text-xl text-slate-800">全国へつなぐ</h3>
         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-100 bg-white transition-transform duration-300 group-hover:scale-110">
-          <Waves className="h-5 w-5 text-amami-blue" />
+          <Globe className="h-5 w-5 text-amami-blue" />
         </div>
       </div>
       <p className="relative z-10 font-sans text-base leading-loose text-slate-500 md:text-lg">
-        小さな課題解決が、やがて大きな変化の波となり、島全体を豊かにしていきます。
+        奄美大島での対面と、全国からのオンライン相談に対応します。
       </p>
     </ValueCardShell>
   );
@@ -234,13 +235,13 @@ function PeopleCard({
       </div>
 
       <div className="relative z-10 mb-6 flex items-center justify-between">
-        <h3 className="font-serif text-xl text-slate-800">人に寄り添う</h3>
+        <h3 className="font-serif text-xl text-slate-800">わかりやすく</h3>
         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-100 bg-white transition-transform duration-300 group-hover:scale-110">
-          <Users className="h-5 w-5 text-sand-beige" />
+          <MessageCircle className="h-5 w-5 text-sand-beige" />
         </div>
       </div>
       <p className="relative z-10 font-sans text-base leading-loose text-slate-500 md:text-lg">
-        難しい技術用語ではなく、分かりやすい言葉と温かい対応で、皆様の想いを形にします。
+        難しい専門用語を避け、チャットボットからホームページ、システムまで一緒に形にします。
       </p>
     </ValueCardShell>
   );
@@ -248,8 +249,7 @@ function PeopleCard({
 
 const CARD_ITEM_CLASS = "w-[min(80vw,22rem)] shrink-0";
 const CARD_CLASS = "h-full w-full";
-const ABOUT_CLOSING_COPY =
-  "最先端の技術も大切ですが、それ以上に「誰かの役に立つこと」を大切に。島の暮らしに、そっと寄り添うような温かいデジタル体験をお届けします。";
+const ABOUT_CLOSING_COPY = COMPANY_REACH;
 
 function AboutCopy({ className }: { className?: string }) {
   return (
@@ -266,14 +266,13 @@ function AboutCopy({ className }: { className?: string }) {
       <SectionEyebrow label="About Us" color="blue" align="responsive" />
 
       <h2 className="mb-10 font-serif text-3xl leading-tight tracking-normal text-slate-800 md:mb-12 md:text-5xl">
-        デジタルだけど、<br />
-        <span className="text-slate-400">体温のある</span>仕事を。
+        {TAGLINE_LEAD}
+        <br />
+        <span className="text-slate-400">{TAGLINE_MARK}</span>
       </h2>
 
       <div className="space-y-8 font-serif text-lg leading-loose text-slate-600 md:text-xl">
-        <p>
-          {LEGAL_NAME}（アマリンク）は、奄美大島で生まれたデジタルクリエイティブチームです。
-        </p>
+        <p>{COMPANY_INTRO}</p>
         <p>
           私たちの名前「AMALINK」には、故郷「
           <span className="font-bold text-amami-blue">AMAMI</span>」と、世界への「

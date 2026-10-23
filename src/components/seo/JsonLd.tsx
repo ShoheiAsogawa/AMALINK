@@ -65,7 +65,7 @@ export function RootJsonLd() {
           "奄美群島",
         ],
         sameAs: [lineUrl],
-        slogan: "島のリズムで、未来をつくる。",
+        slogan: COMPANY_OVERVIEW.tagline,
       },
       {
         "@type": "WebSite",
