@@ -23,6 +23,7 @@ export const LOCALES: readonly LocaleDef[] = [
 export const GLOSSARY: { ja: string; default: string; byLocale?: Record<string, string> }[] = [
   { ja: "合同会社AMALINK", default: "AMALINK LLC" },
   { ja: "AMALINK", default: "AMALINK" },
+  { ja: "AIのことなら、AMALINK。", default: "For AI, AMALINK." },
   { ja: "奄美大島", default: "Amami Oshima" },
   { ja: "奄美群島", default: "Amami Islands" },
   { ja: "奄美市", default: "Amami City" },
