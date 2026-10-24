@@ -4,6 +4,7 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { AmbientVideo } from "@/components/about/AmbientVideo";
+import { HowWeWork } from "@/components/about/HowWeWork";
 import { Contact } from "@/components/sections/Contact";
 import { COMPANY_OVERVIEW, SERVICES } from "@/lib/site-content";
 import { absoluteUrl, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
@@ -169,6 +170,8 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+
+        <HowWeWork />
 
         <section className="bg-white px-6 py-20 md:py-28">
           <div className="mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-slate-100 bg-slate-50">
