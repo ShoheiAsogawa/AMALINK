@@ -1,0 +1,47 @@
+/*
+ * 会社概要「FDE」セクションの動き。transform と opacity だけ。
+ * 何も付いていない状態＝完成形（JS なし・動きを減らす設定でもそのまま見える）。
+ * data-anim="ready"：画面に入る前の隠れた状態 / "play"：再生。
+ * タイミング：輪は 0.2s から 1.5s かけて上から時計回りに描く（120° ごとに 0.5s）。
+ */
+.fde-ring { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.fde-orbit { opacity: 0; transform-box: view-box; transform-origin: 200px 205px; }
+.fde-flash { opacity: 0; }
+
+[data-anim="ready"] .fde-ring { stroke-dashoffset: 1; }
+[data-anim="ready"] .fde-pop,
+[data-anim="ready"] .fde-fade,
+[data-anim="ready"] .fde-card { opacity: 0; }
+
+[data-anim="play"] .fde-ring { animation: fde-draw 1.5s linear 0.2s both; }
+[data-anim="play"] .fde-pop { animation: fde-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both; }
+[data-anim="play"] .fde-fade { animation: fde-in 0.5s ease-out var(--d, 0s) both; }
+[data-anim="play"] .fde-card { animation: fde-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i, 0) * 0.15s) both; }
+[data-anim="play"] .fde-orbit {
+  animation:
+    fde-in 0.6s ease-out 1.7s both,
+    fde-spin 6s linear 1.7s infinite;
+}
+/* 光の点が丸を通る瞬間だけ、丸のまわりが光る（大きさは変えない） */
+[data-anim="play"] .fde-flash { animation: fde-flash 6s linear calc(1.7s + var(--k, 0) * 2s - 0.2s) infinite; }
+
+[data-running="0"] .fde-orbit,
+[data-running="0"] .fde-flash { animation-play-state: paused; }
+
+@keyframes fde-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes fde-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fde-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes fde-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes fde-flash {
+  0% { opacity: 0; }
+  4% { opacity: 1; }
+  14% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fde-ring, .fde-pop, .fde-fade, .fde-card, .fde-orbit, .fde-flash { animation: none !important; }
+  .fde-ring { stroke-dashoffset: 0 !important; }
+  .fde-pop, .fde-fade, .fde-card { opacity: 1 !important; transform: none !important; }
+  .fde-orbit, .fde-flash { opacity: 0 !important; }
+}
