@@ -50,12 +50,14 @@ export function showsHeroCover(item: Pick<News, "content" | "coverUrl">): boolea
   return !item.content.includes(item.coverUrl);
 }
 
+/** 表示用の日付。サーバー（UTC）でもブラウザでも日本時間の日付にそろえる */
 export function formatNewsDate(dateStr: string): string {
   const date = new Date(dateStr);
   return date.toLocaleDateString("ja-JP", {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
+    timeZone: "Asia/Tokyo",
   });
 }
 
