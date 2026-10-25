@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { TAGLINE_LEAD, TAGLINE_MARK } from "@/lib/seo";
 
 type WaveLayer = {
   bottom?: string;
@@ -170,39 +171,34 @@ export function Hero() {
           <h1 className="m-0 w-full text-center font-serif font-bold text-slate-800">
             <span className="hero-vertical hidden md:flex flex-row-reverse gap-8">
               <span className="vertical-text text-5xl md:text-7xl tracking-wider leading-relaxed whitespace-nowrap">
-                島のリズムで、
+                {TAGLINE_LEAD}
               </span>
               <span className="vertical-text text-5xl md:text-7xl tracking-wider leading-relaxed whitespace-nowrap text-amami-blue">
-                未来をつくる。
+                {TAGLINE_MARK}
               </span>
             </span>
             <span className="mx-auto block w-full pt-4 text-center text-3xl leading-tight drop-shadow-sm sm:text-4xl md:hidden">
-              島のリズムで、
+              {TAGLINE_LEAD}
               <br />
-              <span className="text-amami-blue">未来をつくる。</span>
+              <span className="text-amami-blue">{TAGLINE_MARK}</span>
             </span>
           </h1>
 
           <div className="mx-auto w-full max-w-[21rem] text-center md:hidden">
             <p className="text-pretty text-base leading-loose text-slate-600 font-sans [word-break:keep-all] sm:text-lg">
-              <span className="block">波音のように穏やかに、</span>
-              <span className="block">けれど着実に。</span>
-              <span className="mt-6 block">奄美大島でAIのことなら、</span>
-              <span className="block">AMALINKへ。</span>
-              <span className="block">生成AIの活用から</span>
-              <span className="block">Web制作まで、</span>
-              <span className="block">島から全国へ伴走します。</span>
+              <span className="block">生成AIの導入から、</span>
+              <span className="block">社内チャットボット、</span>
+              <span className="block">ホームページ制作まで。</span>
+              <span className="mt-6 block">奄美大島を拠点に、</span>
+              <span className="block">全国へ伴走します。</span>
             </p>
           </div>
 
           <div className="hidden md:block max-w-lg">
             <p className="text-pretty text-lg leading-loose text-slate-600 font-sans [word-break:keep-all] md:text-xl">
-              <span className="block">波音のように穏やかに、</span>
-              <span className="block">けれど着実に。</span>
-              <span className="mt-6 block">奄美大島でAIのことなら、</span>
-              <span className="block">AMALINKへ。</span>
-              <span className="block">生成AIの活用からWeb制作まで、</span>
-              <span className="block">島から全国へ伴走します。</span>
+              <span className="block">生成AIの導入から、社内チャットボット、</span>
+              <span className="block">ホームページ制作まで。</span>
+              <span className="mt-6 block">奄美大島を拠点に、全国へ伴走します。</span>
             </p>
           </div>
         </motion.div>

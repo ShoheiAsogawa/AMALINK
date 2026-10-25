@@ -6,8 +6,8 @@ import Footer from "@/components/layout/Footer";
 import { AmbientVideo } from "@/components/about/AmbientVideo";
 import { HowWeWork } from "@/components/about/HowWeWork";
 import { Contact } from "@/components/sections/Contact";
-import { COMPANY_OVERVIEW, SERVICES } from "@/lib/site-content";
-import { absoluteUrl, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
+import { COMPANY_INTRO, COMPANY_OVERVIEW, COMPANY_REACH, SERVICES } from "@/lib/site-content";
+import { absoluteUrl, LEGAL_NAME, SITE_NAME, TAGLINE_LEAD, TAGLINE_MARK } from "@/lib/seo";
 
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const title = "会社概要";
@@ -114,9 +114,9 @@ export default function AboutPage() {
               会社概要
             </h1>
             <p className="mt-5 font-sans text-sm tracking-[0.12em] text-slate-500 [word-break:keep-all] md:text-base md:tracking-[0.18em]">
-              島のリズムで、
+              {TAGLINE_LEAD}
               <br />
-              <span className="text-brand-gradient">未来をつくる。</span>
+              <span className="text-brand-gradient">{TAGLINE_MARK}</span>
             </p>
           </div>
         </section>
@@ -128,23 +128,19 @@ export default function AboutPage() {
                 About
               </p>
               <h2 className="mb-8 font-serif text-3xl leading-tight text-slate-800 [word-break:keep-all] md:text-4xl">
-                デジタルだけど、
+                {TAGLINE_LEAD}
                 <br />
-                体温のある仕事を。
+                <span className="text-brand-gradient">{TAGLINE_MARK}</span>
               </h2>
               <div className="space-y-6 font-serif text-base leading-loose text-slate-600 [word-break:keep-all] md:text-lg">
-                <p>
-                  {LEGAL_NAME}（アマリンク）は、奄美大島で生まれたデジタルクリエイティブチームです。
-                </p>
+                <p>{COMPANY_INTRO}</p>
                 <p>
                   名前の「AMALINK」には、故郷「
                   <span className="font-semibold text-amami-blue">AMAMI</span>」と、世界への「
                   <span className="font-semibold text-amami-green">LINK</span>
                   」という二つの願いが込められています。
                 </p>
-                <p>
-                  最先端の技術も大切ですが、それ以上に「誰かの役に立つこと」を大切に。島の暮らしに、そっと寄り添うような温かいデジタル体験をお届けします。
-                </p>
+                <p>{COMPANY_REACH}</p>
               </div>
             </div>
 
