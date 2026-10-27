@@ -40,6 +40,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   return {
     title,
     description,
+    // カテゴリ一覧は /news とほぼ同じ中身になる（カテゴリが「お知らせ」だけのため）。
+    // Google が /news を正規に選び「重複」と出るので、インデックスさせずリンクだけたどらせる（サイトマップにも載せない）。
+    robots: { index: false, follow: true },
     alternates: {
       canonical: path,
       types: { "application/rss+xml": [{ url: "/rss.xml", title: `お知らせ | ${SITE_NAME}` }] },

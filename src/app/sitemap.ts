@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
-import { categoryPath, getCategoryIndex, getColumnList, getNewsList } from "@/lib/cms";
+import { getColumnList, getNewsList } from "@/lib/cms";
 import { absoluteUrl } from "@/lib/seo";
-import { isColumnCategoryId } from "@/lib/legacy-redirects";
 import { DEFAULT_LOCALE, LOCALES, localizedPath } from "@/lib/i18n-config";
 
 /**
@@ -77,22 +76,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // news API 未接続
   }
 
-  const categoryEntries: MetadataRoute.Sitemap = [];
-  try {
-    const { categories } = await getCategoryIndex();
-    categoryEntries.push(
-      ...categories.filter((category) => !isColumnCategoryId(category.id)).map((category) => ({
-        url: absoluteUrl(categoryPath(category.id)),
-        lastModified: now,
-        changeFrequency: "weekly" as const,
-        priority: 0.5,
-      })),
-    );
-  } catch {
-    // categories API 未接続
-  }
-
-  return withLocales([...staticEntries, ...newsEntries, ...categoryEntries]);
+  // カテゴリ一覧（/news/category/...）は /news と中身が重なるため noindex にし、サイトマップにも載せない。
+  return withLocales([...staticEntries, ...newsEntries]);
 }
 
 /** 各URLに hreflang の対応先を付け、各言語版（/en/... など）のURLも足す。 */

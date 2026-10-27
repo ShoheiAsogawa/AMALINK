@@ -381,6 +381,9 @@ export async function handleLocalized(request: Request, env: I18nEnv, ctx: Ctx, 
   h.delete("Content-Length");
   h.delete("ETag");
   if (missing.length) h.set("Cache-Control", "private, no-store");
+  // 訳がまだ1割以上そろっていない（ほぼ日本語のまま）ときは、日本語版の重複と見なされないよう検索に載せない。
+  // 訳が揃えば次のクロールで外れる（no-store なのでキャッシュにも残らない）。
+  if (unique.length && missing.length / unique.length > 0.1) h.set("X-Robots-Tag", "noindex");
   h.set("X-I18n", `${dict.size}/${unique.length}`);
   return new Response(out.body, { status: out.status, headers: h });
 }
