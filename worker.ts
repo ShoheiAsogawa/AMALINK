@@ -17,6 +17,14 @@ type FetchHandler = { fetch: (request: Request, env: unknown, ctx: unknown) => P
 
 const worker = {
   async fetch(request: Request, env: unknown, ctx: unknown): Promise<Response> {
+    // www.amalink.co.jp は同じ Worker に来るので、ここで本体へ恒久転送（パスとクエリはそのまま）。
+    // GET/HEAD は 301、それ以外は送信内容を保つため 308。
+    const reqUrl = new URL(request.url);
+    if (reqUrl.hostname === "www.amalink.co.jp") {
+      const to = `https://amalink.co.jp${reqUrl.pathname}${reqUrl.search}`;
+      const status = request.method === "GET" || request.method === "HEAD" ? 301 : 308;
+      return new Response(null, { status, headers: { Location: to, "Cache-Control": "public, max-age=3600" } });
+    }
     if (request.method === "GET" || request.method === "HEAD") {
       const url = new URL(request.url);
       const to = legacyRedirectPath(url);
