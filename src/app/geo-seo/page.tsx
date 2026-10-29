@@ -23,6 +23,12 @@ export const metadata: Metadata = {
     url: absoluteUrl("/geo-seo"),
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ${LEGAL_NAME}`,
+    description,
+    images: [ogImage("og-B-geo-seo.png", "黒地にAMALINKのロゴと「検索にもAIにも、正しく伝わるWeb設計。」「GEO & SEO」の文字が入った画像")],
+  },
 };
 
 const examples = [

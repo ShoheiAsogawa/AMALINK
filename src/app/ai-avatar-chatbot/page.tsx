@@ -23,6 +23,12 @@ export const metadata: Metadata = {
     url: absoluteUrl("/ai-avatar-chatbot"),
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ${LEGAL_NAME}`,
+    description,
+    images: [ogImage("og-B-ai-avatar-chatbot.png", "黒地にAMALINKのロゴと「自社サイトに合う、AIアバターチャットボット制作。」「AI Avatar Chatbot Development」の文字が入った画像")],
+  },
 };
 
 const examples = [

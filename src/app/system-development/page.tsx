@@ -23,6 +23,12 @@ export const metadata: Metadata = {
     url: absoluteUrl("/system-development"),
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ${LEGAL_NAME}`,
+    description,
+    images: [ogImage("og-B-system-development.png", "黒地にAMALINKのロゴと「奄美大島の事業に合う、小さく始めるシステム開発。」「System Development & Workflow Automation」の文字が入った画像")],
+  },
 };
 
 const examples = [

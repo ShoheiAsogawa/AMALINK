@@ -32,6 +32,12 @@ export const metadata: Metadata = {
     url: absoluteUrl("/ai-consulting"),
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ${LEGAL_NAME}`,
+    description,
+    images: [ogImage("og-B-ai-consulting.png", "黒地にAMALINKのロゴと「汎用AIも、社内特化ボットも。会社のことに強いAIの使い方へ。」「AI Consulting」の文字が入った画像")],
+  },
 };
 
 const tools = [
