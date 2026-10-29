@@ -1,3 +1,4 @@
+import { OG_IMAGE } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
@@ -25,6 +26,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/ai-consulting" },
   openGraph: {
+    images: [OG_IMAGE],
     title: `${title} | ${LEGAL_NAME}`,
     description,
     url: absoluteUrl("/ai-consulting"),

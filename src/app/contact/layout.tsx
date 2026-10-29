@@ -1,3 +1,4 @@
+import { OG_IMAGE } from "@/lib/seo";
 import type { Metadata } from "next";
 import { absoluteUrl, LEGAL_NAME, SITE_NAME } from "@/lib/seo";
 import { COMPANY_OVERVIEW } from "@/lib/site-content";
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
   description: desc,
   alternates: { canonical: "/contact" },
   openGraph: {
+    images: [OG_IMAGE],
     url: absoluteUrl("/contact"),
     title,
     description: desc,

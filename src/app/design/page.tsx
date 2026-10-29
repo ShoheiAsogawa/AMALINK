@@ -1,3 +1,4 @@
+import { OG_IMAGE } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
@@ -23,12 +24,14 @@ export const metadata: Metadata = {
   keywords: [...TARGET_KEYWORDS.design, LEGAL_NAME, "AMALINK"],
   alternates: { canonical: DESIGN_GEO.canonicalPath },
   openGraph: {
+    images: [OG_IMAGE],
     title: `${title} | ${LEGAL_NAME}`,
     description,
     url: absoluteUrl(DESIGN_GEO.canonicalPath),
     type: "website",
   },
   twitter: {
+    images: [OG_IMAGE],
     card: "summary_large_image",
     title: `${title} | ${LEGAL_NAME}`,
     description,
