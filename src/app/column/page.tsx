@@ -21,6 +21,12 @@ export const metadata: Metadata = {
     title: `コラム | ${SITE_NAME}`,
     description: `${SITE_NAME}のコラムです。`,
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `コラム | ${SITE_NAME}`,
+    description: `${SITE_NAME}のコラムです。`,
+    images: [OG_IMAGE],
+  },
 };
 
 export default async function ColumnListPage() {

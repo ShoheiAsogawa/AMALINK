@@ -24,6 +24,12 @@ export const metadata: Metadata = {
     title: `お知らせ | ${SITE_NAME}`,
     description: `${SITE_NAME}からのお知らせ一覧です。`,
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `お知らせ | ${SITE_NAME}`,
+    description: `${SITE_NAME}からのお知らせ一覧です。`,
+    images: [OG_IMAGE],
+  },
 };
 
 export default async function NewsListPage() {

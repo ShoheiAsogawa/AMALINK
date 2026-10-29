@@ -35,6 +35,12 @@ export const metadata: Metadata = {
     url: absoluteUrl("/about"),
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ${LEGAL_NAME}`,
+    description,
+    images: [OG_IMAGE],
+  },
 };
 
 const PROFILE = [

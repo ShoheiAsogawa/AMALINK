@@ -19,6 +19,12 @@ export const metadata: Metadata = {
     description: `AI活用・Web制作・システム開発・GEO対策に関するFAQ。${LEGAL_NAME}が回答します。`,
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `よくある質問（FAQ） | ${LEGAL_NAME}`,
+    description: `AI活用・Web制作・システム開発・GEO対策に関するFAQ。${LEGAL_NAME}が回答します。`,
+    images: [OG_IMAGE],
+  },
 };
 
 export default function FaqPage() {
