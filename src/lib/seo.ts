@@ -106,7 +106,7 @@ export const OG_IMAGE = {
   url: "/og/og-default.png",
   width: 1200,
   height: 630,
-  alt: "黒地にAMALINKのロゴと「奄美大島でAIのことなら、」の白い文字が入った画像",
+  alt: "黒地にAMALINKのロゴと「AIのことなら、AMALINK。」の白い文字が入った画像",
   type: "image/png",
 };
 export function ogImage(file?: string, alt?: string) {
