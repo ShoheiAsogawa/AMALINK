@@ -1,3 +1,4 @@
+import { OG_IMAGE } from "@/lib/seo";
 import type { Metadata } from "next";
 import { AmalinkChatbot } from "@/components/chatbot/AmalinkChatbot";
 import { PixelPlayButton } from "@/components/ui/PixelPlayButton";
@@ -54,20 +55,13 @@ export const metadata: Metadata = {
     siteName: `${LEGAL_NAME}（${SITE_NAME}）`,
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: [
-      {
-        url: absoluteUrl("/logo.png"),
-        width: 512,
-        height: 512,
-        alt: `${LEGAL_NAME}（${SITE_NAME}）ロゴ`,
-      },
-    ],
+    images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: [absoluteUrl("/logo.png")],
+    images: [OG_IMAGE],
   },
   robots: {
     index: true,

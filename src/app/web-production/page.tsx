@@ -1,3 +1,4 @@
+import { ogImage } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
@@ -23,12 +24,14 @@ export const metadata: Metadata = {
   keywords: [...TARGET_KEYWORDS.webProduction, LEGAL_NAME, "AMALINK"],
   alternates: { canonical: WEB_PRODUCTION_GEO.canonicalPath },
   openGraph: {
+    images: [ogImage("og-B-web-production.png", "黒地にAMALINKのロゴと「お店や会社の顔になる、伝わるホームページ制作。」「Website Production」の文字が入った画像")],
     title: `${title} | ${LEGAL_NAME}`,
     description,
     url: absoluteUrl(WEB_PRODUCTION_GEO.canonicalPath),
     type: "website",
   },
   twitter: {
+    images: [ogImage("og-B-web-production.png", "黒地にAMALINKのロゴと「お店や会社の顔になる、伝わるホームページ制作。」「Website Production」の文字が入った画像")],
     card: "summary_large_image",
     title: `${title} | ${LEGAL_NAME}`,
     description,

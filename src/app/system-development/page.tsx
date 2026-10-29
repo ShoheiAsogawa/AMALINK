@@ -1,3 +1,4 @@
+import { ogImage } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: "/system-development" },
   openGraph: {
+    images: [ogImage("og-B-system-development.png", "黒地にAMALINKのロゴと「奄美大島の事業に合う、小さく始めるシステム開発。」「System Development & Workflow Automation」の文字が入った画像")],
     title: `${title} | ${LEGAL_NAME}`,
     description,
     url: absoluteUrl("/system-development"),

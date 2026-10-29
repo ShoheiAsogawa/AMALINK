@@ -1,3 +1,4 @@
+import { OG_IMAGE } from "@/lib/seo";
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -47,7 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       canonical: path,
       types: { "application/rss+xml": [{ url: "/rss.xml", title: `お知らせ | ${SITE_NAME}` }] },
     },
-    openGraph: { url: absoluteUrl(path), title: `${title} | ${SITE_NAME}`, description },
+    openGraph: { images: [OG_IMAGE], url: absoluteUrl(path), title: `${title} | ${SITE_NAME}`, description },
   };
 }
 

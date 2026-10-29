@@ -1,3 +1,4 @@
+import { OG_IMAGE } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
   description: `${LEGAL_NAME}（${SITE_NAME}）へのよくある質問。奄美大島でのAI活用・ホームページ制作・システム開発・GEO対策の料金、対応エリア、選び方について回答します。`,
   alternates: { canonical: "/faq" },
   openGraph: {
+    images: [OG_IMAGE],
     url: absoluteUrl("/faq"),
     title: `よくある質問（FAQ） | ${LEGAL_NAME}`,
     description: `AI活用・Web制作・システム開発・GEO対策に関するFAQ。${LEGAL_NAME}が回答します。`,

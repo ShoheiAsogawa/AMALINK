@@ -1,3 +1,4 @@
+import { OG_IMAGE } from "@/lib/seo";
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/" },
   openGraph: {
+    images: [OG_IMAGE],
     url: absoluteUrl("/"),
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,

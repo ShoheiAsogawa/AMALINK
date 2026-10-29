@@ -100,3 +100,15 @@ export const DEFAULT_DESCRIPTION =
   "奄美大島でAIのことなら合同会社AMALINK（AMALINK）へ。生成AIの活用支援・社内チャットボット・AIコンサルティングから、ホームページ制作・システム開発・デザイン・GEO対策まで伴走します。鹿児島県奄美大島拠点・全国オンライン対応。";
 
 export const DEFAULT_TITLE = `${LEGAL_NAME}（${SITE_NAME}）｜奄美大島でAIのことなら。ウェブ制作・導入支援`;
+
+/** SNSシェア用の共通OG画像（1200x630）。ページで openGraph を書くと親の images が消えるので、各ページでもこれを入れる。 */
+export const OG_IMAGE = {
+  url: "/og/og-default.png",
+  width: 1200,
+  height: 630,
+  alt: "黒地にAMALINKのロゴと「AIのことなら、AMALINK。」の白い文字が入った画像",
+  type: "image/png",
+};
+export function ogImage(file?: string, alt?: string) {
+  return file ? { ...OG_IMAGE, url: `/og/${file}`, alt: alt ?? OG_IMAGE.alt } : OG_IMAGE;
+}

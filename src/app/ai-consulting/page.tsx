@@ -1,3 +1,4 @@
+import { ogImage } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
@@ -25,6 +26,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/ai-consulting" },
   openGraph: {
+    images: [ogImage("og-B-ai-consulting.png", "黒地にAMALINKのロゴと「汎用AIも、社内特化ボットも。会社のことに強いAIの使い方へ。」「AI Consulting」の文字が入った画像")],
     title: `${title} | ${LEGAL_NAME}`,
     description,
     url: absoluteUrl("/ai-consulting"),

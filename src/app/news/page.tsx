@@ -1,3 +1,4 @@
+import { OG_IMAGE } from "@/lib/seo";
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
     types: { "application/rss+xml": [{ url: "/rss.xml", title: `お知らせ | ${SITE_NAME}` }] },
   },
   openGraph: {
+    images: [OG_IMAGE],
     url: absoluteUrl("/news"),
     title: `お知らせ | ${SITE_NAME}`,
     description: `${SITE_NAME}からのお知らせ一覧です。`,

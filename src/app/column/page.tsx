@@ -1,3 +1,4 @@
+import { OG_IMAGE } from "@/lib/seo";
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
   description: `${SITE_NAME}のコラムです。制作、AI、島の仕事について書いた読み物を掲載しています。`,
   alternates: { canonical: "/column" },
   openGraph: {
+    images: [OG_IMAGE],
     url: absoluteUrl("/column"),
     title: `コラム | ${SITE_NAME}`,
     description: `${SITE_NAME}のコラムです。`,

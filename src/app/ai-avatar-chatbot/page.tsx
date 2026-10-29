@@ -1,3 +1,4 @@
+import { ogImage } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: "/ai-avatar-chatbot" },
   openGraph: {
+    images: [ogImage("og-B-ai-avatar-chatbot.png", "黒地にAMALINKのロゴと「自社サイトに合う、AIアバターチャットボット制作。」「AI Avatar Chatbot Development」の文字が入った画像")],
     title: `${title} | ${LEGAL_NAME}`,
     description,
     url: absoluteUrl("/ai-avatar-chatbot"),
