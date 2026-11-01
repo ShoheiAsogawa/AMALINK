@@ -43,6 +43,7 @@ export const COLUMN_ARTICLES = [
   { title: "AI検索に正しく引用されるGEO・SEO対策｜会社情報・構造化データとSearch Consoleの設定", keys: ["構造化データ", "構造化", "json-ld", "jsonld", "search console", "searchconsole", "サーチコンソール", "サチコ", "正しく引用", "引用される", "llms.txt", "リッチリザルト"] },
   { title: "AI検索で自社はどう紹介されている？GEO・SEO対策の前にできる確認方法と直し方", keys: ["どう紹介されて", "どう紹介され", "紹介のされ方", "aiの答えが間違", "aiの答えの間違", "aiが間違", "間違って紹介", "aiでの紹介"] },
   { title: "GoogleのAI検索でお店の公式サイトは選ばれる？2026年10月の更新と、奄美の小さな会社のGEO・SEO対策", keys: ["ai検索", "aiモード", "ai overview", "geo"] },
+  { title: "AIで書いた記事はSEOで不利？Googleの公式見解と、評価される使い方（GEO・SEO対策）", keys: ["aiで書いた", "aiで記事", "ai記事", "ai生成コンテンツ", "スパムポリシー"] },
   { title: "AIアバターで接客はできる？キャラクター型AIチャットボットのメリットと注意点", keys: ["aiアバター", "アバター", "キャラクター"] },
   { title: "AIチャットボットを公式LINEにつなぐと何が変わる？奄美のお店・宿の問い合わせ対応の悩みを減らす方法", keys: ["lineのai", "lineにai", "line ai", "lineの自動"] },
   { title: "生成AIのプロンプトの書き方｜思った答えが返ってこない悩みを減らす5つのコツと仕事の例文", keys: ["プロンプト", "指示文"] },
