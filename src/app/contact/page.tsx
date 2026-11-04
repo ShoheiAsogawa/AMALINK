@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Script from "next/script";
 import { motion } from "framer-motion";
 import { WaveBackground } from "@/components/ui/WaveBackground";
 import Header from "@/components/layout/Header";
@@ -8,89 +9,85 @@ import Footer from "@/components/layout/Footer";
 import { ChunkyButton, ChunkyNextLink } from "@/components/ui/ChunkyButton";
 
 const NOTIFY_EMAIL = "uken.shohei@gmail.com";
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
+
+type TurnstileApi = {
+  render: (el: HTMLElement, opts: Record<string, unknown>) => string;
+  reset: (id?: string) => void;
+  remove: (id?: string) => void;
+};
+declare global {
+  interface Window {
+    turnstile?: TurnstileApi;
+  }
+}
 
 export default function ContactPage() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const web3formsKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
-  const contactEndpoint = process.env.NEXT_PUBLIC_CONTACT_FORM_ENDPOINT;
+  const [scriptReady, setScriptReady] = useState(false);
+  const [token, setToken] = useState("");
+  const widgetEl = useRef<HTMLDivElement>(null);
+  const widgetId = useRef<string | null>(null);
+
+  const renderWidget = useCallback(() => {
+    if (!window.turnstile || !widgetEl.current || widgetId.current || !TURNSTILE_SITE_KEY) return;
+    widgetId.current = window.turnstile.render(widgetEl.current, {
+      sitekey: TURNSTILE_SITE_KEY,
+      action: "contact",
+      language: "ja",
+      callback: (t: string) => setToken(t),
+      "expired-callback": () => setToken(""),
+      "error-callback": () => setToken(""),
+    });
+  }, []);
+
+  useEffect(() => {
+    if (scriptReady) renderWidget();
+  }, [scriptReady, renderWidget, status]);
+
+  useEffect(() => {
+    return () => {
+      if (widgetId.current) window.turnstile?.remove(widgetId.current);
+      widgetId.current = null;
+    };
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("submitting");
-
     const formData = new FormData(e.currentTarget);
-    const data = {
-      category: formData.get("category"),
-      name: formData.get("name"),
-      email: formData.get("email"),
-      message: formData.get("message"),
+    const payload = {
+      category: String(formData.get("category") ?? ""),
+      name: String(formData.get("name") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      message: String(formData.get("message") ?? ""),
+      website: String(formData.get("website") ?? ""),
+      turnstileToken: token,
     };
-
-    const name = String(data.name ?? "");
-    const email = String(data.email ?? "");
-    const category = String(data.category ?? "");
-    const message = String(data.message ?? "");
-
     try {
-      if (web3formsKey) {
-        const response = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            access_key: web3formsKey,
-            subject: `【AMALINK】お問い合わせ (${category})`,
-            name,
-            email,
-            message: [
-              `カテゴリ: ${category}`,
-              `お名前: ${name}`,
-              `返信先メール: ${email}`,
-              ``,
-              `お問い合わせ内容:`,
-              message.trim() || "(未入力)",
-            ].join("\n"),
-          }),
-        });
-
-        const json = (await response.json()) as { success?: boolean };
-        if (response.ok && json.success) {
-          setStatus("success");
-        } else {
-          setStatus("error");
-        }
-      } else if (contactEndpoint) {
-        const response = await fetch(contactEndpoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-
-        if (response.ok) {
-          setStatus("success");
-        } else {
-          setStatus("error");
-        }
-      } else {
-        const subject = encodeURIComponent(`【AMALINK】お問い合わせ: ${name}`);
-        const body = encodeURIComponent(
-          `カテゴリ: ${category}\n名前: ${name}\nメール: ${email}\n\n${message}`
-        );
-        window.location.href = `mailto:${NOTIFY_EMAIL}?subject=${subject}&body=${body}`;
-        setStatus("success");
-      }
-    } catch (error) {
-      console.error(error);
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = (await res.json().catch(() => ({}))) as { ok?: boolean };
+      setStatus(res.ok && json.ok ? "success" : "error");
+    } catch {
       setStatus("error");
+    } finally {
+      // トークンは1回限り。再送できるようにリセット
+      setToken("");
+      if (widgetId.current) window.turnstile?.reset(widgetId.current);
     }
   }
 
   return (
     <main className="min-h-screen bg-slate-50 relative overflow-hidden">
+        <Script
+            src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+            strategy="lazyOnload"
+            onReady={() => setScriptReady(true)}
+        />
         <Header />
         
         {/* Background Elements */}
@@ -140,7 +137,7 @@ export default function ContactPage() {
                             </ChunkyNextLink>
                         </div>
                     ) : (
-                        <form onSubmit={handleSubmit} className="space-y-8">
+                        <form onSubmit={handleSubmit} className="relative space-y-8">
                             {/* お問い合わせ項目 (Category) */}
                             <div>
                                 <label htmlFor="category" className="block text-sm font-bold text-slate-700 mb-3">
@@ -208,12 +205,20 @@ export default function ContactPage() {
                                 />
                             </div>
 
+                            {/* ハニーポット（人には見えない欄） */}
+                            <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+                                <label htmlFor="website">ウェブサイト</label>
+                                <input type="text" id="website" name="website" tabIndex={-1} autoComplete="off" />
+                            </div>
+
+                            <div ref={widgetEl} className="flex min-h-[65px] justify-center" />
+
                             <div className="pt-4 text-center">
                                 <ChunkyButton
                                     type="submit"
                                     theme="primary"
                                     block
-                                    disabled={status === "submitting"}
+                                    disabled={status === "submitting" || !token}
                                     className="mx-auto w-full max-w-md md:inline-flex md:w-auto md:min-w-[280px]"
                                 >
                                     {status === "submitting" ? "送信中..." : "上記の内容で送信する"}
@@ -222,7 +227,9 @@ export default function ContactPage() {
                             
                             {status === "error" && (
                                 <p className="text-red-500 text-center text-sm">
-                                    送信に失敗しました。お手数ですが、時間をおいて再度お試しください。
+                                    送信に失敗しました。お手数ですが、時間をおいて再度お試しいただくか、
+                                    <a href={`mailto:${NOTIFY_EMAIL}`} className="underline">{NOTIFY_EMAIL}</a>
+                                    へ直接メールでご連絡ください。
                                 </p>
                             )}
                         </form>
