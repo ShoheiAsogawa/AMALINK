@@ -5,7 +5,7 @@ import { checkChatRateLimit, getClientIp, isAllowedChatOrigin } from "@/lib/chat
 export const runtime = "nodejs";
 
 /** 通知先（Cloudflare の確認済み宛先に登録しておく必要あり） */
-const NOTIFY_EMAIL = "uken.shohei@gmail.com";
+const NOTIFY_EMAIL = "s_asogawa@amalink.co.jp";
 /** 送信元（Email Sending に登録したドメインのアドレス） */
 const FROM_EMAIL = "noreply@amalink.co.jp";
 const TURNSTILE_ACTION = "contact";

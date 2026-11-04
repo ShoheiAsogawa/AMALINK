@@ -8,7 +8,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ChunkyButton, ChunkyNextLink } from "@/components/ui/ChunkyButton";
 
-const NOTIFY_EMAIL = "uken.shohei@gmail.com";
+const NOTIFY_EMAIL = "s_asogawa@amalink.co.jp";
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
 type TurnstileApi = {
