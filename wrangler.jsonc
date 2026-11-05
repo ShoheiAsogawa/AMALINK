@@ -36,7 +36,8 @@
   "send_email": [
     {
       "name": "EMAIL",
-      "destination_address": "s_asogawa@amalink.co.jp"
+      "destination_address": "s_asogawa@amalink.co.jp",
+      "allowed_sender_addresses": ["noreply@send.amalink.co.jp"]
     }
   ],
   "vars": {

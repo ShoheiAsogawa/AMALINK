@@ -7,7 +7,7 @@ export const runtime = "nodejs";
 /** 通知先（Cloudflare の確認済み宛先に登録しておく必要あり） */
 const NOTIFY_EMAIL = "s_asogawa@amalink.co.jp";
 /** 送信元（Email Sending に登録したドメインのアドレス） */
-const FROM_EMAIL = "noreply@amalink.co.jp";
+const FROM_EMAIL = "noreply@send.amalink.co.jp";
 const TURNSTILE_ACTION = "contact";
 const MAX_BODY_BYTES = 12_000;
 const LIMITS = { name: 100, email: 254, category: 60, message: 4000 } as const;
@@ -152,7 +152,7 @@ export async function POST(request: Request) {
   try {
     await env.EMAIL.send({
       to: NOTIFY_EMAIL,
-      from: { email: FROM_EMAIL, name: "AMALINK お問い合わせフォーム" },
+      from: { email: FROM_EMAIL, name: "AMALINK お問い合わせ" },
       replyTo: email,
       subject: `【AMALINK】お問い合わせ (${category})`,
       text: [
