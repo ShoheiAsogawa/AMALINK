@@ -33,6 +33,16 @@
       "database_id": "0313d233-e7bc-4b95-b4a3-96796e56e0d5"
     }
   ],
+  "send_email": [
+    {
+      "name": "EMAIL",
+      "destination_address": "s_asogawa@amalink.co.jp",
+      "allowed_sender_addresses": ["noreply@send.amalink.co.jp"]
+    }
+  ],
+  "vars": {
+    "TURNSTILE_HOSTNAMES": "amalink.co.jp,www.amalink.co.jp"
+  },
   "images": {
     "binding": "IMAGES"
   }
