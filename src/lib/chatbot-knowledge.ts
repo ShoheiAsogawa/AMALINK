@@ -50,6 +50,7 @@ export const COLUMN_ARTICLES = [
   { title: "llms.txtとは？置くと何が変わるのか、Googleの公式見解から考える（GEO・SEO対策）", keys: ["llms.txt", "AI向け案内ファイル", "llmsファイル"] },
   { title: "AI検索に正しく引用されるGEO・SEO対策｜会社情報・構造化データとSearch Consoleの設定", keys: ["構造化データ", "構造化", "json-ld", "jsonld", "search console", "searchconsole", "サーチコンソール", "サチコ", "正しく引用", "引用される", "リッチリザルト"] },
   { title: "AI検索で自社はどう紹介されている？GEO・SEO対策の前にできる確認方法と直し方", keys: ["どう紹介されて", "どう紹介され", "紹介のされ方", "aiの答えが間違", "aiの答えの間違", "aiが間違", "間違って紹介", "aiでの紹介"] },
+  { title: "GEOとは？AI検索で会社の情報が見つかる仕組みと、最初にやること（GEO・SEO対策）", keys: ["geoとは", "生成エンジン最適化", "出るようにするには", "答えに使われやすく"] },
   { title: "GoogleのAI検索でお店の公式サイトは選ばれる？2026年10月の更新と、奄美の小さな会社のGEO・SEO対策", keys: ["ai検索", "aiモード", "ai overview", "geo"] },
   { title: "AIで書いた記事はSEOで不利？Googleの公式見解と、評価される使い方（GEO・SEO対策）", keys: ["aiで書いた", "aiで記事", "ai記事", "ai生成コンテンツ", "スパムポリシー"] },
   { title: "RAGとは？AIに自社の資料を見て答えさせる仕組みをやさしく解説（AIチャットボット）", keys: ["rag", "検索拡張生成", "検索拡張", "自社の資料"] },
