@@ -337,6 +337,21 @@
       <label class="field">カテゴリ
         <select id="category"></select>
       </label>
+      <div id="genre-wrap" class="hidden">
+        <h3>ジャンル</h3>
+        <label class="field">コラムのジャンル
+          <select id="genre">
+            <option value="">自動（タイトルから判定）</option>
+            <option value="ai-search-seo">AI検索・SEO</option>
+            <option value="ai-usage">AI活用・導入</option>
+            <option value="ai-basics">AIの基礎知識</option>
+            <option value="ai-chatbot">AIチャットボット</option>
+            <option value="security">セキュリティ・詐欺対策</option>
+            <option value="web-production">ホームページ制作</option>
+          </select>
+        </label>
+        <p class="hint">カテゴリは「コラム」のままです。ジャンルは一覧の分け方だけに使います。空欄ならタイトルから自動で入ります。</p>
+      </div>
       <div class="row">
         <input id="new-category" placeholder="カテゴリを追加" />
         <button class="btn-ghost" id="add-category" type="button">追加</button>
@@ -492,7 +507,7 @@
     }
 
     function blankPost() {
-      return { id: null, title: "", slug: "", content: "", categoryId: state.categories[0]?.id || "", status: "draft", publishedAt: today() + "T00:00:00.000Z", coverUrl: "", coverAlt: "", description: "", kind: state.desk };
+      return { id: null, title: "", slug: "", content: "", categoryId: state.categories[0]?.id || "", status: "draft", publishedAt: today() + "T00:00:00.000Z", coverUrl: "", coverAlt: "", description: "", kind: state.desk, genre: "" };
     }
 
     function currentDraft() {
@@ -507,6 +522,7 @@
         coverUrl: $("cover").value.trim(),
         coverAlt: $("cover-alt").value.trim(),
         description: $("description").value.trim(),
+        genre: state.kind === "column" ? $("genre").value : "",
       };
     }
 
@@ -529,6 +545,7 @@
       $("kind-hint").textContent = state.kind === "column"
         ? "コラムは /column に、サムネイル付きのカードで出ます。"
         : "お知らせは /news とトップの一覧に出ます。サムネイルも並びます。";
+      $("genre-wrap").classList.toggle("hidden", state.kind !== "column");
     }
 
     function prettyHtml(html) {
@@ -559,6 +576,7 @@
       $("description").value = post.description || "";
       $("published-at").value = (post.publishedAt || "").slice(0, 10) || today();
       $("category").value = post.categoryId || "";
+      $("genre").value = post.genre || "";
       state.kind = kindOf(post);
       state.desk = state.kind;
       document.querySelectorAll("#status-seg button").forEach((button) => {
@@ -849,7 +867,7 @@
       setPane(button.dataset.pane);
     });
 
-    ["title", "slug", "content", "cover", "cover-alt", "description", "published-at", "category"].forEach((id) => {
+    ["title", "slug", "content", "cover", "cover-alt", "description", "published-at", "category", "genre"].forEach((id) => {
       $(id).addEventListener("input", () => {
         if (id === "title") resizeTitle();
         if (id === "content") rememberCaret();

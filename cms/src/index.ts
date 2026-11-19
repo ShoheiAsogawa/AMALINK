@@ -1,5 +1,6 @@
 import adminHtml from "./admin.html";
 import seed from "../seed/news.json";
+import { inferColumnGenre, isColumnGenreId } from "../../src/lib/column-genre";
 
 type SeedPost = {
   id: string;
@@ -65,6 +66,7 @@ type PostRow = {
   kind: string | null;
   cover_alt: string | null;
   description: string | null;
+  genre: string | null;
   category_title?: string | null;
 };
 
@@ -141,7 +143,8 @@ async function ensureReady(env: Env) {
             cover_url TEXT,
             kind TEXT NOT NULL DEFAULT 'news',
             cover_alt TEXT,
-            description TEXT
+            description TEXT,
+            genre TEXT
           )`,
         ),
         env.DB.prepare(
@@ -174,6 +177,7 @@ async function ensureReady(env: Env) {
       if (!names.has("kind")) alters.push(env.DB.prepare("ALTER TABLE posts ADD COLUMN kind TEXT NOT NULL DEFAULT 'news'"));
       if (!names.has("cover_alt")) alters.push(env.DB.prepare("ALTER TABLE posts ADD COLUMN cover_alt TEXT"));
       if (!names.has("description")) alters.push(env.DB.prepare("ALTER TABLE posts ADD COLUMN description TEXT"));
+      if (!names.has("genre")) alters.push(env.DB.prepare("ALTER TABLE posts ADD COLUMN genre TEXT"));
       if (alters.length) await env.DB.batch(alters);
 
       const count = await env.DB.prepare("SELECT COUNT(*) AS n FROM posts").first<{ n: number }>();
@@ -332,9 +336,9 @@ async function savePost(request: Request, env: Env, existingId: string | null) {
   const coverUrl = (body.coverUrl ?? "").trim() || null;
   // 送られてこなかった項目は、今の値を残す（管理画面の版によって送る項目が違っても消えないように）
   const existing = existingId
-    ? await env.DB.prepare("SELECT kind, cover_alt, description FROM posts WHERE id = ?")
+    ? await env.DB.prepare("SELECT kind, cover_alt, description, genre FROM posts WHERE id = ?")
         .bind(existingId)
-        .first<{ kind: string | null; cover_alt: string | null; description: string | null }>()
+        .first<{ kind: string | null; cover_alt: string | null; description: string | null; genre: string | null }>()
     : null;
   const kind =
     body.kind === undefined || body.kind === null ? (existing?.kind === "column" ? "column" : "news") : body.kind === "column" ? "column" : "news";
@@ -344,6 +348,7 @@ async function savePost(request: Request, env: Env, existingId: string | null) {
     body.description === undefined
       ? (existing?.description ?? null)
       : (body.description ?? "").replace(/\s+/g, " ").trim().slice(0, 200) || null;
+  const genre = resolvePostGenre(kind, title, slug, body.genre, existing?.genre);
 
   const dup = await env.DB.prepare("SELECT id FROM posts WHERE slug = ? AND id != ?")
     .bind(slug, id)
@@ -356,19 +361,19 @@ async function savePost(request: Request, env: Env, existingId: string | null) {
     await env.DB.prepare(
       `UPDATE posts
        SET slug = ?, title = ?, content_html = ?, category_id = ?, status = ?, published_at = ?, updated_at = ?, cover_url = ?,
-           kind = ?, cover_alt = ?, description = ?
+           kind = ?, cover_alt = ?, description = ?, genre = ?
        WHERE id = ?`,
     )
-      .bind(slug, title, content, categoryId, status, publishedAt, now, coverUrl, kind, coverAlt, description, existingId)
+      .bind(slug, title, content, categoryId, status, publishedAt, now, coverUrl, kind, coverAlt, description, genre, existingId)
       .run();
     return json({ post: await getAdminPost(env, existingId) });
   }
 
   await env.DB.prepare(
-    `INSERT INTO posts (id, slug, title, content_html, category_id, status, published_at, created_at, updated_at, cover_url, kind, cover_alt, description)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO posts (id, slug, title, content_html, category_id, status, published_at, created_at, updated_at, cover_url, kind, cover_alt, description, genre)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   )
-    .bind(id, slug, title, content, categoryId, status, publishedAt, now, now, coverUrl, kind, coverAlt, description)
+    .bind(id, slug, title, content, categoryId, status, publishedAt, now, now, coverUrl, kind, coverAlt, description, genre)
     .run();
   return json({ post: await getAdminPost(env, id) }, 201);
 }
@@ -585,8 +590,21 @@ async function isAuthed(request: Request, env: Env) {
 }
 
 function postSelect() {
-  return `SELECT p.id, p.slug, p.title, p.content_html, p.category_id, p.status, p.published_at, p.created_at, p.updated_at, p.cover_url, p.kind, p.cover_alt, p.description, c.title AS category_title
+  return `SELECT p.id, p.slug, p.title, p.content_html, p.category_id, p.status, p.published_at, p.created_at, p.updated_at, p.cover_url, p.kind, p.cover_alt, p.description, p.genre, c.title AS category_title
           FROM posts p LEFT JOIN categories c ON c.id = p.category_id`;
+}
+
+function resolvePostGenre(
+  kind: string,
+  title: string,
+  slug: string,
+  incoming: string | null | undefined,
+  existing: string | null | undefined,
+): string | null {
+  if (kind !== "column") return null;
+  if (isColumnGenreId(incoming)) return incoming;
+  if (incoming === undefined && isColumnGenreId(existing)) return existing;
+  return inferColumnGenre(title, slug);
 }
 
 function postKind(kind: string | null | undefined) {
@@ -611,6 +629,7 @@ function toPublic(row: PostRow) {
     coverAlt: row.cover_alt,
     kind: postKind(row.kind),
     category: row.category_id ? [{ id: row.category_id, title: row.category_title ?? "お知らせ" }] : [],
+    genre: isColumnGenreId(row.genre) ? row.genre : null,
   };
 }
 
@@ -630,6 +649,7 @@ function toAdmin(row: PostRow) {
     kind: postKind(row.kind),
     coverAlt: row.cover_alt,
     description: row.description,
+    genre: isColumnGenreId(row.genre) ? row.genre : null,
     publicUrl: publicPath(postKind(row.kind), row.slug),
   };
 }
@@ -650,6 +670,7 @@ type PostInput = {
   kind?: string | null;
   coverAlt?: string | null;
   description?: string | null;
+  genre?: string | null;
 };
 
 function sanitizeHtml(html: string) {
