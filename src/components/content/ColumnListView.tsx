@@ -93,12 +93,12 @@ export function ColumnListView({
                         )}
                       </div>
                       <div className="flex flex-1 flex-col px-3 py-3 sm:px-4 sm:py-4">
-                        <div className="mb-1.5 flex items-center gap-1.5 overflow-hidden">
-                          <time className="shrink-0 font-sans text-[10px] text-slate-400 tabular-nums sm:text-xs">
+                        <div className="mb-1.5 flex flex-col items-start gap-1 sm:flex-row sm:items-center sm:gap-1.5">
+                          <time className="font-sans text-[10px] text-slate-400 tabular-nums sm:text-xs">
                             {formatNewsDate(item.publishedAt ?? item.createdAt)}
                           </time>
                           {itemGenre && !activeGenre ? (
-                            <span className="hidden min-w-0 truncate rounded-full bg-amami-blue-light/50 px-2 py-0.5 font-sans text-[10px] tracking-wide text-amami-blue sm:inline-block">
+                            <span className="max-w-full rounded-full bg-amami-blue-light/50 px-2 py-0.5 font-sans text-[10px] leading-snug tracking-wide text-amami-blue">
                               {itemGenre.label}
                             </span>
                           ) : null}
