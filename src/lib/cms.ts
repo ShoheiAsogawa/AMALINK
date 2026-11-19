@@ -22,6 +22,11 @@ export type News = {
   description?: string | null;
   /** カバー画像の説明（alt） */
   coverAlt?: string | null;
+  /**
+   * コラムのジャンル（CMSカテゴリとは別）。
+   * 未設定や未知の値のときはフロントでタイトルから判定する。
+   */
+  genre?: string | null;
 };
 
 type SeedPost = (typeof seed.posts)[number];

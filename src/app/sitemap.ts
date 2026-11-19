@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getColumnList, getNewsList } from "@/lib/cms";
+import { COLUMN_GENRES, columnGenrePath } from "@/lib/column-genre";
 import { absoluteUrl } from "@/lib/seo";
 import { DEFAULT_LOCALE, LOCALES, localizedPath } from "@/lib/i18n-config";
 
@@ -28,7 +29,8 @@ const HIGH_PRIORITY = new Set<string>([
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const staticPaths = ["", ...SERVICE_PATHS, "/about", "/faq", "/news", "/column", "/contact"] as const;
+  const genrePaths = COLUMN_GENRES.map((genre) => columnGenrePath(genre.id));
+  const staticPaths = ["", ...SERVICE_PATHS, "/about", "/faq", "/news", "/column", ...genrePaths, "/contact"] as const;
 
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => {
     const isHome = path === "";
