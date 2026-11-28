@@ -20,6 +20,25 @@ type UiMessage = {
 };
 
 const OPEN_EVENT = "amalink-open-chat";
+
+/** 返答の中のコラム記事URL（https://amalink.co.jp/column/…）だけをリンクにする */
+const COLUMN_URL_RE = /(https:\/\/amalink\.co\.jp\/column\/[A-Za-z0-9._~-]+)/g;
+
+function renderReply(content: string) {
+  return content.split(COLUMN_URL_RE).map((part, i) =>
+    i % 2 === 1 ? (
+      <a
+        key={i}
+        href={part}
+        className="break-all text-amami-blue underline underline-offset-2"
+      >
+        {part}
+      </a>
+    ) : (
+      part
+    ),
+  );
+}
 /** クライアント側の連打防止（秒） */
 const CLIENT_SEND_COOLDOWN_MS = 1500;
 const CLIENT_MAX_USER_MESSAGES = 30;
@@ -248,13 +267,13 @@ export function AmalinkChatbot() {
                 >
                   <div
                     className={cn(
-                      "rounded-2xl px-3.5 py-2.5 font-sans text-sm leading-relaxed",
+                      "whitespace-pre-line rounded-2xl px-3.5 py-2.5 font-sans text-sm leading-relaxed",
                       m.role === "user"
                         ? "bg-amami-blue text-white"
                         : "border border-slate-100 bg-white text-slate-700 shadow-sm",
                     )}
                   >
-                    {m.content}
+                    {m.role === "assistant" ? renderReply(m.content) : m.content}
                   </div>
                   {m.role === "assistant" && m.showContactLink && (
                     <Link

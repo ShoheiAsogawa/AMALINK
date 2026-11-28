@@ -26,64 +26,64 @@ export const CONTACT_INFO =
   "お問い合わせフォーム（お問い合わせページ。項目はAIコンサルティング・ホームページ制作・システム開発・デザイン・GEO・SEO対策・その他）と、公式LINE（サイト上部メニューとページ下部の「公式LINE」ボタン）の2つ。内容が固まっていなくても相談できる。返信は通常2営業日以内。";
 
 export const COLUMN_ARTICLES = [
-  { title: "AI導入の効果はどう測る？ChatGPTを入れる前と後で比べる「時間と手間」の記録の取り方（AI導入・AIコンサルティング）", keys: ["効果を測る", "効果の測り方", "前と後で比べる", "記録の表", "手直しの手間"] },
-  { title: "社員が個人のAIアカウントで仕事をしていたら？「シャドーAI」とは｜会社のアカウントへ移す手順（AI導入・AIコンサルティング）", keys: ["シャドーai", "個人のaiアカウント", "会社のアカウントへ移す", "個人用ワークスペース", "個人のアカウントで仕事"] },
-  { title: "AIに毎週の仕事を任せるには？Grok Botのルーティンで決めておくこと（AI導入・AIコンサルティング）", keys: ["ルーティン", "毎週の仕事を任せる", "定期の作業", "下書きで止める", "決まった時間に動かす"] },
-  { title: "AIエージェントがメールの中の指示にだまされる？「プロンプトインジェクション」とは｜会社で使う前の守り方（AI導入・AIコンサルティング）", keys: ["インジェクション", "隠れた指示", "メールの中の指示", "ロックダウンモード", "aiがだまされる"] },
-  { title: "Claude Codeの「スキル」とは？社内の手順書をAIに覚えさせて、毎回同じ品質で動かす方法（AI導入・AIコンサルティング）", keys: ["skill.md", "手順書をスキルに", "スキルを育てる", "スキルの置き場所", "毎回同じ品質"] },
-  { title: "AIにメールや予定を任せる前に決めること｜社内のアカウントをつなぐときの「権限」のルール（AI導入・AIコンサルティング）", keys: ["アカウントをつなぐ", "読むだけと送るまで", "権限の3段階", "gmailをつなぐ", "接続を解除"] },
-  { title: "Claude CodeとChatGPTはどう使い分ける？会社の仕事ごとに見る選び方（AI導入・AIコンサルティング）", keys: ["会社の仕事ごと", "両方を入れる順番", "文章づくりとコード修正", "資料づくりと開発", "業務ごとのツール選び"] },
-  { title: "ChatGPTの会社向けプランはどう選ぶ？個人向けとの違いと、契約前に確かめること（AI導入・AIコンサルティング）", keys: ["chatgpt business", "chatgpt enterprise", "会社向けプラン", "個人向けとの違い", "契約前に確かめる"] },
-  { title: "Grok Botのような「仕事を任せられるAI」とは？AIエージェントを会社に入れる前に考えること（AI導入・AIコンサルティング）", keys: ["仕事を任せられるai", "grok bot", "任せる範囲", "人が承認するタイミング", "小さな業務から試す"] },
-  { title: "ChatGPTを会社で使うなら？個人の使い方と会社の使い方の違いと、導入前に決めるルール（AI導入・AIコンサルティング）", keys: ["chatgptを会社で使う", "chatgptの社内導入", "個人向けと会社向け", "chatgptのプラン", "アカウントの管理"] },
-  { title: "Claude Codeとは？会社で使う前に経営者が決めておく5つのこと（AI導入・AIコンサルティング）", keys: ["claude code", "クロードコード", "ai開発ツール", "開発をaiに任せる", "経営者が決めておく"] },
-  { title: "Google検索が「過去最大」の更新｜長い質問も一度に聞ける新しいAIモードで、検索はどう変わる？", keys: ["過去最大の更新", "長い質問", "質問を分けて", "Google検索の新しいAI", "検索の新しいモデル", "条件をまとめて検索"] },
-  { title: "Google検索のAIモードで「お店の空席探し」が日本でも開始｜飲食店がいま確認しておきたいこと", keys: ["空席探し", "お店の空席", "飲食店の予約", "レストラン予約", "空席のあるお店"] },
-  { title: "AIに「公式サイトはどこ？」と聞いたら偽サイトだった？AIが案内するリンクの確かめ方（AI検索の安全対策）", keys: ["公式サイトはどこ", "AIが案内したリンク", "AIがすすめたサイト", "AIのリンク", "リンクの確かめ"] },
-  { title: "「警察庁推奨アプリを入れて」というSMSは偽物です｜ニセ警察詐欺から身を守るチェックリスト（スマホの詐欺対策）", keys: ["警察庁推奨アプリ", "ニセ警察", "偽警察", "警察を名乗る", "警察からのSMS"] },
-  { title: "ブラックフライデー前に確認！検索やSNSで見つけた「激安サイト」が偽物か見分ける方法（ネット通販の安全対策）", keys: ["偽サイト", "偽通販", "ブラックフライデー", "激安サイト", "偽物のサイト"] },
-  { title: "Outlookの脆弱性とは？ファイルを開くだけでなりすましの危険、11月の更新を「至急」入れる理由（パソコンのセキュリティ）", keys: ["outlook", "アウトルック", "office更新", "ファイルを開くだけ"] },
-  { title: "Googleの「11月のコアアップデート」とは？検索順位が動いたときに、慌てずやること（SEO対策）", keys: ["コアアップデート", "検索順位が動いた", "順位が下がった", "11月のアップデート"] },
-  { title: "AI検索診断とは？「地域と業種」で聞かれたときに自社が出るかを見る方法（GEO・SEO対策）", keys: ["検索診断", "地域と業種", "自社が出るか", "業種で聞かれた"] },
-  { title: "ChatGPTのビジネス掲載（Business Hub）とは？登録の前に知っておきたいこと（GEO・SEO対策）", keys: ["business hubとは", "ビジネスハブ", "chatgptのビジネス掲載", "chatgptに登録"] },
-  { title: "奄美大島でホームページ制作を頼む前に読むガイド", keys: ["ホームページ", "奄美"] },
-  { title: "ホームページ制作の費用は何で決まる？離島・地方の事業者向けに見積もりの見方を解説", keys: ["費用", "見積"] },
-  { title: "AIチャットボット導入ガイド（奄美・離島の中小企業向け）", keys: ["チャットボット"] },
-  { title: "AIコンサルティングで何を頼める？奄美・鹿児島の中小企業の生成AI導入支援", keys: ["生成ai", "aiコンサル", "ai導入"] },
-  { title: "ホームページ制作は自作（Wix・ペライチ等）と依頼のどちらがいい？奄美・離島の小さな事業者の判断基準", keys: ["自作", "wix", "ペライチ"] },
-  { title: "AI翻訳で多言語ホームページは作れる？検索で評価される作り方と注意点（ホームページ制作）", keys: ["ai翻訳", "多言語サイト", "多言語ページ", "hreflang", "サイト翻訳"] },
-  { title: "AIで作った画像はどう表示する？ホームページ・ネットショップで使うときのルール（ホームページ制作）", keys: ["iptc", "画像メタデータ", "ai生成画像の表示", "merchant center"] },
-  { title: "AIコンサルティングの前に知りたい、奄美・離島の小さな会社のAI活用｜中小企業は何から始める？", keys: ["ai活用", "何から", "始め方"] },
-  { title: "AI画像生成の著作権とは？仕事で使う前に知りたい3つの注意点（AIコンサルティング）", keys: ["ai画像", "画像生成", "aiイラスト"] },
-  { title: "生成AIの社内ルール、何を決めればいい？中小企業が最初に整える情報漏えい・著作権対策", keys: ["社内ルール", "情報漏", "著作権"] },
-  { title: "少人数の会社でAIエージェントは使える？中小企業の業務活用の方法と注意点", keys: ["aiエージェント", "エージェント"] },
-  { title: "GEO・SEO対策の会社はどう選ぶ？「AIに必ず載る」という提案に注意したい理由", keys: ["geo対策の会社", "seo対策の会社", "geo業者", "seo業者", "aiに必ず載る", "必ず1位"] },
-  { title: "生成AIとは？仕組み・できること・苦手なことをやさしく解説（AIコンサルティング）", keys: ["生成aiとは", "生成aiって", "仕組み"] },
-  { title: "ディープフェイクとは？AIで作られた偽の画像・動画・音声の見分け方（AIコンサルティング）", keys: ["ディープフェイク", "deepfake", "偽動画", "偽音声"] },
-  { title: "AIを使った詐欺とは？なりすまし電話・偽メールから会社を守る確かめ方（AIコンサルティング）", keys: ["ai詐欺", "aiを使った詐欺", "ニセ社長詐欺", "ビジネスメール詐欺", "振込先変更"] },
-  { title: "ハルシネーションとは？AIがもっともらしい間違いをする理由と、仕事で困らない確かめ方（AIコンサルティング）", keys: ["ハルシネーション", "aiの間違い", "aiが嘘", "確かめ方"] },
-  { title: "AIで作った文章は見分けられる？判定ツールの限界と、書き手としての向き合い方（AIコンサルティング）", keys: ["ai文章判定", "ai判定ツール", "aiで作った文章", "ai文章見分け"] },
-  { title: "AI事業者ガイドラインとは？AIを使うだけの会社が押さえる「利用者」のポイント（AIコンサルティング）", keys: ["ai事業者ガイドライン", "事業者ガイドライン", "aiガイドライン国", "総務省aiガイドライン", "経産省aiガイドライン"] },
-  { title: "AIクローラーとは？ホームページをAIに読ませるか断るかをrobots.txtで決める方法（GEO・SEO対策）", keys: ["aiクローラー", "クローラー", "robots.txt", "robots", "gptbot", "google-extended", "oai-searchbot", "aiに読ませ", "学習に使われ"] },
-  { title: "地域SEOのキーワードの選び方｜「奄美 ○○」で探される言葉とページへの入れ方（GEO・SEO対策）", keys: ["地域seo", "ローカルseo", "キーワードの選び方", "キーワード選び", "検索キーワード", "キーワード", "地域名"] },
-  { title: "GEO・SEO対策の第一歩、Googleビジネスプロフィールの整え方｜店舗・宿が地図とAI検索で見つかるために", keys: ["ビジネスプロフィール", "gbp", "googleマップ", "グーグルマップ", "マップ", "地図", "meo", "オーナー確認"] },
-  { title: "llms.txtとは？置くと何が変わるのか、Googleの公式見解から考える（GEO・SEO対策）", keys: ["llms.txt", "AI向け案内ファイル", "llmsファイル"] },
-  { title: "AI検索に正しく引用されるGEO・SEO対策｜会社情報・構造化データとSearch Consoleの設定", keys: ["構造化データ", "構造化", "json-ld", "jsonld", "search console", "searchconsole", "サーチコンソール", "サチコ", "正しく引用", "引用される", "リッチリザルト"] },
-  { title: "AI検索で自社はどう紹介されている？GEO・SEO対策の前にできる確認方法と直し方", keys: ["どう紹介されて", "どう紹介され", "紹介のされ方", "aiの答えが間違", "aiの答えの間違", "aiが間違", "間違って紹介", "aiでの紹介"] },
-  { title: "GEOとは？AI検索で会社の情報が見つかる仕組みと、最初にやること（GEO・SEO対策）", keys: ["geoとは", "生成エンジン最適化", "出るようにするには", "答えに使われやすく"] },
-  { title: "GoogleのAI検索でお店の公式サイトは選ばれる？2026年10月の更新と、奄美の小さな会社のGEO・SEO対策", keys: ["ai検索", "aiモード", "ai overview", "geo"] },
-  { title: "AIで書いた記事はSEOで不利？Googleの公式見解と、評価される使い方（GEO・SEO対策）", keys: ["aiで書いた", "aiで記事", "ai記事", "ai生成コンテンツ", "スパムポリシー"] },
-  { title: "RAGとは？AIに自社の資料を見て答えさせる仕組みをやさしく解説（AIチャットボット）", keys: ["rag", "検索拡張生成", "検索拡張", "自社の資料"] },
-  { title: "ローカルLLMとは？クラウドのAIとの違いと、向いている使い方（システム開発）", keys: ["ローカルllm", "ローカルai", "社内で動くai", "手元で動くai"] },
-  { title: "マルチモーダルAIとは？写真・音声・文字をまとめて扱うAIで仕事はどう変わる？（AIコンサルティング）", keys: ["マルチモーダル", "multimodal", "写真を見せて", "画像と音声"] },
-  { title: "AIアバターで接客はできる？キャラクター型AIチャットボットのメリットと注意点", keys: ["aiアバター", "アバター", "キャラクター"] },
-  { title: "AIチャットボットを公式LINEにつなぐと何が変わる？奄美のお店・宿の問い合わせ対応の悩みを減らす方法", keys: ["lineのai", "lineにai", "line ai", "lineの自動"] },
-  { title: "生成AIのプロンプトの書き方｜思った答えが返ってこない悩みを減らす5つのコツと仕事の例文", keys: ["プロンプト", "指示文"] },
-  { title: "観光業で生成AIはどう使う？奄美の宿・体験事業者が問い合わせ返信・多言語案内・口コミ返信を時短する方法", keys: ["観光業", "口コミ返信", "多言語案内"] },
-  { title: "AIチャットボットとよくある質問ページ、どちらから作る？問い合わせ対応の悩み別の選び方", keys: ["よくある質問ページ", "どちらから作る", "使い分け"] },
-  { title: "観光客がAIで調べる時代のGEO対策｜奄美の宿・体験・飲食店が選ばれる情報の出し方", keys: ["観光のgeo", "観光のai検索", "旅行者"] },
-  { title: "プログラミング言語の脆弱性まとめ【2026年10月】Node.js・Java・Python・Ruby・Goの修正版と自社でやること", keys: ["言語の脆弱性", "脆弱性まとめ", "node.js", "nodejs", "java", "python", "ruby", "go言語", "golang"] },
-  { title: "PHPの脆弱性（PHP2Shell）とは？自社サイトが影響を受けるかの確かめ方と対策【2026年10月】", keys: ["php2shell", "phpの脆弱性", "php", "脆弱性"] },
+  { slug: "ai-donyu-kouka-hakarikata", title: "AI導入の効果はどう測る？ChatGPTを入れる前と後で比べる「時間と手間」の記録の取り方（AI導入・AIコンサルティング）", keys: ["効果を測る", "効果の測り方", "前と後で比べる", "記録の表", "手直しの手間"] },
+  { slug: "shadow-ai-taisaku", title: "社員が個人のAIアカウントで仕事をしていたら？「シャドーAI」とは｜会社のアカウントへ移す手順（AI導入・AIコンサルティング）", keys: ["シャドーai", "個人のaiアカウント", "会社のアカウントへ移す", "個人用ワークスペース", "個人のアカウントで仕事"] },
+  { slug: "ai-teiki-shigoto-routine", title: "AIに毎週の仕事を任せるには？Grok Botのルーティンで決めておくこと（AI導入・AIコンサルティング）", keys: ["ルーティン", "毎週の仕事を任せる", "定期の作業", "下書きで止める", "決まった時間に動かす"] },
+  { slug: "prompt-injection-towa", title: "AIエージェントがメールの中の指示にだまされる？「プロンプトインジェクション」とは｜会社で使う前の守り方（AI導入・AIコンサルティング）", keys: ["インジェクション", "隠れた指示", "メールの中の指示", "ロックダウンモード", "aiがだまされる"] },
+  { slug: "claude-code-skills-tejunsho", title: "Claude Codeの「スキル」とは？社内の手順書をAIに覚えさせて、毎回同じ品質で動かす方法（AI導入・AIコンサルティング）", keys: ["skill.md", "手順書をスキルに", "スキルを育てる", "スキルの置き場所", "毎回同じ品質"] },
+  { slug: "ai-agent-account-kengen", title: "AIにメールや予定を任せる前に決めること｜社内のアカウントをつなぐときの「権限」のルール（AI導入・AIコンサルティング）", keys: ["アカウントをつなぐ", "読むだけと送るまで", "権限の3段階", "gmailをつなぐ", "接続を解除"] },
+  { slug: "claude-code-chatgpt-tsukaiwake", title: "Claude CodeとChatGPTはどう使い分ける？会社の仕事ごとに見る選び方（AI導入・AIコンサルティング）", keys: ["会社の仕事ごと", "両方を入れる順番", "文章づくりとコード修正", "資料づくりと開発", "業務ごとのツール選び"] },
+  { slug: "chatgpt-business-plan-erabikata", title: "ChatGPTの会社向けプランはどう選ぶ？個人向けとの違いと、契約前に確かめること（AI導入・AIコンサルティング）", keys: ["chatgpt business", "chatgpt enterprise", "会社向けプラン", "個人向けとの違い", "契約前に確かめる"] },
+  { slug: "ai-agent-company-introduction", title: "Grok Botのような「仕事を任せられるAI」とは？AIエージェントを会社に入れる前に考えること（AI導入・AIコンサルティング）", keys: ["仕事を任せられるai", "grok bot", "任せる範囲", "人が承認するタイミング", "小さな業務から試す"] },
+  { slug: "chatgpt-company-rules", title: "ChatGPTを会社で使うなら？個人の使い方と会社の使い方の違いと、導入前に決めるルール（AI導入・AIコンサルティング）", keys: ["chatgptを会社で使う", "chatgptの社内導入", "個人向けと会社向け", "chatgptのプラン", "アカウントの管理"] },
+  { slug: "claude-code-company-introduction", title: "Claude Codeとは？会社で使う前に経営者が決めておく5つのこと（AI導入・AIコンサルティング）", keys: ["claude code", "クロードコード", "ai開発ツール", "開発をaiに任せる", "経営者が決めておく"] },
+  { slug: "google-search-ai-mode-upgrade", title: "Google検索が「過去最大」の更新｜長い質問も一度に聞ける新しいAIモードで、検索はどう変わる？", keys: ["過去最大の更新", "長い質問", "質問を分けて", "Google検索の新しいAI", "検索の新しいモデル", "条件をまとめて検索"] },
+  { slug: "ai-mode-restaurant-booking", title: "Google検索のAIモードで「お店の空席探し」が日本でも開始｜飲食店がいま確認しておきたいこと", keys: ["空席探し", "お店の空席", "飲食店の予約", "レストラン予約", "空席のあるお店"] },
+  { slug: "ai-fake-site-recommendation", title: "AIに「公式サイトはどこ？」と聞いたら偽サイトだった？AIが案内するリンクの確かめ方（AI検索の安全対策）", keys: ["公式サイトはどこ", "AIが案内したリンク", "AIがすすめたサイト", "AIのリンク", "リンクの確かめ"] },
+  { slug: "fake-police-app-sms", title: "「警察庁推奨アプリを入れて」というSMSは偽物です｜ニセ警察詐欺から身を守るチェックリスト（スマホの詐欺対策）", keys: ["警察庁推奨アプリ", "ニセ警察", "偽警察", "警察を名乗る", "警察からのSMS"] },
+  { slug: "black-friday-fake-shop", title: "ブラックフライデー前に確認！検索やSNSで見つけた「激安サイト」が偽物か見分ける方法（ネット通販の安全対策）", keys: ["偽サイト", "偽通販", "ブラックフライデー", "激安サイト", "偽物のサイト"] },
+  { slug: "outlook-vulnerability-november-2026", title: "Outlookの脆弱性とは？ファイルを開くだけでなりすましの危険、11月の更新を「至急」入れる理由（パソコンのセキュリティ）", keys: ["outlook", "アウトルック", "office更新", "ファイルを開くだけ"] },
+  { slug: "google-core-update-november-2026", title: "Googleの「11月のコアアップデート」とは？検索順位が動いたときに、慌てずやること（SEO対策）", keys: ["コアアップデート", "検索順位が動いた", "順位が下がった", "11月のアップデート"] },
+  { slug: "ai-kensaku-shindan-towa", title: "AI検索診断とは？「地域と業種」で聞かれたときに自社が出るかを見る方法（GEO・SEO対策）", keys: ["検索診断", "地域と業種", "自社が出るか", "業種で聞かれた"] },
+  { slug: "chatgpt-business-hub-towa", title: "ChatGPTのビジネス掲載（Business Hub）とは？登録の前に知っておきたいこと（GEO・SEO対策）", keys: ["business hubとは", "ビジネスハブ", "chatgptのビジネス掲載", "chatgptに登録"] },
+  { slug: "amami-homepage-seisaku", title: "奄美大島でホームページ制作を頼む前に読むガイド｜費用の考え方・進め方・制作会社の選び方", keys: ["ホームページ", "奄美"] },
+  { slug: "homepage-seisaku-hiyou", title: "ホームページ制作の費用は何で決まる？離島・地方の事業者向けに「見積もりの見方」を解説", keys: ["費用", "見積"] },
+  { slug: "ai-chatbot-donyu", title: "AIチャットボット導入ガイド｜奄美・離島の中小企業が失敗しない選び方・費用の考え方・進め方", keys: ["チャットボット"] },
+  { slug: "seisei-ai-donyu-shien", title: "AIコンサルティングで何を頼める？奄美・鹿児島の中小企業の生成AI導入支援｜進め方と費用の考え方", keys: ["生成ai", "aiコンサル", "ai導入"] },
+  { slug: "homepage-jisaku-irai", title: "ホームページ制作は自作（Wix・ペライチ等）と依頼のどちらがいい？奄美・離島の小さな事業者の判断基準", keys: ["自作", "wix", "ペライチ"] },
+  { slug: "ai-honyaku-tagengo", title: "AI翻訳で多言語ホームページは作れる？検索で評価される作り方と注意点（ホームページ制作）", keys: ["ai翻訳", "多言語サイト", "多言語ページ", "hreflang", "サイト翻訳"] },
+  { slug: "ai-gazo-hyoji", title: "AIで作った画像はどう表示する？ホームページ・ネットショップで使うときのルール（ホームページ制作）", keys: ["iptc", "画像メタデータ", "ai生成画像の表示", "merchant center"] },
+  { slug: "ai-katsuyo-hajimekata", title: "AIコンサルティングの前に知りたい、奄美・離島の小さな会社のAI活用｜中小企業は何から始める？", keys: ["ai活用", "何から", "始め方"] },
+  { slug: "ai-gazo-chosakuken", title: "AI画像生成の著作権とは？仕事で使う前に知りたい3つの注意点（AIコンサルティング）", keys: ["ai画像", "画像生成", "aiイラスト"] },
+  { slug: "seisei-ai-shanai-rule", title: "生成AIの社内ルール、何を決めればいい？中小企業が最初に整える情報漏えい・著作権対策｜奄美・離島の小さな会社向け", keys: ["社内ルール", "情報漏", "著作権"] },
+  { slug: "ai-agent-gyomu-katsuyo", title: "少人数の会社でAIエージェントは使える？中小企業の業務活用の方法と注意点｜奄美・離島の小さな会社向けAIコンサルティングの視点", keys: ["aiエージェント", "エージェント"] },
+  { slug: "geo-taisaku-erabikata", title: "GEO・SEO対策の会社はどう選ぶ？「AIに必ず載る」という提案に注意したい理由", keys: ["geo対策の会社", "seo対策の会社", "geo業者", "seo業者", "aiに必ず載る", "必ず1位"] },
+  { slug: "seisei-ai-towa", title: "生成AIとは？仕組み・できること・苦手なことをやさしく解説（AIコンサルティング）", keys: ["生成aiとは", "生成aiって", "仕組み"] },
+  { slug: "deepfake-miwakekata", title: "ディープフェイクとは？AIで作られた偽の画像・動画・音声の見分け方（AIコンサルティング）", keys: ["ディープフェイク", "deepfake", "偽動画", "偽音声"] },
+  { slug: "ai-sagi-taisaku", title: "AIを使った詐欺とは？なりすまし電話・偽メールから会社を守る確かめ方（AIコンサルティング）", keys: ["ai詐欺", "aiを使った詐欺", "ニセ社長詐欺", "ビジネスメール詐欺", "振込先変更"] },
+  { slug: "hallucination-towa", title: "ハルシネーションとは？AIがもっともらしい間違いをする理由と、仕事で困らない確かめ方（AIコンサルティング）", keys: ["ハルシネーション", "aiの間違い", "aiが嘘", "確かめ方"] },
+  { slug: "ai-bunsho-miwakekata", title: "AIで作った文章は見分けられる？判定ツールの限界と、書き手としての向き合い方（AIコンサルティング）", keys: ["ai文章判定", "ai判定ツール", "aiで作った文章", "ai文章見分け"] },
+  { slug: "ai-jigyosha-guideline", title: "AI事業者ガイドラインとは？AIを使うだけの会社が押さえる「利用者」のポイント（AIコンサルティング）", keys: ["ai事業者ガイドライン", "事業者ガイドライン", "aiガイドライン国", "総務省aiガイドライン", "経産省aiガイドライン"] },
+  { slug: "ai-crawler-robots-txt", title: "AIクローラーとは？ホームページをAIに読ませるか断るかをrobots.txtで決める方法（GEO・SEO対策）", keys: ["aiクローラー", "クローラー", "robots.txt", "robots", "gptbot", "google-extended", "oai-searchbot", "aiに読ませ", "学習に使われ"] },
+  { slug: "chiiki-seo-keyword", title: "地域SEOのキーワードの選び方｜「奄美 ○○」で探される言葉とページへの入れ方（GEO・SEO対策）", keys: ["地域seo", "ローカルseo", "キーワードの選び方", "キーワード選び", "検索キーワード", "キーワード", "地域名"] },
+  { slug: "google-business-profile", title: "GEO・SEO対策の第一歩、Googleビジネスプロフィールの整え方｜店舗・宿が地図とAI検索で見つかるために", keys: ["ビジネスプロフィール", "gbp", "googleマップ", "グーグルマップ", "マップ", "地図", "meo", "オーナー確認"] },
+  { slug: "llms-txt-towa", title: "llms.txtとは？置くと何が変わるのか、Googleの公式見解から考える（GEO・SEO対策）", keys: ["llms.txt", "AI向け案内ファイル", "llmsファイル"] },
+  { slug: "ai-kensaku-kozoka-data", title: "AI検索に正しく引用されるGEO・SEO対策｜会社情報・構造化データとSearch Consoleの設定", keys: ["構造化データ", "構造化", "json-ld", "jsonld", "search console", "searchconsole", "サーチコンソール", "サチコ", "正しく引用", "引用される", "リッチリザルト"] },
+  { slug: "ai-kensaku-jisha-kakunin", title: "AI検索で自社はどう紹介されている？GEO・SEO対策の前にできる確認方法と直し方", keys: ["どう紹介されて", "どう紹介され", "紹介のされ方", "aiの答えが間違", "aiの答えの間違", "aiが間違", "間違って紹介", "aiでの紹介"] },
+  { slug: "geo-towa", title: "GEOとは？AI検索で会社の情報が見つかる仕組みと、最初にやること（GEO・SEO対策）", keys: ["geoとは", "生成エンジン最適化", "出るようにするには", "答えに使われやすく"] },
+  { slug: "google-ai-kensaku-koushiki-site", title: "GoogleのAI検索でお店の公式サイトは選ばれる？2026年10月の更新と、奄美の小さな会社のGEO・SEO対策", keys: ["ai検索", "aiモード", "ai overview", "geo"] },
+  { slug: "ai-content-seo", title: "AIで書いた記事はSEOで不利？Googleの公式見解と、評価される使い方（GEO・SEO対策）", keys: ["aiで書いた", "aiで記事", "ai記事", "ai生成コンテンツ", "スパムポリシー"] },
+  { slug: "rag-towa", title: "RAGとは？AIに自社の資料を見て答えさせる仕組みをやさしく解説（AIチャットボット）", keys: ["rag", "検索拡張生成", "検索拡張", "自社の資料"] },
+  { slug: "local-llm-towa", title: "ローカルLLMとは？クラウドのAIとの違いと、向いている使い方（システム開発）", keys: ["ローカルllm", "ローカルai", "社内で動くai", "手元で動くai"] },
+  { slug: "multimodal-ai-towa", title: "マルチモーダルAIとは？写真・音声・文字をまとめて扱うAIで仕事はどう変わる？（AIコンサルティング）", keys: ["マルチモーダル", "multimodal", "写真を見せて", "画像と音声"] },
+  { slug: "ai-avatar-sekkyaku", title: "AIアバターで接客はできる？キャラクター型AIチャットボットのメリットと注意点｜奄美・離島のお店や宿向け", keys: ["aiアバター", "アバター", "キャラクター"] },
+  { slug: "line-ai-chat", title: "AIチャットボットを公式LINEにつなぐと何が変わる？奄美のお店・宿の問い合わせ対応の悩みを減らす方法", keys: ["lineのai", "lineにai", "line ai", "lineの自動"] },
+  { slug: "prompt-kakikata", title: "生成AIのプロンプトの書き方｜思った答えが返ってこない悩みを減らす5つのコツと仕事の例文【AIコンサルティングの視点】", keys: ["プロンプト", "指示文"] },
+  { slug: "kanko-seisei-ai", title: "観光業で生成AIはどう使う？奄美の宿・体験事業者が問い合わせ返信・多言語案内・口コミ返信を時短する方法｜AIコンサルティングの視点", keys: ["観光業", "口コミ返信", "多言語案内"] },
+  { slug: "chatbot-faq-tsukaiwake", title: "AIチャットボットとよくある質問ページ、どちらから作る？問い合わせ対応の悩み別の選び方", keys: ["よくある質問ページ", "どちらから作る", "使い分け"] },
+  { slug: "kanko-ai-kensaku", title: "観光客がAIで調べる時代のGEO対策｜奄美の宿・体験・飲食店が選ばれる情報の出し方", keys: ["観光のgeo", "観光のai検索", "旅行者"] },
+  { slug: "gengo-zeijakusei-2026-10", title: "プログラミング言語の脆弱性まとめ【2026年10月】ホームページ制作・システム開発の視点で見る、Node.js・Java・Python・Ruby・Goの修正版と自社でやること", keys: ["言語の脆弱性", "脆弱性まとめ", "node.js", "nodejs", "java", "python", "ruby", "go言語", "golang"] },
+  { slug: "php-zeijakusei", title: "PHPの脆弱性（PHP2Shell）とは？ホームページ制作・保守の視点で見る、自社サイトが影響を受けるかの確かめ方と対策【2026年10月】", keys: ["php2shell", "phpの脆弱性", "php", "脆弱性"] },
 ] as const;
 
 export const NEWS_ITEMS = [
@@ -104,7 +104,7 @@ export const CHATBOT_SYSTEM_PROMPT = `あなたは「${CHATBOT_NAME}」です。
 2. それ以外は短く断る。例: ごめんね、くろうさは奄美群島とAMALINKのことしか話せないんだ。
 3. 知らないことや公式にない料金の断定はしない。料金は内容によるのでお問い合わせへ。
 4. 回答は簡潔に。基本は1〜3文。最大でも短い段落2つまで。
-5. マークダウンは禁止。見出し記号、太字、箇条書き記号（- * # \`）、リンク記法は使わない。普通の日本語の文章だけ。URLも本文に書かない。
+5. マークダウンは禁止。見出し記号、太字、箇条書き記号（- * # \`）、リンク記法は使わない。普通の日本語の文章だけ。URLも本文に書かない（コラム記事の題名とURLは、必要なときにサーバーが返答の末尾へ自動で付ける）。
 6. 絵文字は使わないか、多くても1つまで。
 7. 口調はやさしく親しみやすく。ですます調ベースで、ときどき「だよ」「ね」を使ってよい。
 8. 初回や挨拶には「うがみんしょうらん」を自然に使ってよい。
@@ -174,6 +174,93 @@ export function finalizeChatReply(
     hasMarker || (userNeeds && replyNeeds) || /お問い合わせ/.test(reply);
 
   return { reply, showContactLink };
+}
+
+/** コラム記事ページのURL（公開サイトの本番ドメイン） */
+export const COLUMN_BASE_URL = "https://amalink.co.jp/column";
+
+export type ColumnArticle = (typeof COLUMN_ARTICLES)[number];
+
+/**
+ * 単独では話題を決められないほど広いキー（「ホームページ」「費用」など）。
+ * これだけに当たったときは、質問に「コラム／記事／読み物」の語があるときだけ記事を付ける。
+ * 例: 「ホームページ制作の料金は？」に無関係な記事を付けない。
+ */
+const GENERIC_COLUMN_KEYS = new Set([
+  "ホームページ", "奄美", "費用", "見積", "チャットボット", "生成ai", "aiコンサル", "ai導入",
+  "自作", "ai活用", "何から", "始め方", "仕組み", "確かめ方", "使い分け", "aiエージェント",
+  "エージェント", "プロンプト", "指示文", "観光業", "旅行者", "キーワード", "地域名", "マップ",
+  "地図", "社内ルール", "情報漏", "著作権", "脆弱性", "php", "java", "python", "ruby", "go言語",
+  "golang", "node.js", "nodejs", "アバター", "キャラクター", "geo", "ai検索", "robots", "ai画像",
+  "画像生成", "サイト翻訳", "構造化", "wix", "ペライチ",
+].map((k) => k.toLowerCase()));
+
+const COLUMN_WORD_RE = /コラム|記事|読み物/;
+
+function bigrams(text: string): Set<string> {
+  const out = new Set<string>();
+  const t = text.replace(/[\s　、。！？!?「」『』（）()・｜|,.，．:：;；\-ー]/g, "");
+  for (let i = 0; i < t.length - 1; i++) out.add(t.slice(i, i + 2));
+  return out;
+}
+
+/**
+ * 質問に当たったコラム記事を返す（AIの出力には頼らない、サーバー側の判定）。
+ * 1) COLUMN_ARTICLES の keys が質問に含まれる記事を候補にする
+ * 2) 広すぎるキーだけに当たった記事は、質問に「コラム／記事／読み物」があるときだけ残す
+ * 3) 質問と題名・キーの2文字の重なりが多い順に並べ、同点の先頭だけ返す（最大2本）
+ */
+export function matchColumnArticles(userText: string): ColumnArticle[] {
+  const q = normalize(userText);
+  if (!q) return [];
+  const mentionsColumn = COLUMN_WORD_RE.test(userText);
+  const userGrams = bigrams(q);
+  const scored: { article: ColumnArticle; keyHits: number; overlap: number }[] = [];
+  for (const article of COLUMN_ARTICLES) {
+    const hits = article.keys.map(normalize).filter((k) => q.includes(k));
+    if (hits.length === 0) continue;
+    const specific = hits.some((k) => !GENERIC_COLUMN_KEYS.has(k));
+    if (!specific && !mentionsColumn) continue;
+    const hay = bigrams(normalize(`${article.title}${article.keys.join("")}`));
+    let overlap = 0;
+    for (const g of userGrams) if (hay.has(g)) overlap += 1;
+    scored.push({ article, keyHits: hits.filter((k) => !GENERIC_COLUMN_KEYS.has(k)).length, overlap });
+  }
+  if (scored.length === 0) return [];
+  scored.sort((a, b) => b.keyHits - a.keyHits || b.overlap - a.overlap);
+  const top = scored[0];
+  return scored
+    .filter((s) => s.keyHits === top.keyHits && s.overlap === top.overlap)
+    .slice(0, 2)
+    .map((s) => s.article);
+}
+
+export function columnArticleUrl(article: Pick<ColumnArticle, "slug">): string {
+  return `${COLUMN_BASE_URL}/${article.slug}`;
+}
+
+/** AIに渡す追加の指示（話題を断らせず、題名とURLは書かせない） */
+export function columnHintForModel(articles: ColumnArticle[]): string {
+  const list = articles.map((a) => `「${a.title}」`).join(" と ");
+  return `【サーバーの判定】この質問は、AMALINKのコラム記事 ${list} が扱う話題です。コラムの話題は答えてよい範囲に入るので、断らないでください。「技術的な話は答えられない」「その話題は話せない」とは言わず、1〜2文でやさしく要点を説明し、くわしくはコラムで読めると伝えてください。記事の題名とURLは、この後サーバーが自動で付けるので本文には書かないでください。記事にない料金・実績・他社の事例・数字は書かないでください。`;
+}
+
+const REFUSAL_RE = /話せない|答えられない|お答えできない|答えかねる/;
+
+/**
+ * 返答の末尾に、当たった記事の正式な題名全体とURLを必ず付ける。
+ * モデルが断った場合は、断りを消してコラム案内の一文に置き換える。
+ */
+export function appendColumnLinks(reply: string, articles: ColumnArticle[]): string {
+  if (articles.length === 0) return reply;
+  let body = reply.trim();
+  if (!body || REFUSAL_RE.test(body)) {
+    body = "その話題は、AMALINKのコラムで取り上げているよ。";
+  }
+  const lines = articles.map((a) =>
+    body.includes(a.title) ? columnArticleUrl(a) : `「${a.title}」\n${columnArticleUrl(a)}`,
+  );
+  return `${body}\n\nコラムの記事はこちらだよ。\n${lines.join("\n")}`;
 }
 
 export type ChatMessage = {
