@@ -11,7 +11,10 @@ import {
   CHATBOT_MAX_TOKENS,
   CHATBOT_MODEL_DEFAULT,
   CHATBOT_SYSTEM_PROMPT,
+  appendColumnLinks,
+  columnHintForModel,
   finalizeChatReply,
+  matchColumnArticles,
   localChatReply,
   type ChatMessage,
 } from "@/lib/chatbot-knowledge";
@@ -127,8 +130,11 @@ export async function POST(request: Request) {
   }
 
   const headers = rateLimitHeaders(undefined, limited.remainingMinute);
+  // コラムの話題は、サーバー側で当たった記事を決める。AIには断らせず、題名とURLは返答の末尾に確実に付ける。
+  const columnHits = matchColumnArticles(lastUser.content);
   const upstreamMessages = [
     { role: "system", content: CHATBOT_SYSTEM_PROMPT },
+    ...(columnHits.length > 0 ? [{ role: "system", content: columnHintForModel(columnHits) }] : []),
     ...cleaned,
   ];
   const startedAt = Date.now();
@@ -158,7 +164,7 @@ export async function POST(request: Request) {
       console.log(`[chat] provider=${p.name} model=${p.model} ms=${Date.now() - t0} total_ms=${Date.now() - startedAt}`);
       const finalized = finalizeChatReply(content, lastUser.content);
       return NextResponse.json(
-        { reply: finalized.reply, showContactLink: finalized.showContactLink, mode: p.name },
+        { reply: appendColumnLinks(finalized.reply, columnHits), showContactLink: finalized.showContactLink, mode: p.name },
         { headers },
       );
     }
@@ -169,7 +175,7 @@ export async function POST(request: Request) {
   const local = finalizeChatReply(localChatReply(lastUser.content), lastUser.content);
   return NextResponse.json(
     {
-      reply: local.reply,
+      reply: appendColumnLinks(local.reply, columnHits),
       showContactLink: local.showContactLink,
       mode: "local" as const,
       warning: "一時的に接続できないため、簡易回答に切り替えました。",
